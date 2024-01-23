@@ -13,7 +13,7 @@ class ApiClient {
   final Dio dio = Dio();
 
   ApiClient() {
-    dio.options.baseUrl = 'http://192.168.1.150:8091';
+    dio.options.baseUrl = 'http://192.168.1.200:8091';
     dio.interceptors.add(LoggingInterceptor());
   }
 
