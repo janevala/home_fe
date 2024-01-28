@@ -54,3 +54,7 @@ DateTime parsePublished(String str) {
 DateTime parsePublishedParsed(String str) {
   return DateFormat('yyyy-MM-ddTHH:mm:ssZ').parse(str);
 }
+
+String formatPublished(DateTime dateTime) {
+  return DateFormat('dd. MMM yyyy | HH:mm').format(dateTime);
+}

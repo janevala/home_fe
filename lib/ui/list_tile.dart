@@ -4,7 +4,6 @@ import 'package:homefe/podo/rss/rss_json_feed.dart';
 import 'package:homefe/podo/rss/rss_site.dart';
 import 'package:webfeed/webfeed.dart';
 
-
 class JsonFeedTile extends StatelessWidget {
   const JsonFeedTile(
       {super.key,
@@ -39,7 +38,7 @@ class JsonFeedTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
-                  '- Published: ${itemPubDate.day}/${itemPubDate.month}/${itemPubDate.year} ${itemPubDate.hour}:${itemPubDate.minute} Source: $baseUrl',
+                  '- Published: ${formatPublished(itemPubDate)} Source: $baseUrl',
                   style: const TextStyle(fontSize: 16)),
             ],
           ),
@@ -87,7 +86,7 @@ class RssFeedTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
-                  '- Published: ${item.pubDate!.day}/${item.pubDate!.month}/${item.pubDate!.year} ${item.pubDate!.hour}:${item.pubDate!.minute} Source: ${site.title}',
+                  '- Published: ${formatPublished(item.pubDate!)} Source: ${site.title}',
                   style: const TextStyle(fontSize: 16)),
             ],
           ),
