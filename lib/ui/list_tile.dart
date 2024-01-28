@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:homefe/functions.dart';
 import 'package:homefe/podo/rss/rss_json_feed.dart';
 import 'package:homefe/podo/rss/rss_site.dart';
-import 'package:intl/intl.dart';
 import 'package:webfeed/webfeed.dart';
+
 
 class JsonFeedTile extends StatelessWidget {
   const JsonFeedTile(
@@ -15,20 +16,16 @@ class JsonFeedTile extends StatelessWidget {
   final RssJsonFeed item;
   final int index;
 
-  DateTime itemPubDate(String dateString) {
-    return DateFormat('yyyy-MM-ddTHH:mm:ssZ').parse(dateString);
-  }
-
   @override
   Widget build(BuildContext context) {
-    DateTime itemPubDate = this.itemPubDate(item.publishedParsed);
+    DateTime itemPubDate = parsePublishedParsed(item.publishedParsed);
     String baseUrl = item.link.substring(0, item.link.indexOf('/', 8));
-    String printIndex = (index + 1).toString();
     bool hasContent = item.content != null;
+    String printIndex = (index + 1).toString();
 
     return ListTile(
       onTap: () async {
-        hasContent ? openItem : null;
+        openItem;
       },
       title: Text('$printIndex. ${item.title}',
           style: const TextStyle(fontSize: 18)),
@@ -77,7 +74,7 @@ class RssFeedTile extends StatelessWidget {
 
     return ListTile(
       onTap: () async {
-        hasContent ? openItem() : null;
+        openItem;
       },
       title: Text('$printIndex. ${item.title}',
           style: const TextStyle(fontSize: 18)),

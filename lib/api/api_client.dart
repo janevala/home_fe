@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:homefe/api/dio_logging_interceptors.dart';
+import 'package:homefe/api/logging_interceptor.dart';
+import 'package:homefe/functions.dart';
 import 'package:homefe/podo/login/login_body.dart';
 import 'package:homefe/podo/refreshtoken/refresh_token_body.dart';
 import 'package:homefe/podo/rss/rss_json_feed.dart';
@@ -13,7 +14,7 @@ class ApiClient {
   final Dio dio = Dio();
 
   ApiClient() {
-    dio.options.baseUrl = 'http://192.168.1.200:8091';
+    dio.options.baseUrl = readApiEndpointIp("../../.api");
     dio.interceptors.add(LoggingInterceptor());
   }
 

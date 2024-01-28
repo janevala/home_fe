@@ -7,13 +7,12 @@ import 'package:homefe/podo/rss/rss_json_feed.dart';
 import 'package:homefe/podo/rss/rss_site.dart';
 import 'package:homefe/ui/list_tile.dart';
 import 'package:homefe/ui/spinner.dart';
-import 'package:intl/intl.dart';
 import 'package:webfeed/webfeed.dart';
 
 class RssSiteScreen extends StatefulWidget {
   final RssSite rssSite;
 
-  const RssSiteScreen({Key? key, required this.rssSite}) : super(key: key);
+  const RssSiteScreen({super.key, required this.rssSite});
 
   @override
   RssSiteScreenState createState() => RssSiteScreenState();
@@ -21,10 +20,6 @@ class RssSiteScreen extends StatefulWidget {
 
 class RssSiteScreenState extends State<RssSiteScreen> {
   final RssFeedBloc rssFeedBloc = RssFeedBloc();
-
-  String itemPubDate(DateTime dateTime) {
-    return DateFormat('d.M. HH:mm').format(dateTime);
-  }
 
   @override
   void initState() {

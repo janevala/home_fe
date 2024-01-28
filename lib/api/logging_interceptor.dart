@@ -10,13 +10,14 @@ class LoggingInterceptor extends InterceptorsWrapper {
   }
 
   @override
-  void onResponse(Response<dynamic> response, ResponseInterceptorHandler handler) {
+  void onResponse(
+      Response<dynamic> response, ResponseInterceptorHandler handler) {
     debugPrint('onResponse: ${response.headers}');
     super.onResponse(response, handler);
   }
 
   @override
-  void onError(DioError err, ErrorInterceptorHandler handler) {
+  void onError(DioException err, ErrorInterceptorHandler handler) {
     debugPrint('onError: $err');
     super.onError(err, handler);
   }
