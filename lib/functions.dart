@@ -48,7 +48,7 @@ openItem(BuildContext context, RssJsonFeed item) {
 }
 
 DateTime parsePublished(String str) {
-  return DateFormat('FIXME').parse(str);
+  return DateFormat('EEE, dd MMM yyyy HH:mm:ss zzz').parse(str);
 }
 
 DateTime parsePublishedParsed(String str) {
