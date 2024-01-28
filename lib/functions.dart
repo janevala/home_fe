@@ -13,7 +13,7 @@ String readApiEndpointIp(String filePath) {
 
     return contents;
   } catch (e) {
-    return "127.0.0.1";
+    return "http://127.0.0.1:8091";
   }
 }
 
