@@ -17,34 +17,42 @@ String readApiEndpointIp(String filePath) {
   }
 }
 
-openItem(BuildContext context, RssJsonFeed item) {
-  String documentString = parse(item.content).documentElement!.text;
+openItem(BuildContext context, RssJsonFeed item) async {
+  bool hasContent = item.content != null;
 
-  showDialog(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        content: SingleChildScrollView(
-            child: Text('${item.title}\n\n$documentString')),
-        actions: [
-          TextButton(
-            onPressed: () async {
-              Navigator.pop(context, true);
+  if (hasContent) {
+    String documentString = parse(item.content).documentElement!.text;
 
-              if (await canLaunchUrl(Uri.parse(item.link))) {
-                await launchUrl(Uri.parse(item.link));
-              }
-            },
-            child: const Text('Open', style: TextStyle(fontSize: 18)),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: const Text('Close', style: TextStyle(fontSize: 18)),
-          ),
-        ],
-      );
-    },
-  );
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          content: SingleChildScrollView(
+              child: Text('${item.title}\n\n$documentString')),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                Navigator.pop(context, true);
+
+                if (await canLaunchUrl(Uri.parse(item.link))) {
+                  await launchUrl(Uri.parse(item.link));
+                }
+              },
+              child: const Text('Open', style: TextStyle(fontSize: 18)),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, true),
+              child: const Text('Close', style: TextStyle(fontSize: 18)),
+            ),
+          ],
+        );
+      },
+    );
+  } else {
+    if (await canLaunchUrl(Uri.parse(item.link))) {
+      await launchUrl(Uri.parse(item.link));
+    }
+  }
 }
 
 DateTime parsePublished(String str) {
@@ -57,4 +65,8 @@ DateTime parsePublishedParsed(String str) {
 
 String formatPublished(DateTime dateTime) {
   return DateFormat('dd. MMM yyyy | HH:mm').format(dateTime);
+}
+
+String formatPublishedShort(DateTime dateTime) {
+  return DateFormat('HH:mm').format(dateTime);
 }

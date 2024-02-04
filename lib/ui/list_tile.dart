@@ -20,26 +20,24 @@ class JsonFeedTile extends StatelessWidget {
     DateTime itemPubDate = parsePublishedParsed(item.publishedParsed);
     String baseUrl = item.link.substring(0, item.link.indexOf('/', 8));
     bool hasContent = item.content != null;
-    String printIndex = (index + 1).toString();
 
     return ListTile(
       onTap: () async {
-        openItem;
+        openItem.call();
       },
-      title: Text('$printIndex. ${item.title}',
+      title: Text('${formatPublishedShort(itemPubDate)} - ${item.title}',
           style: const TextStyle(fontSize: 18)),
       subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          hasContent
-              ? Text('${item.content!.substring(0, 100)}...',
-                  style: const TextStyle(fontSize: 16))
-              : Text(item.description, style: const TextStyle(fontSize: 16)),
+          Padding(
+            padding: const EdgeInsets.only(top: 8, bottom: 8),
+            child: Text(item.description, style: const TextStyle(fontSize: 18)),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Text(
-                  '- Published: ${formatPublished(itemPubDate)} Source: $baseUrl',
-                  style: const TextStyle(fontSize: 16)),
+              Text('- Source: $baseUrl', style: const TextStyle(fontSize: 16)),
             ],
           ),
         ],
@@ -73,20 +71,27 @@ class RssFeedTile extends StatelessWidget {
 
     return ListTile(
       onTap: () async {
-        openItem;
+        openItem.call();
       },
       title: Text('$printIndex. ${item.title}',
           style: const TextStyle(fontSize: 18)),
       subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           hasContent
               ? Container()
-              : Text(item.description!, style: const TextStyle(fontSize: 16)),
+              : Padding(
+                  padding: const EdgeInsets.only(top: 8, bottom: 8),
+                  child: Text(item.description!,
+                      style: const TextStyle(fontSize: 18)),
+                ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
-                  '- Published: ${formatPublished(item.pubDate!)} Source: ${site.title}',
+                  item.pubDate != null
+                      ? '- Published: ${formatPublished(item.pubDate!)} Source: ${site.title}'
+                      : '- Source: ${site.title}',
                   style: const TextStyle(fontSize: 16)),
             ],
           ),
