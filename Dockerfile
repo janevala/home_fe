@@ -1,6 +1,7 @@
 FROM debian:latest AS builder
-RUN apt update && apt install -y curl
-RUN curl -Lf https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.16.5-stable.tar.xz | tar -xJ -C /
+RUN apt update && apt install -y curl xz-utils
+RUN curl -Lf https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.16.5-stable.tar.xz --output flutter.tar.xz
+RUN tar xvfJ flutter.tar.xz -C /
 ENV PATH="/flutter/bin:${PATH}"
 WORKDIR /homefe_build
 COPY . .
