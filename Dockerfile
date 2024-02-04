@@ -1,4 +1,5 @@
-FROM bitnami/debian-base-buildpack:latest AS builder
+FROM debian:latest AS builder
+RUN apt update && apt install -y curl
 RUN curl -Lf https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.16.5-stable.tar.xz | tar -xJ -C /
 ENV PATH="/flutter/bin:${PATH}"
 WORKDIR /homefe_build
