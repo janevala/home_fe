@@ -14,7 +14,7 @@ class ApiClient {
   final Dio dio = Dio();
 
   ApiClient() {
-    dio.options.baseUrl = readApiEndpointIp("../../.api");
+    dio.options.baseUrl = readApiEndpointIp(".api");
     dio.interceptors.add(LoggingInterceptor());
   }
 
