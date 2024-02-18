@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:homefe/api/logging_interceptor.dart';
 import 'package:homefe/functions.dart';
 import 'package:homefe/podo/login/login_body.dart';
@@ -55,6 +56,10 @@ class ApiClient {
         return Token.withError('Error code ${response.statusCode}');
       }
     } catch (error, _) {
+      if (kDebugMode) {
+        print(error);
+      }
+
       return Token.withError('$error');
     }
   }
@@ -80,6 +85,10 @@ class ApiClient {
       );
       return Token.fromJson(response.data);
     } catch (error, _) {
+      if (kDebugMode) {
+        print(error);
+      }
+
       return Token.withError('$error');
     }
   }
@@ -87,7 +96,7 @@ class ApiClient {
   Future<RssSites> getRssSites() async {
     try {
       final response = await dio.get(
-        '/rss_sites',
+        '/sites',
         queryParameters: {"code": "123"},
         options: Options(
           contentType: Headers.jsonContentType,
@@ -101,6 +110,10 @@ class ApiClient {
         return RssSites.withError('Error code ${response.statusCode}');
       }
     } catch (error, _) {
+      if (kDebugMode) {
+        print(error);
+      }
+
       return RssSites.withError('$error');
     }
   }
@@ -108,7 +121,7 @@ class ApiClient {
   Future<List<RssJsonFeed>> getRssAggregate() async {
     try {
       final response = await dio.get(
-        '/rss_aggregate',
+        '/aggregate',
         queryParameters: {"code": "123"},
         options: Options(
           contentType: Headers.jsonContentType,
@@ -123,7 +136,9 @@ class ApiClient {
         return [];
       }
     } catch (error, _) {
-      print(error);
+      if (kDebugMode) {
+        print(error);
+      }
       return [];
     }
   }
@@ -135,7 +150,9 @@ class ApiClient {
         return RssFeed.parse(response.data);
       }
     } catch (error, _) {
-      print(error);
+      if (kDebugMode) {
+        print(error);
+      }
     }
 
     return null;
