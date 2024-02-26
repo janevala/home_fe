@@ -19,7 +19,6 @@ class JsonFeedTile extends StatelessWidget {
   Widget build(BuildContext context) {
     DateTime itemPubDate = parsePublishedParsed(item.publishedParsed);
     String baseUrl = item.link.substring(0, item.link.indexOf('/', 8));
-    bool hasContent = item.content != null;
 
     return ListTile(
       onTap: () async {
@@ -37,7 +36,7 @@ class JsonFeedTile extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Text('- Source: $baseUrl', style: const TextStyle(fontSize: 16)),
+              Text('- Source $baseUrl', style: const TextStyle(fontSize: 16)),
             ],
           ),
         ],
@@ -90,8 +89,8 @@ class RssFeedTile extends StatelessWidget {
             children: [
               Text(
                   item.pubDate != null
-                      ? '- Published: ${formatPublished(item.pubDate!)} Source: ${site.title}'
-                      : '- Source: ${site.title}',
+                      ? '- Published ${formatPublished(item.pubDate!)} Source ${site.title}'
+                      : '- Source ${site.title}',
                   style: const TextStyle(fontSize: 16)),
             ],
           ),
