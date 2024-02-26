@@ -6,7 +6,7 @@ part 'rss_sites.g.dart';
 @JsonSerializable(ignoreUnannotated: true)
 class RssSites {
   @JsonKey(name: 'time')
-  late String time;
+  late int time;
   @JsonKey(name: 'title')
   late String title;
   @JsonKey(name: 'sites')
