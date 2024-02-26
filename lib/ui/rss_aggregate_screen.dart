@@ -8,7 +8,7 @@ import 'package:homefe/ui/list_tile.dart';
 import 'package:homefe/ui/spinner.dart';
 
 class RssAggregateScreen extends StatefulWidget {
-  const RssAggregateScreen({Key? key}) : super(key: key);
+  const RssAggregateScreen({super.key});
 
   @override
   RssAggregateScreenState createState() => RssAggregateScreenState();

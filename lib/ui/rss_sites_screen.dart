@@ -4,10 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:homefe/bloc/rss_bloc.dart';
 import 'package:homefe/podo/rss/rss_site.dart';
 import 'package:homefe/ui/spinner.dart';
-import 'package:intl/intl.dart';
 
 class RssSitesScreen extends StatefulWidget {
-  const RssSitesScreen({Key? key}) : super(key: key);
+  const RssSitesScreen({super.key});
 
   @override
   RssSitesScreenState createState() => RssSitesScreenState();

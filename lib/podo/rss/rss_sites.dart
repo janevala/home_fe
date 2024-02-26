@@ -1,4 +1,5 @@
 import 'package:homefe/podo/rss/rss_site.dart';
+// ignore: depend_on_referenced_packages
 import 'package:json_annotation/json_annotation.dart';
 
 part 'rss_sites.g.dart';
