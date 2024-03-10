@@ -41,7 +41,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         return;
       }
 
-      emit(LoginSuccess());
+      emit(LoginSuccess()); // TODO: emit token
     });
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homefe/podo/rss/rss_site.dart';
+import 'package:homefe/ui/dashboard_screen.dart';
 import 'package:homefe/ui/login_screen.dart';
 import 'package:homefe/ui/rss_aggregate_screen.dart';
 import 'package:homefe/ui/rss_site_screen.dart';
@@ -30,6 +31,13 @@ final GoRouter router = GoRouter(
         return const LoginScreen();
       },
       routes: <RouteBase>[
+        GoRoute(
+          name: 'dashboard',
+          path: 'dashboard',
+          builder: (BuildContext context, GoRouterState state) {
+            return const DashboardScreen();
+          },
+        ),
         GoRoute(
           name: 'rss_sites',
           path: 'rss_sites',

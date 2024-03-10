@@ -16,10 +16,7 @@ class LoginScreenState extends State<LoginScreen> {
   LoginBloc loginBloc = LoginBloc();
 
   final _formKey = GlobalKey<FormState>();
-  String email = '';
-  String password = '';
-
-  bool openDefault = true;
+  String userName = '';
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +28,7 @@ class LoginScreenState extends State<LoginScreen> {
             onTap: () {
               loginBloc.add(LoginEvent(LoginBody('', '', '')));
             },
-            child: const Text('Login')),
+            child: const Text('Enter token')),
       ),
       body: BlocProvider<LoginBloc>(
         create: (context) => loginBloc,
@@ -39,67 +36,32 @@ class LoginScreenState extends State<LoginScreen> {
           builder: (context, LoginState loginState) {
             return BlocListener<LoginBloc, LoginState>(
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(32),
                   child: Form(
                     key: _formKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
                         TextFormField(
-                          decoration: const InputDecoration(labelText: 'Email'),
+                          decoration: const InputDecoration(labelText: 'Token'),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter your account';
+                              return 'Please enter token';
                             }
                             return null;
                           },
                           onChanged: (value) {
                             setState(() {
-                              email = value;
+                              userName = value;
                             });
                           },
-                        ),
-                        const SizedBox(height: 16.0),
-                        TextFormField(
-                          decoration:
-                              const InputDecoration(labelText: 'Password'),
-                          obscureText: true,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your password';
-                            }
-                            return null;
-                          },
-                          onChanged: (value) {
-                            setState(() {
-                              password = value;
-                            });
-                          },
-                        ),
-                        const SizedBox(height: 24.0),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Switch(
-                              value: openDefault,
-                              onChanged: (bool value) {
-                                setState(() {
-                                  openDefault = value;
-                                });
-                              },
-                            ),
-                            const SizedBox(width: 8.0),
-                            Text(openDefault
-                                ? 'Choose providers'
-                                : 'Choose aggregate'),
-                          ],
                         ),
                         const SizedBox(height: 24.0),
                         ElevatedButton(
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
                               loginBloc.add(LoginEvent(
-                                  LoginBody(email, password, 'password')));
+                                  LoginBody(userName, '123', 'password')));
                             }
                           },
                           child: const Text('Login'),
@@ -110,14 +72,13 @@ class LoginScreenState extends State<LoginScreen> {
                 ),
                 listener: (BuildContext context, LoginState state) {
                   if (state is LoginSuccess) {
-                    GoRouter.of(context)
-                        .goNamed(openDefault ? 'rss_sites' : 'rss_aggregate');
+                    GoRouter.of(context).goNamed('dashboard');
                   } else if (state is LoginFailure) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(state.error),
                         backgroundColor: Colors.red,
-                        duration: const Duration(seconds: 15),
+                        duration: const Duration(seconds: 10),
                       ),
                     );
                   } else if (state is LoginLoading) {
