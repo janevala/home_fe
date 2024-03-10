@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:homefe/bloc/login_bloc.dart';
 import 'package:homefe/podo/login/login_body.dart';
+import 'package:homefe/podo/token/token.dart';
 import 'package:homefe/ui/spinner.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -72,7 +73,17 @@ class LoginScreenState extends State<LoginScreen> {
                 ),
                 listener: (BuildContext context, LoginState state) {
                   if (state is LoginSuccess) {
-                    GoRouter.of(context).goNamed('dashboard');
+                    Token token = state.token;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Token: ${token.accessToken}'),
+                        backgroundColor: Colors.green,
+                        duration: const Duration(seconds: 2),
+                      ),
+                    );
+                    Future.delayed(const Duration(seconds: 3), () {
+                      GoRouter.of(context).goNamed('dashboard');
+                    });
                   } else if (state is LoginFailure) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(

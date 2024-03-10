@@ -15,7 +15,11 @@ class LoginFailure extends LoginState {
   LoginFailure(this.error);
 }
 
-class LoginSuccess extends LoginState {}
+class LoginSuccess extends LoginState {
+  final Token token;
+
+  LoginSuccess(this.token);
+}
 
 class LoginEvent extends LoginState {
   final LoginBody loginBody;
@@ -41,7 +45,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         return;
       }
 
-      emit(LoginSuccess()); // TODO: emit token
+      emit(LoginSuccess(token));
     });
   }
 }
