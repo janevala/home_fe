@@ -37,15 +37,15 @@ class RssAggregateScreenState extends State<RssAggregateScreen> {
               context.goNamed('dashboard');
             },
           )),
-      body: BlocProvider<RssAggregateBloc>(
-        create: (context) => rssAggregateBloc,
-        child: BlocBuilder<RssAggregateBloc, RssState>(
-          builder: (context, feedState) {
-            if (feedState is RssLoading) {
-              return const Spinner();
-            } else if (feedState is RssAggregateSuccess) {
-              return SafeArea(
-                child: ListView.builder(
+      body: SafeArea(
+        child: BlocProvider<RssAggregateBloc>(
+          create: (context) => rssAggregateBloc,
+          child: BlocBuilder<RssAggregateBloc, RssState>(
+            builder: (context, feedState) {
+              if (feedState is RssLoading) {
+                return const Spinner();
+              } else if (feedState is RssAggregateSuccess) {
+                return ListView.builder(
                     itemCount: feedState.rssAggregateFeed.length,
                     itemBuilder: (BuildContext context, int index) {
                       RssJsonFeed item = feedState.rssAggregateFeed[index];
@@ -54,18 +54,18 @@ class RssAggregateScreenState extends State<RssAggregateScreen> {
                         index: index,
                         item: item,
                       );
-                    }),
-              );
-            } else if (feedState is RssFailure) {
-              return Center(
-                  child: Text(feedState.error,
-                      style: const TextStyle(fontSize: 18)));
-            } else {
-              return const Center(
-                  child: Text('Something went wrong',
-                      style: TextStyle(fontSize: 18)));
-            }
-          },
+                    });
+              } else if (feedState is RssFailure) {
+                return Center(
+                    child: Text(feedState.error,
+                        style: const TextStyle(fontSize: 18)));
+              } else {
+                return const Center(
+                    child: Text('Something went wrong',
+                        style: TextStyle(fontSize: 18)));
+              }
+            },
+          ),
         ),
       ),
     );

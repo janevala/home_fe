@@ -29,22 +29,23 @@ class RssSitesScreenState extends State<RssSitesScreen> {
         backgroundColor: Colors.blueGrey,
         foregroundColor: Colors.white,
         iconTheme: const IconThemeData(color: Colors.white),
-        title: InkWell(
-            onTap: () {
-              context.goNamed('dashboard');
-            },
-            child: const Text('Providers')),
+        title: const Text('Providers'),
+        leading: BackButton(
+          onPressed: () {
+            context.goNamed('dashboard');
+          },
+        ),
       ),
-      body: BlocProvider<RssSitesBloc>(
-        create: (context) => rssBloc,
-        child: BlocBuilder<RssSitesBloc, RssState>(
-          builder: (context, state) {
-            if (state is RssLoading) {
-              return const Spinner();
-            } else if (state is RssSitesSuccess &&
-                state.rssSites.sites.isNotEmpty) {
-              return SafeArea(
-                child: ListView.builder(
+      body: SafeArea(
+        child: BlocProvider<RssSitesBloc>(
+          create: (context) => rssBloc,
+          child: BlocBuilder<RssSitesBloc, RssState>(
+            builder: (context, state) {
+              if (state is RssLoading) {
+                return const Spinner();
+              } else if (state is RssSitesSuccess &&
+                  state.rssSites.sites.isNotEmpty) {
+                return ListView.builder(
                     itemCount: state.rssSites.sites.length,
                     itemBuilder: (BuildContext context, int index) {
                       RssSite site = state.rssSites.sites[index];
@@ -58,18 +59,18 @@ class RssSitesScreenState extends State<RssSitesScreen> {
                           GoRouter.of(context).goNamed('rss_site', extra: site);
                         },
                       );
-                    }),
-              );
-            } else if (state is RssFailure) {
-              return Center(
-                  child:
-                      Text(state.error, style: const TextStyle(fontSize: 18)));
-            } else {
-              return const Center(
-                  child: Text('Something went wrong',
-                      style: TextStyle(fontSize: 18)));
-            }
-          },
+                    });
+              } else if (state is RssFailure) {
+                return Center(
+                    child:
+                        Text(state.error, style: const TextStyle(fontSize: 18)));
+              } else {
+                return const Center(
+                    child: Text('Something went wrong',
+                        style: TextStyle(fontSize: 18)));
+              }
+            },
+          ),
         ),
       ),
     );

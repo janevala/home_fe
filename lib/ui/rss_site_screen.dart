@@ -41,15 +41,15 @@ class RssSiteScreenState extends State<RssSiteScreen> {
               context.goNamed('rss_sites');
             },
           )),
-      body: BlocProvider<RssFeedBloc>(
-        create: (context) => rssFeedBloc,
-        child: BlocBuilder<RssFeedBloc, RssState>(
-          builder: (context, feedState) {
-            if (feedState is RssLoading) {
-              return const Spinner();
-            } else if (feedState is RssFeedSuccess) {
-              return SafeArea(
-                child: ListView.builder(
+      body: SafeArea(
+        child: BlocProvider<RssFeedBloc>(
+          create: (context) => rssFeedBloc,
+          child: BlocBuilder<RssFeedBloc, RssState>(
+            builder: (context, feedState) {
+              if (feedState is RssLoading) {
+                return const Spinner();
+              } else if (feedState is RssFeedSuccess) {
+                return ListView.builder(
                     itemCount: feedState.rssFeed.items!.length,
                     itemBuilder: (BuildContext context, int index) {
                       RssItem item = feedState.rssFeed.items![index];
@@ -68,18 +68,18 @@ class RssSiteScreenState extends State<RssSiteScreen> {
                         item: item,
                         site: widget.rssSite,
                       );
-                    }),
-              );
-            } else if (feedState is RssFailure) {
-              return Center(
-                  child: Text(feedState.error,
-                      style: const TextStyle(fontSize: 18)));
-            } else {
-              return const Center(
-                  child: Text('Something went wrong',
-                      style: TextStyle(fontSize: 18)));
-            }
-          },
+                    });
+              } else if (feedState is RssFailure) {
+                return Center(
+                    child: Text(feedState.error,
+                        style: const TextStyle(fontSize: 18)));
+              } else {
+                return const Center(
+                    child: Text('Something went wrong',
+                        style: TextStyle(fontSize: 18)));
+              }
+            },
+          ),
         ),
       ),
     );
