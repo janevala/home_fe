@@ -49,12 +49,17 @@ class RssSitesScreenState extends State<RssSitesScreen> {
                     itemCount: state.rssSites.sites.length,
                     itemBuilder: (BuildContext context, int index) {
                       RssSite site = state.rssSites.sites[index];
+
                       return ListTile(
                         title: Text(site.title),
+                        titleTextStyle:
+                            const TextStyle(fontSize: 22, color: Colors.black),
                         subtitle: Align(
                           alignment: Alignment.centerRight,
                           child: Text(site.url),
                         ),
+                        subtitleTextStyle:
+                            const TextStyle(fontSize: 16, color: Colors.blue, decoration: TextDecoration.underline),
                         onTap: () async {
                           GoRouter.of(context).goNamed('rss_site', extra: site);
                         },
@@ -62,8 +67,8 @@ class RssSitesScreenState extends State<RssSitesScreen> {
                     });
               } else if (state is RssFailure) {
                 return Center(
-                    child:
-                        Text(state.error, style: const TextStyle(fontSize: 18)));
+                    child: Text(state.error,
+                        style: const TextStyle(fontSize: 18)));
               } else {
                 return const Center(
                     child: Text('Something went wrong',

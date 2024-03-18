@@ -49,6 +49,7 @@ class RssAggregateScreenState extends State<RssAggregateScreen> {
                     itemCount: feedState.rssAggregateFeed.length,
                     itemBuilder: (BuildContext context, int index) {
                       RssJsonFeed item = feedState.rssAggregateFeed[index];
+
                       return JsonFeedTile(
                         openItem: () => openItem(context, item),
                         index: index,

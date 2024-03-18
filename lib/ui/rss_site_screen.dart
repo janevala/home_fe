@@ -53,6 +53,7 @@ class RssSiteScreenState extends State<RssSiteScreen> {
                     itemCount: feedState.rssFeed.items!.length,
                     itemBuilder: (BuildContext context, int index) {
                       RssItem item = feedState.rssFeed.items![index];
+
                       return RssFeedTile(
                         openItem: () => openItem(
                           context,

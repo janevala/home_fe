@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:homefe/bloc/login_bloc.dart';
 
@@ -13,18 +12,13 @@ class DashboardScreen extends StatefulWidget {
 class DashboardScreenState extends State<DashboardScreen> {
   LoginBloc loginBloc = LoginBloc();
 
-  String email = '';
-  String password = '';
-
-  bool openDefault = true;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueGrey,
         foregroundColor: Colors.white,
-        title: const Text('Select news servie'),
+        title: const Text('Select news service'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(32),

@@ -29,23 +29,38 @@ class JsonFeedTile extends StatelessWidget {
       onTap: () async {
         openItem.call();
       },
-      title: Text('${formatPublishedShort(itemPubDate)} - ${item.title}',
-          style: const TextStyle(fontSize: 22)),
+      title: Text('${formatPublishedShort(itemPubDate)} - ${item.title}'),
+      titleTextStyle: const TextStyle(fontSize: 22, color: Colors.black),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 8, bottom: 8),
-            child: Text(parsedDescription, style: const TextStyle(fontSize: 18)),
+            child: Text(parsedDescription),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Text('- Source $baseUrl', style: const TextStyle(fontSize: 16)),
+              Text.rich(
+                TextSpan(
+                  text: '- Source: ',
+                  style: const TextStyle(fontSize: 16),
+                  children: <TextSpan>[
+                    TextSpan(
+                        text: baseUrl,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.blue,
+                          decoration: TextDecoration.underline,
+                        )),
+                  ],
+                ),
+              )
             ],
           ),
         ],
       ),
+      subtitleTextStyle: const TextStyle(fontSize: 18, color: Colors.black),
       leading: Icon(
           item.content == null ? Icons.article_outlined : Icons.article_rounded,
           size: 45),
@@ -81,8 +96,8 @@ class RssFeedTile extends StatelessWidget {
       onTap: () async {
         openItem.call();
       },
-      title: Text('$printIndex. ${item.title}',
-          style: const TextStyle(fontSize: 22)),
+      title: Text('$printIndex. ${item.title}'),
+      titleTextStyle: const TextStyle(fontSize: 22, color: Colors.black),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -90,8 +105,7 @@ class RssFeedTile extends StatelessWidget {
               ? Container()
               : Padding(
                   padding: const EdgeInsets.only(top: 8, bottom: 8),
-                  child: Text(parsedDescription,
-                      style: const TextStyle(fontSize: 18)),
+                  child: Text(parsedDescription),
                 ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -105,6 +119,7 @@ class RssFeedTile extends StatelessWidget {
           ),
         ],
       ),
+      subtitleTextStyle: const TextStyle(fontSize: 18, color: Colors.black),
       leading: Icon(
           item.content == null ? Icons.article_outlined : Icons.article_rounded,
           size: 45),
