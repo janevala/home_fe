@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:homefe/bloc/login_bloc.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -25,33 +26,26 @@ class DashboardScreenState extends State<DashboardScreen> {
         foregroundColor: Colors.white,
         title: const Text('Select news servie'),
       ),
-      body: BlocProvider<LoginBloc>(
-        create: (context) => loginBloc,
-        child: BlocBuilder<LoginBloc, LoginState>(
-          builder: (context, LoginState loginState) {
-            return Padding(
-              padding: const EdgeInsets.all(32),
-              child: Column(children: [
-                const SizedBox(height: 24.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Switch(
-                      value: openDefault,
-                      onChanged: (bool value) {
-                        setState(() {
-                          openDefault = value;
-                        });
-                      },
-                    ),
-                    const SizedBox(width: 8.0),
-                    Text(openDefault ? 'Choose providers' : 'Choose aggregate'),
-                  ],
-                ),
-              ]),
-            );
-          },
-        ),
+      body: Padding(
+        padding: const EdgeInsets.all(32),
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  GoRouter.of(context).goNamed('rss_sites');
+                },
+                child: const Text('Choose provider'),
+              ),
+              const SizedBox(height: 32),
+              ElevatedButton(
+                onPressed: () {
+                  GoRouter.of(context).goNamed('rss_aggregate');
+                },
+                child: const Text('Choose aggregate'),
+              ),
+            ]),
       ),
     );
   }

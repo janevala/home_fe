@@ -46,9 +46,9 @@ class ApiClient {
       );
 
       if (response.statusCode == 200) {
-        if (response.data.contains('Logged in as ')) {
+        if (response.data == loginBody.username) {
           return Token(
-              'access_token', 'token_type', 'refresh_token', 0, 'scope');
+              response.data, 'token_type', 'refresh_token', 0, 'scope');
         } else {
           return Token.withError(response.data);
         }

@@ -34,7 +34,7 @@ class RssAggregateScreenState extends State<RssAggregateScreen> {
           title: const Text('Aggregate'),
           leading: BackButton(
             onPressed: () {
-              context.goNamed('login');
+              context.goNamed('dashboard');
             },
           )),
       body: BlocProvider<RssAggregateBloc>(

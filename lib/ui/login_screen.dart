@@ -81,7 +81,7 @@ class LoginScreenState extends State<LoginScreen> {
                         duration: const Duration(seconds: 2),
                       ),
                     );
-                    Future.delayed(const Duration(seconds: 3), () {
+                    Future.delayed(const Duration(seconds: 2), () {
                       GoRouter.of(context).goNamed('dashboard');
                     });
                   } else if (state is LoginFailure) {

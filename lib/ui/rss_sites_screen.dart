@@ -31,7 +31,7 @@ class RssSitesScreenState extends State<RssSitesScreen> {
         iconTheme: const IconThemeData(color: Colors.white),
         title: InkWell(
             onTap: () {
-              context.goNamed('rss_aggregate');
+              context.goNamed('dashboard');
             },
             child: const Text('Providers')),
       ),
