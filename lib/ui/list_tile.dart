@@ -18,18 +18,35 @@ class JsonFeedTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateTime itemPubDate = parsePublishedParsed(item.publishedParsed);
     String baseUrl = item.link.substring(0, item.link.indexOf('/', 8));
     String parsedDescription = parse(item.description).body!.text;
     if (parsedDescription.length > 500) {
       parsedDescription = '${parsedDescription.substring(0, 500)}...';
     }
 
+    DateTime itemPubDate = parsePublishedParsed(item.publishedParsed);
+    String dateString = itemPubDate.day == DateTime.now().day
+        ? formatPublishedShort(itemPubDate)
+        : formatPublishedLong(itemPubDate);
+
     return ListTile(
       onTap: () async {
         openItem.call();
       },
-      title: Text('${formatPublishedShort(itemPubDate)} - ${item.title}'),
+      title: RichText(
+        text: TextSpan(
+          children: [
+            WidgetSpan(
+              child: itemPubDate.day == DateTime.now().day
+                  ? const Icon(Icons.timer_outlined)
+                  : const Icon(Icons.calendar_today),
+            ),
+            TextSpan(
+                text: ' $dateString | ${item.title}',
+                style: const TextStyle(color: Colors.black, fontSize: 22)),
+          ],
+        ),
+      ),
       titleTextStyle: const TextStyle(fontSize: 22, color: Colors.black),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,9 +78,6 @@ class JsonFeedTile extends StatelessWidget {
         ],
       ),
       subtitleTextStyle: const TextStyle(fontSize: 18, color: Colors.black),
-      leading: Icon(
-          item.content == null ? Icons.article_outlined : Icons.article_rounded,
-          size: 45),
       contentPadding:
           const EdgeInsets.only(top: 8, bottom: 8, left: 16, right: 16),
     );
@@ -96,7 +110,8 @@ class RssFeedTile extends StatelessWidget {
       onTap: () async {
         openItem.call();
       },
-      title: Text('$printIndex. ${item.title}'),
+      title: Text('#$printIndex. | ${item.title}',
+          style: const TextStyle(color: Colors.black, fontSize: 22)),
       titleTextStyle: const TextStyle(fontSize: 22, color: Colors.black),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,9 +135,6 @@ class RssFeedTile extends StatelessWidget {
         ],
       ),
       subtitleTextStyle: const TextStyle(fontSize: 18, color: Colors.black),
-      leading: Icon(
-          item.content == null ? Icons.article_outlined : Icons.article_rounded,
-          size: 45),
       contentPadding:
           const EdgeInsets.only(top: 8, bottom: 8, left: 16, right: 16),
     );

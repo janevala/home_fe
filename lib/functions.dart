@@ -70,3 +70,7 @@ String formatPublished(DateTime dateTime) {
 String formatPublishedShort(DateTime dateTime) {
   return DateFormat('HH:mm').format(dateTime);
 }
+
+String formatPublishedLong(DateTime dateTime) {
+  return DateFormat('dd. MMM | HH:mm').format(dateTime);
+}
