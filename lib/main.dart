@@ -61,6 +61,13 @@ final GoRouter router = GoRouter(
             return const RssAggregateScreen();
           },
         ),
+        GoRoute(
+          name: 'rss_archive',
+          path: 'rss_archive',
+          builder: (BuildContext context, GoRouterState state) {
+            return const RssAggregateScreen();
+          },
+        ),
       ],
     ),
   ],

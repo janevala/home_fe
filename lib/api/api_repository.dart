@@ -18,8 +18,11 @@ class ApiRepository {
   Future<RssSites> getRssSites() =>
       apiClient.getRssSites();
   
-  Future<List<RssJsonFeed>> getRssAggregateFeeds() =>
+  Future<List<RssJsonFeed>> getRssAggregateFeed() =>
       apiClient.getRssAggregate();
+
+  Future<List<RssJsonFeed>> getRssArchiveFeed() =>
+      apiClient.getRssArchive();
 
   Future<RssFeed?> getRss(Uri uri) {
     return ApiClient.rss('${uri.scheme}://${uri.host}').getRssFeed(uri.path);

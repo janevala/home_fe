@@ -68,7 +68,7 @@ class RssAggregateBloc extends Bloc<RssAggregateEvent, RssState> {
     on<RssAggregateEvent>((event, emit) async {
       emit(RssLoading());
 
-      List<RssJsonFeed> aggregateFeed = await repo.getRssAggregateFeeds();
+      List<RssJsonFeed> aggregateFeed = await repo.getRssAggregateFeed();
       if (aggregateFeed.isEmpty) {
         emit(RssFailure('Cannot get RSS aggregate feed'));
       } else {

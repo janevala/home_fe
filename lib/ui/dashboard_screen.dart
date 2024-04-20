@@ -39,6 +39,13 @@ class DashboardScreenState extends State<DashboardScreen> {
                 },
                 child: const Text('Choose aggregate'),
               ),
+              const SizedBox(height: 32),
+              ElevatedButton(
+                onPressed: () {
+                  GoRouter.of(context).goNamed('rss_archive');
+                },
+                child: const Text('Choose archive'),
+              ),
             ]),
       ),
     );

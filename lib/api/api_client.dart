@@ -143,6 +143,31 @@ class ApiClient {
     }
   }
 
+  Future<List<RssJsonFeed>> getRssArchive() async {
+    try {
+      final response = await dio.get(
+        '/archive',
+        queryParameters: {"code": "123"},
+        options: Options(
+          contentType: Headers.jsonContentType,
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        List<dynamic> json = jsonDecode(response.data);
+        List<RssJsonFeed> items = json.map((e) => RssJsonFeed.fromJson(e)).toList();
+        return items;
+      } else {
+        return [];
+      }
+    } catch (error, _) {
+      if (kDebugMode) {
+        print(error);
+      }
+      return [];
+    }
+  }
+
   Future<RssFeed?> getRssFeed(String uri) async {
     try {
       final response = await dio.get(uri);
