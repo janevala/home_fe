@@ -9,16 +9,16 @@ import 'package:homefe/ui/list_tile.dart';
 import 'package:homefe/ui/spinner.dart';
 import 'package:webfeed/webfeed.dart';
 
-class RssSiteScreen extends StatefulWidget {
+class SiteScreen extends StatefulWidget {
   final RssSite rssSite;
 
-  const RssSiteScreen({super.key, required this.rssSite});
+  const SiteScreen({super.key, required this.rssSite});
 
   @override
-  RssSiteScreenState createState() => RssSiteScreenState();
+  SiteScreenState createState() => SiteScreenState();
 }
 
-class RssSiteScreenState extends State<RssSiteScreen> {
+class SiteScreenState extends State<SiteScreen> {
   final RssFeedBloc rssFeedBloc = RssFeedBloc();
 
   @override
@@ -38,7 +38,7 @@ class RssSiteScreenState extends State<RssSiteScreen> {
           title: Text(widget.rssSite.title),
           leading: BackButton(
             onPressed: () {
-              context.goNamed('rss_sites');
+              context.goNamed('sites');
             },
           )),
       body: SafeArea(

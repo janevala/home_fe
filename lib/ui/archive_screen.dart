@@ -7,14 +7,14 @@ import 'package:homefe/podo/rss/rss_json_feed.dart';
 import 'package:homefe/ui/list_tile.dart';
 import 'package:homefe/ui/spinner.dart';
 
-class RssAggregateScreen extends StatefulWidget {
-  const RssAggregateScreen({super.key});
+class ArchiveScreen extends StatefulWidget {
+  const ArchiveScreen({super.key});
 
   @override
-  RssAggregateScreenState createState() => RssAggregateScreenState();
+  ArchiveScreenState createState() => ArchiveScreenState();
 }
 
-class RssAggregateScreenState extends State<RssAggregateScreen> {
+class ArchiveScreenState extends State<ArchiveScreen> {
   final RssAggregateBloc rssAggregateBloc = RssAggregateBloc();
 
   @override

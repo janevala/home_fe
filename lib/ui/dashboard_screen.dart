@@ -28,21 +28,21 @@ class DashboardScreenState extends State<DashboardScreen> {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  GoRouter.of(context).goNamed('rss_sites');
+                  GoRouter.of(context).goNamed('sites');
                 },
                 child: const Text('Choose provider'),
               ),
               const SizedBox(height: 32),
               ElevatedButton(
                 onPressed: () {
-                  GoRouter.of(context).goNamed('rss_aggregate');
+                  GoRouter.of(context).goNamed('aggregate');
                 },
                 child: const Text('Choose aggregate'),
               ),
               const SizedBox(height: 32),
               ElevatedButton(
                 onPressed: () {
-                  GoRouter.of(context).goNamed('rss_archive');
+                  GoRouter.of(context).goNamed('archive');
                 },
                 child: const Text('Choose archive'),
               ),

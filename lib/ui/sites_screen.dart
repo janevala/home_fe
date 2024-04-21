@@ -5,14 +5,14 @@ import 'package:homefe/bloc/rss_bloc.dart';
 import 'package:homefe/podo/rss/rss_site.dart';
 import 'package:homefe/ui/spinner.dart';
 
-class RssSitesScreen extends StatefulWidget {
-  const RssSitesScreen({super.key});
+class SitesScreen extends StatefulWidget {
+  const SitesScreen({super.key});
 
   @override
-  RssSitesScreenState createState() => RssSitesScreenState();
+  SitesScreenState createState() => SitesScreenState();
 }
 
-class RssSitesScreenState extends State<RssSitesScreen> {
+class SitesScreenState extends State<SitesScreen> {
   final RssSitesBloc rssBloc = RssSitesBloc();
 
   @override
@@ -61,7 +61,7 @@ class RssSitesScreenState extends State<RssSitesScreen> {
                         subtitleTextStyle:
                             const TextStyle(fontSize: 16, color: Colors.blue, decoration: TextDecoration.underline),
                         onTap: () async {
-                          GoRouter.of(context).goNamed('rss_site', extra: site);
+                          GoRouter.of(context).goNamed('site', extra: site);
                         },
                       );
                     });

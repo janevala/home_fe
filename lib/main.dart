@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:homefe/podo/rss/rss_site.dart';
+import 'package:homefe/ui/archive_screen.dart';
 import 'package:homefe/ui/dashboard_screen.dart';
 import 'package:homefe/ui/login_screen.dart';
-import 'package:homefe/ui/rss_aggregate_screen.dart';
-import 'package:homefe/ui/rss_site_screen.dart';
-import 'package:homefe/ui/rss_sites_screen.dart';
+import 'package:homefe/ui/aggregate_screen.dart';
+import 'package:homefe/ui/site_screen.dart';
+import 'package:homefe/ui/sites_screen.dart';
 import 'package:go_router/go_router.dart';
 
 void main() {
@@ -39,33 +40,33 @@ final GoRouter router = GoRouter(
           },
         ),
         GoRoute(
-          name: 'rss_sites',
-          path: 'rss_sites',
+          name: 'sites',
+          path: 'sites',
           builder: (BuildContext context, GoRouterState state) {
-            return const RssSitesScreen();
+            return const SitesScreen();
           },
         ),
         GoRoute(
-          name: 'rss_site',
-          path: 'rss_site',
+          name: 'site',
+          path: 'site',
           builder: (BuildContext context, GoRouterState state) {
-            return RssSiteScreen(
+            return SiteScreen(
               rssSite: state.extra as RssSite,
             );
           },
         ),
         GoRoute(
-          name: 'rss_aggregate',
-          path: 'rss_aggregate',
+          name: 'aggregate',
+          path: 'aggregate',
           builder: (BuildContext context, GoRouterState state) {
-            return const RssAggregateScreen();
+            return const AggregateScreen();
           },
         ),
         GoRoute(
-          name: 'rss_archive',
-          path: 'rss_archive',
+          name: 'archive',
+          path: 'archive',
           builder: (BuildContext context, GoRouterState state) {
-            return const RssAggregateScreen();
+            return const ArchiveScreen();
           },
         ),
       ],
