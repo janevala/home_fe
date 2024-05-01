@@ -15,13 +15,13 @@ class ArchiveScreen extends StatefulWidget {
 }
 
 class ArchiveScreenState extends State<ArchiveScreen> {
-  final RssAggregateBloc rssAggregateBloc = RssAggregateBloc();
+  final RssArchiveBloc rssAggregateBloc = RssArchiveBloc();
 
   @override
   void initState() {
     super.initState();
 
-    rssAggregateBloc.add(RssAggregateEvent());
+    rssAggregateBloc.add(RssArchiveEvent());
   }
 
   @override
@@ -31,24 +31,24 @@ class ArchiveScreenState extends State<ArchiveScreen> {
           backgroundColor: Colors.blueGrey,
           foregroundColor: Colors.white,
           iconTheme: const IconThemeData(color: Colors.white),
-          title: const Text('Aggregate'),
+          title: const Text('Archive'),
           leading: BackButton(
             onPressed: () {
               context.goNamed('dashboard');
             },
           )),
       body: SafeArea(
-        child: BlocProvider<RssAggregateBloc>(
+        child: BlocProvider<RssArchiveBloc>(
           create: (context) => rssAggregateBloc,
-          child: BlocBuilder<RssAggregateBloc, RssState>(
+          child: BlocBuilder<RssArchiveBloc, RssState>(
             builder: (context, feedState) {
               if (feedState is RssLoading) {
                 return const Spinner();
-              } else if (feedState is RssAggregateSuccess) {
+              } else if (feedState is RssArchiveSuccess) {
                 return ListView.builder(
-                    itemCount: feedState.rssAggregateFeed.length,
+                    itemCount: feedState.rssArchiveFeed.length,
                     itemBuilder: (BuildContext context, int index) {
-                      RssJsonFeed item = feedState.rssAggregateFeed[index];
+                      RssJsonFeed item = feedState.rssArchiveFeed[index];
 
                       return JsonFeedTile(
                         openItem: () => openItem(context, item),

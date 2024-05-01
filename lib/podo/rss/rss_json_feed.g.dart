@@ -11,8 +11,8 @@ RssJsonFeed _$RssJsonFeedFromJson(Map<String, dynamic> json) => RssJsonFeed(
       json['description'] as String,
       json['link'] as String,
       json['published'] as String,
-      json['publishedParsed'] as String,
       json['content'] as String?,
+      json['publishedParsed'] as String?,
     );
 
 Map<String, dynamic> _$RssJsonFeedToJson(RssJsonFeed instance) {

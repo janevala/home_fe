@@ -16,9 +16,9 @@ class RssJsonFeed {
   @JsonKey(name: 'published')
   late String published;
   @JsonKey(name: 'publishedParsed')
-  late String publishedParsed;
+  late String? publishedParsed;
 
-  RssJsonFeed(this.title, this.description, this.link, this.published, this.publishedParsed, [this.content]);
+  RssJsonFeed(this.title, this.description, this.link, this.published, [this.content, this.publishedParsed]);
 
   factory RssJsonFeed.fromJson(Map<String, dynamic> json) => _$RssJsonFeedFromJson(json);
 
