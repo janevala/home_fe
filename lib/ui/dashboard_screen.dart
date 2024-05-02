@@ -13,40 +13,47 @@ class DashboardScreenState extends State<DashboardScreen> {
   LoginBloc loginBloc = LoginBloc();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    
+    double width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueGrey,
         foregroundColor: Colors.white,
-        title: const Text('Select news service'),
+        title: const Text('Logout'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(32),
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  GoRouter.of(context).goNamed('sites');
-                },
-                child: const Text('Choose provider'),
-              ),
-              const SizedBox(height: 32),
-              ElevatedButton(
-                onPressed: () {
-                  GoRouter.of(context).goNamed('aggregate');
-                },
-                child: const Text('Choose aggregate'),
-              ),
-              const SizedBox(height: 32),
-              ElevatedButton(
-                onPressed: () {
-                  GoRouter.of(context).goNamed('archive');
-                },
-                child: const Text('Choose archive'),
-              ),
-            ]),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(32),
+          child: SizedBox(
+            width: width * 0.6,
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      GoRouter.of(context).goNamed('sites');
+                    },
+                    child: const Text('Choose provider'),
+                  ),
+                  const SizedBox(height: 32),
+                  ElevatedButton(
+                    onPressed: () {
+                      GoRouter.of(context).goNamed('aggregate');
+                    },
+                    child: const Text('Choose aggregate'),
+                  ),
+                  const SizedBox(height: 32),
+                  ElevatedButton(
+                    onPressed: () {
+                      GoRouter.of(context).goNamed('archive');
+                    },
+                    child: const Text('Choose archive'),
+                  ),
+                ]),
+          ),
+        ),
       ),
     );
   }

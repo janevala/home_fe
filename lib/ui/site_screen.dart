@@ -30,6 +30,8 @@ class SiteScreenState extends State<SiteScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
           backgroundColor: Colors.blueGrey,
@@ -49,27 +51,35 @@ class SiteScreenState extends State<SiteScreen> {
               if (feedState is RssLoading) {
                 return const Spinner();
               } else if (feedState is RssFeedSuccess) {
-                return ListView.builder(
-                    itemCount: feedState.rssFeed.items!.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      RssItem item = feedState.rssFeed.items![index];
-
-                      return RssFeedTile(
-                        openItem: () => openItem(
-                          context,
-                          RssJsonFeed(
-                            item.title!,
-                            item.description!,
-                            item.link!,
-                            item.pubDate.toString(),
-                            item.pubDate.toString(),
-                          ),
-                        ),
-                        index: index,
-                        item: item,
-                        site: widget.rssSite,
-                      );
-                    });
+                return Center(
+                  child: SizedBox(
+                    width: width * 0.9,
+                    child: Padding(
+                      padding: const EdgeInsets.all(32),
+                      child: ListView.builder(
+                          itemCount: feedState.rssFeed.items!.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            RssItem item = feedState.rssFeed.items![index];
+                      
+                            return RssFeedTile(
+                              openItem: () => openItem(
+                                context,
+                                RssJsonFeed(
+                                  item.title!,
+                                  item.description!,
+                                  item.link!,
+                                  item.pubDate.toString(),
+                                  item.pubDate.toString(),
+                                ),
+                              ),
+                              index: index,
+                              item: item,
+                              site: widget.rssSite,
+                            );
+                          }),
+                    ),
+                  ),
+                );
               } else if (feedState is RssFailure) {
                 return Center(
                     child: Text(feedState.error,

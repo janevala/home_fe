@@ -26,6 +26,8 @@ class ArchiveScreenState extends State<ArchiveScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
           backgroundColor: Colors.blueGrey,
@@ -45,17 +47,25 @@ class ArchiveScreenState extends State<ArchiveScreen> {
               if (feedState is RssLoading) {
                 return const Spinner();
               } else if (feedState is RssArchiveSuccess) {
-                return ListView.builder(
-                    itemCount: feedState.rssArchiveFeed.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      RssJsonFeed item = feedState.rssArchiveFeed[index];
-
-                      return JsonFeedTile(
-                        openItem: () => openItem(context, item),
-                        index: index,
-                        item: item,
-                      );
-                    });
+                return Center(
+                  child: SizedBox(
+                    width: width * 0.9,
+                    child: Padding(
+                      padding: const EdgeInsets.all(32),
+                      child: ListView.builder(
+                          itemCount: feedState.rssArchiveFeed.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            RssJsonFeed item = feedState.rssArchiveFeed[index];
+                      
+                            return JsonFeedTile(
+                              openItem: () => openItem(context, item),
+                              index: index,
+                              item: item,
+                            );
+                          }),
+                    ),
+                  ),
+                );
               } else if (feedState is RssFailure) {
                 return Center(
                     child: Text(feedState.error,
