@@ -1,5 +1,14 @@
-# home_fe
-Home FE is home news feed application, and is mean to use together with Home BE, wich provides the backend data for this client app. It is application that uses Flutter and Dart. It can be used both mobile application, desktop application (Windows, Mac, Linux) and web application.
+# Home FE
+
+Home FE is news feed application, and is mean to use together with Home BE, wich provides the backend data for this client app.
+
+This app is written in Dart. It can be used both as mobile application, desktop application (Windows, Mac, Linux) and web application.
+
+Web application can be used in Docker container.
+
+It is simple demo app for learning purposes.
+
+Dev notes bellow.
 
 # OAuth2 grant types, not in use currently
 
