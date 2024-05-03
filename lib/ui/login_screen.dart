@@ -49,7 +49,6 @@ class LoginScreenState extends State<LoginScreen> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.stretch,
-                            //mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               TextFormField(
                                 decoration: const InputDecoration(labelText: 'Token'),

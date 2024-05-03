@@ -13,23 +13,16 @@ RssJsonFeed _$RssJsonFeedFromJson(Map<String, dynamic> json) => RssJsonFeed(
       json['published'] as String,
       json['content'] as String?,
       json['publishedParsed'] as String?,
+      json['updated'] as String?,
     );
 
-Map<String, dynamic> _$RssJsonFeedToJson(RssJsonFeed instance) {
-  final val = <String, dynamic>{
-    'title': instance.title,
-    'description': instance.description,
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('content', instance.content);
-  val['link'] = instance.link;
-  val['published'] = instance.published;
-  val['publishedParsed'] = instance.publishedParsed;
-  return val;
-}
+Map<String, dynamic> _$RssJsonFeedToJson(RssJsonFeed instance) =>
+    <String, dynamic>{
+      'title': instance.title,
+      'description': instance.description,
+      'content': instance.content,
+      'link': instance.link,
+      'published': instance.published,
+      'publishedParsed': instance.publishedParsed,
+      'updated': instance.updated,
+    };
