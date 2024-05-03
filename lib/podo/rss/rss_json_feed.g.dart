@@ -24,5 +24,5 @@ Map<String, dynamic> _$RssJsonFeedToJson(RssJsonFeed instance) =>
       'link': instance.link,
       'published': instance.published,
       'publishedParsed': instance.publishedParsed,
-      'updated': instance.updated,
+      'updated': instance.source,
     };
