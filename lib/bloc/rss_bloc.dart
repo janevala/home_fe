@@ -59,7 +59,7 @@ class RssSitesBloc extends Bloc<RssSitesEvent, RssState> {
     on<RssSitesEvent>((event, emit) async {
       emit(RssLoading());
 
-      RssSites rssSite = await repo.getRssSites();
+      RssSites rssSite = await repo.getSites();
       if (rssSite.error.isNotEmpty) {
         emit(RssFailure(rssSite.error));
       } else {
@@ -76,7 +76,7 @@ class RssAggregateBloc extends Bloc<RssAggregateEvent, RssState> {
     on<RssAggregateEvent>((event, emit) async {
       emit(RssLoading());
 
-      List<RssJsonFeed> aggregateFeed = await repo.getRssAggregateFeed();
+      List<RssJsonFeed> aggregateFeed = await repo.getAggregate();
       if (aggregateFeed.isEmpty) {
         emit(RssFailure('Cannot get RSS aggregate feed'));
       } else {
@@ -93,7 +93,7 @@ class RssArchiveBloc extends Bloc<RssArchiveEvent, RssState> {
     on<RssArchiveEvent>((event, emit) async {
       emit(RssLoading());
 
-      List<RssJsonFeed> archiveFeed = await repo.getRssArchiveFeed();
+      List<RssJsonFeed> archiveFeed = await repo.getArchive();
       if (archiveFeed.isEmpty) {
         emit(RssFailure('Cannot get RSS archive feed'));
       } else {

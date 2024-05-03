@@ -7,24 +7,21 @@ import 'package:homefe/podo/token/token.dart';
 import 'package:webfeed/webfeed.dart';
 
 class ApiRepository {
-  final ApiClient apiClient = ApiClient();
+  final ApiClient client = ApiClient();
 
   Future<Token> postLogin(LoginBody loginBody) =>
-      apiClient.loginUser(loginBody);
+      client.loginUser(loginBody);
 
   Future<Token> postRefresh(RefreshTokenBody refreshTokenBody) =>
-      apiClient.refreshAuth(refreshTokenBody);
+      client.refreshAuth(refreshTokenBody);
 
-  Future<RssSites> getRssSites() =>
-      apiClient.getRssSites();
-  
-  Future<List<RssJsonFeed>> getRssAggregateFeed() =>
-      apiClient.getRssAggregate();
+  Future<RssSites> getSites() => client.getSites();
 
-  Future<List<RssJsonFeed>> getRssArchiveFeed() =>
-      apiClient.getRssArchive();
+  Future<List<RssJsonFeed>> getAggregate() => client.getAggregate();
+
+  Future<List<RssJsonFeed>> getArchive() => client.getArchive();
 
   Future<RssFeed?> getRss(Uri uri) {
-    return ApiClient.rss('${uri.scheme}://${uri.host}').getRssFeed(uri.path);
+    return ApiClient.rss('${uri.scheme}://${uri.host}').getRss(uri.path);
   }
 }

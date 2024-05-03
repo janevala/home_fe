@@ -93,7 +93,7 @@ class ApiClient {
     }
   }
 
-  Future<RssSites> getRssSites() async {
+  Future<RssSites> getSites() async {
     try {
       final response = await dio.get(
         '/sites',
@@ -118,7 +118,7 @@ class ApiClient {
     }
   }
 
-  Future<List<RssJsonFeed>> getRssAggregate() async {
+  Future<List<RssJsonFeed>> getAggregate() async {
     try {
       final response = await dio.get(
         '/aggregate',
@@ -143,7 +143,7 @@ class ApiClient {
     }
   }
 
-  Future<List<RssJsonFeed>> getRssArchive() async {
+  Future<List<RssJsonFeed>> getArchive() async {
     try {
       final response = await dio.get(
         '/archive',
@@ -168,7 +168,7 @@ class ApiClient {
     }
   }
 
-  Future<RssFeed?> getRssFeed(String uri) async {
+  Future<RssFeed?> getRss(String uri) async {
     try {
       final response = await dio.get(uri);
       if (response.statusCode == 200) {
