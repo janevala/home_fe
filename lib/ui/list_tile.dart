@@ -4,6 +4,7 @@ import 'package:homefe/podo/rss/rss_json_feed.dart';
 import 'package:homefe/podo/rss/rss_site.dart';
 import 'package:html/parser.dart';
 import 'package:webfeed/webfeed.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class JsonFeedTile extends StatelessWidget {
   const JsonFeedTile(
@@ -26,8 +27,8 @@ class JsonFeedTile extends StatelessWidget {
 
     DateTime itemPubDate = parsePublishedParsed(item.publishedParsed);
     String dateString = itemPubDate.day == DateTime.now().day
-        ? formatPublishedShort(itemPubDate)
-        : formatPublishedLong(itemPubDate);
+        ? timeago.format(itemPubDate, locale: 'en_short')
+        : timeago.format(itemPubDate, locale: 'en');
 
     return ListTile(
       onTap: () async {
@@ -106,6 +107,8 @@ class RssFeedTile extends StatelessWidget {
       parsedDescription = '${parsedDescription.substring(0, 500)}...';
     }
 
+    String dateString = timeago.format(item.pubDate!, locale: 'en');
+
     return ListTile(
       onTap: () async {
         openItem.call();
@@ -127,7 +130,7 @@ class RssFeedTile extends StatelessWidget {
             children: [
               Text(
                   item.pubDate != null
-                      ? '- Published ${formatPublished(item.pubDate!)} Source ${site.title}'
+                      ? '- Published $dateString Source ${site.title}'
                       : '- Source ${site.title}',
                   style: const TextStyle(fontSize: 16)),
             ],

@@ -67,6 +67,7 @@ DateTime parsePublishedParsed(String? str) {
   return DateFormat('yyyy-MM-ddTHH:mm:ssZ').parse(str);
 }
 
+/*
 String formatPublished(DateTime dateTime) {
   return DateFormat('dd. MMM yyyy | HH:mm').format(dateTime);
 }
@@ -78,3 +79,4 @@ String formatPublishedShort(DateTime dateTime) {
 String formatPublishedLong(DateTime dateTime) {
   return DateFormat('dd. MMM | HH:mm').format(dateTime);
 }
+*/
