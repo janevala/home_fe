@@ -17,10 +17,12 @@ class RssJsonFeed {
   late String published;
   @JsonKey(name: 'publishedParsed')
   late String? publishedParsed;
-  @JsonKey(name: 'updated') // news source, field reused because backend guy lazy
+  @JsonKey(name: 'updated') // news source, field reused because backend guy lazy TODO
   late String? source;
+  @JsonKey(name: 'linkImage')
+  late String? linkImage;
 
-  RssJsonFeed(this.title, this.description, this.link, this.published, [this.content, this.publishedParsed, this.source]);
+  RssJsonFeed(this.title, this.description, this.link, this.published, [this.content, this.publishedParsed, this.source, this.linkImage]);
 
   factory RssJsonFeed.fromJson(Map<String, dynamic> json) => _$RssJsonFeedFromJson(json);
 

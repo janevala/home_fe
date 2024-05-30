@@ -14,6 +14,7 @@ RssJsonFeed _$RssJsonFeedFromJson(Map<String, dynamic> json) => RssJsonFeed(
       json['content'] as String?,
       json['publishedParsed'] as String?,
       json['updated'] as String?,
+      json['linkImage'] as String?,
     );
 
 Map<String, dynamic> _$RssJsonFeedToJson(RssJsonFeed instance) =>
@@ -25,4 +26,5 @@ Map<String, dynamic> _$RssJsonFeedToJson(RssJsonFeed instance) =>
       'published': instance.published,
       'publishedParsed': instance.publishedParsed,
       'updated': instance.source,
+      'linkImage': instance.linkImage,
     };

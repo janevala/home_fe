@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:homefe/functions.dart';
 import 'package:homefe/podo/rss/rss_json_feed.dart';
@@ -29,6 +30,10 @@ class JsonFeedTile extends StatelessWidget {
     String dateString = itemPubDate.day == DateTime.now().day
         ? timeago.format(itemPubDate, locale: 'en_short')
         : timeago.format(itemPubDate, locale: 'en');
+    Uri uri = Uri();
+    if (item.linkImage != null) {
+      uri = Uri.parse(item.linkImage!);
+    }
 
     return ListTile(
       onTap: () async {
@@ -57,8 +62,20 @@ class JsonFeedTile extends StatelessWidget {
             child: Text(parsedDescription),
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              item.linkImage == null
+                  ? const SizedBox()
+                  : CachedNetworkImage(
+                      imageUrl: '${uri.scheme}://${uri.authority}${uri.path}',
+                      width: 60,
+                      height: 60,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) =>
+                          const CircularProgressIndicator(),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                    ),
               Text.rich(
                 TextSpan(
                   text: '- Source: ',

@@ -58,6 +58,7 @@ class ArchiveScreenState extends State<ArchiveScreen> {
                             RssJsonFeed item = feedState.rssArchiveFeed[index];
                       
                             return JsonFeedTile(
+                              key: Key(item.link),
                               openItem: () => openItem(context, item),
                               index: index,
                               item: item,
