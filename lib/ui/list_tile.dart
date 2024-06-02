@@ -30,9 +30,11 @@ class JsonFeedTile extends StatelessWidget {
     String dateString = itemPubDate.day == DateTime.now().day
         ? timeago.format(itemPubDate, locale: 'en_short')
         : timeago.format(itemPubDate, locale: 'en');
-    Uri uri = Uri();
-    if (item.linkImage != null) {
+    String imageUrl = '';
+    if (item.linkImage != null && !item.linkImage!.contains("www.google.com")) {
+      Uri uri = Uri();
       uri = Uri.parse(item.linkImage!);
+      imageUrl = '${uri.scheme}://${uri.authority}${uri.path}';
     }
 
     return ListTile(
@@ -64,17 +66,15 @@ class JsonFeedTile extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              item.linkImage == null
-                  ? const SizedBox()
+              imageUrl.isEmpty
+                  ? const SizedBox(height: 50, width: 50)
                   : CachedNetworkImage(
-                      imageUrl: '${uri.scheme}://${uri.authority}${uri.path}',
-                      width: 60,
-                      height: 60,
+                      imageUrl: imageUrl,
+                      width: 50,
+                      height: 50,
                       fit: BoxFit.cover,
-                      placeholder: (context, url) =>
-                          const CircularProgressIndicator(),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
+                      placeholder: (context, url) => const CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => const Icon(Icons.error),
                     ),
               Text.rich(
                 TextSpan(
