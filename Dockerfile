@@ -1,14 +1,12 @@
-FROM debian:latest AS builder
-RUN apt update && apt install -y git curl xz-utils
-RUN curl -Lf https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.16.5-stable.tar.xz --output flutter.tar.xz
-RUN tar xvfJ flutter.tar.xz -C /
-RUN git config --global --add safe.directory /flutter
+FROM bitnami/debian-base-buildpack:latest AS builder
+RUN curl -Lf https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.22.3-stable.tar.xz | tar -xJ -C /
 ENV PATH="/flutter/bin:${PATH}"
 WORKDIR /homefe_build
 COPY . .
-RUN dart pub cache clean
+RUN flutter clean
 RUN flutter pub get
+RUN dart run build_runner build --delete-conflicting-outputs
 RUN flutter build web --release -t lib/main.dart --base-href /web/
 FROM bitnami/nginx:latest
 COPY --from=builder /homefe_build/build/web /app/web
-EXPOSE 8080
+EXPOSE 8092
