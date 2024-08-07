@@ -6,14 +6,18 @@ This app is written in Dart. It can be used both as mobile application, desktop 
 
 Web application can be used in Docker container.
 
-It is simple demo app for learning purposes.
+# Flutter notes
+```
+dart run build_runner build --delete-conflicting-outputs
+flutter pub get
+```
 
 # Docker notes
 ```
 sudo docker network create home-network
 
 sudo docker build --no-cache -f Dockerfile -t news-frontend .
-sudo docker run --name front-host --network home-network -p 8091:8091 -d news-frontend
+sudo docker run --name front-host --network home-network -p 8092:8092 -d news-frontend
 
 sudo docker network connect home-network front-host
 ```
