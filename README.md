@@ -8,7 +8,15 @@ Web application can be used in Docker container.
 
 It is simple demo app for learning purposes.
 
-Dev notes bellow:
+# Docker notes
+```
+sudo docker network create home-network
+
+sudo docker build --no-cache -f Dockerfile -t news-frontend .
+sudo docker run --name front-host --network home-network -p 8091:8091 -d news-frontend
+
+sudo docker network connect home-network front-host
+```
 
 ### OAuth2 grant types, not in use currently
 
