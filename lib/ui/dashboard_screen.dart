@@ -38,13 +38,13 @@ class DashboardScreenState extends State<DashboardScreen> {
                     child: const Text('Choose provider'),
                   ),
                   const SizedBox(height: 32),
-                  ElevatedButton(
-                    onPressed: () {
-                      GoRouter.of(context).goNamed('aggregate');
-                    },
-                    child: const Text('Choose aggregate'),
-                  ),
-                  const SizedBox(height: 32),
+                  // ElevatedButton(
+                  //   onPressed: () {
+                  //     GoRouter.of(context).goNamed('aggregate');
+                  //   },
+                  //   child: const Text('Choose aggregate'),
+                  // ),
+                  // const SizedBox(height: 32),
                   ElevatedButton(
                     onPressed: () {
                       GoRouter.of(context).goNamed('archive');
