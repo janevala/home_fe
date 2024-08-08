@@ -10,4 +10,4 @@ RUN dart run build_runner build --delete-conflicting-outputs
 RUN flutter build web --release -t lib/main.dart --base-href /web/
 FROM bitnami/nginx:latest
 COPY --from=builder /homefe_build/build/web /app/web
-EXPOSE 8092
+EXPOSE 8080
