@@ -13,7 +13,7 @@ class DashboardScreenState extends State<DashboardScreen> {
   LoginBloc loginBloc = LoginBloc();
 
   @override
-  Widget build(BuildContext context) {    
+  Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
@@ -38,13 +38,6 @@ class DashboardScreenState extends State<DashboardScreen> {
                     child: const Text('Choose provider'),
                   ),
                   const SizedBox(height: 32),
-                  // ElevatedButton(
-                  //   onPressed: () {
-                  //     GoRouter.of(context).goNamed('aggregate');
-                  //   },
-                  //   child: const Text('Choose aggregate'),
-                  // ),
-                  // const SizedBox(height: 32),
                   ElevatedButton(
                     onPressed: () {
                       GoRouter.of(context).goNamed('archive');

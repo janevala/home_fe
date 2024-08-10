@@ -3,7 +3,6 @@ import 'package:homefe/podo/rss/rss_site.dart';
 import 'package:homefe/ui/archive_screen.dart';
 import 'package:homefe/ui/dashboard_screen.dart';
 import 'package:homefe/ui/login_screen.dart';
-import 'package:homefe/ui/aggregate_screen.dart';
 import 'package:homefe/ui/site_screen.dart';
 import 'package:homefe/ui/sites_screen.dart';
 import 'package:go_router/go_router.dart';
@@ -53,13 +52,6 @@ final GoRouter router = GoRouter(
             return SiteScreen(
               rssSite: state.extra as RssSite,
             );
-          },
-        ),
-        GoRoute(
-          name: 'aggregate',
-          path: 'aggregate',
-          builder: (BuildContext context, GoRouterState state) {
-            return const AggregateScreen();
           },
         ),
         GoRoute(

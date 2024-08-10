@@ -9,15 +9,12 @@ import 'package:webfeed/webfeed.dart';
 class ApiRepository {
   final ApiClient client = ApiClient();
 
-  Future<Token> postLogin(LoginBody loginBody) =>
-      client.loginUser(loginBody);
+  Future<Token> postLogin(LoginBody loginBody) => client.loginUser(loginBody);
 
   Future<Token> postRefresh(RefreshTokenBody refreshTokenBody) =>
       client.refreshAuth(refreshTokenBody);
 
   Future<RssSites> getSites() => client.getSites();
-
-  Future<List<RssJsonFeed>> getAggregate() => client.getAggregate();
 
   Future<List<RssJsonFeed>> getArchive() => client.getArchive();
 

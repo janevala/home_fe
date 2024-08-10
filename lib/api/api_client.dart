@@ -118,31 +118,6 @@ class ApiClient {
     }
   }
 
-  Future<List<RssJsonFeed>> getAggregate() async {
-    try {
-      final response = await dio.get(
-        '/aggregate',
-        queryParameters: {"code": "123"},
-        options: Options(
-          contentType: Headers.jsonContentType,
-        ),
-      );
-
-      if (response.statusCode == 200) {
-        List<dynamic> json = jsonDecode(response.data);
-        List<RssJsonFeed> items = json.map((e) => RssJsonFeed.fromJson(e)).toList();
-        return items;
-      } else {
-        return [];
-      }
-    } catch (error, _) {
-      if (kDebugMode) {
-        print(error);
-      }
-      return [];
-    }
-  }
-
   Future<List<RssJsonFeed>> getArchive() async {
     try {
       final response = await dio.get(
@@ -155,7 +130,8 @@ class ApiClient {
 
       if (response.statusCode == 200) {
         List<dynamic> json = jsonDecode(response.data);
-        List<RssJsonFeed> items = json.map((e) => RssJsonFeed.fromJson(e)).toList();
+        List<RssJsonFeed> items =
+            json.map((e) => RssJsonFeed.fromJson(e)).toList();
         return items;
       } else {
         return [];

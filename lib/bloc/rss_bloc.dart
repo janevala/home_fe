@@ -14,8 +14,6 @@ class RssFeedEvent extends RssState {
   RssFeedEvent(this.url);
 }
 
-class RssAggregateEvent extends RssState {}
-
 class RssArchiveEvent extends RssState {}
 
 class RssInitial extends RssState {}
@@ -32,12 +30,6 @@ class RssFeedSuccess extends RssState {
   final RssFeed rssFeed;
 
   RssFeedSuccess(this.rssFeed);
-}
-
-class RssAggregateSuccess extends RssState {
-  final List<RssJsonFeed> rssAggregateFeed;
-
-  RssAggregateSuccess(this.rssAggregateFeed);
 }
 
 class RssArchiveSuccess extends RssState {
@@ -64,23 +56,6 @@ class RssSitesBloc extends Bloc<RssSitesEvent, RssState> {
         emit(RssFailure(rssSite.error));
       } else {
         emit(RssSitesSuccess(rssSite));
-      }
-    });
-  }
-}
-
-class RssAggregateBloc extends Bloc<RssAggregateEvent, RssState> {
-  final ApiRepository repo = ApiRepository();
-
-  RssAggregateBloc() : super(RssInitial()) {
-    on<RssAggregateEvent>((event, emit) async {
-      emit(RssLoading());
-
-      List<RssJsonFeed> aggregateFeed = await repo.getAggregate();
-      if (aggregateFeed.isEmpty) {
-        emit(RssFailure('Cannot get RSS aggregate feed'));
-      } else {
-        emit(RssAggregateSuccess(aggregateFeed));
       }
     });
   }
