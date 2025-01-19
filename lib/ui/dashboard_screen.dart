@@ -45,15 +45,6 @@ class DashboardScreenState extends State<DashboardScreen> {
                     },
                     child: const Text('Choose archive'),
                   ),
-                  const SizedBox(height: 32),
-                  ElevatedButton(
-                    onPressed: () {
-                      final QuestionBloc bloc = QuestionBloc();
-                      bloc.add(QuestionEvent(
-                          'Tell me a stupid joke, but not a dad joke'));
-                    },
-                    child: const Text('Ask AI'),
-                  ),
                 ]),
           ),
         ),

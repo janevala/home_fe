@@ -121,7 +121,6 @@ class QuestionBloc extends Bloc<QuestionEvent, RssState> {
       if (answer == null) {
         emit(Failure('Cannot get answer'));
       } else {
-        print(answer.answer);
         emit(AnswerSuccess(answer.answer));
       }
     });

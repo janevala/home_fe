@@ -11,10 +11,12 @@ class JsonFeedTile extends StatelessWidget {
   const JsonFeedTile(
       {super.key,
       required this.openItem,
+      required this.explainItem,
       required this.index,
       required this.item});
 
   final VoidCallback openItem;
+  final VoidCallback explainItem;
   final RssJsonFeed item;
   final int index;
 
@@ -38,8 +40,11 @@ class JsonFeedTile extends StatelessWidget {
     }
 
     return ListTile(
-      onTap: () async {
+      onLongPress: () async {
         openItem.call();
+      },
+      onTap: () async {
+        explainItem.call();
       },
       title: RichText(
         text: TextSpan(
@@ -73,8 +78,10 @@ class JsonFeedTile extends StatelessWidget {
                       width: 50,
                       height: 50,
                       fit: BoxFit.cover,
-                      placeholder: (context, url) => const CircularProgressIndicator(),
-                      errorWidget: (context, url, error) => const Icon(Icons.error),
+                      placeholder: (context, url) =>
+                          const CircularProgressIndicator(),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
                     ),
               Text.rich(
                 TextSpan(

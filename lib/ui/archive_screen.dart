@@ -60,6 +60,7 @@ class ArchiveScreenState extends State<ArchiveScreen> {
                             return JsonFeedTile(
                               key: Key(item.link),
                               openItem: () => openItem(context, item),
+                              explainItem: () => explainItem(context, item),
                               index: index,
                               item: item,
                             );
