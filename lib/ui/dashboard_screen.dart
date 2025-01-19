@@ -50,7 +50,7 @@ class DashboardScreenState extends State<DashboardScreen> {
                     onPressed: () {
                       final QuestionBloc bloc = QuestionBloc();
                       bloc.add(QuestionEvent(
-                          'Tell me about differences in stateless and stateful widgets in Flutter'));
+                          'Tell me a stupid joke, but not a dad joke'));
                     },
                     child: const Text('Ask AI'),
                   ),
