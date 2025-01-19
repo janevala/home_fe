@@ -1,5 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:homefe/api/api_repository.dart';
+import 'package:homefe/podo/answer/answer_body.dart';
+import 'package:homefe/podo/question/question_body.dart';
 import 'package:homefe/podo/rss/rss_json_feed.dart';
 import 'package:homefe/podo/rss/rss_sites.dart';
 import 'package:webfeed/webfeed.dart';
@@ -18,7 +20,7 @@ class RssArchiveEvent extends RssState {}
 
 class RssInitial extends RssState {}
 
-class RssLoading extends RssState {}
+class Loading extends RssState {}
 
 class RssSitesSuccess extends RssState {
   final RssSites rssSites;
@@ -38,10 +40,22 @@ class RssArchiveSuccess extends RssState {
   RssArchiveSuccess(this.rssArchiveFeed);
 }
 
-class RssFailure extends RssState {
+class QuestionEvent extends RssState {
+  final String question;
+
+  QuestionEvent(this.question);
+}
+
+class AnswerSuccess extends RssState {
+  final String answer;
+
+  AnswerSuccess(this.answer);
+}
+
+class Failure extends RssState {
   final String error;
 
-  RssFailure(this.error);
+  Failure(this.error);
 }
 
 class RssSitesBloc extends Bloc<RssSitesEvent, RssState> {
@@ -49,11 +63,11 @@ class RssSitesBloc extends Bloc<RssSitesEvent, RssState> {
 
   RssSitesBloc() : super(RssInitial()) {
     on<RssSitesEvent>((event, emit) async {
-      emit(RssLoading());
+      emit(Loading());
 
       RssSites rssSite = await repo.getSites();
       if (rssSite.error.isNotEmpty) {
-        emit(RssFailure(rssSite.error));
+        emit(Failure(rssSite.error));
       } else {
         emit(RssSitesSuccess(rssSite));
       }
@@ -66,11 +80,11 @@ class RssArchiveBloc extends Bloc<RssArchiveEvent, RssState> {
 
   RssArchiveBloc() : super(RssInitial()) {
     on<RssArchiveEvent>((event, emit) async {
-      emit(RssLoading());
+      emit(Loading());
 
       List<RssJsonFeed> archiveFeed = await repo.getArchive();
       if (archiveFeed.isEmpty) {
-        emit(RssFailure('Cannot get RSS archive feed'));
+        emit(Failure('Cannot get RSS archive feed'));
       } else {
         emit(RssArchiveSuccess(archiveFeed));
       }
@@ -83,13 +97,32 @@ class RssFeedBloc extends Bloc<RssFeedEvent, RssState> {
 
   RssFeedBloc() : super(RssInitial()) {
     on<RssFeedEvent>((event, emit) async {
-      emit(RssLoading());
+      emit(Loading());
 
       RssFeed? rssFeed = await repo.getRss(event.url);
       if (rssFeed == null) {
-        emit(RssFailure('Cannot get RSS feed'));
+        emit(Failure('Cannot get RSS feed'));
       } else {
         emit(RssFeedSuccess(rssFeed));
+      }
+    });
+  }
+}
+
+class QuestionBloc extends Bloc<QuestionEvent, RssState> {
+  final ApiRepository repo = ApiRepository();
+
+  QuestionBloc() : super(RssInitial()) {
+    on<QuestionEvent>((event, emit) async {
+      emit(Loading());
+
+      AnswerBody? answer =
+          await repo.answerToQuestion(QuestionBody(event.question));
+      if (answer == null) {
+        emit(Failure('Cannot get answer'));
+      } else {
+        print(answer.answer);
+        emit(AnswerSuccess(answer.answer));
       }
     });
   }

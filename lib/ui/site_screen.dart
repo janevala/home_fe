@@ -48,7 +48,7 @@ class SiteScreenState extends State<SiteScreen> {
           create: (context) => rssFeedBloc,
           child: BlocBuilder<RssFeedBloc, RssState>(
             builder: (context, feedState) {
-              if (feedState is RssLoading) {
+              if (feedState is Loading) {
                 return const Spinner();
               } else if (feedState is RssFeedSuccess) {
                 return Center(
@@ -60,7 +60,7 @@ class SiteScreenState extends State<SiteScreen> {
                           itemCount: feedState.rssFeed.items!.length,
                           itemBuilder: (BuildContext context, int index) {
                             RssItem item = feedState.rssFeed.items![index];
-                      
+
                             return RssFeedTile(
                               openItem: () => openItem(
                                 context,
@@ -80,7 +80,7 @@ class SiteScreenState extends State<SiteScreen> {
                     ),
                   ),
                 );
-              } else if (feedState is RssFailure) {
+              } else if (feedState is Failure) {
                 return Center(
                     child: Text(feedState.error,
                         style: const TextStyle(fontSize: 18)));

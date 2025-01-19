@@ -44,7 +44,7 @@ class ArchiveScreenState extends State<ArchiveScreen> {
           create: (context) => rssAggregateBloc,
           child: BlocBuilder<RssArchiveBloc, RssState>(
             builder: (context, feedState) {
-              if (feedState is RssLoading) {
+              if (feedState is Loading) {
                 return const Spinner();
               } else if (feedState is RssArchiveSuccess) {
                 return Center(
@@ -56,7 +56,7 @@ class ArchiveScreenState extends State<ArchiveScreen> {
                           itemCount: feedState.rssArchiveFeed.length,
                           itemBuilder: (BuildContext context, int index) {
                             RssJsonFeed item = feedState.rssArchiveFeed[index];
-                      
+
                             return JsonFeedTile(
                               key: Key(item.link),
                               openItem: () => openItem(context, item),
@@ -67,7 +67,7 @@ class ArchiveScreenState extends State<ArchiveScreen> {
                     ),
                   ),
                 );
-              } else if (feedState is RssFailure) {
+              } else if (feedState is Failure) {
                 return Center(
                     child: Text(feedState.error,
                         style: const TextStyle(fontSize: 18)));

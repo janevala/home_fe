@@ -4,7 +4,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:homefe/api/logging_interceptor.dart';
 import 'package:homefe/functions.dart';
+import 'package:homefe/podo/answer/answer_body.dart';
 import 'package:homefe/podo/login/login_body.dart';
+import 'package:homefe/podo/question/question_body.dart';
 import 'package:homefe/podo/refreshtoken/refresh_token_body.dart';
 import 'package:homefe/podo/rss/rss_json_feed.dart';
 import 'package:homefe/podo/rss/rss_sites.dart';
@@ -157,5 +159,33 @@ class ApiClient {
     }
 
     return null;
+  }
+
+  Future<AnswerBody?> answerToQuestion(QuestionBody question) async {
+    try {
+      final response = await dio.post(
+        '/explain',
+        queryParameters: {"code": "123"},
+        data: {
+          'question': question.question,
+        },
+        options: Options(
+          contentType: Headers.jsonContentType,
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        Map<String, dynamic> json = jsonDecode(response.data);
+        return AnswerBody.fromJson(json);
+      } else {
+        return AnswerBody.withError('Error code ${response.statusCode}');
+      }
+    } catch (error, _) {
+      if (kDebugMode) {
+        print(error);
+      }
+
+      return AnswerBody.withError('$error');
+    }
   }
 }

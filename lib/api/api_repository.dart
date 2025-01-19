@@ -1,5 +1,7 @@
 import 'package:homefe/api/api_client.dart';
+import 'package:homefe/podo/answer/answer_body.dart';
 import 'package:homefe/podo/login/login_body.dart';
+import 'package:homefe/podo/question/question_body.dart';
 import 'package:homefe/podo/refreshtoken/refresh_token_body.dart';
 import 'package:homefe/podo/rss/rss_json_feed.dart';
 import 'package:homefe/podo/rss/rss_sites.dart';
@@ -21,4 +23,7 @@ class ApiRepository {
   Future<RssFeed?> getRss(Uri uri) {
     return ApiClient.rss('${uri.scheme}://${uri.host}').getRss(uri.path);
   }
+
+  Future<AnswerBody?> answerToQuestion(QuestionBody questionBody) =>
+      client.answerToQuestion(questionBody);
 }

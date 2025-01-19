@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:homefe/bloc/login_bloc.dart';
+import 'package:homefe/bloc/rss_bloc.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -43,6 +44,15 @@ class DashboardScreenState extends State<DashboardScreen> {
                       GoRouter.of(context).goNamed('archive');
                     },
                     child: const Text('Choose archive'),
+                  ),
+                  const SizedBox(height: 32),
+                  ElevatedButton(
+                    onPressed: () {
+                      final QuestionBloc bloc = QuestionBloc();
+                      bloc.add(QuestionEvent(
+                          'Tell me about differences in stateless and stateful widgets in Flutter'));
+                    },
+                    child: const Text('Ask AI'),
                   ),
                 ]),
           ),

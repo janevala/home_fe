@@ -10,7 +10,7 @@ Token _$TokenFromJson(Map<String, dynamic> json) => Token(
       json['access_token'] as String,
       json['token_type'] as String,
       json['refresh_token'] as String,
-      json['expires_in'] as int,
+      (json['expires_in'] as num).toInt(),
       json['scope'] as String,
     );
 

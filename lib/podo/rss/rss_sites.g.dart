@@ -7,7 +7,7 @@ part of 'rss_sites.dart';
 // **************************************************************************
 
 RssSites _$RssSitesFromJson(Map<String, dynamic> json) => RssSites(
-      json['time'] as int,
+      (json['time'] as num).toInt(),
       json['title'] as String,
       (json['sites'] as List<dynamic>)
           .map((e) => RssSite.fromJson(e as Map<String, dynamic>))

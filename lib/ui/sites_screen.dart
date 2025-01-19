@@ -43,7 +43,7 @@ class SitesScreenState extends State<SitesScreen> {
           create: (context) => rssBloc,
           child: BlocBuilder<RssSitesBloc, RssState>(
             builder: (context, state) {
-              if (state is RssLoading) {
+              if (state is Loading) {
                 return const Spinner();
               } else if (state is RssSitesSuccess &&
                   state.rssSites.sites.isNotEmpty) {
@@ -56,11 +56,11 @@ class SitesScreenState extends State<SitesScreen> {
                           itemCount: state.rssSites.sites.length,
                           itemBuilder: (BuildContext context, int index) {
                             RssSite site = state.rssSites.sites[index];
-                      
+
                             return ListTile(
                               title: Text(site.title),
-                              titleTextStyle:
-                                  const TextStyle(fontSize: 22, color: Colors.black),
+                              titleTextStyle: const TextStyle(
+                                  fontSize: 22, color: Colors.black),
                               subtitle: Align(
                                 alignment: Alignment.centerRight,
                                 child: Text(site.url),
@@ -70,14 +70,15 @@ class SitesScreenState extends State<SitesScreen> {
                                   color: Colors.blue,
                                   decoration: TextDecoration.underline),
                               onTap: () async {
-                                GoRouter.of(context).goNamed('site', extra: site);
+                                GoRouter.of(context)
+                                    .goNamed('site', extra: site);
                               },
                             );
                           }),
                     ),
                   ),
                 );
-              } else if (state is RssFailure) {
+              } else if (state is Failure) {
                 return Center(
                     child: Text(state.error,
                         style: const TextStyle(fontSize: 18)));
