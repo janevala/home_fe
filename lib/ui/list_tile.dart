@@ -41,10 +41,10 @@ class JsonFeedTile extends StatelessWidget {
 
     return ListTile(
       onLongPress: () async {
-        openItem.call();
+        // explainItem.call();
       },
       onTap: () async {
-        explainItem.call();
+        openItem.call();
       },
       title: RichText(
         text: TextSpan(
