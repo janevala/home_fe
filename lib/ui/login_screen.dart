@@ -33,7 +33,7 @@ class LoginScreenState extends State<LoginScreen> {
             },
             child: const Text('Enter token')),
       ),
-      body: SafeArea(        
+      body: SafeArea(
         child: BlocProvider<LoginBloc>(
           create: (context) => loginBloc,
           child: BlocBuilder<LoginBloc, LoginState>(
@@ -51,7 +51,8 @@ class LoginScreenState extends State<LoginScreen> {
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: <Widget>[
                               TextFormField(
-                                decoration: const InputDecoration(labelText: 'Token'),
+                                decoration:
+                                    const InputDecoration(labelText: 'Token'),
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Please enter token';
@@ -68,8 +69,8 @@ class LoginScreenState extends State<LoginScreen> {
                               ElevatedButton(
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {
-                                    loginBloc.add(LoginEvent(
-                                        LoginBody(userName, '123', 'password')));
+                                    loginBloc.add(LoginEvent(LoginBody(
+                                        userName, '123', 'password')));
                                   }
                                 },
                                 child: const Text('Login'),
@@ -90,9 +91,12 @@ class LoginScreenState extends State<LoginScreen> {
                           duration: const Duration(seconds: 2),
                         ),
                       );
-                      Future.delayed(const Duration(seconds: 1), () {
-                        GoRouter.of(context).goNamed('dashboard');
-                      });
+                      if (mounted) {
+                        Future.delayed(const Duration(seconds: 1), () {
+                          // ignore: use_build_context_synchronously
+                          GoRouter.of(context).goNamed('dashboard');
+                        });
+                      }
                     } else if (state is LoginFailure) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(

@@ -6,7 +6,7 @@ class Spinner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black.withOpacity(0.2),
+      color: Colors.black.withValues(alpha: 0.5),
       width: double.infinity,
       height: double.infinity,
       child: Center(
