@@ -131,8 +131,6 @@ class RssFeedTile extends StatelessWidget {
       parsedDescription = '${parsedDescription.substring(0, 500)}...';
     }
 
-    String dateString = timeago.format(item.pubDate!, locale: 'en');
-
     return ListTile(
       onTap: () async {
         openItem.call();
@@ -154,7 +152,7 @@ class RssFeedTile extends StatelessWidget {
             children: [
               Text(
                   item.pubDate != null
-                      ? '- Published $dateString Source ${site.title}'
+                      ? '- Published ${timeago.format(item.pubDate!, locale: 'en')} Source ${site.title}'
                       : '- Source ${site.title}',
                   style: const TextStyle(fontSize: 16)),
             ],
