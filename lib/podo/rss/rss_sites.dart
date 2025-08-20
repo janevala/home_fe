@@ -6,11 +6,11 @@ part 'rss_sites.g.dart';
 
 @JsonSerializable(ignoreUnannotated: true)
 class RssSites {
-  @JsonKey(name: 'time')
+  @JsonKey(name: 'Time')
   late int time;
-  @JsonKey(name: 'title')
+  @JsonKey(name: 'Title')
   late String title;
-  @JsonKey(name: 'sites')
+  @JsonKey(name: 'Sites')
   late List<RssSite> sites;
   String error = '';
 
@@ -18,7 +18,8 @@ class RssSites {
 
   RssSites.withError(this.error);
 
-  factory RssSites.fromJson(Map<String, dynamic> json) => _$RssSitesFromJson(json);
+  factory RssSites.fromJson(Map<String, dynamic> json) =>
+      _$RssSitesFromJson(json);
 
   Map<String, dynamic> toJson() => _$RssSitesToJson(this);
 }

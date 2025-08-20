@@ -7,12 +7,12 @@ part of 'rss_site.dart';
 // **************************************************************************
 
 RssSite _$RssSiteFromJson(Map<String, dynamic> json) => RssSite(
-      json['title'] as String,
-      json['url'] as String,
-    )..uuid = json['uuid'] as String;
+      json['Title'] as String,
+      json['Url'] as String,
+    )..uuid = json['Uuid'] as String;
 
 Map<String, dynamic> _$RssSiteToJson(RssSite instance) => <String, dynamic>{
-      'uuid': instance.uuid,
-      'title': instance.title,
-      'url': instance.url,
+      'Uuid': instance.uuid,
+      'Title': instance.title,
+      'Url': instance.url,
     };
