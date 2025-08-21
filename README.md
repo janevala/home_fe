@@ -17,7 +17,7 @@ flutter pub get
 sudo docker network create home-network
 
 sudo docker build --no-cache -f Dockerfile -t news-frontend .
-sudo docker run --name front-host --network home-network -p 8080:8080 -d news-frontend
+sudo docker run --name front-host --network home-network -p 7070:7070 -d news-frontend
 
 sudo docker network connect home-network front-host
 ```
