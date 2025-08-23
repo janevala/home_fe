@@ -19,9 +19,17 @@ class RssFeedEvent extends RssState {
 
 class RssArchiveEvent extends RssState {}
 
+class LoadMoreArchive extends RssArchiveEvent {}
+
 class RssInitial extends RssState {}
 
 class Loading extends RssState {}
+
+class RssArchiveLoadingMore extends RssState {
+  final List<NewsItem> items;
+
+  RssArchiveLoadingMore(this.items);
+}
 
 class RssSitesSuccess extends RssState {
   final RssSites rssSites;
@@ -36,7 +44,7 @@ class RssFeedSuccess extends RssState {
 }
 
 class RssArchiveSuccess extends RssState {
-  final NewsItems rssArchiveFeed;
+  final List<NewsItem> rssArchiveFeed;
 
   RssArchiveSuccess(this.rssArchiveFeed);
 }
@@ -78,16 +86,43 @@ class RssSitesBloc extends Bloc<RssSitesEvent, RssState> {
 
 class RssArchiveBloc extends Bloc<RssArchiveEvent, RssState> {
   final ApiRepository repo = ApiRepository();
+  int limit = 10;
+  int offset = 0;
+  bool hasMore = true;
+  List<NewsItem> items = [];
 
   RssArchiveBloc() : super(RssInitial()) {
     on<RssArchiveEvent>((event, emit) async {
-      emit(Loading());
+      if (event is LoadMoreArchive) {
+        if (!hasMore) return;
 
-      NewsItems? archiveFeed = await repo.getArchive();
-      if (archiveFeed == null) {
-        emit(Failure('Cannot get RSS archive feed'));
-      } else {
-        emit(RssArchiveSuccess(archiveFeed));
+        if (items.isEmpty) {
+          emit(Loading());
+        } else {
+          emit(RssArchiveLoadingMore(items));
+        }
+
+        try {
+          NewsItems? newsItems =
+              await repo.getArchive(offset: offset, limit: limit);
+
+          int totalItems = newsItems?.totalItems ?? 0;
+          limit = newsItems?.limit ?? 0;
+          offset = newsItems?.offset ?? 0;
+
+          if (newsItems == null || newsItems.items.isEmpty) {
+            hasMore = false;
+            emit(RssArchiveSuccess(items));
+            return;
+          }
+
+          items.addAll(newsItems.items);
+          // offset += limit; // DEBUG
+          hasMore = newsItems.items.length == limit && offset < totalItems;
+          emit(RssArchiveSuccess(List.from(items)));
+        } catch (e) {
+          emit(Failure('Failed to load more items'));
+        }
       }
     });
   }

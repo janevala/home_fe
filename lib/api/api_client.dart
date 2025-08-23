@@ -8,7 +8,6 @@ import 'package:homefe/podo/answer/answer_body.dart';
 import 'package:homefe/podo/login/login_body.dart';
 import 'package:homefe/podo/question/question_body.dart';
 import 'package:homefe/podo/refreshtoken/refresh_token_body.dart';
-import 'package:homefe/podo/rss/news_item.dart';
 import 'package:homefe/podo/rss/news_items.dart';
 import 'package:homefe/podo/rss/rss_sites.dart';
 import 'package:homefe/podo/token/token.dart';
@@ -121,11 +120,15 @@ class ApiClient {
     }
   }
 
-  Future<NewsItems?> getArchive() async {
+  Future<NewsItems?> getArchive({int offset = 0, int limit = 10}) async {
     try {
       final response = await dio.get(
         '/archive',
-        queryParameters: {"code": "123"},
+        queryParameters: {
+          "code": "123",
+          "offset": offset,
+          "limit": limit,
+        },
         options: Options(
           contentType: Headers.jsonContentType,
         ),

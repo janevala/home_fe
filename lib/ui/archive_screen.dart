@@ -27,61 +27,104 @@ class ArchiveScreenState extends State<ArchiveScreen> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    final scrollController = ScrollController();
+
+    // Load more items when user scrolls to the bottom
+    void onScroll() {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        rssAggregateBloc.add(LoadMoreArchive());
+      }
+    }
+
+    // Add scroll listener
+    scrollController.addListener(onScroll);
 
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Colors.blueGrey,
-          foregroundColor: Colors.white,
-          iconTheme: const IconThemeData(color: Colors.white),
-          title: const Text('Archive'),
-          leading: BackButton(
-            onPressed: () {
-              context.goNamed('dashboard');
-            },
-          )),
+        backgroundColor: Colors.blueGrey,
+        foregroundColor: Colors.white,
+        iconTheme: const IconThemeData(color: Colors.white),
+        title: const Text('Archive'),
+        leading: BackButton(
+          onPressed: () {
+            context.goNamed('dashboard');
+          },
+        ),
+      ),
       body: SafeArea(
         child: BlocProvider<RssArchiveBloc>(
-          create: (context) => rssAggregateBloc,
+          create: (context) => rssAggregateBloc..add(LoadMoreArchive()),
           child: BlocBuilder<RssArchiveBloc, RssState>(
             builder: (context, feedState) {
               if (feedState is Loading) {
                 return const Spinner();
+              } else if (feedState is RssArchiveLoadingMore) {
+                return _buildArchiveList(
+                  context,
+                  feedState.items,
+                  width,
+                  scrollController,
+                  isLoadingMore: true,
+                );
               } else if (feedState is RssArchiveSuccess) {
-                return Center(
-                  child: SizedBox(
-                    width: width * 0.9,
-                    child: Padding(
-                      padding: const EdgeInsets.all(32),
-                      child: ListView.builder(
-                          itemCount: feedState.rssArchiveFeed.items.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            NewsItem item =
-                                feedState.rssArchiveFeed.items[index];
-
-                            return JsonFeedTile(
-                              key: Key(item.link),
-                              openItem: () => openItem(context, item),
-                              explainItem: () => explainItem(context, item),
-                              index: index,
-                              item: item,
-                            );
-                          }),
-                    ),
-                  ),
+                return _buildArchiveList(
+                  context,
+                  feedState.rssArchiveFeed,
+                  width,
+                  scrollController,
                 );
               } else if (feedState is Failure) {
                 return Center(
-                    child: Text(feedState.error,
-                        style: const TextStyle(fontSize: 18)));
+                  child: Text(
+                    feedState.error,
+                    style: const TextStyle(fontSize: 18),
+                  ),
+                );
               } else {
                 return const Center(
-                    child: Text('Something went wrong',
-                        style: TextStyle(fontSize: 18)));
+                  child: Text(
+                    'Something went wrong',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                );
               }
             },
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildArchiveList(BuildContext context, List<NewsItem> items,
+      double width, ScrollController? scrollController,
+      {bool isLoadingMore = false}) {
+    return Column(
+      children: [
+        Expanded(
+          child: ListView.builder(
+            controller: scrollController,
+            itemCount: items.length + (isLoadingMore ? 1 : 0),
+            itemBuilder: (BuildContext context, int index) {
+              if (index >= items.length) {
+                return const Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Center(child: CircularProgressIndicator()),
+                );
+              }
+
+              NewsItem item = items[index];
+              return JsonFeedTile(
+                key: Key(item.link),
+                openItem: () => openItem(context, item),
+                explainItem: () => explainItem(context, item),
+                index: index,
+                item: item,
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }

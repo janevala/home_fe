@@ -18,7 +18,8 @@ class ApiRepository {
 
   Future<RssSites> getSites() => client.getSites();
 
-  Future<NewsItems?> getArchive() => client.getArchive();
+  Future<NewsItems?> getArchive({int offset = 0, int limit = 10}) =>
+      client.getArchive(offset: offset, limit: limit);
 
   Future<RssFeed?> getRss(Uri uri) {
     return ApiClient.rss('${uri.scheme}://${uri.host}').getRss(uri.path);
