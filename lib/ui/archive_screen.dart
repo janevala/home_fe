@@ -53,9 +53,10 @@ class ArchiveScreenState extends State<ArchiveScreen> {
                     child: Padding(
                       padding: const EdgeInsets.all(32),
                       child: ListView.builder(
-                          itemCount: feedState.rssArchiveFeed.length,
+                          itemCount: feedState.rssArchiveFeed.items.length,
                           itemBuilder: (BuildContext context, int index) {
-                            NewsItem item = feedState.rssArchiveFeed[index];
+                            NewsItem item =
+                                feedState.rssArchiveFeed.items[index];
 
                             return JsonFeedTile(
                               key: Key(item.link),

@@ -3,7 +3,7 @@ import 'package:homefe/podo/answer/answer_body.dart';
 import 'package:homefe/podo/login/login_body.dart';
 import 'package:homefe/podo/question/question_body.dart';
 import 'package:homefe/podo/refreshtoken/refresh_token_body.dart';
-import 'package:homefe/podo/rss/news_item.dart';
+import 'package:homefe/podo/rss/news_items.dart';
 import 'package:homefe/podo/rss/rss_sites.dart';
 import 'package:homefe/podo/token/token.dart';
 import 'package:webfeed/webfeed.dart';
@@ -18,7 +18,7 @@ class ApiRepository {
 
   Future<RssSites> getSites() => client.getSites();
 
-  Future<List<NewsItem>> getArchive() => client.getArchive();
+  Future<NewsItems?> getArchive() => client.getArchive();
 
   Future<RssFeed?> getRss(Uri uri) {
     return ApiClient.rss('${uri.scheme}://${uri.host}').getRss(uri.path);

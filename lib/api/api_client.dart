@@ -121,7 +121,7 @@ class ApiClient {
     }
   }
 
-  Future<List<NewsItem>> getArchive() async {
+  Future<NewsItems?> getArchive() async {
     try {
       final response = await dio.get(
         '/archive',
@@ -133,16 +133,15 @@ class ApiClient {
 
       if (response.statusCode == 200) {
         NewsItems newsItems = NewsItems.fromJson(response.data);
-        List<NewsItem> items = newsItems.items;
-        return items;
+        return newsItems;
       } else {
-        return [];
+        return null;
       }
     } catch (error, _) {
       if (kDebugMode) {
         print(error);
       }
-      return [];
+      return null;
     }
   }
 

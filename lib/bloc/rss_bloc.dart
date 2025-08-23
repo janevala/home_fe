@@ -3,6 +3,7 @@ import 'package:homefe/api/api_repository.dart';
 import 'package:homefe/podo/answer/answer_body.dart';
 import 'package:homefe/podo/question/question_body.dart';
 import 'package:homefe/podo/rss/news_item.dart';
+import 'package:homefe/podo/rss/news_items.dart';
 import 'package:homefe/podo/rss/rss_sites.dart';
 import 'package:webfeed/webfeed.dart';
 
@@ -35,7 +36,7 @@ class RssFeedSuccess extends RssState {
 }
 
 class RssArchiveSuccess extends RssState {
-  final List<NewsItem> rssArchiveFeed;
+  final NewsItems rssArchiveFeed;
 
   RssArchiveSuccess(this.rssArchiveFeed);
 }
@@ -82,8 +83,8 @@ class RssArchiveBloc extends Bloc<RssArchiveEvent, RssState> {
     on<RssArchiveEvent>((event, emit) async {
       emit(Loading());
 
-      List<NewsItem> archiveFeed = await repo.getArchive();
-      if (archiveFeed.isEmpty) {
+      NewsItems? archiveFeed = await repo.getArchive();
+      if (archiveFeed == null) {
         emit(Failure('Cannot get RSS archive feed'));
       } else {
         emit(RssArchiveSuccess(archiveFeed));
