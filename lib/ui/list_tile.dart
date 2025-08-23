@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:homefe/functions.dart';
-import 'package:homefe/podo/rss/rss_json_feed.dart';
+import 'package:homefe/podo/rss/news_item.dart';
 import 'package:homefe/podo/rss/rss_site.dart';
 import 'package:html/parser.dart';
 import 'package:webfeed/webfeed.dart';
@@ -17,7 +17,7 @@ class JsonFeedTile extends StatelessWidget {
 
   final VoidCallback openItem;
   final VoidCallback explainItem;
-  final RssJsonFeed item;
+  final NewsItem item;
   final int index;
 
   @override

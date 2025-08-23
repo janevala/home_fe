@@ -1,10 +1,10 @@
 // ignore: depend_on_referenced_packages
 import 'package:json_annotation/json_annotation.dart';
 
-part 'rss_json_feed.g.dart';
+part 'news_item.g.dart';
 
 @JsonSerializable()
-class RssJsonFeed {
+class NewsItem {
   @JsonKey(name: 'title')
   late String title;
   @JsonKey(name: 'description')
@@ -22,11 +22,11 @@ class RssJsonFeed {
   @JsonKey(name: 'linkImage')
   late String? linkImage;
 
-  RssJsonFeed(this.title, this.description, this.link, this.published,
+  NewsItem(this.title, this.description, this.link, this.published,
       [this.content, this.publishedParsed, this.source, this.linkImage]);
 
-  factory RssJsonFeed.fromJson(Map<String, dynamic> json) =>
-      _$RssJsonFeedFromJson(json);
+  factory NewsItem.fromJson(Map<String, dynamic> json) =>
+      _$NewsItemFromJson(json);
 
-  Map<String, dynamic> toJson() => _$RssJsonFeedToJson(this);
+  Map<String, dynamic> toJson() => _$NewsItemToJson(this);
 }

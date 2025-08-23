@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:homefe/bloc/rss_bloc.dart';
-import 'package:homefe/podo/rss/rss_json_feed.dart';
+import 'package:homefe/podo/rss/news_item.dart';
 import 'package:homefe/ui/spinner.dart';
 import 'package:html/parser.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -20,7 +20,7 @@ String readApiEndpointIp(String filePath) {
   }
 }
 
-openItem(BuildContext context, RssJsonFeed item) async {
+openItem(BuildContext context, NewsItem item) async {
   bool hasContent = item.content != null;
 
   if (hasContent) {
@@ -58,7 +58,7 @@ openItem(BuildContext context, RssJsonFeed item) async {
   }
 }
 
-explainItem(BuildContext context, RssJsonFeed item) async {
+explainItem(BuildContext context, NewsItem item) async {
   String documentString = parse(item.description).documentElement!.text;
   final QuestionBloc bloc = QuestionBloc();
   bloc.add(QuestionEvent(

@@ -8,7 +8,8 @@ import 'package:homefe/podo/answer/answer_body.dart';
 import 'package:homefe/podo/login/login_body.dart';
 import 'package:homefe/podo/question/question_body.dart';
 import 'package:homefe/podo/refreshtoken/refresh_token_body.dart';
-import 'package:homefe/podo/rss/rss_json_feed.dart';
+import 'package:homefe/podo/rss/news_item.dart';
+import 'package:homefe/podo/rss/news_items.dart';
 import 'package:homefe/podo/rss/rss_sites.dart';
 import 'package:homefe/podo/token/token.dart';
 import 'package:webfeed/webfeed.dart';
@@ -120,7 +121,7 @@ class ApiClient {
     }
   }
 
-  Future<List<RssJsonFeed>> getArchive() async {
+  Future<List<NewsItem>> getArchive() async {
     try {
       final response = await dio.get(
         '/archive',
@@ -131,9 +132,8 @@ class ApiClient {
       );
 
       if (response.statusCode == 200) {
-        List<dynamic> json = jsonDecode(response.data);
-        List<RssJsonFeed> items =
-            json.map((e) => RssJsonFeed.fromJson(e)).toList();
+        NewsItems newsItems = NewsItems.fromJson(response.data);
+        List<NewsItem> items = newsItems.items;
         return items;
       } else {
         return [];

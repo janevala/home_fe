@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:homefe/bloc/rss_bloc.dart';
 import 'package:homefe/functions.dart';
-import 'package:homefe/podo/rss/rss_json_feed.dart';
+import 'package:homefe/podo/rss/news_item.dart';
 import 'package:homefe/ui/list_tile.dart';
 import 'package:homefe/ui/spinner.dart';
 
@@ -55,7 +55,7 @@ class ArchiveScreenState extends State<ArchiveScreen> {
                       child: ListView.builder(
                           itemCount: feedState.rssArchiveFeed.length,
                           itemBuilder: (BuildContext context, int index) {
-                            RssJsonFeed item = feedState.rssArchiveFeed[index];
+                            NewsItem item = feedState.rssArchiveFeed[index];
 
                             return JsonFeedTile(
                               key: Key(item.link),

@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'rss_json_feed.dart';
+part of 'news_item.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-RssJsonFeed _$RssJsonFeedFromJson(Map<String, dynamic> json) => RssJsonFeed(
+NewsItem _$NewsItemFromJson(Map<String, dynamic> json) => NewsItem(
       json['title'] as String,
       json['description'] as String,
       json['link'] as String,
@@ -17,8 +17,7 @@ RssJsonFeed _$RssJsonFeedFromJson(Map<String, dynamic> json) => RssJsonFeed(
       json['linkImage'] as String?,
     );
 
-Map<String, dynamic> _$RssJsonFeedToJson(RssJsonFeed instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$NewsItemToJson(NewsItem instance) => <String, dynamic>{
       'title': instance.title,
       'description': instance.description,
       'content': instance.content,
