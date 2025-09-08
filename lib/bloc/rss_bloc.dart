@@ -117,7 +117,7 @@ class RssArchiveBloc extends Bloc<RssArchiveEvent, RssState> {
           }
 
           items.addAll(newsItems.items);
-          // offset += limit; // DEBUG
+          offset += limit;
           hasMore = newsItems.items.length == limit && offset < totalItems;
           emit(RssArchiveSuccess(List.from(items)));
         } catch (e) {
