@@ -58,9 +58,7 @@ class ApiClient {
         return Token.withError('Error code ${response.statusCode}');
       }
     } catch (error, _) {
-      if (kDebugMode) {
-        print(error);
-      }
+      debugPrint(error.toString());
 
       return Token.withError('$error');
     }
@@ -87,9 +85,7 @@ class ApiClient {
       );
       return Token.fromJson(response.data);
     } catch (error, _) {
-      if (kDebugMode) {
-        print(error);
-      }
+      debugPrint(error.toString());
 
       return Token.withError('$error');
     }
@@ -112,9 +108,7 @@ class ApiClient {
         return RssSites.withError('Error code ${response.statusCode}');
       }
     } catch (error, _) {
-      if (kDebugMode) {
-        print(error);
-      }
+      debugPrint(error.toString());
 
       return RssSites.withError('$error');
     }
@@ -136,16 +130,16 @@ class ApiClient {
 
       if (response.statusCode == 200) {
         NewsItems newsItems = NewsItems.fromJson(response.data);
+
         return newsItems;
       } else {
         return null;
       }
     } catch (error, _) {
-      if (kDebugMode) {
-        print(error);
-      }
-      return null;
+      debugPrint(error.toString());
     }
+
+    return null;
   }
 
   Future<RssFeed?> getRss(String uri) async {
@@ -155,9 +149,7 @@ class ApiClient {
         return RssFeed.parse(response.data);
       }
     } catch (error, _) {
-      if (kDebugMode) {
-        print(error);
-      }
+      debugPrint(error.toString());
     }
 
     return null;
@@ -183,9 +175,7 @@ class ApiClient {
         return AnswerBody.withError('Error code ${response.statusCode}');
       }
     } catch (error, _) {
-      if (kDebugMode) {
-        print(error);
-      }
+      debugPrint(error.toString());
 
       return AnswerBody.withError('$error');
     }

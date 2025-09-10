@@ -6,6 +6,7 @@ import 'package:homefe/podo/rss/news_item.dart';
 import 'package:homefe/podo/rss/news_items.dart';
 import 'package:homefe/podo/rss/rss_sites.dart';
 import 'package:webfeed/webfeed.dart';
+import 'package:flutter/foundation.dart';
 
 abstract class RssState {}
 
@@ -103,6 +104,7 @@ class RssArchiveBloc extends Bloc<RssArchiveEvent, RssState> {
         }
 
         try {
+          debugPrint("Request new offset: $offset, limit: $limit");
           NewsItems? newsItems =
               await repo.getArchive(offset: offset, limit: limit);
 
