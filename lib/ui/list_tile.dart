@@ -30,8 +30,8 @@ class JsonFeedTile extends StatelessWidget {
 
     DateTime itemPubDate = parsePublishedParsed(item.publishedParsed);
     String dateString = itemPubDate.day == DateTime.now().day
-        ? timeago.format(itemPubDate, locale: 'en_short')
-        : timeago.format(itemPubDate, locale: 'en');
+        ? timeago.format(itemPubDate, locale: 'en_short', clock: DateTime.now())
+        : timeago.format(itemPubDate, locale: 'en', clock: DateTime.now());
     String imageUrl = '';
     if (item.linkImage != null && !item.linkImage!.contains("www.google.com")) {
       Uri uri = Uri();

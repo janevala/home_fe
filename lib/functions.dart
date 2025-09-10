@@ -112,14 +112,10 @@ explainItem(BuildContext context, NewsItem item) async {
   );
 }
 
-DateTime parsePublished(String str) {
-  return DateFormat('EEE, dd MMM yyyy HH:mm:ss zzz').parse(str);
-}
-
 DateTime parsePublishedParsed(String? str) {
   if (str == null) {
     return DateTime.now();
   }
 
-  return DateFormat('yyyy-MM-ddTHH:mm:ssZ').parse(str);
+  return DateFormat('yyyy-MM-ddTHH:mm:ssZ').parse(str, true);
 }
