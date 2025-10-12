@@ -12,7 +12,7 @@ RUN git config --global --add safe.directory /sdks/flutter
 WORKDIR /homefe_build
 COPY . .
 
-USER flutterbuilder
+# USER flutterbuilder
 RUN flutter doctor
 RUN flutter pub get
 RUN dart --disable-analytics
