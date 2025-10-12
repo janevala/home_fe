@@ -7,6 +7,7 @@ RUN useradd flutterbuilder
 RUN mkdir /home/flutterbuilder
 RUN chown flutterbuilder:flutterbuilder /home/flutterbuilder
 RUN chmod a+rwx /sdks/flutter/ -R
+RUN git config --global --add safe.directory /sdks/flutter
 
 WORKDIR /homefe_build
 COPY . .
