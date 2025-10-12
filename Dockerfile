@@ -9,7 +9,7 @@ WORKDIR /homefe_build
 COPY . .
 
 USER flutterbuilder
-RUN flutter clean
+# RUN flutter clean
 RUN flutter pub get
 RUN dart --disable-analytics
 RUN dart run build_runner build --delete-conflicting-outputs
