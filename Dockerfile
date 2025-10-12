@@ -1,4 +1,6 @@
-FROM ghcr.io/cirruslabs/flutter:stable AS builder
+# FROM cirrusci/flutter:latest AS builder
+# FROM ghcr.io/cirruslabs/flutter:stable AS builder
+FROM ghcr.io/cirruslabs/flutter:3.37.0-0.1.pre@sha256:b41daff806047ebaa6629004a94c790f68a0780534d6c0c80becce07c7a15c70 AS builder
 
 RUN useradd flutterbuilder
 RUN mkdir /home/flutterbuilder
@@ -9,7 +11,7 @@ WORKDIR /homefe_build
 COPY . .
 
 USER flutterbuilder
-# RUN flutter clean
+RUN flutter doctor
 RUN flutter pub get
 RUN dart --disable-analytics
 RUN dart run build_runner build --delete-conflicting-outputs
