@@ -11,6 +11,7 @@ WORKDIR /homefe_build
 COPY . .
 
 USER flutterbuilder
+RUN sudo apt-get update && sudo apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev
 RUN flutter doctor
 RUN flutter pub get
 RUN dart --disable-analytics
