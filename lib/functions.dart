@@ -16,7 +16,8 @@ String readApiEndpointIp(String filePath) {
 
     return contents;
   } catch (e) {
-    return "http://192.168.1.100:7071";
+    return "http://127.0.0.1:7071";
+    // return "http://192.168.1.100:7071";
   }
 }
 
