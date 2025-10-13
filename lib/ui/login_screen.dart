@@ -59,10 +59,16 @@ class LoginScreenState extends State<LoginScreen> {
                                   }
                                   return null;
                                 },
-                                onChanged: (value) {
+                                onChanged: (String value) {
                                   setState(() {
                                     userName = value;
                                   });
+                                },
+                                onFieldSubmitted: (String value) {
+                                  if (_formKey.currentState!.validate()) {
+                                    loginBloc.add(LoginEvent(LoginBody(
+                                        userName, '123', 'password')));
+                                  }
                                 },
                               ),
                               const SizedBox(height: 24.0),
