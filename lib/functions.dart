@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:homefe/bloc/rss_bloc.dart';
@@ -9,14 +7,14 @@ import 'package:html/parser.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 
-String readApiEndpointIp(String filePath) {
-  try {
-    File file = File(filePath);
-    String contents = file.readAsStringSync().trim();
+import 'package:flutter/services.dart';
 
-    return contents;
+Future<String?> readApiEndpointIp() async {
+  try {
+    final api = await rootBundle.loadString('assets/.api');
+    return api.trim();
   } catch (e) {
-    return "http://192.168.1.100:7071";
+    return null;
   }
 }
 

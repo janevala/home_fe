@@ -17,7 +17,15 @@ class ApiClient {
   final Dio dio = Dio();
 
   ApiClient() {
-    dio.options.baseUrl = readApiEndpointIp(".api");
+    _init();
+  }
+
+  Future<void> _init() async {
+    String? baseUrl = await readApiEndpointIp();
+    if (baseUrl == null) {
+      throw Exception('Failed to read API endpoint IP');
+    }
+    dio.options.baseUrl = baseUrl;
     dio.interceptors.add(LoggingInterceptor());
   }
 
@@ -27,6 +35,8 @@ class ApiClient {
   }
 
   Future<Token> loginUser(LoginBody loginBody) async {
+    await _init();
+
     const clientId =
         '75247409848-7gdm1b0i5d9kuaeumco7n5ov00ojevlg.apps.googleusercontent.com';
     const clientSecret = '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';
@@ -65,6 +75,8 @@ class ApiClient {
   }
 
   Future<Token> refreshAuth(RefreshTokenBody refreshTokenBody) async {
+    await _init();
+
     const clientId =
         '75247409848-0fu1932smoiih7vrrhcqn5jqv3s0bago.apps.googleusercontent.com';
     const clientSecret = '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';
