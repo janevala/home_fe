@@ -116,9 +116,8 @@ class ArchiveScreenState extends State<ArchiveScreen> {
               NewsItem item = items[index];
               return JsonFeedTile(
                 key: Key(item.link),
-                openItem: () => openItem(context, item),
-                explainItem: () => explainItem(context, item),
-                index: index,
+                onItemTap: () => openItem(context, item),
+                onItemLongPress: () => explainItem(context, item),
                 item: item,
               );
             },

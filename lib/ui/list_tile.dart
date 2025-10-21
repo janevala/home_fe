@@ -1,110 +1,184 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:homefe/functions.dart';
 import 'package:homefe/podo/rss/news_item.dart';
 import 'package:homefe/podo/rss/rss_site.dart';
 import 'package:html/parser.dart';
-import 'package:webfeed/webfeed.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:webfeed/webfeed.dart';
 
 class JsonFeedTile extends StatelessWidget {
-  const JsonFeedTile(
-      {super.key,
-      required this.openItem,
-      required this.explainItem,
-      required this.index,
-      required this.item});
+  const JsonFeedTile({
+    super.key,
+    required this.onItemTap,
+    this.onItemLongPress,
+    required this.item,
+  });
 
-  final VoidCallback openItem;
-  final VoidCallback explainItem;
+  final VoidCallback onItemTap;
+  final VoidCallback? onItemLongPress;
   final NewsItem item;
-  final int index;
+
+  String get _baseUrl => _parseBaseUrl(item.link);
+  String get _description => _parseDescription(item.description);
+  DateTime get _publishedDate => parsePublishedParsed(item.publishedParsed);
+  bool get _isToday => _publishedDate.day == DateTime.now().day;
+
+  static String _parseBaseUrl(String url) {
+    try {
+      final uri = Uri.parse(url);
+      return '${uri.scheme}://${uri.host}';
+    } catch (e) {
+      return url;
+    }
+  }
+
+  static String _parseDescription(String? html) {
+    if (html == null || html.isEmpty) return '';
+    try {
+      final document = parse(html);
+      final text = document.body?.text ?? '';
+      return text.length > 500 ? '${text.substring(0, 500)}...' : text;
+    } catch (e) {
+      return html;
+    }
+  }
+
+  String _formatDate() {
+    final now = DateTime.now();
+    return _isToday
+        ? timeago.format(_publishedDate, locale: 'en_short', clock: now)
+        : timeago.format(_publishedDate, locale: 'en', clock: now);
+  }
 
   @override
   Widget build(BuildContext context) {
-    String baseUrl = item.link.substring(0, item.link.indexOf('/', 8));
-    String parsedDescription = parse(item.description).body!.text;
-    if (parsedDescription.length > 500) {
-      parsedDescription = '${parsedDescription.substring(0, 500)}...';
-    }
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
 
-    DateTime itemPubDate = parsePublishedParsed(item.publishedParsed);
-    String dateString = itemPubDate.day == DateTime.now().day
-        ? timeago.format(itemPubDate, locale: 'en_short', clock: DateTime.now())
-        : timeago.format(itemPubDate, locale: 'en', clock: DateTime.now());
-    String imageUrl = '';
-    if (item.linkImage != null && !item.linkImage!.contains("www.google.com")) {
-      Uri uri = Uri();
-      uri = Uri.parse(item.linkImage!);
-      imageUrl = '${uri.scheme}://${uri.authority}${uri.path}';
-    }
-
-    return ListTile(
-      onLongPress: () async {
-        // explainItem.call();
-      },
-      onTap: () async {
-        openItem.call();
-      },
-      title: RichText(
-        text: TextSpan(
-          children: [
-            WidgetSpan(
-              child: itemPubDate.day == DateTime.now().day
-                  ? const Icon(Icons.timer_outlined)
-                  : const Icon(Icons.calendar_today),
-            ),
-            TextSpan(
-                text: ' $dateString | ${item.title}',
-                style: const TextStyle(color: Colors.black, fontSize: 22)),
-          ],
-        ),
-      ),
-      titleTextStyle: const TextStyle(fontSize: 22, color: Colors.black),
-      subtitle: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 8, bottom: 8),
-            child: Text(parsedDescription),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+      child: InkWell(
+        onTap: onItemTap,
+        onLongPress: onItemLongPress,
+        borderRadius: BorderRadius.circular(12),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              imageUrl.isEmpty
-                  ? const SizedBox(height: 50, width: 50)
-                  : CachedNetworkImage(
-                      imageUrl: imageUrl,
-                      width: 50,
-                      height: 50,
-                      fit: BoxFit.cover,
-                      placeholder: (context, url) =>
-                          const CircularProgressIndicator(),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
-                    ),
-              Text.rich(
-                TextSpan(
-                  text: '- Source: ',
-                  style: const TextStyle(fontSize: 16),
-                  children: <TextSpan>[
-                    TextSpan(
-                        text: baseUrl,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.blue,
-                          decoration: TextDecoration.underline,
-                        )),
-                  ],
-                ),
-              )
+              _buildHeader(textTheme),
+              const SizedBox(height: 8),
+              if (_description.isNotEmpty) ...[
+                Text(_description, style: textTheme.bodyMedium),
+                const SizedBox(height: 12),
+              ],
+              _buildFooter(theme, context),
             ],
           ),
-        ],
+        ),
       ),
-      subtitleTextStyle: const TextStyle(fontSize: 18, color: Colors.black),
-      contentPadding:
-          const EdgeInsets.only(top: 8, bottom: 8, left: 16, right: 16),
+    );
+  }
+
+  Widget _buildHeader(TextTheme textTheme) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Icon(
+          _isToday ? Icons.timer_outlined : Icons.calendar_today,
+          size: 20,
+          color: Colors.grey[600],
+        ),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '${_formatDate()} • ${item.title}',
+                style: textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFooter(ThemeData theme, BuildContext context) {
+    final imageUrl = _getImageUrl();
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        if (imageUrl != null) ...[
+          _buildImagePreview(imageUrl),
+          const SizedBox(width: 12),
+        ],
+        Expanded(
+          child: GestureDetector(
+            onTap: () => _copyToClipboard(_baseUrl, context),
+            child: Text(
+              _baseUrl,
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: theme.colorScheme.primary,
+                decoration: TextDecoration.underline,
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildImagePreview(String imageUrl) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(8),
+      child: CachedNetworkImage(
+        imageUrl: imageUrl,
+        width: 60,
+        height: 60,
+        fit: BoxFit.cover,
+        placeholder: (context, url) => Container(
+          width: 60,
+          height: 60,
+          color: Colors.grey[200],
+          child: const Center(child: CircularProgressIndicator(strokeWidth: 2)),
+        ),
+        errorWidget: (context, url, error) => Container(
+          width: 60,
+          height: 60,
+          color: Colors.grey[200],
+          child: const Icon(Icons.broken_image, color: Colors.grey),
+        ),
+      ),
+    );
+  }
+
+  String? _getImageUrl() {
+    if (item.linkImage == null || item.linkImage!.contains('www.google.com')) {
+      return null;
+    }
+    try {
+      final uri = Uri.parse(item.linkImage!);
+      return '${uri.scheme}://${uri.host}${uri.path}';
+    } catch (e) {
+      return null;
+    }
+  }
+
+  void _copyToClipboard(String text, BuildContext context) {
+    Clipboard.setData(ClipboardData(text: text));
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Link copied to clipboard')),
     );
   }
 }
