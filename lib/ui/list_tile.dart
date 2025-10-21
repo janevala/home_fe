@@ -9,7 +9,7 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:webfeed/webfeed.dart';
 
 class JsonFeedTile extends StatelessWidget {
-  const JsonFeedTile({
+  JsonFeedTile({
     super.key,
     required this.onItemTap,
     this.onItemLongPress,
@@ -163,16 +163,40 @@ class JsonFeedTile extends StatelessWidget {
     );
   }
 
+  /// TEMPORARY JUST TO SEE UI, WILL BE DONE IN BACKEND
+  final Map<String, String> _urlMap = {
+    'github': 'http://192.168.1.100/hdd2/thumbs/Copilot_20251021_202857.png',
+    'phoronix': 'http://192.168.1.100/hdd2/thumbs/Copilot_20251021_194755.png',
+    'a.fsdn.com':
+        'http://192.168.1.100/hdd2/thumbs/Copilot_20251021_194619.png',
+    'www.tomshardware.com':
+        'http://192.168.1.100/hdd2/thumbs/Copilot_20251021_194521.png',
+    'techcrunch.com':
+        'http://192.168.1.100/hdd2/thumbs/Copilot_20251021_194404.png'
+  };
+
   String? _getImageUrl() {
-    if (item.linkImage == null || item.linkImage!.contains('www.google.com')) {
+    String firstKey = _urlMap.keys.first;
+    if (item.linkImage == null || item.linkImage!.contains(firstKey)) {
       return null;
     }
+
     try {
       final uri = Uri.parse(item.linkImage!);
-      return '${uri.scheme}://${uri.host}${uri.path}';
+      String host = uri.host;
+
+      if (_urlMap.keys.contains(host)) {
+        String url = _urlMap.entries
+            .where((entry) => entry.key.contains(host))
+            .first
+            .value;
+        return url;
+      }
     } catch (e) {
-      return null;
+      return _urlMap.values.first;
     }
+
+    return null;
   }
 
   void _copyToClipboard(String text, BuildContext context) {
