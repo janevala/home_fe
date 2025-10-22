@@ -165,32 +165,30 @@ class JsonFeedTile extends StatelessWidget {
 
   /// TEMPORARY JUST TO SEE UI, WILL BE DONE IN BACKEND
   final Map<String, String> _urlMap = {
-    'github': 'http://192.168.1.100/hdd2/thumbs/Copilot_20251021_202857.png',
-    'phoronix': 'http://192.168.1.100/hdd2/thumbs/Copilot_20251021_194755.png',
-    'a.fsdn.com':
-        'http://192.168.1.100/hdd2/thumbs/Copilot_20251021_194619.png',
-    'www.tomshardware.com':
-        'http://192.168.1.100/hdd2/thumbs/Copilot_20251021_194521.png',
-    'techcrunch.com':
-        'http://192.168.1.100/hdd2/thumbs/Copilot_20251021_194404.png'
+    "": "http://192.168.1.100/hdd2/thumbs/Copilot_20251021_202857.png",
+    "Phoronix": "http://192.168.1.100/hdd2/thumbs/Copilot_20251021_194755.png",
+    "Slashdot":
+        "http://192.168.1.100/hdd2/thumbs/Copilot_20251021_194619.png",
+    "Tom's Hardware":
+        "http://192.168.1.100/hdd2/thumbs/Copilot_20251021_194521.png",
+    "TechCrunch":
+        "http://192.168.1.100/hdd2/thumbs/Copilot_20251021_194404.png"
   };
 
   String? _getImageUrl() {
-    String firstKey = _urlMap.keys.first;
-    if (item.linkImage == null || item.linkImage!.contains(firstKey)) {
-      return null;
+    if (item.source == null) {
+      return _urlMap.values.first;
     }
 
     try {
-      final uri = Uri.parse(item.linkImage!);
-      String host = uri.host;
+      String? source = item.source;
 
-      if (_urlMap.keys.contains(host)) {
-        String url = _urlMap.entries
-            .where((entry) => entry.key.contains(host))
-            .first
-            .value;
-        return url;
+      for (final key in _urlMap.keys) {
+        if (source == key) {
+          return _urlMap.entries
+              .firstWhere((entry) => entry.key == key)
+              .value;
+        }
       }
     } catch (e) {
       return _urlMap.values.first;
