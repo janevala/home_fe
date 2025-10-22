@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:homefe/functions.dart';
@@ -7,6 +6,7 @@ import 'package:homefe/podo/rss/rss_site.dart';
 import 'package:html/parser.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:webfeed/webfeed.dart';
+import 'package:collection/collection.dart';
 
 class JsonFeedTile extends StatelessWidget {
   JsonFeedTile({
@@ -112,72 +112,52 @@ class JsonFeedTile extends StatelessWidget {
   }
 
   Widget _buildFooter(ThemeData theme, BuildContext context) {
-    final imageUrl = _getImageUrl();
+    Image? image = _getImage();
 
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        if (imageUrl != null) ...[
-          _buildImagePreview(imageUrl),
+        if (image != null) ...[
+          _buildImagePreview(image),
           const SizedBox(width: 12),
         ],
-        Expanded(
-          child: GestureDetector(
-            onTap: () => _copyToClipboard(_baseUrl, context),
-            child: Text(
-              _baseUrl,
-              style: theme.textTheme.bodySmall?.copyWith(
-                color: theme.colorScheme.primary,
-                decoration: TextDecoration.underline,
-              ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+        GestureDetector(
+          onTap: () => _copyToClipboard(_baseUrl, context),
+          child: Text(
+            _baseUrl,
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: theme.colorScheme.primary,
+              decoration: TextDecoration.underline,
             ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       ],
     );
   }
 
-  Widget _buildImagePreview(String imageUrl) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(8),
-      child: CachedNetworkImage(
-        imageUrl: imageUrl,
-        width: 60,
-        height: 60,
-        fit: BoxFit.cover,
-        placeholder: (context, url) => Container(
-          width: 60,
-          height: 60,
-          color: Colors.grey[200],
-          child: const Center(child: CircularProgressIndicator(strokeWidth: 2)),
-        ),
-        errorWidget: (context, url, error) => Container(
-          width: 60,
-          height: 60,
-          color: Colors.grey[200],
-          child: const Icon(Icons.broken_image, color: Colors.grey),
-        ),
-      ),
-    );
+  Widget _buildImagePreview(Image? image) {
+    return ClipRRect(borderRadius: BorderRadius.circular(8), child: image);
   }
 
   /// TEMPORARY JUST TO SEE UI, WILL BE DONE IN BACKEND
   final Map<String, String> _urlMap = {
-    "": "http://192.168.1.100/hdd2/thumbs/Copilot_20251021_202857.png",
-    "Phoronix": "http://192.168.1.100/hdd2/thumbs/Copilot_20251021_194755.png",
-    "Slashdot":
-        "http://192.168.1.100/hdd2/thumbs/Copilot_20251021_194619.png",
-    "Tom's Hardware":
-        "http://192.168.1.100/hdd2/thumbs/Copilot_20251021_194521.png",
-    "TechCrunch":
-        "http://192.168.1.100/hdd2/thumbs/Copilot_20251021_194404.png"
+    "": "assets/thumbnails/Copilot_20251021_202857.png",
+    "Phoronix": "assets/thumbnails/Copilot_20251021_194755.png",
+    "Slashdot": "assets/thumbnails/Copilot_20251021_194619.png",
+    "Tom's Hardware": "assets/thumbnails/Copilot_20251021_194521.png",
+    "TechCrunch": "assets/thumbnails/Copilot_20251021_194404.png",
   };
 
-  String? _getImageUrl() {
+  Image? _getImage() {
     if (item.source == null) {
-      return _urlMap.values.first;
+      return const Image(
+        image: AssetImage('assets/thumbnails/Copilot_20251021_202857.png'),
+        width: 80,
+        height: 80,
+      );
     }
 
     try {
@@ -185,13 +165,18 @@ class JsonFeedTile extends StatelessWidget {
 
       for (final key in _urlMap.keys) {
         if (source == key) {
-          return _urlMap.entries
-              .firstWhere((entry) => entry.key == key)
-              .value;
+          String? value = _urlMap.entries
+              .firstWhereOrNull((entry) => entry.key == key)
+              ?.value;
+          if (value != null) {
+            return Image(image: AssetImage(value), width: 80, height: 80);
+          } else {
+            return null;
+          }
         }
       }
     } catch (e) {
-      return _urlMap.values.first;
+      return null;
     }
 
     return null;
@@ -199,19 +184,20 @@ class JsonFeedTile extends StatelessWidget {
 
   void _copyToClipboard(String text, BuildContext context) {
     Clipboard.setData(ClipboardData(text: text));
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Link copied to clipboard')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('Link copied to clipboard')));
   }
 }
 
 class RssFeedTile extends StatelessWidget {
-  const RssFeedTile(
-      {super.key,
-      required this.openItem,
-      required this.index,
-      required this.item,
-      required this.site});
+  const RssFeedTile({
+    super.key,
+    required this.openItem,
+    required this.index,
+    required this.item,
+    required this.site,
+  });
 
   final VoidCallback openItem;
   final RssItem item;
@@ -231,8 +217,10 @@ class RssFeedTile extends StatelessWidget {
       onTap: () async {
         openItem.call();
       },
-      title: Text('#$printIndex. | ${item.title}',
-          style: const TextStyle(color: Colors.black, fontSize: 22)),
+      title: Text(
+        '#$printIndex. | ${item.title}',
+        style: const TextStyle(color: Colors.black, fontSize: 22),
+      ),
       titleTextStyle: const TextStyle(fontSize: 22, color: Colors.black),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -247,17 +235,22 @@ class RssFeedTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
-                  item.pubDate != null
-                      ? '- Published ${timeago.format(item.pubDate!, locale: 'en')} Source ${site.title}'
-                      : '- Source ${site.title}',
-                  style: const TextStyle(fontSize: 16)),
+                item.pubDate != null
+                    ? '- Published ${timeago.format(item.pubDate!, locale: 'en')} Source ${site.title}'
+                    : '- Source ${site.title}',
+                style: const TextStyle(fontSize: 16),
+              ),
             ],
           ),
         ],
       ),
       subtitleTextStyle: const TextStyle(fontSize: 18, color: Colors.black),
-      contentPadding:
-          const EdgeInsets.only(top: 8, bottom: 8, left: 16, right: 16),
+      contentPadding: const EdgeInsets.only(
+        top: 8,
+        bottom: 8,
+        left: 16,
+        right: 16,
+      ),
     );
   }
 }

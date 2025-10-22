@@ -21,6 +21,7 @@ dependencies:
   timeago: 3.3.0
   cached_network_image: 3.4.1
   json_annotation: 4.9.0
+  collection: 1.19.1
 
 dev_dependencies:
   flutter_test:
@@ -34,3 +35,8 @@ flutter:
   uses-material-design: true
   assets:
     - assets/.api
+    - assets/thumbnails/Copilot_20251021_194404.png
+    - assets/thumbnails/Copilot_20251021_194521.png
+    - assets/thumbnails/Copilot_20251021_194619.png
+    - assets/thumbnails/Copilot_20251021_194755.png
+    - assets/thumbnails/Copilot_20251021_202857.png
