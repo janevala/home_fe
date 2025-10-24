@@ -32,7 +32,7 @@ class ArchiveScreenState extends State<ArchiveScreen> {
     // Load more items when user scrolls to the bottom
     void onScroll() {
       if (scrollController.position.pixels >=
-          (scrollController.position.maxScrollExtent * 0.9)) {
+          (scrollController.position.maxScrollExtent)) {
         rssAggregateBloc.add(LoadMoreArchive());
       }
     }
