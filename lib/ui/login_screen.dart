@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:homefe/bloc/login_bloc.dart';
+import 'package:homefe/logger/logger.dart';
 import 'package:homefe/podo/login/login_body.dart';
 import 'package:homefe/podo/token/token.dart';
 import 'package:homefe/ui/spinner.dart';
+import 'package:flutter/foundation.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -18,6 +20,19 @@ class LoginScreenState extends State<LoginScreen> {
 
   final _formKey = GlobalKey<FormState>();
   String userName = '';
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (kIsWasm) {
+      logger.i("WASM build.");
+    } else if (kIsWeb) {
+      logger.i("WEB build.");
+    } else {
+      logger.i("NATIVE build.");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
