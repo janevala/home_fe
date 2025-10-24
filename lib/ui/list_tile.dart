@@ -21,7 +21,14 @@ class JsonFeedTile extends StatelessWidget {
   final NewsItem item;
 
   String get _baseUrl => _parseBaseUrl(item.link);
-  String get _description => _parseDescription(item.description);
+  String get _description {
+    if (item.source == 'Dpreview') {
+      return item.title;
+    }
+
+    return _parseDescription(item.description);
+  }
+
   DateTime get _publishedDate => parsePublishedParsed(item.publishedParsed);
   bool get _isToday => _publishedDate.day == DateTime.now().day;
 
@@ -61,7 +68,7 @@ class JsonFeedTile extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
       child: InkWell(
         onTap: onItemTap,
-        onLongPress: onItemLongPress,
+        onLongPress: null,
         borderRadius: BorderRadius.circular(12),
         child: Padding(
           padding: const EdgeInsets.all(16),
