@@ -149,6 +149,7 @@ class JsonFeedTile extends StatelessWidget {
     "Slashdot": "assets/thumbnails/Copilot_20251021_194619.png",
     "Tom's Hardware": "assets/thumbnails/Copilot_20251021_194521.png",
     "TechCrunch": "assets/thumbnails/Copilot_20251021_194404.png",
+    "Dpreview": "assets/thumbnails/Copilot_20251024_195657.png",
   };
 
   Image? _getImage() {
