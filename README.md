@@ -6,6 +6,18 @@ This app is written in Dart. It can be used both as mobile application, desktop 
 
 Web application can be used in Docker container.
 
+# TODO
+
+- Width and height detection
+- Add wide screen layout, and keep current one for narrow
+- Wide with [fancy_tree_view plugin](https://pub.dev/documentation/flutter_fancy_tree_view/)
+- Change Archive to News
+- Add search field
+- Search from all sources
+- Search from single source
+- Search source by name (uniq source list from backend)
+- Add dark mode and light mode
+
 # Flutter notes
 ```
 dart run build_runner build --delete-conflicting-outputs
