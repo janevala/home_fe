@@ -32,10 +32,13 @@ dev_dependencies:
   json_serializable: ^6.8.0
   build_runner: ^2.4.11
 
+api:
+  - description: baseUrl
+    path: assets/.api
+
 flutter:
   uses-material-design: true
   assets:
-    - assets/.api
     - assets/thumbnails/Copilot_20251021_194404.png
     - assets/thumbnails/Copilot_20251021_194521.png
     - assets/thumbnails/Copilot_20251021_194619.png
