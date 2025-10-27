@@ -69,13 +69,13 @@ class Failure extends RssState {
 }
 
 class RssSitesBloc extends Bloc<RssSitesEvent, RssState> {
-  final ApiRepository repo = ApiRepository();
+  ApiRepository apiRepository;
 
-  RssSitesBloc() : super(RssInitial()) {
+  RssSitesBloc({required this.apiRepository}) : super(RssInitial()) {
     on<RssSitesEvent>((event, emit) async {
       emit(Loading());
 
-      RssSites rssSite = await repo.getSites();
+      RssSites rssSite = await apiRepository.getSites();
       if (rssSite.error.isNotEmpty) {
         emit(Failure(rssSite.error));
       } else {
@@ -86,13 +86,13 @@ class RssSitesBloc extends Bloc<RssSitesEvent, RssState> {
 }
 
 class RssArchiveBloc extends Bloc<RssArchiveEvent, RssState> {
-  final ApiRepository repo = ApiRepository();
+  ApiRepository apiRepository;
   int limit = 10;
   int offset = 0;
   bool hasMore = true;
   List<NewsItem> items = [];
 
-  RssArchiveBloc() : super(RssInitial()) {
+  RssArchiveBloc({required this.apiRepository}) : super(RssInitial()) {
     on<RssArchiveEvent>((event, emit) async {
       if (event is LoadMoreArchive) {
         if (!hasMore) return;
@@ -105,8 +105,10 @@ class RssArchiveBloc extends Bloc<RssArchiveEvent, RssState> {
 
         try {
           debugPrint("Request new offset: $offset, limit: $limit");
-          NewsItems? newsItems =
-              await repo.getArchive(offset: offset, limit: limit);
+          NewsItems? newsItems = await apiRepository.getArchive(
+            offset: offset,
+            limit: limit,
+          );
 
           int totalItems = newsItems?.totalItems ?? 0;
           limit = newsItems?.limit ?? 0;
@@ -131,13 +133,13 @@ class RssArchiveBloc extends Bloc<RssArchiveEvent, RssState> {
 }
 
 class RssFeedBloc extends Bloc<RssFeedEvent, RssState> {
-  final ApiRepository repo = ApiRepository();
+  ApiRepository apiRepository;
 
-  RssFeedBloc() : super(RssInitial()) {
+  RssFeedBloc({required this.apiRepository}) : super(RssInitial()) {
     on<RssFeedEvent>((event, emit) async {
       emit(Loading());
 
-      RssFeed? rssFeed = await repo.getRss(event.url);
+      RssFeed? rssFeed = await apiRepository.getRss(event.url);
       if (rssFeed == null) {
         emit(Failure('Cannot get RSS feed'));
       } else {
@@ -148,14 +150,15 @@ class RssFeedBloc extends Bloc<RssFeedEvent, RssState> {
 }
 
 class QuestionBloc extends Bloc<QuestionEvent, RssState> {
-  final ApiRepository repo = ApiRepository();
+  ApiRepository apiRepository;
 
-  QuestionBloc() : super(RssInitial()) {
+  QuestionBloc({required this.apiRepository}) : super(RssInitial()) {
     on<QuestionEvent>((event, emit) async {
       emit(Loading());
 
-      AnswerBody? answer =
-          await repo.answerToQuestion(QuestionBody(event.question));
+      AnswerBody? answer = await apiRepository.answerToQuestion(
+        QuestionBody(event.question),
+      );
       if (answer == null) {
         emit(Failure('Cannot get answer'));
       } else {

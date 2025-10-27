@@ -19,36 +19,34 @@ class SiteScreen extends StatefulWidget {
 }
 
 class SiteScreenState extends State<SiteScreen> {
-  final RssFeedBloc rssFeedBloc = RssFeedBloc();
-
-  @override
-  void initState() {
-    super.initState();
-
-    rssFeedBloc.add(RssFeedEvent(Uri.parse(widget.rssSite.url)));
-  }
-
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Colors.blueGrey,
-          foregroundColor: Colors.white,
-          iconTheme: const IconThemeData(color: Colors.white),
-          title: Text(widget.rssSite.title),
-          leading: BackButton(
-            onPressed: () {
-              context.goNamed('sites');
-            },
-          )),
+        backgroundColor: Colors.blueGrey,
+        foregroundColor: Colors.white,
+        iconTheme: const IconThemeData(color: Colors.white),
+        title: Text(widget.rssSite.title),
+        leading: BackButton(
+          onPressed: () {
+            context.goNamed('sites');
+          },
+        ),
+      ),
       body: SafeArea(
         child: BlocProvider<RssFeedBloc>(
-          create: (context) => rssFeedBloc,
+          create: (context) => context.read<RssFeedBloc>(),
           child: BlocBuilder<RssFeedBloc, RssState>(
             builder: (context, feedState) {
               if (feedState is Loading) {
+                return const Spinner();
+              } else if (feedState is RssInitial) {
+                context.read<RssFeedBloc>().add(
+                  RssFeedEvent(Uri.parse(widget.rssSite.url)),
+                );
+
                 return const Spinner();
               } else if (feedState is RssFeedSuccess) {
                 return Center(
@@ -57,37 +55,44 @@ class SiteScreenState extends State<SiteScreen> {
                     child: Padding(
                       padding: const EdgeInsets.all(32),
                       child: ListView.builder(
-                          itemCount: feedState.rssFeed.items!.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            RssItem item = feedState.rssFeed.items![index];
+                        itemCount: feedState.rssFeed.items!.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          RssItem item = feedState.rssFeed.items![index];
 
-                            return RssFeedTile(
-                              openItem: () => openItem(
-                                context,
-                                NewsItem(
-                                  item.title!,
-                                  item.description!,
-                                  item.link!,
-                                  item.pubDate.toString(),
-                                  item.pubDate.toString(),
-                                ),
+                          return RssFeedTile(
+                            openItem: () => openItem(
+                              context,
+                              NewsItem(
+                                item.title!,
+                                item.description!,
+                                item.link!,
+                                item.pubDate.toString(),
+                                item.pubDate.toString(),
                               ),
-                              index: index,
-                              item: item,
-                              site: widget.rssSite,
-                            );
-                          }),
+                            ),
+                            index: index,
+                            item: item,
+                            site: widget.rssSite,
+                          );
+                        },
+                      ),
                     ),
                   ),
                 );
               } else if (feedState is Failure) {
                 return Center(
-                    child: Text(feedState.error,
-                        style: const TextStyle(fontSize: 18)));
+                  child: Text(
+                    feedState.error,
+                    style: const TextStyle(fontSize: 18),
+                  ),
+                );
               } else {
                 return const Center(
-                    child: Text('Something went wrong',
-                        style: TextStyle(fontSize: 18)));
+                  child: Text(
+                    'Something went wrong',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                );
               }
             },
           ),

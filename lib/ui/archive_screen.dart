@@ -15,15 +15,6 @@ class ArchiveScreen extends StatefulWidget {
 }
 
 class ArchiveScreenState extends State<ArchiveScreen> {
-  final RssArchiveBloc rssAggregateBloc = RssArchiveBloc();
-
-  @override
-  void initState() {
-    super.initState();
-
-    rssAggregateBloc.add(RssArchiveEvent());
-  }
-
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -33,7 +24,7 @@ class ArchiveScreenState extends State<ArchiveScreen> {
     void onScroll() {
       if (scrollController.position.pixels >=
           (scrollController.position.maxScrollExtent)) {
-        rssAggregateBloc.add(LoadMoreArchive());
+        context.read<RssArchiveBloc>().add(LoadMoreArchive());
       }
     }
 
@@ -54,30 +45,34 @@ class ArchiveScreenState extends State<ArchiveScreen> {
       ),
       body: SafeArea(
         child: BlocProvider<RssArchiveBloc>(
-          create: (context) => rssAggregateBloc..add(LoadMoreArchive()),
+          create: (context) => context.read<RssArchiveBloc>(),
           child: BlocBuilder<RssArchiveBloc, RssState>(
-            builder: (context, feedState) {
-              if (feedState is Loading) {
+            builder: (context, state) {
+              if (state is Loading) {
                 return const Spinner();
-              } else if (feedState is RssArchiveLoadingMore) {
+              } else if (state is RssInitial) {
+                context.read<RssArchiveBloc>().add(LoadMoreArchive());
+
+                return const Spinner();
+              } else if (state is RssArchiveLoadingMore) {
                 return _buildArchiveList(
                   context,
-                  feedState.items,
+                  state.items,
                   width,
                   scrollController,
                   isLoadingMore: true,
                 );
-              } else if (feedState is RssArchiveSuccess) {
+              } else if (state is RssArchiveSuccess) {
                 return _buildArchiveList(
                   context,
-                  feedState.rssArchiveFeed,
+                  state.rssArchiveFeed,
                   width,
                   scrollController,
                 );
-              } else if (feedState is Failure) {
+              } else if (state is Failure) {
                 return Center(
                   child: Text(
-                    feedState.error,
+                    state.error,
                     style: const TextStyle(fontSize: 18),
                   ),
                 );
@@ -96,9 +91,13 @@ class ArchiveScreenState extends State<ArchiveScreen> {
     );
   }
 
-  Widget _buildArchiveList(BuildContext context, List<NewsItem> items,
-      double width, ScrollController? scrollController,
-      {bool isLoadingMore = false}) {
+  Widget _buildArchiveList(
+    BuildContext context,
+    List<NewsItem> items,
+    double width,
+    ScrollController? scrollController, {
+    bool isLoadingMore = false,
+  }) {
     return Column(
       children: [
         Expanded(
@@ -117,7 +116,7 @@ class ArchiveScreenState extends State<ArchiveScreen> {
               return JsonFeedTile(
                 key: Key(item.link),
                 onItemTap: () => openItem(context, item),
-                onItemLongPress: () => explainItem(context, item),
+                // onItemLongPress: () => explainItem(context, item),
                 item: item,
               );
             },

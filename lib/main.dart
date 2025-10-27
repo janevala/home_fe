@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:homefe/api/api_client.dart';
+import 'package:homefe/api/api_repository.dart';
+import 'package:homefe/bloc/login_bloc.dart';
+import 'package:homefe/bloc/rss_bloc.dart';
+import 'package:homefe/functions.dart';
 import 'package:homefe/podo/rss/rss_site.dart';
 import 'package:homefe/ui/archive_screen.dart';
 import 'package:homefe/ui/dashboard_screen.dart';
@@ -6,6 +12,7 @@ import 'package:homefe/ui/login_screen.dart';
 import 'package:homefe/ui/site_screen.dart';
 import 'package:homefe/ui/sites_screen.dart';
 import 'package:go_router/go_router.dart';
+import 'package:homefe/ui/spinner.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,8 +23,50 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: router,
+    return FutureBuilder<String?>(
+      future: readBaseUrl(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: Spinner());
+        }
+
+        final baseUrl = snapshot.data ?? 'http://localhost:8000';
+
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider<LoginBloc>(
+              create: (context) {
+                return LoginBloc(
+                  apiRepository: ApiRepository(apiClient: ApiClient(baseUrl)),
+                );
+              },
+            ),
+            BlocProvider<RssArchiveBloc>(
+              create: (context) {
+                return RssArchiveBloc(
+                  apiRepository: ApiRepository(apiClient: ApiClient(baseUrl)),
+                );
+              },
+            ),
+            BlocProvider<RssSitesBloc>(
+              create: (context) {
+                return RssSitesBloc(
+                  apiRepository: ApiRepository(apiClient: ApiClient(baseUrl)),
+                );
+              },
+            ),
+            BlocProvider<RssFeedBloc>(
+              create: (context) {
+                return RssFeedBloc(
+                  apiRepository: ApiRepository(apiClient: ApiClient(baseUrl)),
+                );
+              },
+            ),
+          ],
+
+          child: MaterialApp.router(routerConfig: router),
+        );
+      },
     );
   }
 }
@@ -49,9 +98,7 @@ final GoRouter router = GoRouter(
           name: 'site',
           path: 'site',
           builder: (BuildContext context, GoRouterState state) {
-            return SiteScreen(
-              rssSite: state.extra as RssSite,
-            );
+            return SiteScreen(rssSite: state.extra as RssSite);
           },
         ),
         GoRoute(

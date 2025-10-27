@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:homefe/api/logging_interceptor.dart';
-import 'package:homefe/functions.dart';
 import 'package:homefe/podo/answer/answer_body.dart';
 import 'package:homefe/podo/login/login_body.dart';
 import 'package:homefe/podo/question/question_body.dart';
@@ -16,15 +15,7 @@ import 'package:webfeed/webfeed.dart';
 class ApiClient {
   final Dio dio = Dio();
 
-  ApiClient() {
-    _init();
-  }
-
-  Future<void> _init() async {
-    String? baseUrl = await readApiEndpointIp();
-    if (baseUrl == null) {
-      throw Exception('Failed to read API endpoint IP');
-    }
+  ApiClient(String baseUrl) {
     dio.options.baseUrl = baseUrl;
     dio.interceptors.add(LoggingInterceptor());
   }
@@ -35,8 +26,6 @@ class ApiClient {
   }
 
   Future<Token> loginUser(LoginBody loginBody) async {
-    await _init();
-
     const clientId =
         '75247409848-7gdm1b0i5d9kuaeumco7n5ov00ojevlg.apps.googleusercontent.com';
     const clientSecret = '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';
@@ -52,15 +41,18 @@ class ApiClient {
           'client_id': clientId,
           'client_secret': clientSecret,
         },
-        options: Options(
-          contentType: Headers.jsonContentType,
-        ),
+        options: Options(contentType: Headers.jsonContentType),
       );
 
       if (response.statusCode == 200) {
         if (response.data == loginBody.username) {
           return Token(
-              response.data, 'token_type', 'refresh_token', 0, 'scope');
+            response.data,
+            'token_type',
+            'refresh_token',
+            0,
+            'scope',
+          );
         } else {
           return Token.withError(response.data);
         }
@@ -75,8 +67,6 @@ class ApiClient {
   }
 
   Future<Token> refreshAuth(RefreshTokenBody refreshTokenBody) async {
-    await _init();
-
     const clientId =
         '75247409848-0fu1932smoiih7vrrhcqn5jqv3s0bago.apps.googleusercontent.com';
     const clientSecret = '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';
@@ -91,9 +81,7 @@ class ApiClient {
           'client_id': clientId,
           'client_secret': clientSecret,
         },
-        options: Options(
-          contentType: Headers.jsonContentType,
-        ),
+        options: Options(contentType: Headers.jsonContentType),
       );
       return Token.fromJson(response.data);
     } catch (error, _) {
@@ -108,9 +96,7 @@ class ApiClient {
       final response = await dio.get(
         '/sites',
         queryParameters: {"code": "123"},
-        options: Options(
-          contentType: Headers.jsonContentType,
-        ),
+        options: Options(contentType: Headers.jsonContentType),
       );
 
       if (response.statusCode == 200) {
@@ -130,14 +116,8 @@ class ApiClient {
     try {
       final response = await dio.get(
         '/archive',
-        queryParameters: {
-          "code": "123",
-          "offset": offset,
-          "limit": limit,
-        },
-        options: Options(
-          contentType: Headers.jsonContentType,
-        ),
+        queryParameters: {"code": "123", "offset": offset, "limit": limit},
+        options: Options(contentType: Headers.jsonContentType),
       );
 
       if (response.statusCode == 200) {
@@ -172,12 +152,8 @@ class ApiClient {
       final response = await dio.post(
         '/explain',
         queryParameters: {"code": "123"},
-        data: {
-          'question': question.question,
-        },
-        options: Options(
-          contentType: Headers.jsonContentType,
-        ),
+        data: {'question': question.question},
+        options: Options(contentType: Headers.jsonContentType),
       );
 
       if (response.statusCode == 200) {

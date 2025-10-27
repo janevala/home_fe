@@ -13,15 +13,6 @@ class SitesScreen extends StatefulWidget {
 }
 
 class SitesScreenState extends State<SitesScreen> {
-  final RssSitesBloc rssBloc = RssSitesBloc();
-
-  @override
-  void initState() {
-    super.initState();
-
-    rssBloc.add(RssSitesEvent());
-  }
-
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -40,10 +31,14 @@ class SitesScreenState extends State<SitesScreen> {
       ),
       body: SafeArea(
         child: BlocProvider<RssSitesBloc>(
-          create: (context) => rssBloc,
+          create: (context) => context.read<RssSitesBloc>(),
           child: BlocBuilder<RssSitesBloc, RssState>(
             builder: (context, state) {
               if (state is Loading) {
+                return const Spinner();
+              } else if (state is RssInitial) {
+                context.read<RssSitesBloc>().add(RssSitesEvent());
+
                 return const Spinner();
               } else if (state is RssSitesSuccess &&
                   state.rssSites.sites.isNotEmpty) {
@@ -53,39 +48,48 @@ class SitesScreenState extends State<SitesScreen> {
                     child: Padding(
                       padding: const EdgeInsets.all(32),
                       child: ListView.builder(
-                          itemCount: state.rssSites.sites.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            RssSite site = state.rssSites.sites[index];
+                        itemCount: state.rssSites.sites.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          RssSite site = state.rssSites.sites[index];
 
-                            return ListTile(
-                              title: Text(site.title),
-                              titleTextStyle: const TextStyle(
-                                  fontSize: 22, color: Colors.black),
-                              subtitle: Align(
-                                alignment: Alignment.centerRight,
-                                child: Text(site.url),
-                              ),
-                              subtitleTextStyle: const TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.blue,
-                                  decoration: TextDecoration.underline),
-                              onTap: () async {
-                                GoRouter.of(context)
-                                    .goNamed('site', extra: site);
-                              },
-                            );
-                          }),
+                          return ListTile(
+                            title: Text(site.title),
+                            titleTextStyle: const TextStyle(
+                              fontSize: 22,
+                              color: Colors.black,
+                            ),
+                            subtitle: Align(
+                              alignment: Alignment.centerRight,
+                              child: Text(site.url),
+                            ),
+                            subtitleTextStyle: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.blue,
+                              decoration: TextDecoration.underline,
+                            ),
+                            onTap: () async {
+                              GoRouter.of(context).goNamed('site', extra: site);
+                            },
+                          );
+                        },
+                      ),
                     ),
                   ),
                 );
               } else if (state is Failure) {
                 return Center(
-                    child: Text(state.error,
-                        style: const TextStyle(fontSize: 18)));
+                  child: Text(
+                    state.error,
+                    style: const TextStyle(fontSize: 18),
+                  ),
+                );
               } else {
                 return const Center(
-                    child: Text('Something went wrong',
-                        style: TextStyle(fontSize: 18)));
+                  child: Text(
+                    'Something went wrong',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                );
               }
             },
           ),
