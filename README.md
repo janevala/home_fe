@@ -4,10 +4,9 @@ Home FE is news feed application, and is mean to use together with Home BE, wich
 
 This app is written in Dart. It can be used both as mobile application, desktop application (Windows, Mac, Linux) and web application.
 
-Web application can be used in Docker container.
-
 # TODO
 
+- Future api to fetch data
 - Width and height detection
 - Add wide screen layout, and keep current one for narrow
 - Wide with [fancy_tree_view plugin](https://pub.dev/documentation/flutter_fancy_tree_view/)
