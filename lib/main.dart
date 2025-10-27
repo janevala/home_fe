@@ -57,9 +57,7 @@ class MyApp extends StatelessWidget {
             ),
             BlocProvider<RssFeedBloc>(
               create: (context) {
-                return RssFeedBloc(
-                  apiRepository: ApiRepository(apiClient: ApiClient(baseUrl)),
-                );
+                return RssFeedBloc();
               },
             ),
           ],

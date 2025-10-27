@@ -31,6 +31,10 @@ class SiteScreenState extends State<SiteScreen> {
         title: Text(widget.rssSite.title),
         leading: BackButton(
           onPressed: () {
+            // context.read<RssFeedBloc>().add(
+            //   Loading(),
+            // );
+
             context.goNamed('sites');
           },
         ),
@@ -39,25 +43,25 @@ class SiteScreenState extends State<SiteScreen> {
         child: BlocProvider<RssFeedBloc>(
           create: (context) => context.read<RssFeedBloc>(),
           child: BlocBuilder<RssFeedBloc, RssState>(
-            builder: (context, feedState) {
-              if (feedState is Loading) {
+            builder: (context, state) {
+              if (state is Loading) {
                 return const Spinner();
-              } else if (feedState is RssInitial) {
+              } else if (state is RssInitial) {
                 context.read<RssFeedBloc>().add(
                   RssFeedEvent(Uri.parse(widget.rssSite.url)),
                 );
 
                 return const Spinner();
-              } else if (feedState is RssFeedSuccess) {
+              } else if (state is RssFeedSuccess) {
                 return Center(
                   child: SizedBox(
                     width: width * 0.9,
                     child: Padding(
                       padding: const EdgeInsets.all(32),
                       child: ListView.builder(
-                        itemCount: feedState.rssFeed.items!.length,
+                        itemCount: state.rssFeed.items!.length,
                         itemBuilder: (BuildContext context, int index) {
-                          RssItem item = feedState.rssFeed.items![index];
+                          RssItem item = state.rssFeed.items![index];
 
                           return RssFeedTile(
                             openItem: () => openItem(
@@ -79,10 +83,10 @@ class SiteScreenState extends State<SiteScreen> {
                     ),
                   ),
                 );
-              } else if (feedState is Failure) {
+              } else if (state is Failure) {
                 return Center(
                   child: Text(
-                    feedState.error,
+                    state.error,
                     style: const TextStyle(fontSize: 18),
                   ),
                 );

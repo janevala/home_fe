@@ -20,9 +20,22 @@ class ApiClient {
     dio.interceptors.add(LoggingInterceptor());
   }
 
-  ApiClient.rss(String baseUrl) {
-    dio.options.baseUrl = baseUrl;
-    dio.interceptors.add(LoggingInterceptor());
+  ApiClient.empty();
+
+  Future<RssFeed?> getRss(Uri uri) async {
+    try {
+      final Dio tempDio = Dio();
+      tempDio.options.baseUrl = '${uri.scheme}://${uri.host}';
+      final response = await tempDio.get(uri.path);
+
+      if (response.statusCode == 200) {
+        return RssFeed.parse(response.data);
+      }
+    } catch (error, _) {
+      debugPrint(error.toString());
+    }
+
+    return null;
   }
 
   Future<Token> loginUser(LoginBody loginBody) async {
@@ -126,19 +139,6 @@ class ApiClient {
         return newsItems;
       } else {
         return null;
-      }
-    } catch (error, _) {
-      debugPrint(error.toString());
-    }
-
-    return null;
-  }
-
-  Future<RssFeed?> getRss(String uri) async {
-    try {
-      final response = await dio.get(uri);
-      if (response.statusCode == 200) {
-        return RssFeed.parse(response.data);
       }
     } catch (error, _) {
       debugPrint(error.toString());

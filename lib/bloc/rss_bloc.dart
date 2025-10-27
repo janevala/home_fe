@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:homefe/api/api_repository.dart';
+import 'package:homefe/api/ext_api_repository.dart';
 import 'package:homefe/podo/answer/answer_body.dart';
 import 'package:homefe/podo/question/question_body.dart';
 import 'package:homefe/podo/rss/news_item.dart';
@@ -133,13 +134,11 @@ class RssArchiveBloc extends Bloc<RssArchiveEvent, RssState> {
 }
 
 class RssFeedBloc extends Bloc<RssFeedEvent, RssState> {
-  ApiRepository apiRepository;
-
-  RssFeedBloc({required this.apiRepository}) : super(RssInitial()) {
+  RssFeedBloc() : super(RssInitial()) {
     on<RssFeedEvent>((event, emit) async {
       emit(Loading());
 
-      RssFeed? rssFeed = await apiRepository.getRss(event.url);
+      RssFeed? rssFeed = await ExtApiRepository().getRss(event.url);
       if (rssFeed == null) {
         emit(Failure('Cannot get RSS feed'));
       } else {
