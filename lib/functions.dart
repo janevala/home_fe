@@ -8,7 +8,7 @@ import 'package:flutter/services.dart';
 
 Future<String?> readBaseUrl() async {
   try {
-    final api = await rootBundle.loadString('assets/.api');
+    final api = await rootBundle.loadString('api/.api');
     return api.trim();
   } catch (e) {
     return null;
