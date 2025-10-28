@@ -212,52 +212,97 @@ class RssFeedTile extends StatelessWidget {
   final RssSite site;
   final int index;
 
-  @override
-  Widget build(BuildContext context) {
-    bool hasContent = item.content != null;
-    String printIndex = (index + 1).toString();
-    String parsedDescription = parse(item.description!).body!.text;
-    if (parsedDescription.length > 500) {
-      parsedDescription = '${parsedDescription.substring(0, 500)}...';
+  String get _description {
+    if (item.description == null) return '';
+    try {
+      final document = parse(item.description!);
+      final text = document.body?.text ?? '';
+      return text.length > 500 ? '${text.substring(0, 500)}...' : text;
+    } catch (e) {
+      return item.description!;
     }
+  }
 
-    return ListTile(
-      onTap: () async {
-        openItem.call();
-      },
-      title: Text(
-        '#$printIndex. | ${item.title}',
-        style: const TextStyle(color: Colors.black, fontSize: 22),
-      ),
-      titleTextStyle: const TextStyle(fontSize: 22, color: Colors.black),
-      subtitle: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          hasContent
-              ? Container()
-              : Padding(
-                  padding: const EdgeInsets.only(top: 8, bottom: 8),
-                  child: Text(parsedDescription),
-                ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
+  String _formatDate() {
+    if (item.pubDate == null) return '';
+    return timeago.format(item.pubDate!, locale: 'en');
+  }
+
+  Widget _buildHeader(TextTheme textTheme) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Icon(Icons.article_outlined, size: 20, color: Colors.grey[600]),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Text(
+            item.title ?? 'No title',
+            style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFooter(ThemeData theme, BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+          child: Text(
+            site.title,
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: theme.colorScheme.primary,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        const SizedBox(width: 8),
+        Row(
+          children: [
+            if (item.pubDate != null) ...[
+              const Icon(Icons.schedule_outlined, size: 16, color: Colors.grey),
+              const SizedBox(width: 4),
               Text(
-                item.pubDate != null
-                    ? '- Published ${timeago.format(item.pubDate!, locale: 'en')} Source ${site.title}'
-                    : '- Source ${site.title}',
-                style: const TextStyle(fontSize: 16),
+                _formatDate(),
+                style: theme.textTheme.bodySmall?.copyWith(color: Colors.grey),
               ),
             ],
+          ],
+        ),
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+      child: InkWell(
+        onTap: openItem,
+        borderRadius: BorderRadius.circular(12),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildHeader(textTheme),
+              if (_description.isNotEmpty) ...[
+                const SizedBox(height: 8),
+                Text(_description, style: textTheme.bodyMedium),
+              ],
+              const SizedBox(height: 12),
+              _buildFooter(theme, context),
+            ],
           ),
-        ],
-      ),
-      subtitleTextStyle: const TextStyle(fontSize: 18, color: Colors.black),
-      contentPadding: const EdgeInsets.only(
-        top: 8,
-        bottom: 8,
-        left: 16,
-        right: 16,
+        ),
       ),
     );
   }

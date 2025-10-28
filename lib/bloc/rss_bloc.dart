@@ -11,68 +11,70 @@ import 'package:flutter/foundation.dart';
 
 abstract class RssState {}
 
-class RssSitesEvent extends RssState {}
+class RssEvent extends RssState {}
 
-class RssFeedEvent extends RssState {
-  final Uri url;
+class Initial extends RssEvent {}
 
-  RssFeedEvent(this.url);
-}
+class Loading extends RssEvent {}
 
-class RssArchiveEvent extends RssState {}
-
-class LoadMoreArchive extends RssArchiveEvent {}
-
-class RssInitial extends RssState {}
-
-class Loading extends RssState {}
-
-class RssArchiveLoadingMore extends RssState {
-  final List<NewsItem> items;
-
-  RssArchiveLoadingMore(this.items);
-}
-
-class RssSitesSuccess extends RssState {
-  final RssSites rssSites;
-
-  RssSitesSuccess(this.rssSites);
-}
-
-class RssFeedSuccess extends RssState {
-  final RssFeed rssFeed;
-
-  RssFeedSuccess(this.rssFeed);
-}
-
-class RssArchiveSuccess extends RssState {
-  final List<NewsItem> rssArchiveFeed;
-
-  RssArchiveSuccess(this.rssArchiveFeed);
-}
-
-class QuestionEvent extends RssState {
-  final String question;
-
-  QuestionEvent(this.question);
-}
-
-class AnswerSuccess extends RssState {
-  final String answer;
-
-  AnswerSuccess(this.answer);
-}
-
-class Failure extends RssState {
+class Failure extends RssEvent {
   final String error;
 
   Failure(this.error);
 }
 
-class RssSitesBloc extends Bloc<RssSitesEvent, RssState> {
+class RssSitesEvent extends RssEvent {}
+
+class RssFeedEvent extends RssEvent {
+  final Uri url;
+
+  RssFeedEvent(this.url);
+}
+
+class RssArchiveEvent extends RssEvent {}
+
+class LoadMoreArchive extends RssArchiveEvent {}
+
+class RssArchiveLoadingMore extends RssEvent {
+  final List<NewsItem> items;
+
+  RssArchiveLoadingMore(this.items);
+}
+
+class RssSitesSuccess extends RssEvent {
+  final RssSites rssSites;
+
+  RssSitesSuccess(this.rssSites);
+}
+
+class RssFeedSuccess extends RssEvent {
+  final RssFeed rssFeed;
+
+  RssFeedSuccess(this.rssFeed);
+}
+
+class RssArchiveSuccess extends RssEvent {
+  final List<NewsItem> rssArchiveFeed;
+
+  RssArchiveSuccess(this.rssArchiveFeed);
+}
+
+class QuestionEvent extends RssEvent {
+  final String question;
+
+  QuestionEvent(this.question);
+}
+
+class AnswerSuccess extends RssEvent {
+  final String answer;
+
+  AnswerSuccess(this.answer);
+}
+
+class RssSitesBloc extends Bloc<RssEvent, RssState> {
   ApiRepository apiRepository;
 
-  RssSitesBloc({required this.apiRepository}) : super(RssInitial()) {
+  RssSitesBloc({required this.apiRepository}) : super(Initial()) {
     on<RssSitesEvent>((event, emit) async {
       emit(Loading());
 
@@ -86,14 +88,14 @@ class RssSitesBloc extends Bloc<RssSitesEvent, RssState> {
   }
 }
 
-class RssArchiveBloc extends Bloc<RssArchiveEvent, RssState> {
+class RssArchiveBloc extends Bloc<RssEvent, RssState> {
   ApiRepository apiRepository;
   int limit = 10;
   int offset = 0;
   bool hasMore = true;
   List<NewsItem> items = [];
 
-  RssArchiveBloc({required this.apiRepository}) : super(RssInitial()) {
+  RssArchiveBloc({required this.apiRepository}) : super(Initial()) {
     on<RssArchiveEvent>((event, emit) async {
       if (event is LoadMoreArchive) {
         if (!hasMore) return;
@@ -133,8 +135,8 @@ class RssArchiveBloc extends Bloc<RssArchiveEvent, RssState> {
   }
 }
 
-class RssFeedBloc extends Bloc<RssFeedEvent, RssState> {
-  RssFeedBloc() : super(RssInitial()) {
+class RssFeedBloc extends Bloc<RssEvent, RssState> {
+  RssFeedBloc() : super(Initial()) {
     on<RssFeedEvent>((event, emit) async {
       emit(Loading());
 
@@ -148,10 +150,10 @@ class RssFeedBloc extends Bloc<RssFeedEvent, RssState> {
   }
 }
 
-class QuestionBloc extends Bloc<QuestionEvent, RssState> {
+class QuestionBloc extends Bloc<RssEvent, RssState> {
   ApiRepository apiRepository;
 
-  QuestionBloc({required this.apiRepository}) : super(RssInitial()) {
+  QuestionBloc({required this.apiRepository}) : super(Initial()) {
     on<QuestionEvent>((event, emit) async {
       emit(Loading());
 

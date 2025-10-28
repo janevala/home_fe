@@ -5,6 +5,6 @@ class ExtApiRepository {
   ExtApiRepository();
 
   Future<RssFeed?> getRss(Uri uri) {
-    return ApiClient.empty().getRss(uri);
+    return ApiClient.ext().getRss(uri);
   }
 }

@@ -50,7 +50,7 @@ class ArchiveScreenState extends State<ArchiveScreen> {
             builder: (context, state) {
               if (state is Loading) {
                 return const Spinner();
-              } else if (state is RssInitial) {
+              } else if (state is Initial) {
                 context.read<RssArchiveBloc>().add(LoadMoreArchive());
 
                 return const Spinner();

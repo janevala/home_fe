@@ -9,7 +9,7 @@ import 'package:homefe/podo/rss/rss_site.dart';
 import 'package:homefe/ui/archive_screen.dart';
 import 'package:homefe/ui/dashboard_screen.dart';
 import 'package:homefe/ui/login_screen.dart';
-import 'package:homefe/ui/site_screen.dart';
+import 'package:homefe/ui/feed_screen.dart';
 import 'package:homefe/ui/sites_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:homefe/ui/spinner.dart';
@@ -96,7 +96,7 @@ final GoRouter router = GoRouter(
           name: 'site',
           path: 'site',
           builder: (BuildContext context, GoRouterState state) {
-            return SiteScreen(rssSite: state.extra as RssSite);
+            return FeedScreen(rssSite: state.extra as RssSite);
           },
         ),
         GoRoute(

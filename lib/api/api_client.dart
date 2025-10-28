@@ -20,24 +20,6 @@ class ApiClient {
     dio.interceptors.add(LoggingInterceptor());
   }
 
-  ApiClient.empty();
-
-  Future<RssFeed?> getRss(Uri uri) async {
-    try {
-      final Dio tempDio = Dio();
-      tempDio.options.baseUrl = '${uri.scheme}://${uri.host}';
-      final response = await tempDio.get(uri.path);
-
-      if (response.statusCode == 200) {
-        return RssFeed.parse(response.data);
-      }
-    } catch (error, _) {
-      debugPrint(error.toString());
-    }
-
-    return null;
-  }
-
   Future<Token> loginUser(LoginBody loginBody) async {
     const clientId =
         '75247409848-7gdm1b0i5d9kuaeumco7n5ov00ojevlg.apps.googleusercontent.com';
@@ -167,5 +149,23 @@ class ApiClient {
 
       return AnswerBody.withError('$error');
     }
+  }
+
+  ApiClient.ext();
+
+  Future<RssFeed?> getRss(Uri uri) async {
+    try {
+      final Dio extDio = Dio();
+      extDio.options.baseUrl = '${uri.scheme}://${uri.host}';
+      final response = await extDio.get(uri.path);
+
+      if (response.statusCode == 200) {
+        return RssFeed.parse(response.data);
+      }
+    } catch (error, _) {
+      debugPrint(error.toString());
+    }
+
+    return null;
   }
 }
