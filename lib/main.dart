@@ -37,21 +37,21 @@ class MyApp extends StatelessWidget {
             BlocProvider<LoginBloc>(
               create: (context) {
                 return LoginBloc(
-                  apiRepository: ApiRepository(apiClient: ApiClient(baseUrl)),
+                  apiRepository: ApiRepository(client: ApiClient(baseUrl)),
                 );
               },
             ),
             BlocProvider<RssArchiveBloc>(
               create: (context) {
                 return RssArchiveBloc(
-                  apiRepository: ApiRepository(apiClient: ApiClient(baseUrl)),
+                  apiRepository: ApiRepository(client: ApiClient(baseUrl)),
                 );
               },
             ),
             BlocProvider<RssSitesBloc>(
               create: (context) {
                 return RssSitesBloc(
-                  apiRepository: ApiRepository(apiClient: ApiClient(baseUrl)),
+                  apiRepository: ApiRepository(client: ApiClient(baseUrl)),
                 );
               },
             ),

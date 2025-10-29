@@ -78,9 +78,9 @@ class RssSitesBloc extends Bloc<RssEvent, RssState> {
     on<RssSitesEvent>((event, emit) async {
       emit(Loading());
 
-      RssSites rssSite = await apiRepository.getSites();
-      if (rssSite.error.isNotEmpty) {
-        emit(Failure(rssSite.error));
+      RssSites? rssSite = await apiRepository.sites();
+      if (rssSite == null) {
+        emit(Failure('Cannot get RSS sites'));
       } else {
         emit(RssSitesSuccess(rssSite));
       }
@@ -107,8 +107,7 @@ class RssArchiveBloc extends Bloc<RssEvent, RssState> {
         }
 
         try {
-          debugPrint("Request new offset: $offset, limit: $limit");
-          NewsItems? newsItems = await apiRepository.getArchive(
+          NewsItems? newsItems = await apiRepository.archive(
             offset: offset,
             limit: limit,
           );
@@ -140,12 +139,12 @@ class RssFeedBloc extends Bloc<RssEvent, RssState> {
     on<RssFeedEvent>((event, emit) async {
       emit(Loading());
 
-      RssFeed? rssFeed = await ExtApiRepository().getRss(event.url);
-      if (rssFeed == null) {
-        emit(Failure('Cannot get RSS feed'));
-      } else {
-        emit(RssFeedSuccess(rssFeed));
-      }
+      // RssFeed? rssFeed = await ExtApiRepository().getRss(event.url);
+      // if (rssFeed == null) {
+      //   emit(Failure('Cannot get RSS feed'));
+      // } else {
+      //   emit(RssFeedSuccess(rssFeed));
+      // }
     });
   }
 }

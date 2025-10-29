@@ -2,22 +2,55 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:homefe/api/base_client.dart';
 import 'package:homefe/api/logging_interceptor.dart';
 import 'package:homefe/podo/answer/answer_body.dart';
 import 'package:homefe/podo/login/login_body.dart';
 import 'package:homefe/podo/question/question_body.dart';
 import 'package:homefe/podo/refreshtoken/refresh_token_body.dart';
-import 'package:homefe/podo/rss/news_items.dart';
-import 'package:homefe/podo/rss/rss_sites.dart';
 import 'package:homefe/podo/token/token.dart';
 import 'package:webfeed/webfeed.dart';
 
-class ApiClient {
-  final Dio dio = Dio();
+class ApiClient extends BaseClient {
+  ApiClient(String baseUrl)
+    : super(
+        Dio()
+          ..options.baseUrl = baseUrl
+          ..interceptors.add(LoggingInterceptor()),
+      );
 
-  ApiClient(String baseUrl) {
-    dio.options.baseUrl = baseUrl;
-    dio.interceptors.add(LoggingInterceptor());
+  @override
+  Future<Response<dynamic>> get(
+    String uri, {
+    Map<String, dynamic> parameters = const {},
+  }) {
+    return super.get(uri, parameters: parameters);
+  }
+
+  @override
+  Future<Response<dynamic>> post(
+    String uri, {
+    Map<String, dynamic> parameters = const {},
+    Map<String, dynamic> data = const {},
+  }) {
+    return super.post(uri, parameters: parameters, data: data);
+  }
+
+  @override
+  Future<Response<dynamic>> put(
+    String uri, {
+    Map<String, dynamic> parameters = const {},
+    Map<String, dynamic> data = const {},
+  }) {
+    return super.put(uri, parameters: parameters, data: data);
+  }
+
+  @override
+  Future<Response<dynamic>> delete(
+    String uri, {
+    Map<String, dynamic> parameters = const {},
+  }) {
+    return super.delete(uri, parameters: parameters);
   }
 
   Future<Token> loginUser(LoginBody loginBody) async {
@@ -86,49 +119,6 @@ class ApiClient {
     }
   }
 
-  Future<RssSites> getSites() async {
-    try {
-      final response = await dio.get(
-        '/sites',
-        queryParameters: {"code": "123"},
-        options: Options(contentType: Headers.jsonContentType),
-      );
-
-      if (response.statusCode == 200) {
-        Map<String, dynamic> json = jsonDecode(response.data);
-        return RssSites.fromJson(json);
-      } else {
-        return RssSites.withError('Error code ${response.statusCode}');
-      }
-    } catch (error, _) {
-      debugPrint(error.toString());
-
-      return RssSites.withError('$error');
-    }
-  }
-
-  Future<NewsItems?> getArchive({int offset = 0, int limit = 10}) async {
-    try {
-      final response = await dio.get(
-        '/archive',
-        queryParameters: {"code": "123", "offset": offset, "limit": limit},
-        options: Options(contentType: Headers.jsonContentType),
-      );
-
-      if (response.statusCode == 200) {
-        NewsItems newsItems = NewsItems.fromJson(response.data);
-
-        return newsItems;
-      } else {
-        return null;
-      }
-    } catch (error, _) {
-      debugPrint(error.toString());
-    }
-
-    return null;
-  }
-
   Future<AnswerBody?> answerToQuestion(QuestionBody question) async {
     try {
       final response = await dio.post(
@@ -151,7 +141,7 @@ class ApiClient {
     }
   }
 
-  ApiClient.ext();
+  // ApiClient.ext();
 
   Future<RssFeed?> getRss(Uri uri) async {
     try {

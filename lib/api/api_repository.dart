@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:homefe/api/api_client.dart';
 import 'package:homefe/podo/answer/answer_body.dart';
 import 'package:homefe/podo/login/login_body.dart';
@@ -8,23 +10,46 @@ import 'package:homefe/podo/rss/rss_sites.dart';
 import 'package:homefe/podo/token/token.dart';
 
 class ApiRepository {
-  ApiClient apiClient;
+  ApiClient client;
 
-  ApiRepository({required this.apiClient});
+  ApiRepository({required this.client});
 
-  ApiClient get client => apiClient;
-
-  Future<Token> postLogin(LoginBody loginBody) =>
-      apiClient.loginUser(loginBody);
+  Future<Token> postLogin(LoginBody loginBody) => client.loginUser(loginBody);
 
   Future<Token> postRefresh(RefreshTokenBody refreshTokenBody) =>
-      apiClient.refreshAuth(refreshTokenBody);
+      client.refreshAuth(refreshTokenBody);
 
-  Future<RssSites> getSites() => apiClient.getSites();
+  Future<RssSites?> sites() async {
+    List<Future<dynamic>> futures = [];
+    futures.add(client.get('/sites', parameters: {"code": "123"}));
+    List<dynamic> results = await Future.wait(futures);
 
-  Future<NewsItems?> getArchive({int offset = 0, int limit = 10}) =>
-      apiClient.getArchive(offset: offset, limit: limit);
+    if (results.isNotEmpty) {
+      Map<String, dynamic> json = jsonDecode(results.first.data);
+      return RssSites.fromJson(json);
+    }
+
+    return null;
+  }
+
+  Future<NewsItems?> archive({int offset = 0, int limit = 10}) async {
+    List<Future<dynamic>> futures = [];
+    futures.add(
+      client.get(
+        '/archive',
+        parameters: {"code": "123", "offset": offset, "limit": limit},
+      ),
+    );
+    List<dynamic> results = await Future.wait(futures);
+
+    if (results.isNotEmpty) {
+      /// NOTE BACKEND RETURN TYPE DOES NOT NEED DECODING
+      return NewsItems.fromJson(results.first.data);
+    }
+
+    return null;
+  }
 
   Future<AnswerBody?> answerToQuestion(QuestionBody questionBody) =>
-      apiClient.answerToQuestion(questionBody);
+      client.answerToQuestion(questionBody);
 }
