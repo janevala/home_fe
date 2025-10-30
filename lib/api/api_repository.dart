@@ -8,6 +8,7 @@ import 'package:homefe/podo/refreshtoken/refresh_token_body.dart';
 import 'package:homefe/podo/rss/news_items.dart';
 import 'package:homefe/podo/rss/rss_sites.dart';
 import 'package:homefe/podo/token/token.dart';
+import 'package:webfeed/domain/rss_feed.dart';
 
 class ApiRepository {
   ApiClient client;
@@ -102,6 +103,8 @@ class ApiRepository {
 
     return null;
   }
+
+  Future<RssFeed?> getRss(Uri uri) => client.getRss(uri);
 
   Future<AnswerBody?> answerToQuestion(QuestionBody questionBody) =>
       client.answerToQuestion(questionBody);

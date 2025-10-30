@@ -50,6 +50,11 @@ class ApiClient extends BaseClient {
     return super.delete(uri, parameters: parameters);
   }
 
+  @override
+  Future<RssFeed?> getRss(Uri uri) async {
+    return super.getRss(uri);
+  }
+
   Future<AnswerBody?> answerToQuestion(QuestionBody question) async {
     try {
       final response = await dio.post(
@@ -70,23 +75,5 @@ class ApiClient extends BaseClient {
 
       return AnswerBody.withError('$error');
     }
-  }
-
-  // ApiClient.ext();
-
-  Future<RssFeed?> getRss(Uri uri) async {
-    try {
-      final Dio extDio = Dio();
-      extDio.options.baseUrl = '${uri.scheme}://${uri.host}';
-      final response = await extDio.get(uri.path);
-
-      if (response.statusCode == 200) {
-        return RssFeed.parse(response.data);
-      }
-    } catch (error, _) {
-      debugPrint(error.toString());
-    }
-
-    return null;
   }
 }

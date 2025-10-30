@@ -1,13 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:homefe/api/api_client.dart';
 import 'package:homefe/api/api_repository.dart';
-import 'package:homefe/api/ext_api_repository.dart';
 import 'package:homefe/podo/answer/answer_body.dart';
 import 'package:homefe/podo/question/question_body.dart';
 import 'package:homefe/podo/rss/news_item.dart';
 import 'package:homefe/podo/rss/news_items.dart';
 import 'package:homefe/podo/rss/rss_sites.dart';
 import 'package:webfeed/webfeed.dart';
-import 'package:flutter/foundation.dart';
 
 abstract class RssState {}
 
@@ -139,12 +138,14 @@ class RssFeedBloc extends Bloc<RssEvent, RssState> {
     on<RssFeedEvent>((event, emit) async {
       emit(Loading());
 
-      // RssFeed? rssFeed = await ExtApiRepository().getRss(event.url);
-      // if (rssFeed == null) {
-      //   emit(Failure('Cannot get RSS feed'));
-      // } else {
-      //   emit(RssFeedSuccess(rssFeed));
-      // }
+      RssFeed? rssFeed = await ApiRepository(
+        client: ApiClient(''),
+      ).getRss(event.url);
+      if (rssFeed == null) {
+        emit(Failure('Cannot get RSS feed'));
+      } else {
+        emit(RssFeedSuccess(rssFeed));
+      }
     });
   }
 }
