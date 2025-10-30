@@ -111,7 +111,7 @@ abstract class BaseClient {
       );
 
       if (response.statusCode == 200) {
-        return response.data;
+        return response;
       } else {
         throw Exception("Error code ${response.statusCode}");
       }

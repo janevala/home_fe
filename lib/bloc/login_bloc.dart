@@ -41,13 +41,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         return;
       }
 
-      Token token = await apiRepository.postLogin(loginBody);
-      if (token.error.isNotEmpty) {
+      Token? token = await apiRepository.login(loginBody);
+      if (token == null) {
+        emit(LoginFailure('Login failed'));
+      } else if (token.error.isNotEmpty) {
         emit(LoginFailure(token.error));
-        return;
+      } else {
+        emit(LoginSuccess(token));
       }
-
-      emit(LoginSuccess(token));
     });
   }
 }

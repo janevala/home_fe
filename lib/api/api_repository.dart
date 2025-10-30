@@ -14,9 +14,36 @@ class ApiRepository {
 
   ApiRepository({required this.client});
 
-  Future<Token> postLogin(LoginBody loginBody) => client.loginUser(loginBody);
+  Future<Token?> login(LoginBody loginBody) async {
+    const clientId =
+        '75247409848-7gdm1b0i5d9kuaeumco7n5ov00ojevlg.apps.googleusercontent.com';
+    const clientSecret = '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';
+    Map<String, dynamic> data = {
+      'username': loginBody.username,
+      'password': loginBody.password,
+      'grant_type': loginBody.grantType,
+      'client_id': clientId,
+      'client_secret': clientSecret,
+    };
 
-  Future<Token> postRefresh(RefreshTokenBody refreshTokenBody) =>
+    List<Future<dynamic>> futures = [];
+    futures.add(client.post('/auth', parameters: {"code": "123"}, data: data));
+    List<dynamic> results = await Future.wait(futures);
+
+    if (results.isNotEmpty) {
+      return Token(
+        results.first.data,
+        'token_type',
+        'refresh_token',
+        0,
+        'scope',
+      );
+    }
+
+    return null;
+  }
+
+  Future<Token> refreshLogin(RefreshTokenBody refreshTokenBody) =>
       client.refreshAuth(refreshTokenBody);
 
   Future<RssSites?> sites() async {
