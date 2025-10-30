@@ -133,6 +133,25 @@ class RssArchiveBloc extends Bloc<RssEvent, RssState> {
   }
 }
 
+class QuestionBloc extends Bloc<RssEvent, RssState> {
+  ApiRepository apiRepository;
+
+  QuestionBloc({required this.apiRepository}) : super(Initial()) {
+    on<QuestionEvent>((event, emit) async {
+      emit(Loading());
+
+      AnswerBody? answer = await apiRepository.answerToQuestion(
+        QuestionBody(event.question),
+      );
+      if (answer == null) {
+        emit(Failure('Cannot get answer'));
+      } else {
+        emit(AnswerSuccess(answer.answer));
+      }
+    });
+  }
+}
+
 /// DIRECT FEED RETRIEVAL
 class RssFeedBloc extends Bloc<RssEvent, RssState> {
   RssFeedBloc() : super(Initial()) {
@@ -151,25 +170,6 @@ class RssFeedBloc extends Bloc<RssEvent, RssState> {
         }
       } catch (error) {
         emit(Failure('Error fetching RSS feed: $error'));
-      }
-    });
-  }
-}
-
-class QuestionBloc extends Bloc<RssEvent, RssState> {
-  ApiRepository apiRepository;
-
-  QuestionBloc({required this.apiRepository}) : super(Initial()) {
-    on<QuestionEvent>((event, emit) async {
-      emit(Loading());
-
-      AnswerBody? answer = await apiRepository.answerToQuestion(
-        QuestionBody(event.question),
-      );
-      if (answer == null) {
-        emit(Failure('Cannot get answer'));
-      } else {
-        emit(AnswerSuccess(answer.answer));
       }
     });
   }
