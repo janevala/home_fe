@@ -6,7 +6,6 @@ import 'package:homefe/api/base_client.dart';
 import 'package:homefe/api/logging_interceptor.dart';
 import 'package:homefe/podo/answer/answer_body.dart';
 import 'package:homefe/podo/question/question_body.dart';
-import 'package:webfeed/webfeed.dart';
 
 class ApiClient extends BaseClient {
   ApiClient(String baseUrl)
@@ -48,11 +47,6 @@ class ApiClient extends BaseClient {
     Map<String, dynamic> parameters = const {},
   }) {
     return super.delete(uri, parameters: parameters);
-  }
-
-  @override
-  Future<RssFeed?> getRss(Uri uri) async {
-    return super.getRss(uri);
   }
 
   Future<AnswerBody?> answerToQuestion(QuestionBody question) async {

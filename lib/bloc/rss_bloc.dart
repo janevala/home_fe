@@ -1,5 +1,5 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:homefe/api/api_client.dart';
 import 'package:homefe/api/api_repository.dart';
 import 'package:homefe/podo/answer/answer_body.dart';
 import 'package:homefe/podo/question/question_body.dart';
@@ -133,18 +133,24 @@ class RssArchiveBloc extends Bloc<RssEvent, RssState> {
   }
 }
 
+/// DIRECT FEED RETRIEVAL
 class RssFeedBloc extends Bloc<RssEvent, RssState> {
   RssFeedBloc() : super(Initial()) {
     on<RssFeedEvent>((event, emit) async {
       emit(Loading());
 
-      RssFeed? rssFeed = await ApiRepository(
-        client: ApiClient(''),
-      ).getRss(event.url);
-      if (rssFeed == null) {
-        emit(Failure('Cannot get RSS feed'));
-      } else {
-        emit(RssFeedSuccess(rssFeed));
+      try {
+        final dio = Dio();
+        final response = await dio.get(event.url.toString());
+
+        if (response.statusCode == 200 && response.data != null) {
+          final rssFeed = RssFeed.parse(response.data);
+          emit(RssFeedSuccess(rssFeed));
+        } else {
+          emit(Failure('Failed to load RSS feed: ${response.statusCode}'));
+        }
+      } catch (error) {
+        emit(Failure('Error fetching RSS feed: $error'));
       }
     });
   }
