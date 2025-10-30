@@ -43,8 +43,34 @@ class ApiRepository {
     return null;
   }
 
-  Future<Token> refreshLogin(RefreshTokenBody refreshTokenBody) =>
-      client.refreshAuth(refreshTokenBody);
+  /// NOT VERIFIED BECAUSE OAUTH IS NOT USED (YET)
+  Future<Token?> refreshLogin(RefreshTokenBody refreshTokenBody) async {
+    const clientId =
+        '75247409848-0fu1932smoiih7vrrhcqn5jqv3s0bago.apps.googleusercontent.com';
+    const clientSecret = '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';
+    Map<String, dynamic> data = {
+      'grant_type': refreshTokenBody.grantType,
+      'refresh_token': refreshTokenBody.refreshToken,
+      'client_id': clientId,
+      'client_secret': clientSecret,
+    };
+
+    List<Future<dynamic>> futures = [];
+    futures.add(client.post('/auth', parameters: {"code": "123"}, data: data));
+    List<dynamic> results = await Future.wait(futures);
+
+    if (results.isNotEmpty) {
+      return Token(
+        results.first.data,
+        'token_type',
+        'refresh_token',
+        0,
+        'scope',
+      );
+    }
+
+    return null;
+  }
 
   Future<RssSites?> sites() async {
     List<Future<dynamic>> futures = [];
