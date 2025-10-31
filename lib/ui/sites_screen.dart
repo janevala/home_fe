@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:homefe/bloc/rss_bloc.dart';
-import 'package:homefe/podo/rss/rss_site.dart';
 import 'package:homefe/ui/spinner.dart';
 
 class SitesScreen extends StatefulWidget {

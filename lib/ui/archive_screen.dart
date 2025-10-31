@@ -20,7 +20,6 @@ class ArchiveScreenState extends State<ArchiveScreen> {
     double width = MediaQuery.of(context).size.width;
     final scrollController = ScrollController();
 
-    // Load more items when user scrolls to the bottom
     void onScroll() {
       if (scrollController.position.pixels >=
           (scrollController.position.maxScrollExtent)) {
@@ -28,7 +27,6 @@ class ArchiveScreenState extends State<ArchiveScreen> {
       }
     }
 
-    // Add scroll listener
     scrollController.addListener(onScroll);
 
     return Scaffold(

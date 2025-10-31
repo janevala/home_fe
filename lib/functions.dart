@@ -15,106 +15,73 @@ Future<String?> readBaseUrl() async {
   }
 }
 
-openItem(BuildContext context, NewsItem item) async {
-  bool hasContent = item.content != null;
+String parseDescription(NewsItem item, bool cutLong) {
+  if (item.source == 'Dpreview') {
+    return item.title;
+  }
 
-  if (hasContent) {
-    String documentString = parse(item.content).documentElement!.text;
+  if (item.description.isEmpty) return '';
 
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          content: SingleChildScrollView(
-            child: Text('${item.title}\n\n$documentString'),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () async {
-                Navigator.pop(context, true);
+  try {
+    final document = parse(item.description);
+    final text = document.body?.text ?? '';
+    text.replaceAll(' \n', '');
 
-                if (await canLaunchUrl(Uri.parse(item.link))) {
-                  await launchUrl(Uri.parse(item.link));
-                }
-              },
-              child: const Text('Open', style: TextStyle(fontSize: 18)),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(context, true),
-              child: const Text('Close', style: TextStyle(fontSize: 18)),
-            ),
-          ],
-        );
-      },
-    );
-  } else {
-    if (await canLaunchUrl(Uri.parse(item.link))) {
-      await launchUrl(Uri.parse(item.link));
+    if (cutLong) {
+      return text.length > 500 ? '${text.substring(0, 500)}...' : text;
+    } else {
+      return text;
     }
+  } catch (e) {
+    return item.description;
   }
 }
 
-// explainItem(BuildContext context, NewsItem item) async {
-//   String documentString = parse(item.description).documentElement!.text;
-//   final QuestionBloc bloc = QuestionBloc();
-//   bloc.add(
-//     QuestionEvent(
-//       "Summarize TITLE and CONTENT in 3 sentences. TITLE: ${item.title} , CONTENT:  $documentString .",
-//     ),
-//   );
-//   DateTime startTime = DateTime.now();
+openItem(BuildContext context, NewsItem item) async {
+  double width = MediaQuery.of(context).size.width;
 
-//   showDialog(
-//     context: context,
-//     builder: (context) {
-//       return BlocProvider<QuestionBloc>(
-//         create: (context) => bloc,
-//         child: BlocBuilder<QuestionBloc, RssState>(
-//           builder: (context, state) {
-//             if (state is AnswerSuccess) {
-//               DateTime endTime = DateTime.now();
-//               Duration elapsedTime = endTime.difference(startTime);
-//               return AlertDialog(
-//                 content: SingleChildScrollView(
-//                   child: SelectableText(
-//                     'AI summary (time to process ${elapsedTime.inSeconds} seconds):\n\n${state.answer.trim()}',
-//                   ),
-//                 ),
-//                 actions: [
-//                   TextButton(
-//                     onPressed: () async {
-//                       Navigator.pop(context, true);
+  String documentString = parseDescription(item, false);
 
-//                       if (await canLaunchUrl(Uri.parse(item.link))) {
-//                         await launchUrl(Uri.parse(item.link));
-//                       }
-//                     },
-//                     child: const Text('Open', style: TextStyle(fontSize: 18)),
-//                   ),
-//                   TextButton(
-//                     onPressed: () => Navigator.pop(context, true),
-//                     child: const Text('Close', style: TextStyle(fontSize: 18)),
-//                   ),
-//                 ],
-//               );
-//             } else if (state is Failure) {
-//               return AlertDialog(
-//                 content: Center(
-//                   child: Padding(
-//                     padding: const EdgeInsets.all(8.0),
-//                     child: Text('Error: ${state.error}'),
-//                   ),
-//                 ),
-//               );
-//             } else {
-//               return Center(child: Spinner());
-//             }
-//           },
-//         ),
-//       );
-//     },
-//   );
-// }
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: SizedBox(
+          width: width * 0.5,
+          child: SelectableText(
+            item.title,
+            style: const TextStyle(fontSize: 18),
+          ),
+        ),
+        content: SizedBox(
+          width: width * 0.5,
+          child: SingleChildScrollView(
+            child: SelectableText(
+              documentString,
+              style: const TextStyle(fontSize: 14),
+            ),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () async {
+              Navigator.pop(context, true);
+
+              if (await canLaunchUrl(Uri.parse(item.link))) {
+                await launchUrl(Uri.parse(item.link));
+              }
+            },
+            child: const Text('Open', style: TextStyle(fontSize: 16)),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Close', style: TextStyle(fontSize: 16)),
+          ),
+        ],
+      );
+    },
+  );
+}
 
 DateTime parsePublishedParsed(String? str) {
   if (str == null) {

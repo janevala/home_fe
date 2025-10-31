@@ -6,8 +6,7 @@ This app is written in Dart. It can be used both as mobile application, desktop 
 
 # TODO
 
-- Future api to fetch data
-- Check backend /archive vs /sites return types
+## Front
 - Width and height detection
 - Add wide screen layout, and keep current one for narrow
 - Wide with [fancy_tree_view plugin](https://pub.dev/documentation/flutter_fancy_tree_view/)
@@ -17,6 +16,9 @@ This app is written in Dart. It can be used both as mobile application, desktop 
 - Search from single source
 - Search source by name (uniq source list from backend)
 - Add dark mode and light mode
+
+## Back
+- Check backend /archive vs /sites return types
 
 # Flutter notes
 ```

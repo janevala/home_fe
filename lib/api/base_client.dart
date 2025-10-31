@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:webfeed/domain/rss_feed.dart';
 
 abstract class BaseClient {
   final Dio dio;

@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:homefe/functions.dart';
 import 'package:homefe/podo/rss/news_item.dart';
 import 'package:homefe/podo/rss/rss_site.dart';
-import 'package:html/parser.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:webfeed/webfeed.dart';
 import 'package:collection/collection.dart';
@@ -21,13 +20,7 @@ class JsonFeedTile extends StatelessWidget {
   final NewsItem item;
 
   String get _baseUrl => _parseBaseUrl(item.link);
-  String get _description {
-    if (item.source == 'Dpreview') {
-      return item.title;
-    }
-
-    return _parseDescription(item.description);
-  }
+  String get _description => parseDescription(item, true);
 
   DateTime get _publishedDate => parsePublishedParsed(item.publishedParsed);
   bool get _isToday => _publishedDate.day == DateTime.now().day;
@@ -38,17 +31,6 @@ class JsonFeedTile extends StatelessWidget {
       return '${uri.scheme}://${uri.host}';
     } catch (e) {
       return url;
-    }
-  }
-
-  static String _parseDescription(String? html) {
-    if (html == null || html.isEmpty) return '';
-    try {
-      final document = parse(html);
-      final text = document.body?.text ?? '';
-      return text.length > 500 ? '${text.substring(0, 500)}...' : text;
-    } catch (e) {
-      return html;
     }
   }
 
@@ -212,16 +194,15 @@ class RssFeedTile extends StatelessWidget {
   final RssSite site;
   final int index;
 
-  String get _description {
-    if (item.description == null) return '';
-    try {
-      final document = parse(item.description!);
-      final text = document.body?.text ?? '';
-      return text.length > 500 ? '${text.substring(0, 500)}...' : text;
-    } catch (e) {
-      return item.description!;
-    }
-  }
+  String get _description => parseDescription(
+    NewsItem(
+      item.title ?? '',
+      item.description ?? '',
+      item.link ?? '',
+      item.pubDate.toString(),
+    ),
+    true,
+  );
 
   String _formatDate() {
     if (item.pubDate == null) return '';

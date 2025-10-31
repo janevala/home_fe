@@ -20,19 +20,6 @@ class FeedScreen extends StatefulWidget {
 
 class FeedScreenState extends State<FeedScreen> {
   @override
-  void initState() {
-    super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        context.read<RssFeedBloc>().add(
-          RssFeedEvent(Uri.parse(widget.rssSite.url)),
-        );
-      }
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
 
@@ -50,10 +37,16 @@ class FeedScreenState extends State<FeedScreen> {
       ),
       body: SafeArea(
         child: BlocProvider<RssFeedBloc>(
-          create: (context) => context.read<RssFeedBloc>(),
+          create: (context) => RssFeedBloc(),
           child: BlocBuilder<RssFeedBloc, RssState>(
             builder: (context, state) {
-              if (state is Loading || state is Initial) {
+              if (state is Loading) {
+                return const Spinner();
+              } else if (state is Initial) {
+                context.read<RssFeedBloc>().add(
+                  RssFeedEvent(Uri.parse(widget.rssSite.url)),
+                );
+
                 return const Spinner();
               } else if (state is RssFeedSuccess) {
                 return Center(
