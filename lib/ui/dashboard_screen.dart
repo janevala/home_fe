@@ -24,7 +24,7 @@ class DashboardScreenState extends State<DashboardScreen> {
         child: Padding(
           padding: const EdgeInsets.all(32),
           child: SizedBox(
-            width: width * 0.6,
+            width: width * 0.8,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,

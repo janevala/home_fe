@@ -56,7 +56,6 @@ class ArchiveScreenState extends State<ArchiveScreen> {
                 return _buildArchiveList(
                   context,
                   state.items,
-                  width,
                   scrollController,
                   isLoadingMore: true,
                 );
@@ -64,7 +63,6 @@ class ArchiveScreenState extends State<ArchiveScreen> {
                 return _buildArchiveList(
                   context,
                   state.rssArchiveFeed,
-                  width,
                   scrollController,
                 );
               } else if (state is Failure) {
@@ -92,35 +90,28 @@ class ArchiveScreenState extends State<ArchiveScreen> {
   Widget _buildArchiveList(
     BuildContext context,
     List<NewsItem> items,
-    double width,
     ScrollController? scrollController, {
     bool isLoadingMore = false,
   }) {
-    return Column(
-      children: [
-        Expanded(
-          child: ListView.builder(
-            controller: scrollController,
-            itemCount: items.length + (isLoadingMore ? 1 : 0),
-            itemBuilder: (BuildContext context, int index) {
-              if (index >= items.length) {
-                return const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Center(child: CircularProgressIndicator()),
-                );
-              }
+    return ListView.builder(
+      controller: scrollController,
+      itemCount: items.length + (isLoadingMore ? 1 : 0),
+      itemBuilder: (BuildContext context, int index) {
+        if (index >= items.length) {
+          return const Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Center(child: CircularProgressIndicator()),
+          );
+        }
 
-              NewsItem item = items[index];
-              return JsonFeedTile(
-                key: Key(item.link),
-                onItemTap: () => openItem(context, item),
-                // onItemLongPress: () => explainItem(context, item),
-                item: item,
-              );
-            },
-          ),
-        ),
-      ],
+        NewsItem item = items[index];
+        return JsonFeedTile(
+          key: Key(item.link),
+          onItemTap: () => openItem(context, item),
+          // onItemLongPress: () => explainItem(context, item),
+          item: item,
+        );
+      },
     );
   }
 }

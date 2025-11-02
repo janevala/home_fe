@@ -49,35 +49,27 @@ class FeedScreenState extends State<FeedScreen> {
 
                 return const Spinner();
               } else if (state is RssFeedSuccess) {
-                return Center(
-                  child: SizedBox(
-                    width: width * 0.9,
-                    child: Padding(
-                      padding: const EdgeInsets.all(32),
-                      child: ListView.builder(
-                        itemCount: state.rssFeed.items!.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          RssItem item = state.rssFeed.items![index];
+                return ListView.builder(
+                  itemCount: state.rssFeed.items!.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    RssItem item = state.rssFeed.items![index];
 
-                          return RssFeedTile(
-                            openItem: () => openItem(
-                              context,
-                              NewsItem(
-                                item.title!,
-                                item.description!,
-                                item.link!,
-                                item.pubDate.toString(),
-                                item.pubDate.toString(),
-                              ),
-                            ),
-                            index: index,
-                            item: item,
-                            site: widget.rssSite,
-                          );
-                        },
+                    return RssFeedTile(
+                      openItem: () => openItem(
+                        context,
+                        NewsItem(
+                          item.title!,
+                          item.description!,
+                          item.link!,
+                          item.pubDate.toString(),
+                          item.pubDate.toString(),
+                        ),
                       ),
-                    ),
-                  ),
+                      index: index,
+                      item: item,
+                      site: widget.rssSite,
+                    );
+                  },
                 );
               } else if (state is Failure) {
                 return Center(
