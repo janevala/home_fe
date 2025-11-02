@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -28,13 +29,14 @@ class DashboardScreenState extends State<DashboardScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                ElevatedButton(
-                  onPressed: () {
-                    GoRouter.of(context).goNamed('sites');
-                  },
-                  child: const Text('Choose provider'),
-                ),
-                const SizedBox(height: 32),
+                if (!kIsWeb && !kIsWasm)
+                  ElevatedButton(
+                    onPressed: () {
+                      GoRouter.of(context).goNamed('sites');
+                    },
+                    child: const Text('Choose provider'),
+                  ),
+                if (!kIsWeb && !kIsWasm) const SizedBox(height: 32),
                 ElevatedButton(
                   onPressed: () {
                     GoRouter.of(context).goNamed('archive');
