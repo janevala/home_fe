@@ -40,7 +40,7 @@ String parseDescription(NewsItem item, bool cutLong) {
 openItem(BuildContext context, NewsItem item) async {
   double width = MediaQuery.of(context).size.width;
 
-  String documentString = parseDescription(item, false);
+  String description = parseDescription(item, false);
 
   showDialog(
     context: context,
@@ -57,8 +57,8 @@ openItem(BuildContext context, NewsItem item) async {
           width: width * 0.5,
           child: SingleChildScrollView(
             child: SelectableText(
-              documentString,
-              style: const TextStyle(fontSize: 14),
+              description,
+              style: const TextStyle(fontSize: 16),
             ),
           ),
         ),
