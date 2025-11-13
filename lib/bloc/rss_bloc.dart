@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:homefe/api/api_repository.dart';
+import 'package:homefe/logger/logger.dart';
 import 'package:homefe/podo/answer/answer_body.dart';
 import 'package:homefe/podo/question/question_body.dart';
 import 'package:homefe/podo/rss/news_item.dart';
@@ -159,8 +160,10 @@ class RssFeedBloc extends Bloc<RssEvent, RssState> {
       emit(Loading());
 
       try {
+        logger.i('onRequest | ${event.url}');
         final dio = Dio();
         final response = await dio.get(event.url.toString());
+        logger.i('onResponse | ${event.url} | ${response.statusCode}');
 
         if (response.statusCode == 200 && response.data != null) {
           final rssFeed = RssFeed.parse(response.data);
