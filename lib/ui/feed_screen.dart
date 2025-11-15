@@ -5,6 +5,7 @@ import 'package:homefe/bloc/rss_bloc.dart';
 import 'package:homefe/functions.dart';
 import 'package:homefe/podo/rss/news_item.dart';
 import 'package:homefe/podo/rss/rss_site.dart';
+import 'package:homefe/ui/callback_shortcuts.dart';
 import 'package:homefe/ui/list_tile.dart';
 import 'package:homefe/ui/spinner.dart';
 import 'package:webfeed/webfeed.dart';
@@ -19,10 +20,16 @@ class FeedScreen extends StatefulWidget {
 }
 
 class FeedScreenState extends State<FeedScreen> {
+  final controller = ScrollController();
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueGrey,
@@ -49,27 +56,34 @@ class FeedScreenState extends State<FeedScreen> {
 
                 return const Spinner();
               } else if (state is RssFeedSuccess) {
-                return ListView.builder(
-                  itemCount: state.rssFeed.items!.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    RssItem item = state.rssFeed.items![index];
+                return CallbackShortcuts(
+                  bindings: getCallbackShortcuts(controller),
+                  child: Focus(
+                    autofocus: true,
+                    child: ListView.builder(
+                      controller: controller,
+                      itemCount: state.rssFeed.items!.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        RssItem item = state.rssFeed.items![index];
 
-                    return RssFeedTile(
-                      openItem: () => openItem(
-                        context,
-                        NewsItem(
-                          item.title!,
-                          item.description!,
-                          item.link!,
-                          item.pubDate.toString(),
-                          item.pubDate.toString(),
-                        ),
-                      ),
-                      index: index,
-                      item: item,
-                      site: widget.rssSite,
-                    );
-                  },
+                        return RssFeedTile(
+                          openItem: () => openItem(
+                            context,
+                            NewsItem(
+                              item.title!,
+                              item.description!,
+                              item.link!,
+                              item.pubDate.toString(),
+                              item.pubDate.toString(),
+                            ),
+                          ),
+                          index: index,
+                          item: item,
+                          site: widget.rssSite,
+                        );
+                      },
+                    ),
+                  ),
                 );
               } else if (state is Failure) {
                 return Center(
