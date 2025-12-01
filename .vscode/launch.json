@@ -9,7 +9,8 @@
             // "openDevTools": "network",
             "args": [
                 "--web-browser-flag",
-                "--disable-web-security"
+                "--disable-web-security",
+                "--web-port=7070"
             ]
         },
     ]
