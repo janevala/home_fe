@@ -4,10 +4,10 @@
 		"dockerfile": "Dockerfile",
 		"context": ".."
 	},
-	"runArgs": [
-		"--privileged",
-		"--network=host"
-	],
+	// "runArgs": [
+	// 	"--privileged",
+	// 	"--network=host"
+	// ],
 	"forwardPorts": [
 		7070
 	],
@@ -18,5 +18,8 @@
 		}
 	},
 	"postCreateCommand": "flutter pub get",
-	"remoteUser": "root"
+	"remoteUser": "root",
+	// "mounts": [
+	// 	"source:/home/jay/Desktop:/Dsktop,type=bind"
+	// ]
 }
