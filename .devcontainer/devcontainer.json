@@ -4,6 +4,10 @@
 		"dockerfile": "Dockerfile",
 		"context": ".."
 	},
+	"runArgs": [
+		"--privileged",
+		"--network=host"
+	],
 	"forwardPorts": [
 		7070
 	],
