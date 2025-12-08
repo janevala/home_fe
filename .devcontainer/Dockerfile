@@ -1,8 +1,8 @@
 # FROM ubuntu:latest
 FROM mcr.microsoft.com/devcontainers/base:noble
 
-RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get -y install --no-install-recommends curl
+RUN apt update && export DEBIAN_FRONTEND=noninteractive \
+    && apt -y install --no-install-recommends curl
 
 ENV FLUTTER_SDK_ROOT=/flutter
 ENV FLUTTER_SDK_VERSION=3.37.0-stable
