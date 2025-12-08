@@ -4,10 +4,10 @@
 		"dockerfile": "Dockerfile",
 		"context": ".."
 	},
-	"runArgs": [
-		"--privileged",
-		"--network=host"
-	],
+	// "runArgs": [
+	// 	"--privileged",
+	// 	"--network=host"
+	// ],
 	"forwardPorts": [
 		7070
 	],
@@ -18,9 +18,9 @@
 		}
 	},
 	"postCreateCommand": "flutter pub get",
-	"remoteUser": "root",
-	"mounts": [
-		"source=C:\\Users\\Jay\\Desktop,target=/workspace,type=bind"
-		// "source:C:\Users\Jay\Desktop:/Dsktop,type=bind"
-	]
+	"remoteUser": "root"
+	// "mounts": [
+	// 	"source=C:\\Users\\Jay\\Desktop,target=/workspace,type=bind"
+	// 	"source:C:\Users\Jay\Desktop:/Dsktop,type=bind"
+	// ]
 }
