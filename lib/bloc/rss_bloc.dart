@@ -35,6 +35,12 @@ class RssArchiveEvent extends RssEvent {}
 
 class LoadMoreArchive extends RssArchiveEvent {}
 
+class SearchArchive extends RssArchiveEvent {
+  final String query;
+
+  SearchArchive({required this.query});
+}
+
 class RssArchiveLoadingMore extends RssEvent {
   final List<NewsItem> items;
 
@@ -54,9 +60,9 @@ class RssFeedSuccess extends RssEvent {
 }
 
 class RssArchiveSuccess extends RssEvent {
-  final List<NewsItem> rssArchiveFeed;
+  final List<NewsItem> items;
 
-  RssArchiveSuccess(this.rssArchiveFeed);
+  RssArchiveSuccess(this.items);
 }
 
 class QuestionEvent extends RssEvent {

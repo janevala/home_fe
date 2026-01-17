@@ -16,23 +16,27 @@ class ArchiveScreen extends StatefulWidget {
 }
 
 class ArchiveScreenState extends State<ArchiveScreen> {
-  final controller = ScrollController();
+  final scrollContoller = ScrollController();
+  final searchController = TextEditingController();
 
   @override
   void dispose() {
-    controller.dispose();
+    scrollContoller.dispose();
+    searchController.dispose();
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     void onScroll() {
-      if (controller.position.pixels >= (controller.position.maxScrollExtent)) {
+      if (scrollContoller.position.pixels >=
+          (scrollContoller.position.maxScrollExtent)) {
         context.read<RssArchiveBloc>().add(LoadMoreArchive());
       }
     }
 
-    controller.addListener(onScroll);
+    scrollContoller.addListener(onScroll);
 
     return Scaffold(
       appBar: AppBar(
@@ -61,11 +65,17 @@ class ArchiveScreenState extends State<ArchiveScreen> {
                 return _buildList(
                   context,
                   state.items,
-                  controller,
+                  scrollContoller,
+                  searchController,
                   isLoadingMore: true,
                 );
               } else if (state is RssArchiveSuccess) {
-                return _buildList(context, state.rssArchiveFeed, controller);
+                return _buildList(
+                  context,
+                  state.items,
+                  scrollContoller,
+                  searchController,
+                );
               } else if (state is Failure) {
                 return Center(
                   child: Text(
@@ -91,34 +101,51 @@ class ArchiveScreenState extends State<ArchiveScreen> {
   Widget _buildList(
     BuildContext context,
     List<NewsItem> items,
-    ScrollController contoller, {
+    ScrollController scroll,
+    TextEditingController search, {
     bool isLoadingMore = false,
   }) {
-    return CallbackShortcuts(
-      bindings: getCallbackShortcuts(contoller),
-      child: Focus(
-        autofocus: true,
-        child: ListView.builder(
-          controller: contoller,
-          itemCount: items.length + (isLoadingMore ? 1 : 0),
-          itemBuilder: (BuildContext context, int index) {
-            if (index >= items.length) {
-              return const Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Center(child: CircularProgressIndicator()),
-              );
-            }
-
-            NewsItem item = items[index];
-            return JsonFeedTile(
-              key: Key(item.link),
-              onItemTap: () => openItem(context, item),
-              // onItemLongPress: () => explainItem(context, item),
-              item: item,
+    return Column(
+      children: [
+        TextField(
+          controller: search,
+          decoration: const InputDecoration(
+            prefixIcon: Icon(Icons.search),
+            hintText: 'Search archive...',
+          ),
+          onChanged: (value) {
+            context.read<RssArchiveBloc>().add(
+              SearchArchive(query: value.trim()),
             );
           },
         ),
-      ),
+        CallbackShortcuts(
+          bindings: getCallbackShortcuts(scroll),
+          child: Focus(
+            autofocus: true,
+            child: ListView.builder(
+              controller: scroll,
+              itemCount: items.length + (isLoadingMore ? 1 : 0),
+              itemBuilder: (BuildContext context, int index) {
+                if (index >= items.length) {
+                  return const Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                }
+
+                NewsItem item = items[index];
+                return JsonFeedTile(
+                  key: Key(item.link),
+                  onItemTap: () => openItem(context, item),
+                  // onItemLongPress: () => explainItem(context, item),
+                  item: item,
+                );
+              },
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
