@@ -109,39 +109,49 @@ class ArchiveScreenState extends State<ArchiveScreen> {
       children: [
         TextField(
           controller: search,
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
             prefixIcon: Icon(Icons.search),
             hintText: 'Search archive...',
+            border: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey, width: 2),
+              borderRadius: BorderRadius.circular(4),
+            ),
           ),
           onChanged: (value) {
+            if (value.length < 3) {
+              return;
+            }
+
             context.read<RssArchiveBloc>().add(
               SearchArchive(query: value.trim()),
             );
           },
         ),
-        CallbackShortcuts(
-          bindings: getCallbackShortcuts(scroll),
-          child: Focus(
-            autofocus: true,
-            child: ListView.builder(
-              controller: scroll,
-              itemCount: items.length + (isLoadingMore ? 1 : 0),
-              itemBuilder: (BuildContext context, int index) {
-                if (index >= items.length) {
-                  return const Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Center(child: CircularProgressIndicator()),
-                  );
-                }
+        Flexible(
+          child: CallbackShortcuts(
+            bindings: getCallbackShortcuts(scroll),
+            child: Focus(
+              autofocus: true,
+              child: ListView.builder(
+                controller: scroll,
+                itemCount: items.length + (isLoadingMore ? 1 : 0),
+                itemBuilder: (BuildContext context, int index) {
+                  if (index >= items.length) {
+                    return const Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Center(child: CircularProgressIndicator()),
+                    );
+                  }
 
-                NewsItem item = items[index];
-                return JsonFeedTile(
-                  key: Key(item.link),
-                  onItemTap: () => openItem(context, item),
-                  // onItemLongPress: () => explainItem(context, item),
-                  item: item,
-                );
-              },
+                  NewsItem item = items[index];
+                  return JsonFeedTile(
+                    key: Key(item.link),
+                    onItemTap: () => openItem(context, item),
+                    // onItemLongPress: () => explainItem(context, item),
+                    item: item,
+                  );
+                },
+              ),
             ),
           ),
         ),
