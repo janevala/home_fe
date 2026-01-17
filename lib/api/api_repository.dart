@@ -103,6 +103,18 @@ class ApiRepository {
     return null;
   }
 
+  Future<NewsItems?> search({required String query}) async {
+    List<Future<dynamic>> futures = [];
+    futures.add(client.get('/search', parameters: {"code": "123", "q": query}));
+    List<dynamic> results = await Future.wait(futures);
+
+    if (results.isNotEmpty) {
+      return NewsItems.fromJson(results.first.data);
+    }
+
+    return null;
+  }
+
   Future<AnswerBody?> answerToQuestion(QuestionBody questionBody) =>
       client.answerToQuestion(questionBody);
 }

@@ -137,6 +137,23 @@ class RssArchiveBloc extends Bloc<RssEvent, RssState> {
         }
       }
     });
+
+    on<SearchArchive>((event, emit) async {
+      emit(Loading());
+
+      try {
+        NewsItems? newsItems = await apiRepository.search(query: event.query);
+
+        if (newsItems == null || newsItems.items.isEmpty) {
+          emit(RssArchiveSuccess([]));
+          return;
+        }
+
+        emit(RssArchiveSuccess(newsItems.items));
+      } catch (e) {
+        emit(Failure('Failed to search archive'));
+      }
+    });
   }
 }
 
