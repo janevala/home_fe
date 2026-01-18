@@ -41,6 +41,9 @@ class SearchArchive extends RssArchiveEvent {
   SearchArchive({required this.query});
 }
 
+// TODO: this is probably redundant
+class ResetArchive extends RssArchiveEvent {}
+
 class ArchiveLoadMore extends RssEvent {
   final List<NewsItem> items;
 
@@ -84,13 +87,13 @@ class AnswerSuccess extends RssEvent {
 }
 
 class RssSitesBloc extends Bloc<RssEvent, RssState> {
-  ApiRepository apiRepository;
+  ApiRepository repo;
 
-  RssSitesBloc({required this.apiRepository}) : super(Initial()) {
+  RssSitesBloc({required this.repo}) : super(Initial()) {
     on<RssSitesEvent>((event, emit) async {
       emit(Loading());
 
-      RssSites? rssSite = await apiRepository.sites();
+      RssSites? rssSite = await repo.sites();
       if (rssSite == null) {
         emit(Failure('Cannot get RSS sites'));
       } else {
@@ -101,13 +104,21 @@ class RssSitesBloc extends Bloc<RssEvent, RssState> {
 }
 
 class RssArchiveBloc extends Bloc<RssEvent, RssState> {
-  ApiRepository apiRepository;
+  ApiRepository repo;
   int limit = 10;
   int offset = 0;
   bool hasMore = true;
   List<NewsItem> items = [];
 
-  RssArchiveBloc({required this.apiRepository}) : super(Initial()) {
+  RssArchiveBloc({required this.repo}) : super(Initial()) {
+    on<ResetArchive>((event, emit) {
+      limit = 10;
+      offset = 0;
+      hasMore = true;
+      items = [];
+      emit(Initial());
+    });
+
     on<RssArchiveEvent>((event, emit) async {
       if (event is LoadMoreArchive) {
         if (!hasMore) return;
@@ -119,7 +130,7 @@ class RssArchiveBloc extends Bloc<RssEvent, RssState> {
         }
 
         try {
-          NewsItems? newsItems = await apiRepository.archive(
+          NewsItems? newsItems = await repo.archive(
             offset: offset,
             limit: limit,
           );
@@ -145,12 +156,12 @@ class RssArchiveBloc extends Bloc<RssEvent, RssState> {
     });
 
     on<SearchArchive>((event, emit) async {
-      emit(Loading());
-
       try {
-        NewsItems? newsItems = await apiRepository.search(query: event.query);
+        NewsItems? newsItems = await repo.search(query: event.query);
 
-        if (newsItems == null || newsItems.items.isEmpty) {
+        if (newsItems == null) {
+          emit(SearchLoad([]));
+
           return;
         }
 
@@ -163,13 +174,13 @@ class RssArchiveBloc extends Bloc<RssEvent, RssState> {
 }
 
 class QuestionBloc extends Bloc<RssEvent, RssState> {
-  ApiRepository apiRepository;
+  ApiRepository repo;
 
-  QuestionBloc({required this.apiRepository}) : super(Initial()) {
+  QuestionBloc({required this.repo}) : super(Initial()) {
     on<QuestionEvent>((event, emit) async {
       emit(Loading());
 
-      AnswerBody? answer = await apiRepository.answerToQuestion(
+      AnswerBody? answer = await repo.answerToQuestion(
         QuestionBody(event.question),
       );
       if (answer == null) {

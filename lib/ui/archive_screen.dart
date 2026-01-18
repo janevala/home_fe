@@ -16,34 +16,45 @@ class ArchiveScreen extends StatefulWidget {
 }
 
 class ArchiveScreenState extends State<ArchiveScreen> {
-  final scrollContoller = ScrollController();
-  final searchController = TextEditingController();
+  final _scrollContoller = ScrollController();
+  final _searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    _scrollContoller.addListener(_onScroll);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<RssArchiveBloc>().add(ResetArchive());
+      context.read<RssArchiveBloc>().add(LoadMoreArchive());
+    });
+  }
 
   @override
   void dispose() {
-    scrollContoller.dispose();
-    searchController.dispose();
+    _scrollContoller.removeListener(_onScroll);
+    _scrollContoller.dispose();
+    _searchController.dispose();
 
     super.dispose();
   }
 
+  void _onScroll() {
+    if (_scrollContoller.position.pixels >=
+        (_scrollContoller.position.maxScrollExtent)) {
+      context.read<RssArchiveBloc>().add(LoadMoreArchive());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    void onScroll() {
-      if (scrollContoller.position.pixels >=
-          (scrollContoller.position.maxScrollExtent)) {
-        context.read<RssArchiveBloc>().add(LoadMoreArchive());
-      }
-    }
-
-    scrollContoller.addListener(onScroll);
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueGrey,
         foregroundColor: Colors.white,
         iconTheme: const IconThemeData(color: Colors.white),
-        title: const Text('Archive'),
+        title: const Text('News archive'),
         leading: BackButton(
           onPressed: () {
             context.goNamed('dashboard');
@@ -51,154 +62,130 @@ class ArchiveScreenState extends State<ArchiveScreen> {
         ),
       ),
       body: SafeArea(
-        child: BlocProvider<RssArchiveBloc>(
-          create: (context) => context.read<RssArchiveBloc>(),
-          child: Column(
-            children: [
-              TextField(
-                controller: searchController,
-                decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.search),
-                  suffixIcon: IconButton(
-                    icon: Icon(Icons.clear),
-                    onPressed: () {
-                      searchController.clear();
-                      context.read<RssArchiveBloc>().add(LoadMoreArchive());
-                    },
-                  ),
-                  hintText: 'Search archive...',
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey, width: 2),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                ),
-                onChanged: (value) {
-                  if (value.length < 3) {
-                    return;
-                  }
-
-                  context.read<RssArchiveBloc>().add(
-                    SearchArchive(query: value.trim()),
-                  );
-                },
-              ),
-              BlocBuilder<RssArchiveBloc, RssState>(
-                builder: (context, state) {
-                  if (state is Loading) {
-                    return Flexible(child: Center(child: const Spinner()));
-                  } else if (state is Initial) {
+        child: Column(
+          children: [
+            TextField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                prefixIcon: Icon(Icons.search),
+                suffixIcon: IconButton(
+                  icon: Icon(Icons.clear),
+                  onPressed: () {
+                    _searchController.clear();
+                    context.read<RssArchiveBloc>().add(ResetArchive());
                     context.read<RssArchiveBloc>().add(LoadMoreArchive());
-
-                    return Flexible(child: Center(child: const Spinner()));
-                  } else if (state is ArchiveLoad) {
-                    return _buildList(context, state.items, scrollContoller);
-                  } else if (state is ArchiveLoadMore) {
-                    return _buildList(
-                      context,
-                      state.items,
-                      scrollContoller,
-                      isLoadingMore: true,
-                    );
-                  } else if (state is SearchLoad) {
-                    return _buildList(
-                      context,
-                      state.items,
-                      scrollContoller,
-                      animate: true,
-                    );
-                  } else if (state is Failure) {
-                    return Flexible(
-                      child: Center(
-                        child: Text(
-                          state.error,
-                          style: const TextStyle(fontSize: 18),
-                        ),
-                      ),
-                    );
-                  } else {
-                    return Flexible(
-                      child: const Center(
-                        child: Text(
-                          'Something went wrong',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ),
-                    );
-                  }
-                },
+                  },
+                ),
+                hintText: 'Search archive...',
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey, width: 2),
+                  borderRadius: BorderRadius.circular(4),
+                ),
               ),
-            ],
+              onChanged: (value) {
+                if (value.isEmpty) {
+                  context.read<RssArchiveBloc>().add(LoadMoreArchive());
+                } else {
+                  context.read<RssArchiveBloc>().add(
+                    SearchArchive(query: _searchController.text),
+                  );
+                }
+              },
+            ),
+            BlocBuilder<RssArchiveBloc, RssState>(
+              builder: (context, state) {
+                if (state is Loading) {
+                  return Flexible(child: Center(child: const Spinner()));
+                } else if (state is ArchiveLoad) {
+                  return _buildArchiveList(
+                    context,
+                    state.items,
+                    _scrollContoller,
+                  );
+                } else if (state is ArchiveLoadMore) {
+                  return _buildArchiveList(
+                    context,
+                    state.items,
+                    _scrollContoller,
+                    isLoadingMore: true,
+                  );
+                } else if (state is SearchLoad) {
+                  return _buildSearchList(context, state.items);
+                } else if (state is Failure) {
+                  return Flexible(
+                    child: Center(
+                      child: Text(
+                        state.error,
+                        style: const TextStyle(fontSize: 18),
+                      ),
+                    ),
+                  );
+                } else {
+                  return Flexible(
+                    child: const Center(
+                      child: Text(
+                        'Something went wrong',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ),
+                  );
+                }
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildArchiveList(
+    BuildContext context,
+    List<NewsItem> items,
+    ScrollController scroll, {
+    bool isLoadingMore = false,
+  }) {
+    return Flexible(
+      child: CallbackShortcuts(
+        bindings: getCallbackShortcuts(scroll),
+        child: Focus(
+          autofocus: true,
+          child: ListView.builder(
+            controller: scroll,
+            itemCount: items.length + (isLoadingMore ? 1 : 0),
+            itemBuilder: (BuildContext context, int index) {
+              if (index >= items.length) {
+                return Center(child: CircularProgressIndicator());
+              }
+
+              NewsItem item = items[index];
+              return JsonFeedTile(
+                key: Key(item.link),
+                onItemTap: () => openItem(context, item),
+                item: item,
+              );
+            },
           ),
         ),
       ),
     );
   }
 
-  Widget _buildList(
-    BuildContext context,
-    List<NewsItem> items,
-    ScrollController scroll, {
-    bool isLoadingMore = false,
-    bool animate = false,
-  }) {
-    return animate
-        ? Flexible(
-            child: AnimatedOpacity(
-              duration: const Duration(milliseconds: 5000),
-              opacity: 1.0,
-              child: CallbackShortcuts(
-                bindings: getCallbackShortcuts(scroll),
-                child: Focus(
-                  autofocus: true,
-                  child: ListView.builder(
-                    controller: scroll,
-                    itemCount: items.length + (isLoadingMore ? 1 : 0),
-                    itemBuilder: (BuildContext context, int index) {
-                      if (index >= items.length) {
-                        return const Padding(
-                          padding: EdgeInsets.all(16.0),
-                          child: Center(child: CircularProgressIndicator()),
-                        );
-                      }
-
-                      NewsItem item = items[index];
-                      return JsonFeedTile(
-                        key: Key(item.link),
-                        onItemTap: () => openItem(context, item),
-                        item: item,
-                      );
-                    },
-                  ),
-                ),
-              ),
-            ),
-          )
-        : Flexible(
-            child: CallbackShortcuts(
-              bindings: getCallbackShortcuts(scroll),
-              child: Focus(
-                autofocus: true,
-                child: ListView.builder(
-                  controller: scroll,
-                  itemCount: items.length + (isLoadingMore ? 1 : 0),
-                  itemBuilder: (BuildContext context, int index) {
-                    if (index >= items.length) {
-                      return const Padding(
-                        padding: EdgeInsets.all(16.0),
-                        child: Center(child: CircularProgressIndicator()),
-                      );
-                    }
-
-                    NewsItem item = items[index];
-                    return JsonFeedTile(
-                      key: Key(item.link),
-                      onItemTap: () => openItem(context, item),
-                      item: item,
-                    );
-                  },
-                ),
-              ),
-            ),
-          );
+  Widget _buildSearchList(BuildContext context, List<NewsItem> items) {
+    return Flexible(
+      child: Focus(
+        autofocus: true,
+        child: ListView.builder(
+          itemCount: items.length,
+          itemBuilder: (BuildContext context, int index) {
+            NewsItem item = items[index];
+            return JsonFeedTile(
+              key: Key(item.link),
+              onItemTap: () => openItem(context, item),
+              item: item,
+            );
+          },
+        ),
+      ),
+    );
   }
 }

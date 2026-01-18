@@ -6,15 +6,13 @@ part 'rss_sites.g.dart';
 
 @JsonSerializable(ignoreUnannotated: true)
 class RssSites {
-  @JsonKey(name: 'Time')
-  late int time;
   @JsonKey(name: 'Title')
   late String title;
   @JsonKey(name: 'Sites')
   late List<RssSite> sites;
   String error = '';
 
-  RssSites(this.time, this.title, this.sites);
+  RssSites(this.title, this.sites);
 
   RssSites.withError(this.error);
 

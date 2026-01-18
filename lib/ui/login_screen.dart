@@ -24,11 +24,11 @@ class LoginScreenState extends State<LoginScreen> {
     super.initState();
 
     if (kIsWasm) {
-      logger.i("WASM build.");
+      logger.i("WASM build");
     } else if (kIsWeb) {
-      logger.i("WEB build.");
+      logger.i("WEB build");
     } else {
-      logger.i("NATIVE build.");
+      logger.i("NATIVE build");
     }
   }
 
@@ -40,103 +40,92 @@ class LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         backgroundColor: Colors.blueGrey,
         foregroundColor: Colors.white,
-        title: InkWell(
-          onDoubleTap: () {
-            context.read<LoginBloc>().add(LoginEvent(LoginBody('', '', '')));
-          },
-          child: const Text('Enter token'),
-        ),
+        title: const Text('Login'),
       ),
       body: SafeArea(
         child: BlocProvider<LoginBloc>(
           create: (context) => context.read<LoginBloc>(),
-          child: BlocBuilder<LoginBloc, LoginState>(
-            builder: (context, LoginState loginState) {
-              return BlocListener<LoginBloc, LoginState>(
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(32),
-                    child: Form(
-                      key: _formKey,
-                      child: SizedBox(
-                        width: width * 0.6,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: <Widget>[
-                            TextFormField(
-                              decoration: const InputDecoration(
-                                labelText: 'Token',
-                              ),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter token';
-                                }
-                                return null;
-                              },
-                              onChanged: (String value) {
-                                setState(() {
-                                  userName = value;
-                                });
-                              },
-                              onFieldSubmitted: (String value) {
-                                if (_formKey.currentState!.validate()) {
-                                  context.read<LoginBloc>().add(
-                                    LoginEvent(
-                                      LoginBody(userName, '123', 'password'),
-                                    ),
-                                  );
-                                }
-                              },
-                            ),
-                            const SizedBox(height: 24.0),
-                            ElevatedButton(
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  context.read<LoginBloc>().add(
-                                    LoginEvent(
-                                      LoginBody(userName, '123', 'password'),
-                                    ),
-                                  );
-                                }
-                              },
-                              child: const Text('Login'),
-                            ),
-                          ],
+          child: BlocListener<LoginBloc, LoginState>(
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(32),
+                child: Form(
+                  key: _formKey,
+                  child: SizedBox(
+                    width: width * 0.6,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        TextFormField(
+                          decoration: const InputDecoration(labelText: 'Token'),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter token';
+                            }
+                            return null;
+                          },
+                          onChanged: (String value) {
+                            setState(() {
+                              userName = value;
+                            });
+                          },
+                          onFieldSubmitted: (String value) {
+                            if (_formKey.currentState!.validate()) {
+                              context.read<LoginBloc>().add(
+                                LoginEvent(
+                                  LoginBody(userName, '123', 'password'),
+                                ),
+                              );
+                            }
+                          },
                         ),
-                      ),
+                        const SizedBox(height: 32),
+                        ElevatedButton(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              context.read<LoginBloc>().add(
+                                LoginEvent(
+                                  LoginBody(userName, '123', 'password'),
+                                ),
+                              );
+                            }
+                          },
+                          child: const Text('Login'),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-                listener: (BuildContext context, LoginState state) {
-                  if (state is LoginSuccess) {
-                    Token token = state.token;
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('Token: ${token.accessToken}'),
-                        backgroundColor: Colors.green,
-                        duration: const Duration(seconds: 2),
-                      ),
-                    );
-                    if (mounted) {
-                      Future.delayed(const Duration(seconds: 1), () {
-                        // ignore: use_build_context_synchronously
-                        GoRouter.of(context).goNamed('dashboard');
-                      });
-                    }
-                  } else if (state is LoginFailure) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(state.error),
-                        backgroundColor: Colors.red,
-                        duration: const Duration(seconds: 10),
-                      ),
-                    );
-                  } else if (state is LoginLoading) {
-                    const Spinner();
-                  }
-                },
-              );
+              ),
+            ),
+            listener: (BuildContext context, LoginState state) {
+              if (state is LoginSuccess) {
+                Token token = state.token;
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Token: ${token.accessToken}'),
+                    backgroundColor: Colors.green,
+                    duration: const Duration(seconds: 2),
+                  ),
+                );
+                if (mounted) {
+                  Future.delayed(const Duration(seconds: 1), () {
+                    // ignore: use_build_context_synchronously
+                    GoRouter.of(context).goNamed('dashboard');
+                  });
+                }
+              } else if (state is LoginFailure) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(state.error),
+                    backgroundColor: Colors.red,
+                    duration: const Duration(seconds: 10),
+                  ),
+                );
+              } else if (state is LoginLoading) {
+                const Spinner();
+              }
             },
           ),
         ),

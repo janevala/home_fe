@@ -18,13 +18,13 @@ class DashboardScreenState extends State<DashboardScreen> {
       appBar: AppBar(
         backgroundColor: Colors.blueGrey,
         foregroundColor: Colors.white,
-        title: const Text('Home'),
+        title: const Text('News Dashboard'),
       ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(32),
           child: SizedBox(
-            width: width * 0.8,
+            width: width * 0.6,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -34,14 +34,14 @@ class DashboardScreenState extends State<DashboardScreen> {
                     onPressed: () {
                       GoRouter.of(context).goNamed('sites');
                     },
-                    child: const Text('Choose provider'),
+                    child: const Text('Choose news site'),
                   ),
                 if (!kIsWeb && !kIsWasm) const SizedBox(height: 32),
                 ElevatedButton(
                   onPressed: () {
                     GoRouter.of(context).goNamed('archive');
                   },
-                  child: const Text('Choose archive'),
+                  child: const Text('Choose new archive'),
                 ),
               ],
             ),

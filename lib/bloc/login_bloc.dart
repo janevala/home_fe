@@ -28,9 +28,9 @@ class LoginEvent extends LoginState {
 }
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  ApiRepository apiRepository;
+  ApiRepository repo;
 
-  LoginBloc({required this.apiRepository}) : super(LoginInitial()) {
+  LoginBloc({required this.repo}) : super(LoginInitial()) {
     on<LoginEvent>((event, emit) async {
       emit(LoginLoading());
 
@@ -41,7 +41,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         return;
       }
 
-      Token? token = await apiRepository.login(loginBody);
+      Token? token = await repo.login(loginBody);
       if (token == null) {
         emit(LoginFailure('Login failed'));
       } else if (token.error.isNotEmpty) {

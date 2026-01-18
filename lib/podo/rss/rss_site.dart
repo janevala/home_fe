@@ -5,8 +5,6 @@ part 'rss_site.g.dart';
 
 @JsonSerializable()
 class RssSite {
-  @JsonKey(name: 'Uuid')
-  late String uuid;
   @JsonKey(name: 'Title')
   late String title;
   @JsonKey(name: 'Url')
