@@ -53,45 +53,81 @@ class ArchiveScreenState extends State<ArchiveScreen> {
       body: SafeArea(
         child: BlocProvider<RssArchiveBloc>(
           create: (context) => context.read<RssArchiveBloc>(),
-          child: BlocBuilder<RssArchiveBloc, RssState>(
-            builder: (context, state) {
-              if (state is Loading) {
-                return const Spinner();
-              } else if (state is Initial) {
-                context.read<RssArchiveBloc>().add(LoadMoreArchive());
+          child: Column(
+            children: [
+              TextField(
+                controller: searchController,
+                decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.search),
+                  suffixIcon: IconButton(
+                    icon: Icon(Icons.clear),
+                    onPressed: () {
+                      searchController.clear();
+                      context.read<RssArchiveBloc>().add(LoadMoreArchive());
+                    },
+                  ),
+                  hintText: 'Search archive...',
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey, width: 2),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                ),
+                onChanged: (value) {
+                  if (value.length < 3) {
+                    return;
+                  }
 
-                return const Spinner();
-              } else if (state is RssArchiveLoadingMore) {
-                return _buildList(
-                  context,
-                  state.items,
-                  scrollContoller,
-                  searchController,
-                  isLoadingMore: true,
-                );
-              } else if (state is RssArchiveSuccess) {
-                return _buildList(
-                  context,
-                  state.items,
-                  scrollContoller,
-                  searchController,
-                );
-              } else if (state is Failure) {
-                return Center(
-                  child: Text(
-                    state.error,
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                );
-              } else {
-                return const Center(
-                  child: Text(
-                    'Something went wrong',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                );
-              }
-            },
+                  context.read<RssArchiveBloc>().add(
+                    SearchArchive(query: value.trim()),
+                  );
+                },
+              ),
+              BlocBuilder<RssArchiveBloc, RssState>(
+                builder: (context, state) {
+                  if (state is Loading) {
+                    return Flexible(child: Center(child: const Spinner()));
+                  } else if (state is Initial) {
+                    context.read<RssArchiveBloc>().add(LoadMoreArchive());
+
+                    return Flexible(child: Center(child: const Spinner()));
+                  } else if (state is ArchiveLoad) {
+                    return _buildList(context, state.items, scrollContoller);
+                  } else if (state is ArchiveLoadMore) {
+                    return _buildList(
+                      context,
+                      state.items,
+                      scrollContoller,
+                      isLoadingMore: true,
+                    );
+                  } else if (state is SearchLoad) {
+                    return _buildList(
+                      context,
+                      state.items,
+                      scrollContoller,
+                      animate: true,
+                    );
+                  } else if (state is Failure) {
+                    return Flexible(
+                      child: Center(
+                        child: Text(
+                          state.error,
+                          style: const TextStyle(fontSize: 18),
+                        ),
+                      ),
+                    );
+                  } else {
+                    return Flexible(
+                      child: const Center(
+                        child: Text(
+                          'Something went wrong',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                    );
+                  }
+                },
+              ),
+            ],
           ),
         ),
       ),
@@ -101,61 +137,68 @@ class ArchiveScreenState extends State<ArchiveScreen> {
   Widget _buildList(
     BuildContext context,
     List<NewsItem> items,
-    ScrollController scroll,
-    TextEditingController search, {
+    ScrollController scroll, {
     bool isLoadingMore = false,
+    bool animate = false,
   }) {
-    return Column(
-      children: [
-        TextField(
-          controller: search,
-          decoration: InputDecoration(
-            prefixIcon: Icon(Icons.search),
-            hintText: 'Search archive...',
-            border: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey, width: 2),
-              borderRadius: BorderRadius.circular(4),
-            ),
-          ),
-          onChanged: (value) {
-            if (value.length < 3) {
-              return;
-            }
+    return animate
+        ? Flexible(
+            child: AnimatedOpacity(
+              duration: const Duration(milliseconds: 5000),
+              opacity: 1.0,
+              child: CallbackShortcuts(
+                bindings: getCallbackShortcuts(scroll),
+                child: Focus(
+                  autofocus: true,
+                  child: ListView.builder(
+                    controller: scroll,
+                    itemCount: items.length + (isLoadingMore ? 1 : 0),
+                    itemBuilder: (BuildContext context, int index) {
+                      if (index >= items.length) {
+                        return const Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Center(child: CircularProgressIndicator()),
+                        );
+                      }
 
-            context.read<RssArchiveBloc>().add(
-              SearchArchive(query: value.trim()),
-            );
-          },
-        ),
-        Flexible(
-          child: CallbackShortcuts(
-            bindings: getCallbackShortcuts(scroll),
-            child: Focus(
-              autofocus: true,
-              child: ListView.builder(
-                controller: scroll,
-                itemCount: items.length + (isLoadingMore ? 1 : 0),
-                itemBuilder: (BuildContext context, int index) {
-                  if (index >= items.length) {
-                    return const Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Center(child: CircularProgressIndicator()),
-                    );
-                  }
-
-                  NewsItem item = items[index];
-                  return JsonFeedTile(
-                    key: Key(item.link),
-                    onItemTap: () => openItem(context, item),
-                    // onItemLongPress: () => explainItem(context, item),
-                    item: item,
-                  );
-                },
+                      NewsItem item = items[index];
+                      return JsonFeedTile(
+                        key: Key(item.link),
+                        onItemTap: () => openItem(context, item),
+                        item: item,
+                      );
+                    },
+                  ),
+                ),
               ),
             ),
-          ),
-        ),
-      ],
-    );
+          )
+        : Flexible(
+            child: CallbackShortcuts(
+              bindings: getCallbackShortcuts(scroll),
+              child: Focus(
+                autofocus: true,
+                child: ListView.builder(
+                  controller: scroll,
+                  itemCount: items.length + (isLoadingMore ? 1 : 0),
+                  itemBuilder: (BuildContext context, int index) {
+                    if (index >= items.length) {
+                      return const Padding(
+                        padding: EdgeInsets.all(16.0),
+                        child: Center(child: CircularProgressIndicator()),
+                      );
+                    }
+
+                    NewsItem item = items[index];
+                    return JsonFeedTile(
+                      key: Key(item.link),
+                      onItemTap: () => openItem(context, item),
+                      item: item,
+                    );
+                  },
+                ),
+              ),
+            ),
+          );
   }
 }

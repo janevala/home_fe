@@ -41,10 +41,10 @@ class SearchArchive extends RssArchiveEvent {
   SearchArchive({required this.query});
 }
 
-class RssArchiveLoadingMore extends RssEvent {
+class ArchiveLoadMore extends RssEvent {
   final List<NewsItem> items;
 
-  RssArchiveLoadingMore(this.items);
+  ArchiveLoadMore(this.items);
 }
 
 class RssSitesSuccess extends RssEvent {
@@ -59,10 +59,16 @@ class RssFeedSuccess extends RssEvent {
   RssFeedSuccess(this.rssFeed);
 }
 
-class RssArchiveSuccess extends RssEvent {
+class ArchiveLoad extends RssEvent {
   final List<NewsItem> items;
 
-  RssArchiveSuccess(this.items);
+  ArchiveLoad(this.items);
+}
+
+class SearchLoad extends RssEvent {
+  final List<NewsItem> items;
+
+  SearchLoad(this.items);
 }
 
 class QuestionEvent extends RssEvent {
@@ -109,7 +115,7 @@ class RssArchiveBloc extends Bloc<RssEvent, RssState> {
         if (items.isEmpty) {
           emit(Loading());
         } else {
-          emit(RssArchiveLoadingMore(items));
+          emit(ArchiveLoadMore(items));
         }
 
         try {
@@ -124,14 +130,14 @@ class RssArchiveBloc extends Bloc<RssEvent, RssState> {
 
           if (newsItems == null || newsItems.items.isEmpty) {
             hasMore = false;
-            emit(RssArchiveSuccess(items));
+            emit(ArchiveLoad(items));
             return;
           }
 
           items.addAll(newsItems.items);
           offset += limit;
           hasMore = newsItems.items.length == limit && offset < totalItems;
-          emit(RssArchiveSuccess(List.from(items)));
+          emit(ArchiveLoad(List.from(items)));
         } catch (e) {
           emit(Failure('Failed to load more items'));
         }
@@ -145,11 +151,10 @@ class RssArchiveBloc extends Bloc<RssEvent, RssState> {
         NewsItems? newsItems = await apiRepository.search(query: event.query);
 
         if (newsItems == null || newsItems.items.isEmpty) {
-          emit(RssArchiveSuccess([]));
           return;
         }
 
-        emit(RssArchiveSuccess(newsItems.items));
+        emit(SearchLoad(newsItems.items));
       } catch (e) {
         emit(Failure('Failed to search archive'));
       }
