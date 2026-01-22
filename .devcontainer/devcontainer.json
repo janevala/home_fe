@@ -1,10 +1,10 @@
 {
-	"name": "Flutter Dev Container",
+	"name": "front-host",
 	"build": {
 		"dockerfile": "Dockerfile",
 		"context": ".."
 	},
-	"runArgs": ["--network=home-network"],
+	"runArgs": ["--network=home-network", "--name=front-host"],
 	"forwardPorts": [
 		7070
 	],
