@@ -1,4 +1,4 @@
-FROM ghcr.io/cirruslabs/flutter:3.37.0-0.1.pre@sha256:b41daff806047ebaa6629004a94c790f68a0780534d6c0c80becce07c7a15c70 AS builder
+FROM ghcr.io/cirruslabs/flutter:3.38.6 AS builder
 
 WORKDIR /homefe_build
 COPY . .
