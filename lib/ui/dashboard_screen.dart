@@ -18,7 +18,7 @@ class DashboardScreenState extends State<DashboardScreen> {
       appBar: AppBar(
         backgroundColor: Colors.blueGrey,
         foregroundColor: Colors.white,
-        title: const Text('News Dashboard'),
+        title: const Text('News dashboard'),
       ),
       body: Center(
         child: Padding(
