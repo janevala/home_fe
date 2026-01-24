@@ -8,6 +8,7 @@ import 'package:homefe/podo/refreshtoken/refresh_token_body.dart';
 import 'package:homefe/podo/rss/news_items.dart';
 import 'package:homefe/podo/rss/rss_sites.dart';
 import 'package:homefe/podo/token/token.dart';
+import 'package:logger/logger.dart';
 
 class ApiRepository {
   ApiClient client;
@@ -26,18 +27,24 @@ class ApiRepository {
       'client_secret': clientSecret,
     };
 
-    List<Future<dynamic>> futures = [];
-    futures.add(client.post('/auth', parameters: {"code": "123"}, data: data));
-    List<dynamic> results = await Future.wait(futures);
-
-    if (results.isNotEmpty) {
-      return Token(
-        results.first.data,
-        'token_type',
-        'refresh_token',
-        0,
-        'scope',
+    try {
+      List<Future<dynamic>> futures = [];
+      futures.add(
+        client.post('/auth', parameters: {"code": "123"}, data: data),
       );
+      List<dynamic> results = await Future.wait(futures);
+
+      if (results.isNotEmpty) {
+        return Token(
+          results.first.data,
+          'token_type',
+          'refresh_token',
+          0,
+          'scope',
+        );
+      }
+    } catch (e) {
+      Logger().e('Error during login: $e');
     }
 
     return null;
@@ -55,18 +62,24 @@ class ApiRepository {
       'client_secret': clientSecret,
     };
 
-    List<Future<dynamic>> futures = [];
-    futures.add(client.post('/auth', parameters: {"code": "123"}, data: data));
-    List<dynamic> results = await Future.wait(futures);
-
-    if (results.isNotEmpty) {
-      return Token(
-        results.first.data,
-        'token_type',
-        'refresh_token',
-        0,
-        'scope',
+    try {
+      List<Future<dynamic>> futures = [];
+      futures.add(
+        client.post('/auth', parameters: {"code": "123"}, data: data),
       );
+      List<dynamic> results = await Future.wait(futures);
+
+      if (results.isNotEmpty) {
+        return Token(
+          results.first.data,
+          'token_type',
+          'refresh_token',
+          0,
+          'scope',
+        );
+      }
+    } catch (e) {
+      Logger().e('Error refreshing token: $e');
     }
 
     return null;
