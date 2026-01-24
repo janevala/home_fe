@@ -112,7 +112,7 @@ class LoginScreenState extends State<LoginScreen> {
                 if (mounted) {
                   Future.delayed(const Duration(seconds: 1), () {
                     // ignore: use_build_context_synchronously
-                    GoRouter.of(context).goNamed('dashboard');
+                    GoRouter.of(context).go('/dashboard');
                   });
                 }
               } else if (state is LoginFailure) {

@@ -72,35 +72,30 @@ class MyApp extends StatelessWidget {
 final GoRouter router = GoRouter(
   routes: <RouteBase>[
     GoRoute(
-      name: 'login',
       path: '/',
       builder: (BuildContext context, GoRouterState state) {
         return const LoginScreen();
       },
       routes: <RouteBase>[
         GoRoute(
-          name: 'dashboard',
           path: 'dashboard',
           builder: (BuildContext context, GoRouterState state) {
             return const DashboardScreen();
           },
         ),
         GoRoute(
-          name: 'sites',
           path: 'sites',
           builder: (BuildContext context, GoRouterState state) {
             return const SitesScreen();
           },
         ),
         GoRoute(
-          name: 'site',
           path: 'site',
           builder: (BuildContext context, GoRouterState state) {
             return FeedScreen(rssSite: state.extra as RssSite);
           },
         ),
         GoRoute(
-          name: 'archive',
           path: 'archive',
           builder: (BuildContext context, GoRouterState state) {
             return const ArchiveScreen();

@@ -24,7 +24,7 @@ class SitesScreenState extends State<SitesScreen> {
         title: const Text('News sites'),
         leading: BackButton(
           onPressed: () {
-            context.goNamed('dashboard');
+            context.go('/dashboard');
           },
         ),
       ),
@@ -61,9 +61,8 @@ class SitesScreenState extends State<SitesScreen> {
                           ),
                           child: InkWell(
                             borderRadius: BorderRadius.circular(12),
-                            onTap: () => GoRouter.of(
-                              context,
-                            ).goNamed('site', extra: site),
+                            onTap: () =>
+                                GoRouter.of(context).go('/site', extra: site),
                             child: Padding(
                               padding: const EdgeInsets.all(16),
                               child: Column(
