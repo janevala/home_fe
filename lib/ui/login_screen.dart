@@ -120,7 +120,7 @@ class LoginScreenState extends State<LoginScreen> {
                   SnackBar(
                     content: Text(state.error),
                     backgroundColor: Colors.red,
-                    duration: const Duration(seconds: 10),
+                    duration: const Duration(seconds: 2),
                   ),
                 );
               } else if (state is LoginLoading) {

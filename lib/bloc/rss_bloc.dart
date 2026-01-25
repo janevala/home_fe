@@ -41,6 +41,8 @@ class SearchArchive extends RssArchiveEvent {
   SearchArchive({required this.query});
 }
 
+class RefreshArchive extends RssArchiveEvent {}
+
 // TODO: this is probably redundant
 class ResetArchive extends RssArchiveEvent {}
 
@@ -72,6 +74,12 @@ class SearchLoad extends RssEvent {
   final List<NewsItem> items;
 
   SearchLoad(this.items);
+}
+
+class ArchiveRefreshDone extends RssEvent {
+  final String message;
+
+  ArchiveRefreshDone(this.message);
 }
 
 class QuestionEvent extends RssEvent {
@@ -168,6 +176,16 @@ class RssArchiveBloc extends Bloc<RssEvent, RssState> {
         emit(SearchLoad(newsItems.items));
       } catch (e) {
         emit(Failure('Failed to search archive'));
+      }
+    });
+
+    on<RefreshArchive>((event, emit) async {
+      emit(Loading());
+      final (returnCode, data) = await repo.refresh();
+      if (returnCode == 200) {
+        emit(ArchiveRefreshDone(data));
+      } else {
+        emit(Failure('Error: $data'));
       }
     });
   }
