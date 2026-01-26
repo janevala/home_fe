@@ -188,13 +188,7 @@ class RssArchiveBloc extends Bloc<RssEvent, RssState> {
         emit(Failure('Error: $data'));
       }
     });
-  }
-}
 
-class QuestionBloc extends Bloc<RssEvent, RssState> {
-  ApiRepository repo;
-
-  QuestionBloc({required this.repo}) : super(Initial()) {
     on<QuestionEvent>((event, emit) async {
       emit(Loading());
 
