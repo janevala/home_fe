@@ -130,7 +130,7 @@ class ApiRepository {
 
   Future<(int, String)> refresh() async {
     List<Future<dynamic>> futures = [];
-    futures.add(client.post('/refresh', parameters: {"code": "123"}));
+    futures.add(client.get('/refresh', parameters: {"code": "123"}));
     List<dynamic> results = await Future.wait(futures);
 
     if (results.isNotEmpty) {
