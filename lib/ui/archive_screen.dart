@@ -160,12 +160,13 @@ class ArchiveScreenState extends State<ArchiveScreen> {
               NewsItem item = items[index];
               return JsonFeedTile(
                 key: Key(item.link),
-                onItemTap: () => openItem(context, item),
-                onItemLongPress: () {
+                onItemTap: () {
                   String question =
                       'Translate the following text to English:\n\n${item.title}\n\n${parseDescription(item, false)}';
                   context.read<RssFeedBloc>().add(QuestionEvent(question));
                 },
+                // onItemTap: () => openItem(context, item),
+                onItemLongPress: () {},
                 item: item,
               );
             },

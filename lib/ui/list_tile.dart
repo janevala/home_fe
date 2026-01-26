@@ -50,7 +50,7 @@ class JsonFeedTile extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
       child: InkWell(
         onTap: onItemTap,
-        onLongPress: null,
+        onLongPress: onItemLongPress,
         borderRadius: BorderRadius.circular(12),
         child: Padding(
           padding: const EdgeInsets.all(16),
