@@ -128,6 +128,20 @@ class ApiRepository {
     return null;
   }
 
+  Future<(int, String)> refresh() async {
+    List<Future<dynamic>> futures = [];
+    futures.add(client.post('/refresh', parameters: {"code": "123"}));
+    List<dynamic> results = await Future.wait(futures);
+
+    if (results.isNotEmpty) {
+      int returnCode = results.first.statusCode;
+      String data = results.first.data.toString();
+      return (returnCode, data);
+    }
+
+    return (500, 'Unknown error');
+  }
+
   Future<AnswerBody?> answerToQuestion(QuestionBody questionBody) =>
       client.answerToQuestion(questionBody);
 }
