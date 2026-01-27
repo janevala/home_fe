@@ -63,14 +63,14 @@ class DashboardScreenState extends State<DashboardScreen> {
                   if (!kIsWeb && !kIsWasm)
                     ElevatedButton(
                       onPressed: () {
-                        GoRouter.of(context).go('/sites');
+                        GoRouter.of(context).push('/sites');
                       },
                       child: const Text('Choose news site'),
                     ),
                   if (!kIsWeb && !kIsWasm) const SizedBox(height: 32),
                   ElevatedButton(
                     onPressed: () {
-                      GoRouter.of(context).go('/archive');
+                      GoRouter.of(context).push('/archive');
                     },
                     child: const Text('Choose new archive'),
                   ),

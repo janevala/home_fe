@@ -57,7 +57,7 @@ class ArchiveScreenState extends State<ArchiveScreen> {
         title: const Text('News archive'),
         leading: BackButton(
           onPressed: () {
-            context.go('/dashboard');
+            context.pop();
           },
         ),
       ),

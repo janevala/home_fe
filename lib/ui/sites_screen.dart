@@ -24,7 +24,7 @@ class SitesScreenState extends State<SitesScreen> {
         title: const Text('News sites'),
         leading: BackButton(
           onPressed: () {
-            context.go('/dashboard');
+            context.pop();
           },
         ),
       ),
