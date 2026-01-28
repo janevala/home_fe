@@ -41,6 +41,12 @@ class SearchArchive extends RssArchiveEvent {
   SearchArchive({required this.query});
 }
 
+class QuestionEvent extends RssArchiveEvent {
+  final String question;
+
+  QuestionEvent(this.question);
+}
+
 class RefreshArchive extends RssArchiveEvent {}
 
 // TODO: this is probably redundant
@@ -80,12 +86,6 @@ class ArchiveRefreshDone extends RssEvent {
   final String message;
 
   ArchiveRefreshDone(this.message);
-}
-
-class QuestionEvent extends RssEvent {
-  final String question;
-
-  QuestionEvent(this.question);
 }
 
 class AnswerSuccess extends RssEvent {
@@ -195,7 +195,7 @@ class RssArchiveBloc extends Bloc<RssEvent, RssState> {
       AnswerBody? answer = await repo.answerToQuestion(
         QuestionBody(event.question),
       );
-      if (answer == null) {
+      if (answer == null || answer.answer.isEmpty) {
         emit(Failure('Cannot get answer'));
       } else {
         emit(AnswerSuccess(answer.answer));

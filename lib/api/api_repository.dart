@@ -142,6 +142,23 @@ class ApiRepository {
     return (500, 'Unknown error');
   }
 
-  Future<AnswerBody?> answerToQuestion(QuestionBody questionBody) =>
-      client.answerToQuestion(questionBody);
+  Future<AnswerBody?> answerToQuestion(QuestionBody questionBody) async {
+    Map<String, dynamic> data = {'question': questionBody.question};
+
+    try {
+      List<Future<dynamic>> futures = [];
+      futures.add(
+        client.post('/translate', parameters: {"code": "123"}, data: data),
+      );
+      List<dynamic> results = await Future.wait(futures);
+
+      if (results.isNotEmpty) {
+        return AnswerBody.fromJson(results.first.data);
+      }
+    } catch (e) {
+      return AnswerBody.withError('Error: $e');
+    }
+
+    return null;
+  }
 }

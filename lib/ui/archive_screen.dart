@@ -64,6 +64,14 @@ class ArchiveScreenState extends State<ArchiveScreen> {
       body: SafeArea(
         child: Column(
           children: [
+            // ElevatedButton(
+            //   onPressed: () {
+            //     context.read<RssArchiveBloc>().add(
+            //       QuestionEvent('translate to french: short squeeze'),
+            //     );
+            //   },
+            //   child: Text('Refresh'),
+            // ),
             TextField(
               controller: _searchController,
               decoration: InputDecoration(
@@ -160,13 +168,7 @@ class ArchiveScreenState extends State<ArchiveScreen> {
               NewsItem item = items[index];
               return JsonFeedTile(
                 key: Key(item.link),
-                onItemTap: () {
-                  String question =
-                      'Translate the following text to English:\n\n${item.title}\n\n${parseDescription(item, false)}';
-                  context.read<RssFeedBloc>().add(QuestionEvent(question));
-                },
-                // onItemTap: () => openItem(context, item),
-                onItemLongPress: () {},
+                onItemTap: () => openItem(context, item),
                 item: item,
               );
             },
