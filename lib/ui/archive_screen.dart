@@ -64,14 +64,6 @@ class ArchiveScreenState extends State<ArchiveScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            // ElevatedButton(
-            //   onPressed: () {
-            //     context.read<RssArchiveBloc>().add(
-            //       QuestionEvent('translate to french: short squeeze'),
-            //     );
-            //   },
-            //   child: Text('Refresh'),
-            // ),
             TextField(
               controller: _searchController,
               decoration: InputDecoration(
@@ -128,6 +120,15 @@ class ArchiveScreenState extends State<ArchiveScreen> {
                       ),
                     ),
                   );
+                } else if (state is AnswerSuccess) {
+                  return Flexible(
+                    child: Center(
+                      child: Text(
+                        state.answer,
+                        style: const TextStyle(fontSize: 18),
+                      ),
+                    ),
+                  );
                 } else {
                   return Flexible(
                     child: const Center(
@@ -169,6 +170,11 @@ class ArchiveScreenState extends State<ArchiveScreen> {
               return JsonFeedTile(
                 key: Key(item.link),
                 onItemTap: () => openItem(context, item),
+                onItemLongPress: () {
+                  context.read<RssArchiveBloc>().add(
+                    QuestionEvent('translate to spanish: ${item.title}'),
+                  );
+                },
                 item: item,
               );
             },
