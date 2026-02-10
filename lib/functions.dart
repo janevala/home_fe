@@ -16,7 +16,7 @@ Future<String?> readBaseUrl() async {
 }
 
 String parseDescription(NewsItem item, bool cutLong) {
-  if (item.source == 'Dpreview') {
+  if (item.source == 'Dpreview' || item.source == 'Hacker News') {
     return item.title;
   }
 
