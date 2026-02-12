@@ -23,6 +23,7 @@ dependencies:
   json_annotation: 4.9.0
   collection: 1.19.1
   logger: 2.6.2
+  two_dimensional_scrollables: 0.3.8
 
 dev_dependencies:
   flutter_test:
