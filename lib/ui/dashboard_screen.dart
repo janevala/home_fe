@@ -51,33 +51,47 @@ class DashboardScreenState extends State<DashboardScreen> {
             );
           }
         },
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(32),
-            child: SizedBox(
-              width: width * 0.6,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  if (!kIsWeb && !kIsWasm)
-                    ElevatedButton(
-                      onPressed: () {
-                        GoRouter.of(context).push('/sites');
-                      },
-                      child: const Text('Choose news site'),
-                    ),
-                  if (!kIsWeb && !kIsWasm) const SizedBox(height: 32),
-                  ElevatedButton(
-                    onPressed: () {
-                      GoRouter.of(context).push('/archive');
-                    },
-                    child: const Text('Choose new archive'),
+        child: BlocBuilder<RssArchiveBloc, RssState>(
+          builder: (context, state) {
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.all(32),
+                child: SizedBox(
+                  width: width * 0.6,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      if (!kIsWeb && !kIsWasm)
+                        ElevatedButton(
+                          onPressed: () {
+                            GoRouter.of(context).push('/sites');
+                          },
+                          child: const Text('Choose news site'),
+                        ),
+                      if (!kIsWeb && !kIsWasm) const SizedBox(height: 32),
+                      ElevatedButton(
+                        style: state is SlowLoading
+                            ? ButtonStyle(
+                                backgroundColor: WidgetStateProperty.all(
+                                  Colors.blueGrey,
+                                ),
+                                foregroundColor: WidgetStateProperty.all(
+                                  Colors.grey[200],
+                                ),
+                              )
+                            : null,
+                        onPressed: state is SlowLoading
+                            ? null
+                            : () => GoRouter.of(context).push('/archive'),
+                        child: const Text('Choose new archive'),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
-          ),
+            );
+          },
         ),
       ),
     );

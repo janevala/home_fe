@@ -17,6 +17,8 @@ class Initial extends RssEvent {}
 
 class Loading extends RssEvent {}
 
+class SlowLoading extends Loading {}
+
 class Failure extends RssEvent {
   final String error;
 
@@ -180,7 +182,7 @@ class RssArchiveBloc extends Bloc<RssEvent, RssState> {
     });
 
     on<RefreshArchive>((event, emit) async {
-      emit(Loading());
+      emit(SlowLoading());
       final (returnCode, data) = await repo.refresh();
       if (returnCode == 200) {
         emit(ArchiveRefreshDone(data));
