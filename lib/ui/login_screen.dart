@@ -7,6 +7,7 @@ import 'package:homefe/podo/login/login_body.dart';
 import 'package:homefe/podo/token/token.dart';
 import 'package:homefe/ui/spinner.dart';
 import 'package:flutter/foundation.dart';
+import 'package:homefe/constants/app_version.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -24,11 +25,11 @@ class LoginScreenState extends State<LoginScreen> {
     super.initState();
 
     if (kIsWasm) {
-      logger.i("WASM build");
+      logger.i("WASM build $appVersion");
     } else if (kIsWeb) {
-      logger.i("WEB build");
+      logger.i("WEB build $appVersion");
     } else {
-      logger.i("NATIVE build");
+      logger.i("NATIVE build $appVersion");
     }
   }
 

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:homefe/api/api_client.dart';
 import 'package:homefe/podo/answer/answer_body.dart';
+import 'package:homefe/podo/backend/config.dart';
 import 'package:homefe/podo/login/login_body.dart';
 import 'package:homefe/podo/question/question_body.dart';
 import 'package:homefe/podo/refreshtoken/refresh_token_body.dart';
@@ -157,6 +158,18 @@ class ApiRepository {
       }
     } catch (e) {
       return AnswerBody.withError('Error: $e');
+    }
+
+    return null;
+  }
+
+  Future<Config?> getConfig() async {
+    List<Future<dynamic>> futures = [];
+    futures.add(client.get('/jq', parameters: {"code": "123"}));
+    List<dynamic> results = await Future.wait(futures);
+
+    if (results.isNotEmpty) {
+      return Config.fromJson(results.first.data);
     }
 
     return null;

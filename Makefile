@@ -4,10 +4,9 @@
 # Build options do web version, debug and release
 # Run option does debug version of OS binary, and runs it. This is just for development purposes
 
-# TODO: do windows vs linux run option later
-
-GOOS=linux
+GOOS ?= linux
 BUILDARCH ?= $(shell uname -m)
+VERSION := $(shell git describe --always --long --dirty)
 
 ifeq ($(BUILDARCH),aarch64)
 	BUILDARCH=arm64
@@ -15,31 +14,6 @@ endif
 ifeq ($(BUILDARCH),x86_64)
 	BUILDARCH=amd64
 endif
-
-dep:
-	flutter doctor
-	flutter clean
-	flutter pub get
-
-build: clean
-	dart run build_runner build --delete-conflicting-outputs
-	flutter build web --no-wasm-dry-run --debug -t lib/main.dart --base-href /
-
-debug: build
-
-release: clean
-	dart --disable-analytics
-	run build_runner build --delete-conflicting-outputs
-	flutter build web --wasm --release -t lib/main.dart --base-href /
-
-run: clean
-	flutter build linux --debug
-	./build/linux/x64/debug/bundle/homefe
-
-clean:
-	flutter clean
-
-rebuild: clean build
 
 help:
 	@echo "Available targets:"
@@ -51,3 +25,29 @@ help:
 	@echo "  clean     - Clean up the build directory"
 	@echo "  rebuild   - Rebuild the application"
 	@echo "  help      - Show this help message"
+
+dep:
+	flutter doctor
+	flutter clean
+	dart run build_runner build --delete-conflicting-outputs
+	flutter pub get
+
+build: clean
+	dart run build_runner build --delete-conflicting-outputs
+	flutter build web --no-wasm-dry-run --debug -t lib/main.dart --base-href / --dart-define=APP_VERSION=$(VERSION)
+
+debug: build
+
+release: clean
+	dart --disable-analytics
+	dart run build_runner build --delete-conflicting-outputs
+	flutter build web --wasm --release -t lib/main.dart --base-href / --dart-define=APP_VERSION=$(VERSION)
+
+linux: clean
+	flutter build linux --debug --dart-define=APP_VERSION=$(VERSION)
+	./build/linux/x64/debug/bundle/homefe
+
+clean:
+	flutter clean
+
+rebuild: clean build

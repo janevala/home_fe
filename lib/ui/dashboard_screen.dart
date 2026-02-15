@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:homefe/bloc/rss_bloc.dart';
+import 'package:homefe/constants/app_version.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -14,6 +15,10 @@ class DashboardScreen extends StatefulWidget {
 class DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<RssArchiveBloc>().add(ConfigEvent());
+    });
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<RssArchiveBloc>().add(RefreshArchive());
     });
@@ -37,6 +42,19 @@ class DashboardScreenState extends State<DashboardScreen> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.message),
+                backgroundColor: Colors.blueGrey,
+                duration: const Duration(seconds: 2),
+              ),
+            );
+          } else if (state is ConfigSuccess) {
+            String backendVersion = state.config.version;
+            String frontendVersion = appVersion;
+
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  'Backend: $backendVersion, Frontend: $frontendVersion',
+                ),
                 backgroundColor: Colors.blueGrey,
                 duration: const Duration(seconds: 2),
               ),

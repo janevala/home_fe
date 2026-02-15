@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:homefe/api/api_repository.dart';
 import 'package:homefe/logger/logger.dart';
 import 'package:homefe/podo/answer/answer_body.dart';
+import 'package:homefe/podo/backend/config.dart';
 import 'package:homefe/podo/question/question_body.dart';
 import 'package:homefe/podo/rss/news_item.dart';
 import 'package:homefe/podo/rss/news_items.dart';
@@ -49,6 +50,8 @@ class QuestionEvent extends RssArchiveEvent {
   QuestionEvent(this.question);
 }
 
+class ConfigEvent extends RssArchiveEvent {}
+
 class RefreshArchive extends RssArchiveEvent {}
 
 // TODO: this is probably redundant
@@ -94,6 +97,12 @@ class AnswerSuccess extends RssEvent {
   final String answer;
 
   AnswerSuccess(this.answer);
+}
+
+class ConfigSuccess extends RssEvent {
+  final Config config;
+
+  ConfigSuccess(this.config);
 }
 
 class RssSitesBloc extends Bloc<RssEvent, RssState> {
@@ -201,6 +210,17 @@ class RssArchiveBloc extends Bloc<RssEvent, RssState> {
         emit(Failure('Cannot get answer'));
       } else {
         emit(AnswerSuccess(answer.answer));
+      }
+    });
+
+    on<ConfigEvent>((event, emit) async {
+      emit(Loading());
+
+      Config? config = await repo.getConfig();
+      if (config == null) {
+        emit(Failure('Cannot get config'));
+      } else {
+        emit(ConfigSuccess(config));
       }
     });
   }
