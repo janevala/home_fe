@@ -10,7 +10,8 @@
             "args": [
                 "--web-browser-flag",
                 "--disable-web-security",
-                "--web-port=7070"
+                "--web-port=7070",
+                "--dart-define=APP_VERSION=vscode",
             ]
         },
     ]
