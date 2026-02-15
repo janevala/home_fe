@@ -1,4 +1,6 @@
 // ignore: depend_on_referenced_packages
+import 'package:homefe/podo/backend/database.dart';
+import 'package:homefe/podo/backend/http.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'config.g.dart';
@@ -21,10 +23,10 @@ class Config {
   late int numGomaxprocs;
   @JsonKey(name: 'num_cgo_call')
   late int numCgoCall;
-  // @JsonKey(name: 'db_stats')
-  // late String dbStats;
-  // @JsonKey(name: 'http_stats')
-  // late String httpStats;
+  @JsonKey(name: 'db_stats')
+  late DatabaseStats dbStats;
+  @JsonKey(name: 'http_stats')
+  late HttpStats httpStats;
 
   Config(
     this.os,
@@ -35,8 +37,8 @@ class Config {
     this.numGoroutine,
     this.numGomaxprocs,
     this.numCgoCall,
-    // this.dbStats,
-    // this.httpStats,
+    this.dbStats,
+    this.httpStats,
   );
 
   factory Config.fromJson(Map<String, dynamic> json) => _$ConfigFromJson(json);
