@@ -181,6 +181,7 @@ class JsonFeedTile extends StatelessWidget {
     return null;
   }
 
+  // TODO this should be handled, or removed, now its forgotten
   void _copyToClipboard(String text, BuildContext context) {
     Clipboard.setData(ClipboardData(text: text));
     ScaffoldMessenger.of(
