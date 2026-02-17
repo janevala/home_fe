@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="25" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Neon outer ring -->
+  <circle cx="512" cy="512" r="420"
+          stroke="#ffd400"
+          stroke-width="40"
+          fill="none"
+          filter="url(#glow)"/>
+
+  <!-- Inner dark glass circle -->
+  <circle cx="512" cy="512" r="380"
+          fill="#0a0f1a"
+          opacity="0.9"/>
+
+  <!-- Text -->
+  <text x="50%" y="55%"
+        text-anchor="middle"
+        font-family="Arial, Helvetica, sans-serif"
+        font-size="280"
+        fill="#ffd400"
+        filter="url(#glow)"
+        font-weight="bold">
+    DP
+  </text>
+</svg>

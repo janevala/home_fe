@@ -7,6 +7,7 @@ part of 'config.dart';
 // **************************************************************************
 
 Config _$ConfigFromJson(Map<String, dynamic> json) => Config(
+  json['uptime'] as String,
   json['os'] as String,
   json['arch'] as String,
   json['version'] as String,
@@ -20,6 +21,7 @@ Config _$ConfigFromJson(Map<String, dynamic> json) => Config(
 );
 
 Map<String, dynamic> _$ConfigToJson(Config instance) => <String, dynamic>{
+  'uptime': instance.uptime,
   'os': instance.os,
   'arch': instance.arch,
   'version': instance.version,

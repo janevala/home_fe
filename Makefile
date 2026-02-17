@@ -34,17 +34,23 @@ dep:
 
 build: clean
 	dart run build_runner build --delete-conflicting-outputs
-	flutter build web --no-wasm-dry-run --debug -t lib/main.dart --base-href / --dart-define=APP_VERSION=$(VERSION)
+	flutter build web --no-wasm-dry-run --debug -t lib/main.dart --base-href / --dart-define=APP_VERSION=$(VERSION) --dart-define=BRAND="Debug News"
 
 debug: build
 
 release: clean
 	dart --disable-analytics
 	dart run build_runner build --delete-conflicting-outputs
-	flutter build web --wasm --release -t lib/main.dart --base-href / --dart-define=APP_VERSION=$(VERSION)
+	flutter build web --wasm --release -t lib/main.dart --base-href / --dart-define=APP_VERSION=$(VERSION) --dart-define=BRAND="Tech-Heavy News"
+
+chrome: clean
+	flutter run -d chrome --web-port 7070 --dart-define=APP_VERSION=$(VERSION) --dart-define=BRAND="Debug News"
+
+web: chrome
 
 linux: clean
-	flutter build linux --debug --dart-define=APP_VERSION=$(VERSION)
+# 	flutter run -d linux --debug --dart-define=APP_VERSION=$(VERSION) --enable-software-rendering
+	flutter build linux --debug --dart-define=APP_VERSION=$(VERSION) --dart-define=BRAND="Debug News"
 	./build/linux/x64/debug/bundle/homefe
 
 clean:

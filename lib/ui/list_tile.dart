@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:homefe/functions.dart';
 import 'package:homefe/podo/rss/news_item.dart';
 import 'package:homefe/podo/rss/rss_site.dart';
+import 'package:rss_dart/domain/rss_item.dart';
 import 'package:timeago/timeago.dart' as timeago;
-import 'package:webfeed/webfeed.dart';
 import 'package:collection/collection.dart';
 
 class JsonFeedTile extends StatelessWidget {
@@ -101,7 +102,7 @@ class JsonFeedTile extends StatelessWidget {
   }
 
   Widget _buildFooter(ThemeData theme, BuildContext context) {
-    Image? image = _getImage();
+    SvgPicture? image = _getImage();
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -127,26 +128,26 @@ class JsonFeedTile extends StatelessWidget {
     );
   }
 
-  Widget _buildImagePreview(Image? image) {
+  Widget _buildImagePreview(SvgPicture? image) {
     return ClipRRect(borderRadius: BorderRadius.circular(8), child: image);
   }
 
-  /// TEMPORARY JUST TO SEE UI, WILL BE DONE IN BACKEND
   final Map<String, String> _urlMap = {
-    "": "assets/thumbnails/Copilot_20251021_202857.png",
-    "Phoronix": "assets/thumbnails/Copilot_20251021_194755.png",
-    "Slashdot": "assets/thumbnails/Copilot_20251021_194619.png",
-    "Tom's Hardware": "assets/thumbnails/Copilot_20251021_194521.png",
-    "TechCrunch": "assets/thumbnails/Copilot_20251021_194404.png",
-    "Dpreview": "assets/thumbnails/Copilot_20251024_195657.png",
-    "Ars Technica": "assets/thumbnails/Copilot_20251021_202857.png",
-    "Hacker News": "assets/thumbnails/Copilot_20251021_202857.png",
+    "": "assets/thumbnails/random-source.svg",
+    "Phoronix": "assets/thumbnails/phoronix.svg",
+    "Slashdot": "assets/thumbnails/slashdot.svg",
+    "TechCrunch": "assets/thumbnails/techcrunch.svg",
+    "Dpreview": "assets/thumbnails/dpreview.svg",
+    "Tom's Hardware": "assets/thumbnails/toms-hardware.svg",
+    "Ars Technica": "assets/thumbnails/ars-technica.svg",
+    "Hacker News": "assets/thumbnails/hacker-news.svg",
   };
 
-  Image? _getImage() {
+  SvgPicture? _getImage() {
     if (item.source == null) {
-      return const Image(
-        image: AssetImage('assets/thumbnails/Copilot_20251021_202857.png'),
+      return SvgPicture.asset(
+        'assets/thumbnails/random-source.svg',
+        key: const ValueKey('random-source'),
         width: 80,
         height: 80,
       );
@@ -161,7 +162,12 @@ class JsonFeedTile extends StatelessWidget {
               .firstWhereOrNull((entry) => entry.key == key)
               ?.value;
           if (value != null) {
-            return Image(image: AssetImage(value), width: 80, height: 80);
+            return SvgPicture.asset(
+              value,
+              key: ValueKey(value),
+              width: 80,
+              height: 80,
+            );
           } else {
             return null;
           }
@@ -207,8 +213,18 @@ class RssFeedTile extends StatelessWidget {
   );
 
   String _formatDate() {
-    if (item.pubDate == null) return '';
-    return timeago.format(item.pubDate!, locale: 'en');
+    if (item.pubDate != null) {
+      try {
+        DateTime pubDate = DateTime.parse(
+          item.pubDate!,
+        ); // TODO: this is buggy, after plugin upgrades
+        return timeago.format(pubDate, locale: 'en');
+      } catch (e) {
+        return '';
+      }
+    }
+
+    return '';
   }
 
   Widget _buildHeader(TextTheme textTheme) {

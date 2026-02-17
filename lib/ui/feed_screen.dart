@@ -8,7 +8,7 @@ import 'package:homefe/podo/rss/rss_site.dart';
 import 'package:homefe/ui/callback_shortcuts.dart';
 import 'package:homefe/ui/list_tile.dart';
 import 'package:homefe/ui/spinner.dart';
-import 'package:webfeed/webfeed.dart';
+import 'package:rss_dart/domain/rss_item.dart';
 
 class FeedScreen extends StatefulWidget {
   final RssSite rssSite;
@@ -62,9 +62,9 @@ class FeedScreenState extends State<FeedScreen> {
                     autofocus: true,
                     child: ListView.builder(
                       controller: controller,
-                      itemCount: state.rssFeed.items!.length,
+                      itemCount: state.rssFeed.items.length,
                       itemBuilder: (BuildContext context, int index) {
-                        RssItem item = state.rssFeed.items![index];
+                        RssItem item = state.rssFeed.items[index];
 
                         return RssFeedTile(
                           openItem: () => openItem(

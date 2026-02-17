@@ -8,7 +8,7 @@ import 'package:homefe/podo/question/question_body.dart';
 import 'package:homefe/podo/rss/news_item.dart';
 import 'package:homefe/podo/rss/news_items.dart';
 import 'package:homefe/podo/rss/rss_sites.dart';
-import 'package:webfeed/webfeed.dart';
+import 'package:rss_dart/domain/rss_feed.dart';
 
 abstract class RssState {}
 
@@ -226,7 +226,6 @@ class RssArchiveBloc extends Bloc<RssEvent, RssState> {
   }
 }
 
-/// DIRECT FEED RETRIEVAL
 class RssFeedBloc extends Bloc<RssEvent, RssState> {
   RssFeedBloc() : super(Initial()) {
     on<RssFeedEvent>((event, emit) async {

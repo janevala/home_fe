@@ -13,17 +13,18 @@ dependencies:
     sdk: flutter
   dio: 5.9.0
   flutter_bloc: 9.1.1
-  webfeed: 0.7.0
+  rss_dart: 1.0.14
   html: 0.15.6
-  intl: 0.17.0
+  intl: 0.20.2
   go_router: 15.1.1
   url_launcher: 6.3.1
-  timeago: 3.3.0
+  timeago: 3.7.1
   cached_network_image: 3.4.1
   json_annotation: 4.9.0
   collection: 1.19.1
   logger: 2.6.2
   two_dimensional_scrollables: 0.3.8
+  flutter_svg: 2.2.1
 
 dev_dependencies:
   flutter_test:
@@ -41,9 +42,11 @@ flutter:
   uses-material-design: true
   assets:
     - api/.api
-    - assets/thumbnails/Copilot_20251021_194404.png
-    - assets/thumbnails/Copilot_20251021_194521.png
-    - assets/thumbnails/Copilot_20251021_194619.png
-    - assets/thumbnails/Copilot_20251021_194755.png
-    - assets/thumbnails/Copilot_20251021_202857.png
-    - assets/thumbnails/Copilot_20251024_195657.png
+    - assets/thumbnails/random-source.svg
+    - assets/thumbnails/phoronix.svg
+    - assets/thumbnails/slashdot.svg
+    - assets/thumbnails/techcrunch.svg
+    - assets/thumbnails/dpreview.svg
+    - assets/thumbnails/toms-hardware.svg
+    - assets/thumbnails/ars-technica.svg
+    - assets/thumbnails/hacker-news.svg

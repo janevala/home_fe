@@ -166,11 +166,13 @@ class ArchiveScreenState extends State<ArchiveScreen> {
               return JsonFeedTile(
                 key: Key(item.link),
                 onItemTap: () => openItem(context, item),
-                onItemLongPress: () {
-                  context.read<RssArchiveBloc>().add(
-                    QuestionEvent('translate to spanish: ${item.title}'),
-                  );
-                },
+                // onItemTap: () {
+                //   context.read<RssArchiveBloc>().add(
+                //     QuestionEvent(
+                //       'Generate text in Finnish. Just text itself, no explanation needed. Text: ${item.title}',
+                //     ),
+                //   );
+                // },
                 item: item,
               );
             },

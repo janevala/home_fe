@@ -41,7 +41,7 @@ class LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         backgroundColor: Colors.blueGrey,
         foregroundColor: Colors.white,
-        title: const Text('Login'),
+        title: Text(brand),
       ),
       body: SafeArea(
         child: BlocProvider<LoginBloc>(

@@ -34,7 +34,7 @@ class DashboardScreenState extends State<DashboardScreen> {
       appBar: AppBar(
         backgroundColor: Colors.blueGrey,
         foregroundColor: Colors.white,
-        title: const Text('News dashboard'),
+        title: Text(brand),
       ),
       body: BlocListener<RssArchiveBloc, RssState>(
         listener: (context, state) {

@@ -7,6 +7,8 @@ part 'config.g.dart';
 
 @JsonSerializable()
 class Config {
+  @JsonKey(name: 'uptime')
+  late String uptime;
   @JsonKey(name: 'os')
   late String os;
   @JsonKey(name: 'arch')
@@ -29,6 +31,7 @@ class Config {
   late HttpStats httpStats;
 
   Config(
+    this.uptime,
     this.os,
     this.arch,
     this.version,
