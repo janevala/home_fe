@@ -38,7 +38,7 @@ class JsonFeedTile extends StatelessWidget {
 
   String _formatDate() {
     final now = DateTime.now();
-    return _isToday
+    return _isToday // TODO: this is buggy, after plugin upgrades
         ? timeago.format(_publishedDate, locale: 'en_short', clock: now)
         : timeago.format(_publishedDate, locale: 'en', clock: now);
   }
