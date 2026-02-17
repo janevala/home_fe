@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:homefe/functions.dart';
+import 'package:homefe/logger/logger.dart';
 import 'package:homefe/podo/rss/news_item.dart';
 import 'package:homefe/podo/rss/rss_site.dart';
 import 'package:rss_dart/domain/rss_item.dart';
@@ -220,6 +221,8 @@ class RssFeedTile extends StatelessWidget {
         ); // TODO: this is buggy, after plugin upgrades
         return timeago.format(pubDate, locale: 'en');
       } catch (e) {
+        logger.e('Error: $e');
+
         return '';
       }
     }

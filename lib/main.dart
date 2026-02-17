@@ -55,11 +55,6 @@ class MyApp extends StatelessWidget {
                 )..add(RssSitesEvent());
               },
             ),
-            // BlocProvider<RssFeedBloc>(
-            //   create: (context) {
-            //     return RssFeedBloc();
-            //   },
-            // ),
           ],
 
           child: MaterialApp.router(routerConfig: router),
