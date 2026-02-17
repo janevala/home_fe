@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:homefe/api/api_client.dart';
 import 'package:homefe/api/api_repository.dart';
 import 'package:homefe/bloc/login_bloc.dart';
 import 'package:homefe/bloc/rss_bloc.dart';
+import 'package:homefe/constants/app_version.dart';
 import 'package:homefe/functions.dart';
 import 'package:homefe/podo/rss/rss_site.dart';
 import 'package:homefe/ui/archive_screen.dart';
@@ -13,8 +16,26 @@ import 'package:homefe/ui/feed_screen.dart';
 import 'package:homefe/ui/sites_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:homefe/ui/spinner.dart';
+import 'package:window_manager/window_manager.dart';
 
-void main() {
+void main() async {
+  if (Platform.isWindows || Platform.isLinux) {
+    WidgetsFlutterBinding.ensureInitialized();
+    await windowManager.ensureInitialized();
+
+    WindowOptions windowOptions = const WindowOptions(
+      size: Size(500, 1000),
+      minimumSize: Size(400, 800),
+      center: false,
+      title: brand,
+    );
+
+    windowManager.waitUntilReadyToShow(windowOptions, () async {
+      await windowManager.show();
+      await windowManager.focus();
+    });
+  }
+
   runApp(const MyApp());
 }
 
