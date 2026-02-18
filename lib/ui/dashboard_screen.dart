@@ -47,18 +47,20 @@ class DashboardScreenState extends State<DashboardScreen> {
               ),
             );
           } else if (state is ConfigSuccess) {
-            String backendVersion = state.config.version;
-            String frontendVersion = appVersion;
+            if (appVersion.contains('dev') ||
+                appVersion.contains('dirty') ||
+                appVersion.contains('vscode')) {
+              String backVersion = state.config.version;
+              String frontVersion = appVersion;
 
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  'Backend: $backendVersion, Frontend: $frontendVersion',
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Back: $backVersion, Front: $frontVersion'),
+                  backgroundColor: Colors.blueGrey,
+                  duration: const Duration(seconds: 2),
                 ),
-                backgroundColor: Colors.blueGrey,
-                duration: const Duration(seconds: 2),
-              ),
-            );
+              );
+            }
           } else if (state is Failure) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(

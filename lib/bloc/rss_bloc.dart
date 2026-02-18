@@ -34,28 +34,15 @@ class RssFeedEvent extends RssEvent {
   RssFeedEvent(this.url);
 }
 
-class RssArchiveEvent extends RssEvent {}
-
-class LoadMoreArchive extends RssArchiveEvent {}
-
-class SearchArchive extends RssArchiveEvent {
-  final String query;
-
-  SearchArchive({required this.query});
-}
-
-class QuestionEvent extends RssArchiveEvent {
+class QuestionEvent extends RssEvent {
   final String question;
 
   QuestionEvent(this.question);
 }
 
-class ConfigEvent extends RssArchiveEvent {}
+class ConfigEvent extends RssEvent {}
 
-class RefreshArchive extends RssArchiveEvent {}
-
-// TODO: this is probably redundant
-class ResetArchive extends RssArchiveEvent {}
+class RefreshArchive extends RssEvent {}
 
 class ArchiveLoadMore extends RssEvent {
   final List<NewsItem> items;
@@ -104,6 +91,19 @@ class ConfigSuccess extends RssEvent {
 
   ConfigSuccess(this.config);
 }
+
+class RssArchiveEvent extends RssEvent {}
+
+class LoadMoreArchive extends RssArchiveEvent {}
+
+class SearchArchive extends RssArchiveEvent {
+  final String query;
+
+  SearchArchive({required this.query});
+}
+
+// TODO: this is probably redundant
+class ResetArchive extends RssArchiveEvent {}
 
 class RssSitesBloc extends Bloc<RssEvent, RssState> {
   ApiRepository repo;

@@ -55,7 +55,8 @@ class FeedScreenState extends State<FeedScreen> {
                 );
 
                 return const Spinner();
-              } else if (state is RssFeedSuccess) {
+              } else if (state is RssFeedSuccess &&
+                  state.rssFeed.items.isNotEmpty) {
                 return CallbackShortcuts(
                   bindings: getCallbackShortcuts(controller),
                   child: Focus(

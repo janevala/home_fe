@@ -39,7 +39,6 @@ String parseDescription(NewsItem item, bool cutLong) {
 
 openItem(BuildContext context, NewsItem item) async {
   double width = MediaQuery.of(context).size.width;
-
   String description = parseDescription(item, false);
 
   showDialog(
@@ -88,5 +87,16 @@ DateTime parsePublishedParsed(String? str) {
     return DateTime.now();
   }
 
-  return DateFormat('yyyy-MM-ddTHH:mm:ssZ').parse(str, true);
+  DateFormat format1 = DateFormat('EEE, dd MMM yyyy HH:mm:ss Z');
+  DateFormat format2 = DateFormat('yyyy-MM-ddTHH:mm:ssZ');
+
+  try {
+    return format1.parse(str, true);
+  } catch (e) {
+    try {
+      return format2.parse(str, true);
+    } catch (e2) {
+      return DateTime.now();
+    }
+  }
 }

@@ -38,7 +38,7 @@ class JsonFeedTile extends StatelessWidget {
 
   String _formatDate() {
     final now = DateTime.now();
-    return _isToday // TODO: this is buggy, after plugin upgrades
+    return _isToday
         ? timeago.format(_publishedDate, locale: 'en_short', clock: now)
         : timeago.format(_publishedDate, locale: 'en', clock: now);
   }
@@ -75,14 +75,17 @@ class JsonFeedTile extends StatelessWidget {
 
   Widget _buildHeader(TextTheme textTheme) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(
-          _isToday ? Icons.timer_outlined : Icons.calendar_today,
-          size: 20,
-          color: Colors.grey[600],
+        Padding(
+          padding: const EdgeInsets.only(top: 2),
+          child: Icon(
+            _isToday ? Icons.timer_outlined : Icons.calendar_today,
+            size: 20,
+            color: Colors.grey[600],
+          ),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: 6),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -214,29 +217,19 @@ class RssFeedTile extends StatelessWidget {
     true,
   );
 
-  String _formatDate() {
-    if (item.pubDate != null) {
-      try {
-        DateTime pubDate = DateTime.parse(
-          item.pubDate!,
-        ); // TODO: this is buggy, after plugin upgrades
-        return timeago.format(pubDate, locale: 'en');
-      } catch (e) {
-        logger.e('Error: $e');
-
-        return '';
-      }
-    }
-
-    return '';
-  }
-
   Widget _buildHeader(TextTheme textTheme) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(Icons.article_outlined, size: 20, color: Colors.grey[600]),
-        const SizedBox(width: 8),
+        Padding(
+          padding: const EdgeInsets.only(top: 2),
+          child: Icon(
+            Icons.article_outlined,
+            size: 20,
+            color: Colors.grey[600],
+          ),
+        ),
+        const SizedBox(width: 6),
         Expanded(
           child: Text(
             item.title ?? 'No title',
@@ -247,6 +240,21 @@ class RssFeedTile extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  String _formatDate() {
+    if (item.pubDate != null) {
+      try {
+        DateTime pubDate = parsePublishedParsed(item.pubDate);
+        return timeago.format(pubDate, locale: 'en');
+      } catch (e) {
+        logger.e('Error: $e');
+
+        return '';
+      }
+    }
+
+    return '';
   }
 
   Widget _buildFooter(ThemeData theme, BuildContext context) {
