@@ -34,13 +34,13 @@ dep:
 	dart run build_runner build --delete-conflicting-outputs
 	flutter pub get
 
-build: clean
+build:
 	dart run build_runner build --delete-conflicting-outputs
 	flutter build web --no-wasm-dry-run --debug -t lib/main.dart --base-href / --dart-define=APP_VERSION=$(VERSION) --dart-define=APP_API=$(API) --dart-define=BRAND="Debug News"
 
 debug: build
 
-release: clean
+release:
 	dart --disable-analytics
 	dart run build_runner build --delete-conflicting-outputs
 	flutter build web --wasm --release -t lib/main.dart --base-href / --dart-define=APP_VERSION=$(VERSION) --dart-define=APP_API=$(API) --dart-define=BRAND="Tech-Heavy News"

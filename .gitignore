@@ -12,6 +12,7 @@ ios/
 macos/
 windows/
 linux/
+.env
 
 # IntelliJ related
 *.iml
