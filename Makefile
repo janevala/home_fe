@@ -56,7 +56,7 @@ linux: clean
 
 clean:
 	dart pub cache clean
-	flutter pub run build_runner clean
+	dart run build_runner clean
 	flutter clean
 
 rebuild: clean build
