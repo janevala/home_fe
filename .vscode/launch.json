@@ -11,7 +11,8 @@
                 "--web-browser-flag",
                 "--disable-web-security",
                 "--web-port=7070",
-                "--dart-define=APP_VERSION=vscode",
+                "--dart-define=APP_VERSION=dev",
+                "--dart-define=APP_API=http://api-host:7071",
                 "--dart-define=BRAND=VS Code News",
             ]
         },

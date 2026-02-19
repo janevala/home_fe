@@ -35,14 +35,9 @@ dev_dependencies:
   json_serializable: ^6.8.0
   build_runner: ^2.4.11
 
-# api:
-#   - description: baseUrl
-#     path: api/.api
-
 flutter:
   uses-material-design: true
   assets:
-    - api/.api
     - assets/thumbnails/random-source.svg
     - assets/thumbnails/phoronix.svg
     - assets/thumbnails/slashdot.svg

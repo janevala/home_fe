@@ -7,6 +7,8 @@
 GOOS ?= linux
 BUILDARCH ?= $(shell uname -m)
 VERSION := $(shell git describe --always --long --dirty)
+API ?= $(cat .env | grep APP_API | cut -d '=' -f2)
+API ?= http://api-host:7071
 
 ifeq ($(BUILDARCH),aarch64)
 	BUILDARCH=arm64
@@ -34,26 +36,27 @@ dep:
 
 build: clean
 	dart run build_runner build --delete-conflicting-outputs
-	flutter build web --no-wasm-dry-run --debug -t lib/main.dart --base-href / --dart-define=APP_VERSION=$(VERSION) --dart-define=BRAND="Debug News"
+	flutter build web --no-wasm-dry-run --debug -t lib/main.dart --base-href / --dart-define=APP_VERSION=$(VERSION) --dart-define=APP_API=$(API) --dart-define=BRAND="Debug News"
 
 debug: build
 
 release: clean
 	dart --disable-analytics
 	dart run build_runner build --delete-conflicting-outputs
-	flutter build web --wasm --release -t lib/main.dart --base-href / --dart-define=APP_VERSION=$(VERSION) --dart-define=BRAND="Tech-Heavy News"
+	flutter build web --wasm --release -t lib/main.dart --base-href / --dart-define=APP_VERSION=$(VERSION) --dart-define=APP_API=$(API) --dart-define=BRAND="Tech-Heavy News"
 
 chrome: clean
-	flutter run -d chrome --web-port 7070 --dart-define=APP_VERSION=$(VERSION) --dart-define=BRAND="Debug News"
+	flutter run -d chrome --web-port 7070 --dart-define=APP_VERSION=$(VERSION) --dart-define=APP_API=$(API) --dart-define=BRAND="Debug News"
 
 web: chrome
 
 linux: clean
-# 	flutter run -d linux --debug --dart-define=APP_VERSION=$(VERSION) --enable-software-rendering
-	flutter build linux --debug --dart-define=APP_VERSION=$(VERSION) --dart-define=BRAND="Debug News"
+	flutter build linux --debug --dart-define=APP_VERSION=$(VERSION) --dart-define=APP_API=$(API) --dart-define=BRAND="Debug News"
 	./build/linux/x64/debug/bundle/homefe
 
 clean:
+	dart pub cache clean
+	flutter pub run build_runner clean
 	flutter clean
 
 rebuild: clean build

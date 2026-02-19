@@ -3,13 +3,11 @@ import 'package:homefe/podo/rss/news_item.dart';
 import 'package:html/parser.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
-
-import 'package:flutter/services.dart';
+import 'package:homefe/constants/app_version.dart';
 
 Future<String?> readBaseUrl() async {
   try {
-    final api = await rootBundle.loadString('api/.api');
-    return api.trim();
+    return appApi.trim();
   } catch (e) {
     return null;
   }
