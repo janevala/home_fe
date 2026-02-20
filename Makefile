@@ -36,7 +36,7 @@ dep:
 
 build:
 	dart run build_runner build --delete-conflicting-outputs
-	flutter build web --no-wasm-dry-run --debug -t lib/main.dart --base-href / --dart-define=APP_VERSION=$(VERSION) --dart-define=APP_API=$(API)
+	flutter build web --no-wasm-dry-run --debug -t lib/main.dart --base-href / --dart-define=APP_VERSION=$(VERSION) --dart-define=APP_API=http://api-host:7071
 
 debug: build
 
@@ -47,17 +47,17 @@ release:
 # 	flutter build web --wasm --release -t lib/main.dart --base-href / --dart-define=APP_VERSION=$(VERSION) --dart-define=APP_API=$(API)
 
 chrome: clean
-	flutter run -d chrome --web-port 7070 --dart-define=APP_VERSION=$(VERSION) --dart-define=APP_API=$(API)
+	flutter run -d chrome --web-port 7070 --dart-define=APP_VERSION=$(VERSION) --dart-define=APP_API=http://api-host:7071
 
 web: chrome
 
 linux: clean
-	flutter build linux --debug --dart-define=APP_VERSION=$(VERSION) --dart-define=APP_API=$(API)
+	flutter build linux --debug --dart-define=APP_VERSION=$(VERSION) --dart-define=APP_API=http://api-host:7071
 	./build/linux/x64/debug/bundle/homefe
 
 clean:
-	dart pub cache clean
-	dart run build_runner clean
+	yes | dart pub cache clean
+	yes | dart run build_runner clean
 	flutter clean
 
 rebuild: clean build
