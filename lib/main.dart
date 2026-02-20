@@ -19,22 +19,22 @@ import 'package:homefe/ui/spinner.dart';
 import 'package:window_manager/window_manager.dart';
 
 void main() async {
-  if (Platform.isWindows || Platform.isLinux) {
-    WidgetsFlutterBinding.ensureInitialized();
-    await windowManager.ensureInitialized();
+  // if (Platform.isWindows || Platform.isLinux) {
+  //   WidgetsFlutterBinding.ensureInitialized();
+  //   await windowManager.ensureInitialized();
 
-    WindowOptions windowOptions = const WindowOptions(
-      size: Size(500, 1000),
-      minimumSize: Size(400, 800),
-      center: false,
-      title: 'Tech-Heavy News',
-    );
+  //   WindowOptions windowOptions = const WindowOptions(
+  //     size: Size(500, 1000),
+  //     minimumSize: Size(400, 800),
+  //     center: false,
+  //     title: 'Tech-Heavy News',
+  //   );
 
-    windowManager.waitUntilReadyToShow(windowOptions, () async {
-      await windowManager.show();
-      await windowManager.focus();
-    });
-  }
+  //   windowManager.waitUntilReadyToShow(windowOptions, () async {
+  //     await windowManager.show();
+  //     await windowManager.focus();
+  //   });
+  // }
 
   runApp(const MyApp());
 }
