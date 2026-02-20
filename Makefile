@@ -36,7 +36,7 @@ dep:
 
 build:
 	dart run build_runner build --delete-conflicting-outputs
-	flutter build web --no-wasm-dry-run --debug -t lib/main.dart --base-href / --dart-define=APP_VERSION=$(VERSION) --dart-define=APP_API=http://api-host:7071
+	flutter build web --wasm --debug -t lib/main.dart --base-href / --dart-define=APP_VERSION=$(VERSION) --dart-define=APP_API=http://api-host:7071
 
 debug: build
 
