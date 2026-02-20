@@ -41,6 +41,7 @@ sudo docker network connect home-network front-host
 
 HTTPS is required to run WASM in VPS NGINX
 Domain name is required for HTTPS
+Default port 443 nginx config
 
 ```
 sudo apt install certbot python3-certbot-nginx

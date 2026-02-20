@@ -7,8 +7,8 @@
 GOOS ?= linux
 BUILDARCH ?= $(shell uname -m)
 VERSION := $(shell git describe --always --long --dirty)
-API := $(cat .env | grep APP_API | cut -d '=' -f2)
-API ?= "http://api-host:7071"
+# API := $(cat .env | grep APP_API | cut -d '=' -f2)
+# API ?= "http://api-host:7071"
 
 ifeq ($(BUILDARCH),aarch64)
 	BUILDARCH=arm64
