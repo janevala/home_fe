@@ -7,8 +7,3 @@ const String appApi = String.fromEnvironment(
   'APP_API',
   defaultValue: 'http://api-host:7071',
 );
-
-const String brand = String.fromEnvironment(
-  'BRAND',
-  defaultValue: 'Tech-Heavy News',
-);

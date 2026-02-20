@@ -27,7 +27,7 @@ void main() async {
       size: Size(500, 1000),
       minimumSize: Size(400, 800),
       center: false,
-      title: brand,
+      title: 'Tech-Heavy News',
     );
 
     windowManager.waitUntilReadyToShow(windowOptions, () async {
