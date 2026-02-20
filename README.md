@@ -36,3 +36,12 @@ sudo docker network connect home-network front-host
 1. Resource Owner Password Credentials Grant: This grant type allows users to provide their username and password directly to the client, which then exchanges them for an access token.
 
 2. Refresh Token Grant: Once the client has obtained an initial access token, it can use a refresh token to request a new access token without requiring the user to re-authenticate.
+
+### HTTPS & WASM
+
+HTTPS is required to run WASM in VPS NGINX
+Domain name is required for HTTPS
+
+```
+sudo apt install certbot python3-certbot-nginx
+```

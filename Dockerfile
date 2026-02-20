@@ -8,7 +8,7 @@ COPY . .
 RUN ./start.sh 
 
 FROM nginx:stable-alpine
-COPY --from=builder /homefe/nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /homefe/nginx/nginx.debug.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /homefe/build/web /app/web
 
 EXPOSE 7070
