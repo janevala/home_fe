@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:homefe/podo/rss/news_item.dart';
 import 'package:html/parser.dart';
@@ -44,14 +45,14 @@ openItem(BuildContext context, NewsItem item) async {
     builder: (context) {
       return AlertDialog(
         title: SizedBox(
-          width: width * 0.5,
+          width: width * 0.8,
           child: SelectableText(
             item.title,
             style: const TextStyle(fontSize: 18),
           ),
         ),
         content: SizedBox(
-          width: width * 0.5,
+          width: width * 0.8,
           child: SingleChildScrollView(
             child: SelectableText(
               description,
@@ -97,4 +98,12 @@ DateTime parsePublishedParsed(String? str) {
       return DateTime.now();
     }
   }
+}
+
+bool isMobileBrowser() {
+  if (kIsWeb) {
+    return defaultTargetPlatform == TargetPlatform.android ||
+        defaultTargetPlatform == TargetPlatform.iOS;
+  }
+  return false;
 }

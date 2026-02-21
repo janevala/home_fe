@@ -26,6 +26,9 @@ class DashboardScreenState extends State<DashboardScreen> {
     super.initState();
   }
 
+  String backVersion = '';
+  String frontVersion = '';
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -47,12 +50,11 @@ class DashboardScreenState extends State<DashboardScreen> {
               ),
             );
           } else if (state is ConfigSuccess) {
+            backVersion = state.config.version;
+            frontVersion = appVersion;
             if (appVersion.contains('dev') ||
                 appVersion.contains('dirty') ||
                 appVersion.contains('vscode')) {
-              String backVersion = state.config.version;
-              String frontVersion = appVersion;
-
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text('Back: $backVersion, Front: $frontVersion'),
@@ -82,6 +84,27 @@ class DashboardScreenState extends State<DashboardScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
+                      Center(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Tech:', style: const TextStyle(fontSize: 22)),
+                            Text(
+                              'Back: $backVersion',
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                            Text(
+                              'Front: $frontVersion',
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                            Text(
+                              'TargetPlatform: ${defaultTargetPlatform.name}',
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 32),
                       if (!kIsWeb && !kIsWasm)
                         ElevatedButton(
                           onPressed: () {
@@ -104,7 +127,7 @@ class DashboardScreenState extends State<DashboardScreen> {
                         onPressed: state is SlowLoading
                             ? null
                             : () => GoRouter.of(context).push('/archive'),
-                        child: const Text('Choose new archive'),
+                        child: const Text('Choose news archive'),
                       ),
                     ],
                   ),
