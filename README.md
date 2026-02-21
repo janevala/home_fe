@@ -46,3 +46,13 @@ Default port 443 nginx config
 ```
 sudo apt install certbot python3-certbot-nginx
 ```
+
+### Docker transfer prebuilt container
+
+```
+ 7955  sudo docker commit c64eae9ea185 news-frontend:tag1
+ 7956  docker save -o news-frontend.tar news-frontend:tag1
+ 7960  scp news-frontend.tar.gz jay@192.168.1.100:
+  209  docker run -d --name news-frontend --network home-network -p 7070:7070 news-frontend:tag1
+```
+
