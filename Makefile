@@ -7,14 +7,17 @@
 GOOS ?= linux
 BUILDARCH ?= $(shell uname -m)
 VERSION := $(shell git describe --always --long --dirty)
-# API := $(cat .env | grep APP_API | cut -d '=' -f2)
-# API ?= "http://api-host:7071"
 
 ifeq ($(BUILDARCH),aarch64)
 	BUILDARCH=arm64
 endif
 ifeq ($(BUILDARCH),x86_64)
 	BUILDARCH=amd64
+endif
+
+API := $(shell cat .env | grep APP_API | cut -d '=' -f2)
+ifeq ($(API),)
+	API=http://api-host:7071
 endif
 
 help:
@@ -32,30 +35,35 @@ dep:
 	flutter doctor
 	flutter pub get
 
-build:
+debug:
+	flutter pub get
+	dart --enable-analytics
 	dart run build_runner build --delete-conflicting-outputs
-	flutter build web --debug -t lib/main.dart --base-href / --dart-define=APP_VERSION=$(VERSION) --dart-define=APP_API=http://api-host:7071
+	flutter build web --debug -t lib/main.dart --base-href / --dart-define=APP_VERSION=$(VERSION) --dart-define=APP_API=$(API)
 
-debug: build
+build: debug
 
 release:
+	flutter pub get
 	dart --disable-analytics
 	dart run build_runner build --delete-conflicting-outputs
-	flutter build web --release -t lib/main.dart --base-href / --dart-define=APP_VERSION=$(VERSION) --dart-define=APP_API=http://api-host:7071
-# 	flutter build web --wasm --release -t lib/main.dart --base-href / --dart-define=APP_VERSION=$(VERSION) --dart-define=APP_API=$(API)
+	flutter build web --release -t lib/main.dart --base-href / --dart-define=APP_VERSION=$(VERSION) --dart-define=APP_API=$(API)
 
 chrome: clean
-	flutter run -d chrome --web-port 7070 --dart-define=APP_VERSION=$(VERSION) --dart-define=APP_API=http://api-host:7071
+	flutter run -d chrome --web-port 7070 --dart-define=APP_VERSION=$(VERSION) --dart-define=APP_API=$(API)
 
 web: chrome
 
 linux: clean
-	flutter build linux --debug --dart-define=APP_VERSION=$(VERSION) --dart-define=APP_API=http://api-host:7071
+	flutter pub get
+	dart --enable-analytics
+	dart run build_runner build --delete-conflicting-outputs
+	flutter build linux --debug --dart-define=APP_VERSION=$(VERSION) --dart-define=APP_API=$(API)
 	./build/linux/x64/debug/bundle/homefe
 
 clean:
 	yes | dart pub cache clean
-	yes | dart run build_runner clean
+	dart run build_runner clean 2>/dev/null || true
 	flutter clean
 
 rebuild: clean build
