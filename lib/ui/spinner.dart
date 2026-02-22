@@ -6,35 +6,21 @@ class Spinner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black.withValues(alpha: 0.5),
+      color: Theme.of(context).colorScheme.scrim.withValues(alpha: 0.5),
       width: double.infinity,
       height: double.infinity,
       child: Center(
-        child: _buildMaterialSpinner(context),
+        child: SizedBox(
+          width: 60,
+          height: 60,
+          child: CircularProgressIndicator.adaptive(
+            valueColor: AlwaysStoppedAnimation<Color>(
+              Theme.of(context).colorScheme.primary,
+            ),
+            backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+          ),
+        ),
       ),
     );
   }
-}
-
-Widget _buildMaterialSpinner(BuildContext context) {
-  return Container(
-    width: 100,
-    height: 100,
-    decoration: const BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.all(
-        Radius.circular(8.0),
-      ),
-    ),
-    child: const Center(
-      child: SizedBox(
-        height: 60,
-        width: 60,
-        child: CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
-          backgroundColor: Colors.lightBlue,
-        ),
-      ),
-    ),
-  );
 }
