@@ -76,13 +76,10 @@ class JsonFeedTile extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 2),
-          child: Icon(
-            _isToday ? Icons.timer_outlined : Icons.calendar_today,
-            size: 20,
-            color: Colors.grey[600],
-          ),
+        Icon(
+          _isToday ? Icons.timer_outlined : Icons.calendar_today,
+          size: 20,
+          color: Colors.grey[600],
         ),
         const SizedBox(width: 6),
         Expanded(
@@ -209,14 +206,7 @@ class RssFeedTile extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 2),
-          child: Icon(
-            Icons.article_outlined,
-            size: 20,
-            color: Colors.grey[600],
-          ),
-        ),
+        Icon(Icons.article_outlined, size: 20, color: Colors.grey[600]),
         const SizedBox(width: 6),
         Expanded(
           child: Text(

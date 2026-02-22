@@ -99,17 +99,12 @@ class DashboardScreenState extends State<DashboardScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Tech:', style: const TextStyle(fontSize: 22)),
                             Text(
                               'Back: $backVersion',
                               style: const TextStyle(fontSize: 16),
                             ),
                             Text(
                               'Front: $frontVersion',
-                              style: const TextStyle(fontSize: 16),
-                            ),
-                            Text(
-                              'TargetPlatform: ${defaultTargetPlatform.name}',
                               style: const TextStyle(fontSize: 16),
                             ),
                           ],
@@ -128,10 +123,10 @@ class DashboardScreenState extends State<DashboardScreen> {
                         style: state is SlowLoading
                             ? ButtonStyle(
                                 backgroundColor: WidgetStateProperty.all(
-                                  Colors.blueGrey,
+                                  Theme.of(context).colorScheme.surface,
                                 ),
                                 foregroundColor: WidgetStateProperty.all(
-                                  Colors.grey[200],
+                                  Theme.of(context).colorScheme.onSurface,
                                 ),
                               )
                             : null,
