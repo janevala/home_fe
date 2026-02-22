@@ -101,9 +101,14 @@ class LoginScreenState extends State<LoginScreen> {
                 Token token = state.token;
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text('Token: ${token.accessToken}'),
-                    backgroundColor: Colors.green,
+                    content: Text(
+                      'Token: ${token.accessToken}',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                    ),
                     duration: const Duration(seconds: 2),
+                    backgroundColor: Theme.of(context).colorScheme.surface,
                   ),
                 );
                 if (mounted) {
@@ -115,9 +120,14 @@ class LoginScreenState extends State<LoginScreen> {
               } else if (state is LoginFailure) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text(state.error),
-                    backgroundColor: Colors.red,
+                    content: Text(
+                      state.error,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onError,
+                      ),
+                    ),
                     duration: const Duration(seconds: 2),
+                    backgroundColor: Theme.of(context).colorScheme.error,
                   ),
                 );
               } else if (state is LoginLoading) {

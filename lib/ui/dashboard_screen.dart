@@ -40,9 +40,14 @@ class DashboardScreenState extends State<DashboardScreen> {
           if (state is ArchiveRefreshDone) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(state.message),
-                backgroundColor: Colors.blueGrey,
-                duration: const Duration(seconds: 2),
+                content: Text(
+                  state.message,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+                ),
+                duration: const Duration(seconds: 4),
+                backgroundColor: Theme.of(context).colorScheme.surface,
               ),
             );
           } else if (state is ConfigSuccess) {
@@ -53,18 +58,28 @@ class DashboardScreenState extends State<DashboardScreen> {
                 appVersion.contains('vscode')) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text('Back: $backVersion, Front: $frontVersion'),
-                  backgroundColor: Colors.blueGrey,
+                  content: Text(
+                    'Back: $backVersion, Front: $frontVersion',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
                   duration: const Duration(seconds: 2),
+                  backgroundColor: Theme.of(context).colorScheme.surface,
                 ),
               );
             }
           } else if (state is Failure) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text('Error: ${state.error}'),
-                backgroundColor: Colors.blueGrey,
+                content: Text(
+                  'Error: ${state.error}',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onError,
+                  ),
+                ),
                 duration: const Duration(seconds: 2),
+                backgroundColor: Theme.of(context).colorScheme.error,
               ),
             );
           }

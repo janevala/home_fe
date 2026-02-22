@@ -1,8 +1,16 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 class AppTheme {
+  static ThemeData getThemeForPlatform({required bool isDarkMode}) {
+    if (defaultTargetPlatform == TargetPlatform.iOS ||
+        (kIsWeb && defaultTargetPlatform == TargetPlatform.macOS)) {
+      return isDarkMode ? cupertinoDarkTheme : cupertinoLightTheme;
+    }
+
+    return isDarkMode ? darkTheme : lightTheme;
+  }
+
   static const ColorScheme _lightColorScheme = ColorScheme(
     brightness: Brightness.light,
     primary: Color(0xFF1976D2), // Blue primary
@@ -325,14 +333,5 @@ class AppTheme {
         ),
       ),
     );
-  }
-
-  static ThemeData getThemeForPlatform({required bool isDarkMode}) {
-    return isDarkMode ? cupertinoDarkTheme : cupertinoLightTheme;
-    // if (defaultTargetPlatform == TargetPlatform.iOS ||
-    //     (kIsWeb && defaultTargetPlatform == TargetPlatform.macOS)) {
-    //   return isDarkMode ? cupertinoDarkTheme : cupertinoLightTheme;
-    // }
-    // return isDarkMode ? darkTheme : lightTheme;
   }
 }

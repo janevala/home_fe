@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:homefe/functions.dart';
 import 'package:homefe/logger/logger.dart';
@@ -116,17 +115,14 @@ class JsonFeedTile extends StatelessWidget {
           _buildImagePreview(image),
           const SizedBox(width: 12),
         ],
-        GestureDetector(
-          onTap: () => _copyToClipboard(_baseUrl, context),
-          child: Text(
-            _baseUrl,
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: theme.colorScheme.primary,
-              decoration: TextDecoration.underline,
-            ),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
+        Text(
+          _baseUrl,
+          style: theme.textTheme.bodyMedium?.copyWith(
+            color: theme.colorScheme.primary,
+            decoration: TextDecoration.underline,
           ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
       ],
     );
@@ -182,14 +178,6 @@ class JsonFeedTile extends StatelessWidget {
     }
 
     return null;
-  }
-
-  // TODO this should be handled, or removed, now its forgotten
-  void _copyToClipboard(String text, BuildContext context) {
-    Clipboard.setData(ClipboardData(text: text));
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: Text('Link copied to clipboard')));
   }
 }
 
