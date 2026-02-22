@@ -238,12 +238,19 @@ class RssFeedBloc extends Bloc<RssEvent, RssState> {
         logger.i('onResponse | ${event.url} | ${response.statusCode}');
 
         if (response.statusCode == 200 && response.data != null) {
-          final rssFeed = RssFeed.parse(response.data);
-          emit(RssFeedSuccess(rssFeed));
+          try {
+            final rssFeed = RssFeed.parse(response.data);
+            emit(RssFeedSuccess(rssFeed));
+          } catch (e) {
+            logger.e('onResponse | ${event.url} | $e');
+            emit(Failure(e.toString()));
+          }
         } else {
+          logger.e('onResponse | ${event.url} | ${response.statusCode}');
           emit(Failure('Failed to load RSS feed: ${response.statusCode}'));
         }
       } catch (error) {
+        logger.e('onError | ${event.url} | $error');
         emit(Failure('Error fetching RSS feed: $error'));
       }
     });
