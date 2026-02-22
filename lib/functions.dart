@@ -43,21 +43,10 @@ openItem(BuildContext context, NewsItem item) async {
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: SizedBox(
-          width: width * 0.8,
-          child: SelectableText(
-            item.title,
-            style: const TextStyle(fontSize: 18),
-          ),
-        ),
+        title: SizedBox(width: width * 0.8, child: SelectableText(item.title)),
         content: SizedBox(
           width: width * 0.8,
-          child: SingleChildScrollView(
-            child: SelectableText(
-              description,
-              style: const TextStyle(fontSize: 16),
-            ),
-          ),
+          child: SingleChildScrollView(child: SelectableText(description)),
         ),
         actions: [
           TextButton(
@@ -68,11 +57,11 @@ openItem(BuildContext context, NewsItem item) async {
                 await launchUrl(Uri.parse(item.link));
               }
             },
-            child: const Text('Open', style: TextStyle(fontSize: 16)),
+            child: const Text('Open'),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Close', style: TextStyle(fontSize: 16)),
+            child: const Text('Close'),
           ),
         ],
       );
