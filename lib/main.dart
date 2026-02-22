@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
           return const Center(child: Spinner());
         }
 
-        final baseUrl = snapshot.data ?? 'http://localhost:8000';
+        final baseUrl = snapshot.data ?? 'http://localhost:7070';
 
         return MultiBlocProvider(
           providers: [
@@ -78,7 +78,12 @@ class MyApp extends StatelessWidget {
             ),
           ],
 
-          child: MaterialApp.router(routerConfig: router),
+          child: MaterialApp.router(
+            title: 'Tech-Heavy News',
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(useMaterial3: true),
+            routerConfig: router,
+          ),
         );
       },
     );
