@@ -39,9 +39,6 @@ class TreeScreenState extends State<TreeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blueGrey,
-        foregroundColor: Colors.white,
-        iconTheme: const IconThemeData(color: Colors.white),
         title: const Text('News archive'),
         leading: BackButton(
           onPressed: () {

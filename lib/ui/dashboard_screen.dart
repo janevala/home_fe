@@ -34,11 +34,7 @@ class DashboardScreenState extends State<DashboardScreen> {
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blueGrey,
-        foregroundColor: Colors.white,
-        title: Text('Tech-Heavy News'),
-      ),
+      appBar: AppBar(title: Text('Tech-Heavy News')),
       body: BlocListener<RssArchiveBloc, RssState>(
         listener: (context, state) {
           if (state is ArchiveRefreshDone) {

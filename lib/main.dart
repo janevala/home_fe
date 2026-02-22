@@ -16,6 +16,7 @@ import 'package:homefe/ui/feed_screen.dart';
 import 'package:homefe/ui/sites_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:homefe/ui/spinner.dart';
+import 'package:homefe/theme/theme.dart';
 // import 'package:window_manager/window_manager.dart';
 
 void main() async {
@@ -51,7 +52,7 @@ class MyApp extends StatelessWidget {
           return const Center(child: Spinner());
         }
 
-        final baseUrl = snapshot.data ?? 'http://localhost:7070';
+        final baseUrl = snapshot.data ?? 'http://api-host:7071';
 
         return MultiBlocProvider(
           providers: [
@@ -81,7 +82,9 @@ class MyApp extends StatelessWidget {
           child: MaterialApp.router(
             title: 'Tech-Heavy News',
             debugShowCheckedModeBanner: false,
-            theme: ThemeData(useMaterial3: true),
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            themeMode: ThemeMode.dark,
             routerConfig: router,
           ),
         );

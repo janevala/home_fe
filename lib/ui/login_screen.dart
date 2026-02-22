@@ -38,11 +38,7 @@ class LoginScreenState extends State<LoginScreen> {
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blueGrey,
-        foregroundColor: Colors.white,
-        title: Text('Tech-Heavy News'),
-      ),
+      appBar: AppBar(title: Text('Tech-Heavy News')),
       body: SafeArea(
         child: BlocProvider<LoginBloc>(
           create: (context) => context.read<LoginBloc>(),

@@ -32,9 +32,6 @@ class FeedScreenState extends State<FeedScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blueGrey,
-        foregroundColor: Colors.white,
-        iconTheme: const IconThemeData(color: Colors.white),
         title: Text(widget.rssSite.title),
         leading: BackButton(
           onPressed: () {

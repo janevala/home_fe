@@ -18,9 +18,6 @@ class SitesScreenState extends State<SitesScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blueGrey,
-        foregroundColor: Colors.white,
-        iconTheme: const IconThemeData(color: Colors.white),
         title: const Text('News sites'),
         leading: BackButton(
           onPressed: () {
