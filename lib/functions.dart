@@ -99,11 +99,3 @@ DateTime parsePublishedParsed(String? str) {
     }
   }
 }
-
-bool isMobileBrowser() {
-  if (kIsWeb) {
-    return defaultTargetPlatform == TargetPlatform.android ||
-        defaultTargetPlatform == TargetPlatform.iOS;
-  }
-  return false;
-}

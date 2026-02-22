@@ -17,26 +17,8 @@ import 'package:homefe/ui/sites_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:homefe/ui/spinner.dart';
 import 'package:homefe/theme/theme.dart';
-// import 'package:window_manager/window_manager.dart';
 
 void main() async {
-  // if (Platform.isWindows || Platform.isLinux) {
-  //   WidgetsFlutterBinding.ensureInitialized();
-  //   await windowManager.ensureInitialized();
-
-  //   WindowOptions windowOptions = const WindowOptions(
-  //     size: Size(500, 1000),
-  //     minimumSize: Size(400, 800),
-  //     center: false,
-  //     title: 'Tech-Heavy News',
-  //   );
-
-  //   windowManager.waitUntilReadyToShow(windowOptions, () async {
-  //     await windowManager.show();
-  //     await windowManager.focus();
-  //   });
-  // }
-
   runApp(const MyApp());
 }
 
@@ -82,9 +64,9 @@ class MyApp extends StatelessWidget {
           child: MaterialApp.router(
             title: 'Tech-Heavy News',
             debugShowCheckedModeBanner: false,
-            theme: AppTheme.lightTheme,
-            darkTheme: AppTheme.darkTheme,
-            themeMode: ThemeMode.dark,
+            theme: AppTheme.getThemeForPlatform(isDarkMode: false),
+            darkTheme: AppTheme.getThemeForPlatform(isDarkMode: true),
+            themeMode: ThemeMode.light,
             routerConfig: router,
           ),
         );

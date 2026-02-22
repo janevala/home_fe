@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 
 class AppTheme {
   static const ColorScheme _lightColorScheme = ColorScheme(
@@ -127,5 +129,210 @@ class AppTheme {
         contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       ),
     );
+  }
+
+  static const Color _cupertinoLightPrimary = Color(0xFF007AFF);
+  static const Color _cupertinoLightSecondary = Color(0xFF5856D6);
+  static const Color _cupertinoLightBackground = Color(0xFFF2F2F7);
+  static const Color _cupertinoLightSurface = Color(0xFFFFFFFF);
+  static const Color _cupertinoLightLabel = Color(0xFF000000);
+  static const Color _cupertinoLightSecondaryLabel = Color(0xFF3C3C43);
+  static const Color _cupertinoLightTertiaryLabel = Color(0xFF3C3C4399);
+
+  static const Color _cupertinoDarkPrimary = Color(0xFF0A84FF);
+  static const Color _cupertinoDarkSecondary = Color(0xFF5E5CE6);
+  static const Color _cupertinoDarkBackground = Color(0xFF000000);
+  static const Color _cupertinoDarkSurface = Color(0xFF1C1C1E);
+  static const Color _cupertinoDarkLabel = Color(0xFFFFFFFF);
+  static const Color _cupertinoDarkSecondaryLabel = Color(0xFFEBEBF5);
+  static const Color _cupertinoDarkTertiaryLabel = Color(0xFFEBEBF599);
+
+  static ThemeData get cupertinoLightTheme {
+    return ThemeData(
+      useMaterial3: true,
+      brightness: Brightness.light,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: _cupertinoLightPrimary,
+        brightness: Brightness.light,
+        surface: _cupertinoLightSurface,
+        onSurface: _cupertinoLightLabel,
+        surfaceContainer: _cupertinoLightBackground,
+        onSurfaceVariant: _cupertinoLightSecondaryLabel,
+        primary: _cupertinoLightPrimary,
+        onPrimary: Colors.white,
+        secondary: _cupertinoLightSecondary,
+        onSecondary: Colors.white,
+      ),
+      appBarTheme: AppBarTheme(
+        backgroundColor: _cupertinoLightSurface,
+        foregroundColor: _cupertinoLightLabel,
+        elevation: 0,
+        centerTitle: true,
+        titleTextStyle: const TextStyle(
+          color: _cupertinoLightLabel,
+          fontSize: 17,
+          fontWeight: FontWeight.w600,
+        ),
+        iconTheme: const IconThemeData(color: _cupertinoLightLabel),
+      ),
+      cardTheme: CardThemeData(
+        color: _cupertinoLightSurface,
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+          side: BorderSide(
+            color: _cupertinoLightTertiaryLabel.withValues(alpha: 0.2),
+            width: 0.5,
+          ),
+        ),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: _cupertinoLightPrimary,
+          foregroundColor: Colors.white,
+          elevation: 0,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        ),
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          foregroundColor: _cupertinoLightPrimary,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        ),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: _cupertinoLightTertiaryLabel.withValues(alpha: 0.3),
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: _cupertinoLightTertiaryLabel.withValues(alpha: 0.3),
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: _cupertinoLightPrimary, width: 2),
+        ),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 12,
+        ),
+      ),
+      listTileTheme: ListTileThemeData(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        titleTextStyle: const TextStyle(
+          color: _cupertinoLightLabel,
+          fontSize: 17,
+        ),
+        subtitleTextStyle: TextStyle(
+          color: _cupertinoLightSecondaryLabel,
+          fontSize: 15,
+        ),
+      ),
+    );
+  }
+
+  static ThemeData get cupertinoDarkTheme {
+    return ThemeData(
+      useMaterial3: true,
+      brightness: Brightness.dark,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: _cupertinoDarkPrimary,
+        brightness: Brightness.dark,
+        surface: _cupertinoDarkSurface,
+        onSurface: _cupertinoDarkLabel,
+        surfaceContainer: _cupertinoDarkBackground,
+        onSurfaceVariant: _cupertinoDarkSecondaryLabel,
+        primary: _cupertinoDarkPrimary,
+        onPrimary: Colors.white,
+        secondary: _cupertinoDarkSecondary,
+        onSecondary: Colors.white,
+      ),
+      appBarTheme: AppBarTheme(
+        backgroundColor: _cupertinoDarkSurface,
+        foregroundColor: _cupertinoDarkLabel,
+        elevation: 0,
+        centerTitle: true,
+        titleTextStyle: const TextStyle(
+          color: _cupertinoDarkLabel,
+          fontSize: 17,
+          fontWeight: FontWeight.w600,
+        ),
+        iconTheme: const IconThemeData(color: _cupertinoDarkLabel),
+      ),
+      cardTheme: CardThemeData(
+        color: _cupertinoDarkSurface,
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+          side: BorderSide(
+            color: _cupertinoDarkTertiaryLabel.withValues(alpha: 0.2),
+            width: 0.5,
+          ),
+        ),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: _cupertinoDarkPrimary,
+          foregroundColor: Colors.white,
+          elevation: 0,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        ),
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          foregroundColor: _cupertinoDarkPrimary,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        ),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: _cupertinoDarkTertiaryLabel.withValues(alpha: 0.3),
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: _cupertinoDarkTertiaryLabel.withValues(alpha: 0.3),
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: _cupertinoDarkPrimary, width: 2),
+        ),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 12,
+        ),
+      ),
+      listTileTheme: ListTileThemeData(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        titleTextStyle: const TextStyle(
+          color: _cupertinoDarkLabel,
+          fontSize: 17,
+        ),
+        subtitleTextStyle: TextStyle(
+          color: _cupertinoDarkSecondaryLabel,
+          fontSize: 15,
+        ),
+      ),
+    );
+  }
+
+  static ThemeData getThemeForPlatform({required bool isDarkMode}) {
+    return isDarkMode ? cupertinoDarkTheme : cupertinoLightTheme;
+    // if (defaultTargetPlatform == TargetPlatform.iOS ||
+    //     (kIsWeb && defaultTargetPlatform == TargetPlatform.macOS)) {
+    //   return isDarkMode ? cupertinoDarkTheme : cupertinoLightTheme;
+    // }
+    // return isDarkMode ? darkTheme : lightTheme;
   }
 }
