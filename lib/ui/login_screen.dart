@@ -98,19 +98,19 @@ class LoginScreenState extends State<LoginScreen> {
             ),
             listener: (BuildContext context, LoginState state) {
               if (state is LoginSuccess) {
-                Token token = state.token;
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                      'Token: ${token.accessToken}',
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.onSurface,
-                      ),
-                    ),
-                    duration: const Duration(seconds: 2),
-                    backgroundColor: Theme.of(context).colorScheme.surface,
-                  ),
-                );
+                // Token token = state.token;
+                // ScaffoldMessenger.of(context).showSnackBar(
+                //   SnackBar(
+                //     content: Text(
+                //       'Token: ${token.accessToken}',
+                //       style: TextStyle(
+                //         color: Theme.of(context).colorScheme.onSurface,
+                //       ),
+                //     ),
+                //     duration: const Duration(seconds: 2),
+                //     backgroundColor: Theme.of(context).colorScheme.surface,
+                //   ),
+                // );
                 if (mounted) {
                   Future.delayed(const Duration(seconds: 1), () {
                     // ignore: use_build_context_synchronously
