@@ -53,7 +53,7 @@ class DashboardScreenState extends State<DashboardScreen> {
               title: Text('Logout'),
               onTap: () {
                 context.pop();
-                GoRouter.of(context).push('/');
+                GoRouter.of(context).pop();
               },
             ),
           ],
