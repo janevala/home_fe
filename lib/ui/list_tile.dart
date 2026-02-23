@@ -138,6 +138,9 @@ class JsonFeedTile extends StatelessWidget {
     "Tom's Hardware": "assets/thumbnails/toms-hardware.svg",
     "Ars Technica": "assets/thumbnails/ars-technica.svg",
     "Hacker News": "assets/thumbnails/hacker-news.svg",
+    "The Register": "assets/thumbnails/random-source.svg",
+    "The Verge": "assets/thumbnails/random-source.svg",
+    "Wired": "assets/thumbnails/random-source.svg",
   };
 
   SvgPicture? _getImage() {

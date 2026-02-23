@@ -7,7 +7,10 @@ This app is written in Dart. It can be used both as mobile application, desktop 
 # TODO
 
 ## Front
-- Build types: relaese, debug
+- Re-do SVGs, add 3 new ones, add flags: English, Finnish, German, Thai, Brazil, Spain
+- Bring cookie storage from old app
+- Add language selection + use preference saved to cookie
+- translate all hardcode strings to English and Thai
 - User levels: admin, normal
 - RssEvent vs RssArchiveEvent?
 - Rename rssBloc to generic
