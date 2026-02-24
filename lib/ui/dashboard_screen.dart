@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:homefe/bloc/rss_bloc.dart';
 import 'package:homefe/constants/app_version.dart';
+import 'package:homefe/persistence/persistent_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -13,6 +15,8 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class DashboardScreenState extends State<DashboardScreen> {
+  late SharedPreferences storage;
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -20,9 +24,19 @@ class DashboardScreenState extends State<DashboardScreen> {
       context.read<RssArchiveBloc>().add(RefreshArchive());
     });
 
+    _loadSharedPreferences();
+
     super.initState();
   }
 
+  Future<void> _loadSharedPreferences() async {
+    storage = await PersistentStorage.instance;
+    setState(() {
+      token = storage.getString('token') ?? '';
+    });
+  }
+
+  String token = '';
   String backVersion = '';
   String frontVersion = '';
 
@@ -36,22 +50,32 @@ class DashboardScreenState extends State<DashboardScreen> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(color: Colors.blue),
-              child: Center(child: Text('Drawer Header')),
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surface,
+              ),
+              child: Center(child: Text('Token: $token')),
             ),
             ListTile(
               title: Text(
-                'Back: $backVersion, Front: $frontVersion',
+                'Back: $backVersion',
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
-              onTap: () {},
+            ),
+            ListTile(
+              title: Text(
+                'Front: $frontVersion',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+              ),
             ),
             ListTile(
               title: Text('Logout'),
               onTap: () {
+                storage.clear();
                 context.pop();
                 GoRouter.of(context).pop();
               },

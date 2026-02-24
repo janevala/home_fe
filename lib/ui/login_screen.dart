@@ -3,11 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:homefe/bloc/login_bloc.dart';
 import 'package:homefe/logger/logger.dart';
+import 'package:homefe/persistence/persistent_storage.dart';
 import 'package:homefe/podo/login/login_body.dart';
 import 'package:homefe/podo/token/token.dart';
 import 'package:homefe/ui/spinner.dart';
 import 'package:flutter/foundation.dart';
 import 'package:homefe/constants/app_version.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -98,19 +100,7 @@ class LoginScreenState extends State<LoginScreen> {
             ),
             listener: (BuildContext context, LoginState state) {
               if (state is LoginSuccess) {
-                // Token token = state.token;
-                // ScaffoldMessenger.of(context).showSnackBar(
-                //   SnackBar(
-                //     content: Text(
-                //       'Token: ${token.accessToken}',
-                //       style: TextStyle(
-                //         color: Theme.of(context).colorScheme.onSurface,
-                //       ),
-                //     ),
-                //     duration: const Duration(seconds: 2),
-                //     backgroundColor: Theme.of(context).colorScheme.surface,
-                //   ),
-                // );
+                _saveToken(state.token);
                 if (mounted) {
                   Future.delayed(const Duration(seconds: 1), () {
                     // ignore: use_build_context_synchronously
@@ -139,4 +129,9 @@ class LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+}
+
+Future<void> _saveToken(Token token) async {
+  SharedPreferences storage = await PersistentStorage.instance;
+  storage.setString("token", token.accessToken);
 }

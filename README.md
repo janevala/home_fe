@@ -7,8 +7,20 @@ This app is written in Dart. It can be used both as mobile application, desktop 
 # TODO
 
 ## Front
+### HTTPS
+    - buy https://techeavy.news from godaddy
+    - enable secure_persistent_storage
+    - enable https in nginx
+    - enable WASM
+    - enable https in dio???
+    - enable https in firewall
+    - Docker???
+
+### for now
+    - switch public port to 80
+
+### Rest of TODOs
 - Re-do SVGs, add 3 new ones, add flags: English, Finnish, German, Thai, Brazil, Spain
-- Bring cookie storage from old app
 - Add language selection + use preference saved to cookie
 - translate all hardcode strings to English and Thai
 - User levels: admin, normal
@@ -17,6 +29,7 @@ This app is written in Dart. It can be used both as mobile application, desktop 
 - Width and height detection
 - Add wide screen layout, and keep current one for narrow
 - Add dark mode and light mode
+- Analytics and to what acount? create account?
 
 # Flutter notes
 ```
