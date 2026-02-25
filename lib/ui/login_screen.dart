@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:homefe/assets/i18n/generated/app_localizations.dart';
 import 'package:homefe/bloc/login_bloc.dart';
+import 'package:homefe/functions.dart';
 import 'package:homefe/logger/logger.dart';
 import 'package:homefe/persistence/persistent_storage.dart';
 import 'package:homefe/podo/login/login_body.dart';
@@ -29,11 +30,16 @@ class LoginScreenState extends State<LoginScreen> {
 
     if (kIsWasm) {
       logger.i("WASM build $appVersion");
+      // TODO: WASM way of detect browser locale
     } else if (kIsWeb) {
       logger.i("WEB build $appVersion");
+      // TODO:  WEB way of detect browser locale
     } else {
       logger.i("NATIVE build $appVersion");
     }
+
+    String languageCode = getLanguageCode(context);
+    logger.i("LANGUAGE CODE $languageCode");
   }
 
   @override

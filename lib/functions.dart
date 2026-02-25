@@ -48,11 +48,11 @@ openItem(BuildContext context, NewsItem item) async {
                 await launchUrl(Uri.parse(item.link));
               }
             },
-            child: const Text('Open'),
+            child: const Text('Open'), //TODO
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Close'),
+            child: const Text('Close'), //TODO
           ),
         ],
       );
@@ -77,4 +77,9 @@ DateTime parsePublishedParsed(String? str) {
       return DateTime.now();
     }
   }
+}
+
+String getLanguageCode(BuildContext context) {
+  Locale locale = Localizations.localeOf(context);
+  return locale.languageCode;
 }
