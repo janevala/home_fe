@@ -37,16 +37,6 @@ dart run build_runner build --delete-conflicting-outputs
 flutter pub get
 ```
 
-# Docker notes
-```
-sudo docker network create home-network
-
-sudo docker build --no-cache -f Dockerfile -t news-frontend .
-sudo docker run --name front-host --network home-network -p 7070:7070 --restart always -d news-frontend
-
-sudo docker network connect home-network front-host
-```
-
 ### OAuth2 grant types, not in use currently
 
 1. Resource Owner Password Credentials Grant: This grant type allows users to provide their username and password directly to the client, which then exchanges them for an access token.
@@ -61,6 +51,17 @@ Default port 443 nginx config
 
 ```
 sudo apt install certbot python3-certbot-nginx
+```
+
+# Docker notes
+
+```
+sudo docker network create home-network
+
+sudo docker build --no-cache -f Dockerfile -t news-frontend .
+sudo docker run --name front-host --network home-network -p 80:7070 --restart always -d news-frontend
+
+sudo docker network connect home-network front-host
 ```
 
 ### Docker transfer prebuilt container
