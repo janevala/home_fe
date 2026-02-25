@@ -17,9 +17,10 @@ This app is written in Dart. It can be used both as mobile application, desktop 
     - Docker???
 
 ### Rest of TODOs
-- Re-do SVGs, add 3 new ones, add flags: English, Finnish, German, Thai, Brazil, Spain
 - Add language selection + use preference saved to cookie
-- translate all hardcode strings to English and Thai
+- Localize timeago.format
+- Re-do SVGs, add 3 new ones, add flags: English, Finnish, German, Thai, Brazil, Spain
+- Add Error text theme, and put it into use in error scenarios
 - User levels: admin, normal
 - RssEvent vs RssArchiveEvent?
 - Rename rssBloc to generic
@@ -27,6 +28,8 @@ This app is written in Dart. It can be used both as mobile application, desktop 
 - Add wide screen layout, and keep current one for narrow
 - Add dark mode and light mode
 - Analytics and to what acount? create account?
+- Deploy identifiable version of Gemma to Ollama
+- Add LLM with version, to translated table entry in Backend. Show in frontend
 
 # Flutter notes
 ```

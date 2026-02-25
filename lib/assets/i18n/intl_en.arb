@@ -1,0 +1,21 @@
+{
+  "title": "Tech-Heavy News",
+  "@title": {
+    "description": "Title of the app"
+  },
+  "yes": "Yes",
+  "no": "No",
+  "cancel": "Cancel",
+  "ok": "Ok",
+  "close": "Close",
+  "logout": "Logout",
+  "noTitle": "No title",
+  "generalError": "Something went wrong",
+  "backendError": "Error: {error}",
+  "searchArchive": "Search archive...",
+  "newsSites": "News sites",
+  "newsArchive": "News archive",
+  "pleaseEnterToken": "Please enter token",
+  "token": "Token",
+  "login": "Login"
+}

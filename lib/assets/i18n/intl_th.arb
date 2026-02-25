@@ -1,0 +1,21 @@
+{
+  "title": "ข่าวที่น่าสนใจ",
+  "@title": {
+    "description": "Title of the app"
+  },
+  "yes": "ใช่",
+  "no": "ไม่",
+  "cancel": "ยกเลิก",
+  "ok": "ตกลง",
+  "close": "ปิด",
+  "logout": "ออกจากระบบ",
+  "noTitle": "ไม่มีหัวข้อ",
+  "generalError": "เกิดข้อผิดพลาด",
+  "backendError": "Error: {error}",
+  "searchArchive": "ค้นหา",
+  "newsSites": "แหล่งข่าว",
+  "newsArchive": "ข้อมูลข่าว",
+  "pleaseEnterToken": "กรุณากรอกรหัสผ่าน",
+  "token": "Token",
+  "login": "เข้าสู่ระบบ"
+}

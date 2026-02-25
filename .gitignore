@@ -13,6 +13,8 @@ macos/
 windows/
 linux/
 .env
+untranslated.txt
+lib/assets/i18n/generated
 
 # IntelliJ related
 *.iml

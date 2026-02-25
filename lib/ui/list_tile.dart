@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:homefe/assets/i18n/generated/app_localizations.dart';
 import 'package:homefe/functions.dart';
 import 'package:homefe/logger/logger.dart';
 import 'package:homefe/podo/rss/news_item.dart';
@@ -205,7 +206,7 @@ class RssFeedTile extends StatelessWidget {
     true,
   );
 
-  Widget _buildHeader(TextTheme textTheme) {
+  Widget _buildHeader(BuildContext context, TextTheme textTheme) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -213,7 +214,7 @@ class RssFeedTile extends StatelessWidget {
         const SizedBox(width: 6),
         Expanded(
           child: Text(
-            item.title ?? 'No title',
+            item.title ?? AppLocalizations.of(context)!.noTitle,
             style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
@@ -225,14 +226,8 @@ class RssFeedTile extends StatelessWidget {
 
   String _formatDate() {
     if (item.pubDate != null) {
-      try {
-        DateTime pubDate = parsePublishedParsed(item.pubDate);
-        return timeago.format(pubDate, locale: 'en');
-      } catch (e) {
-        logger.e('Error: $e');
-
-        return '';
-      }
+      DateTime pubDate = parsePublishedParsed(item.pubDate);
+      return timeago.format(pubDate, locale: 'en');
     }
 
     return '';
@@ -285,7 +280,7 @@ class RssFeedTile extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildHeader(textTheme),
+              _buildHeader(context, textTheme),
               if (_description.isNotEmpty) ...[
                 const SizedBox(height: 8),
                 Text(_description, style: textTheme.bodyMedium),

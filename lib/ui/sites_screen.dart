@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:homefe/assets/i18n/generated/app_localizations.dart';
 import 'package:homefe/bloc/rss_bloc.dart';
 import 'package:homefe/ui/spinner.dart';
 
@@ -18,7 +19,7 @@ class SitesScreenState extends State<SitesScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('News sites'),
+        title: Text(AppLocalizations.of(context)!.title),
         leading: BackButton(
           onPressed: () {
             context.pop();
@@ -102,9 +103,9 @@ class SitesScreenState extends State<SitesScreen> {
                 child: Text(state.error, style: const TextStyle(fontSize: 18)),
               );
             } else {
-              return const Center(
+              return Center(
                 child: Text(
-                  'Something went wrong',
+                  AppLocalizations.of(context)!.generalError,
                   style: TextStyle(fontSize: 18),
                 ),
               );

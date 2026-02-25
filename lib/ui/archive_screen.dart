@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:homefe/assets/i18n/generated/app_localizations.dart';
 import 'package:homefe/bloc/rss_bloc.dart';
 import 'package:homefe/functions.dart';
 import 'package:homefe/podo/rss/news_item.dart';
@@ -51,7 +52,7 @@ class ArchiveScreenState extends State<ArchiveScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('News archive'),
+        title: Text(AppLocalizations.of(context)!.title),
         leading: BackButton(
           onPressed: () {
             context.pop();
@@ -73,7 +74,7 @@ class ArchiveScreenState extends State<ArchiveScreen> {
                     context.read<RssArchiveBloc>().add(LoadMoreArchive());
                   },
                 ),
-                hintText: 'Search archive...',
+                hintText: AppLocalizations.of(context)!.searchArchive,
                 border: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.grey, width: 2),
                   borderRadius: BorderRadius.circular(4),
@@ -124,10 +125,10 @@ class ArchiveScreenState extends State<ArchiveScreen> {
                   );
                 } else {
                   return Flexible(
-                    child: const Center(
+                    child: Center(
                       child: Text(
-                        'Something went wrong',
-                        style: TextStyle(fontSize: 18),
+                        AppLocalizations.of(context)!.generalError,
+                        style: const TextStyle(fontSize: 18),
                       ),
                     ),
                   );

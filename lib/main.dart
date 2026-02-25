@@ -2,12 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:homefe/api/api_client.dart';
 import 'package:homefe/api/api_repository.dart';
+import 'package:homefe/assets/i18n/generated/app_localizations.dart';
 import 'package:homefe/bloc/login_bloc.dart';
 import 'package:homefe/bloc/rss_bloc.dart';
-// import 'package:homefe/constants/app_version.dart';
-import 'package:homefe/functions.dart';
+import 'package:homefe/constants/app_version.dart';
 import 'package:homefe/podo/rss/rss_site.dart';
 import 'package:homefe/ui/archive_screen.dart';
 import 'package:homefe/ui/dashboard_screen.dart';
@@ -15,10 +16,9 @@ import 'package:homefe/ui/login_screen.dart';
 import 'package:homefe/ui/feed_screen.dart';
 import 'package:homefe/ui/sites_screen.dart';
 import 'package:go_router/go_router.dart';
-import 'package:homefe/ui/spinner.dart';
 import 'package:homefe/theme/theme.dart';
 
-void main() async {
+void main() {
   runApp(const MyApp());
 }
 
@@ -27,50 +27,45 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<String?>(
-      future: readBaseUrl(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: Spinner());
-        }
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<LoginBloc>(
+          create: (context) {
+            return LoginBloc(
+              repo: ApiRepository(client: ApiClient(appApi.trim())),
+            );
+          },
+        ),
+        BlocProvider<RssArchiveBloc>(
+          create: (context) {
+            return RssArchiveBloc(
+              repo: ApiRepository(client: ApiClient(appApi.trim())),
+            )..add(LoadMoreArchive());
+          },
+        ),
+        BlocProvider<RssSitesBloc>(
+          create: (context) {
+            return RssSitesBloc(
+              repo: ApiRepository(client: ApiClient(appApi.trim())),
+            )..add(RssSitesEvent());
+          },
+        ),
+      ],
 
-        final baseUrl = snapshot.data ?? 'http://api-host:7071';
-
-        return MultiBlocProvider(
-          providers: [
-            BlocProvider<LoginBloc>(
-              create: (context) {
-                return LoginBloc(
-                  repo: ApiRepository(client: ApiClient(baseUrl)),
-                );
-              },
-            ),
-            BlocProvider<RssArchiveBloc>(
-              create: (context) {
-                return RssArchiveBloc(
-                  repo: ApiRepository(client: ApiClient(baseUrl)),
-                )..add(LoadMoreArchive());
-              },
-            ),
-            BlocProvider<RssSitesBloc>(
-              create: (context) {
-                return RssSitesBloc(
-                  repo: ApiRepository(client: ApiClient(baseUrl)),
-                )..add(RssSitesEvent());
-              },
-            ),
-          ],
-
-          child: MaterialApp.router(
-            title: 'Tech-Heavy News',
-            debugShowCheckedModeBanner: false,
-            theme: AppTheme.getThemeForPlatform(isDarkMode: false),
-            darkTheme: AppTheme.getThemeForPlatform(isDarkMode: true),
-            themeMode: ThemeMode.light,
-            routerConfig: router,
-          ),
-        );
-      },
+      child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.getThemeForPlatform(isDarkMode: false),
+        darkTheme: AppTheme.getThemeForPlatform(isDarkMode: true),
+        themeMode: ThemeMode.light,
+        localizationsDelegates: [
+          AppLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [Locale('en'), Locale('th')],
+        routerConfig: router,
+      ),
     );
   }
 }

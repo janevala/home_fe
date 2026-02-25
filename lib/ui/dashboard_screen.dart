@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:homefe/assets/i18n/generated/app_localizations.dart';
 import 'package:homefe/bloc/rss_bloc.dart';
 import 'package:homefe/constants/app_version.dart';
 import 'package:homefe/persistence/persistent_storage.dart';
@@ -45,7 +46,7 @@ class DashboardScreenState extends State<DashboardScreen> {
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: AppBar(title: Text('Tech-Heavy News')),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.title)),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -54,11 +55,11 @@ class DashboardScreenState extends State<DashboardScreen> {
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.surface,
               ),
-              child: Center(child: Text('Token: $token')),
+              child: Center(child: Text('Token: $token')), //TODO
             ),
             ListTile(
               title: Text(
-                'Back: $backVersion',
+                'Back: $backVersion', //TODO
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.onSurface,
                 ),
@@ -66,14 +67,14 @@ class DashboardScreenState extends State<DashboardScreen> {
             ),
             ListTile(
               title: Text(
-                'Front: $frontVersion',
+                'Front: $frontVersion', //TODO
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
             ),
             ListTile(
-              title: Text('Logout'),
+              title: Text(AppLocalizations.of(context)!.logout),
               onTap: () {
                 storage.clear();
                 context.pop();
@@ -107,7 +108,7 @@ class DashboardScreenState extends State<DashboardScreen> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
-                  'Error: ${state.error}',
+                  AppLocalizations.of(context)!.backendError(state.error),
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onError,
                   ),
@@ -134,7 +135,7 @@ class DashboardScreenState extends State<DashboardScreen> {
                           onPressed: () {
                             GoRouter.of(context).push('/sites');
                           },
-                          child: const Text('Choose news site'),
+                          child: Text(AppLocalizations.of(context)!.newsSites),
                         ),
                       if (!kIsWeb && !kIsWasm) const SizedBox(height: 32),
                       ElevatedButton(
@@ -151,7 +152,7 @@ class DashboardScreenState extends State<DashboardScreen> {
                         onPressed: state is SlowLoading
                             ? null
                             : () => GoRouter.of(context).push('/archive'),
-                        child: const Text('Choose news archive'),
+                        child: Text(AppLocalizations.of(context)!.newsArchive),
                       ),
                     ],
                   ),

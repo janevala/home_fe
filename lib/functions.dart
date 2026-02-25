@@ -5,14 +5,6 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 import 'package:homefe/constants/app_version.dart';
 
-Future<String?> readBaseUrl() async {
-  try {
-    return appApi.trim();
-  } catch (e) {
-    return null;
-  }
-}
-
 String parseDescription(NewsItem item, bool cutLong) {
   if (item.source == 'Dpreview' || item.source == 'Hacker News') {
     return item.title;

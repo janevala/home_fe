@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:homefe/assets/i18n/generated/app_localizations.dart';
 import 'package:homefe/bloc/login_bloc.dart';
 import 'package:homefe/logger/logger.dart';
 import 'package:homefe/persistence/persistent_storage.dart';
@@ -40,7 +41,7 @@ class LoginScreenState extends State<LoginScreen> {
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: AppBar(title: Text('Tech-Heavy News')),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.title)),
       body: SafeArea(
         child: BlocProvider<LoginBloc>(
           create: (context) => context.read<LoginBloc>(),
@@ -57,10 +58,14 @@ class LoginScreenState extends State<LoginScreen> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
                         TextFormField(
-                          decoration: const InputDecoration(labelText: 'Token'),
+                          decoration: InputDecoration(
+                            labelText: AppLocalizations.of(context)!.token,
+                          ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter token';
+                              return AppLocalizations.of(
+                                context,
+                              )!.pleaseEnterToken;
                             }
                             return null;
                           },
@@ -90,7 +95,7 @@ class LoginScreenState extends State<LoginScreen> {
                               );
                             }
                           },
-                          child: const Text('Login'),
+                          child: Text(AppLocalizations.of(context)!.login),
                         ),
                       ],
                     ),
