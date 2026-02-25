@@ -42,6 +42,7 @@ class LoginScreenState extends State<LoginScreen> {
     super.didChangeDependencies();
     String languageCode = getLanguageCode(context);
     logger.i("LANGUAGE $languageCode");
+    _persist({'system_language': languageCode});
     // TODO: DO THEME BLOC AND CONSIDER ENABLING IT
   }
 
@@ -114,13 +115,13 @@ class LoginScreenState extends State<LoginScreen> {
             ),
             listener: (BuildContext context, LoginState state) {
               if (state is LoginSuccess) {
-                _saveToken(state.token);
-                if (mounted) {
-                  Future.delayed(const Duration(seconds: 1), () {
+                _persist({'token': state.token.accessToken});
+                Future.delayed(const Duration(seconds: 1), () {
+                  if (mounted) {
                     // ignore: use_build_context_synchronously
                     GoRouter.of(context).go('/dashboard');
-                  });
-                }
+                  }
+                });
               } else if (state is LoginFailure) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
@@ -145,7 +146,10 @@ class LoginScreenState extends State<LoginScreen> {
   }
 }
 
-Future<void> _saveToken(Token token) async {
-  SharedPreferences storage = await PersistentStorage.instance;
-  storage.setString("token", token.accessToken);
+Future<void> _persist(Map<String, dynamic> data) async {
+  await PersistentStorage.delete(data.entries.first.key);
+  await PersistentStorage.write(
+    data.entries.first.key,
+    data.entries.first.value.toString(),
+  );
 }

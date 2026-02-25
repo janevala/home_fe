@@ -31,9 +31,9 @@ class DashboardScreenState extends State<DashboardScreen> {
   }
 
   Future<void> _loadSharedPreferences() async {
-    storage = await PersistentStorage.instance;
+    String token = await PersistentStorage.read('token') ?? '';
     setState(() {
-      token = storage.getString('token') ?? '';
+      this.token = token;
     });
   }
 
@@ -76,9 +76,13 @@ class DashboardScreenState extends State<DashboardScreen> {
             ListTile(
               title: Text(AppLocalizations.of(context)!.logout),
               onTap: () {
-                storage.clear();
-                context.pop();
-                GoRouter.of(context).pop();
+                _dePersist({'token': token});
+                Future.delayed(const Duration(seconds: 1), () {
+                  // ignore: use_build_context_synchronously
+                  context.pop();
+                  // ignore: use_build_context_synchronously
+                  GoRouter.of(context).pop();
+                });
               },
             ),
           ],
@@ -164,4 +168,8 @@ class DashboardScreenState extends State<DashboardScreen> {
       ),
     );
   }
+}
+
+Future<void> _dePersist(Map<String, dynamic> data) async {
+  await PersistentStorage.delete(data.entries.first.key);
 }
