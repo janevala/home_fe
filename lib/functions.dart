@@ -3,7 +3,6 @@ import 'package:homefe/podo/rss/news_item.dart';
 import 'package:html/parser.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
-import 'package:homefe/constants/app_version.dart';
 
 String parseDescription(NewsItem item, bool cutLong) {
   if (item.source == 'Dpreview' || item.source == 'Hacker News') {

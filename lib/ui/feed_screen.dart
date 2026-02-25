@@ -6,7 +6,7 @@ import 'package:homefe/bloc/rss_bloc.dart';
 import 'package:homefe/functions.dart';
 import 'package:homefe/podo/rss/news_item.dart';
 import 'package:homefe/podo/rss/rss_site.dart';
-import 'package:homefe/ui/callback_shortcuts.dart';
+import 'package:homefe/callback_shortcuts.dart';
 import 'package:homefe/ui/list_tile.dart';
 import 'package:homefe/ui/spinner.dart';
 import 'package:rss_dart/domain/rss_item.dart';
