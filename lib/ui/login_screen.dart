@@ -29,17 +29,20 @@ class LoginScreenState extends State<LoginScreen> {
     super.initState();
 
     if (kIsWasm) {
-      logger.i("WASM build $appVersion");
-      // TODO: WASM way of detect browser locale
+      logger.i("WASM $appVersion");
     } else if (kIsWeb) {
-      logger.i("WEB build $appVersion");
-      // TODO:  WEB way of detect browser locale
+      logger.i("WEB $appVersion");
     } else {
-      logger.i("NATIVE build $appVersion");
+      logger.i("NATIVE $appVersion");
     }
+  }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     String languageCode = getLanguageCode(context);
-    logger.i("LANGUAGE CODE $languageCode");
+    logger.i("LANGUAGE $languageCode");
+    // TODO: DO THEME BLOC AND CONSIDER ENABLING IT
   }
 
   @override
