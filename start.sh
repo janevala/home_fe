@@ -3,8 +3,6 @@
 if [ ! -f ".env" ]; then
     echo "Error: .env file not found"
     exit 1
-else
-    cat .env
 fi
 
 ENV=$(cat .env | grep ENV | cut -d '=' -f2)
