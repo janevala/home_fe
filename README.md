@@ -16,9 +16,6 @@ This app is written in Dart. It can be used both as mobile application, desktop 
     - enable https in firewall
     - Docker???
 
-### for now
-    - switch public port to 80
-
 ### Rest of TODOs
 - Re-do SVGs, add 3 new ones, add flags: English, Finnish, German, Thai, Brazil, Spain
 - Add language selection + use preference saved to cookie
