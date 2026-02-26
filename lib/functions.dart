@@ -27,7 +27,6 @@ String parseDescription(NewsItem item, bool cutLong) {
 }
 
 openItem(BuildContext context, NewsItem item) async {
-  double width = MediaQuery.of(context).size.width;
   String description = parseDescription(item, false);
 
   showDialog(
