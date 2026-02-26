@@ -1,35 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="25" result="coloredBlur"/>
-      <feMerge>
-        <feMergeNode in="coloredBlur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-  </defs>
-
-  <!-- Neon outer ring -->
-  <circle cx="512" cy="512" r="420"
-          stroke="#ffd400"
-          stroke-width="40"
-          fill="none"
-          filter="url(#glow)"/>
-
-  <!-- Inner dark glass circle -->
-  <circle cx="512" cy="512" r="380"
-          fill="#0a0f1a"
-          opacity="0.9"/>
-
-  <!-- Text -->
-  <text x="50%" y="55%"
-        text-anchor="middle"
-        font-family="Arial, Helvetica, sans-serif"
-        font-size="280"
-        fill="#ffd400"
-        filter="url(#glow)"
-        font-weight="bold">
-    DP
-  </text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <g fill="currentColor">
+    <!-- Outer ring -->
+    <circle cx="32" cy="32" r="24" fill="none" stroke="currentColor" stroke-width="4"></circle>
+    
+    <!-- Aperture blades -->
+    <path d="M32 12 L40 26 L32 32 Z"></path>
+    <path d="M52 32 L38 40 L32 32 Z"></path>
+    <path d="M32 52 L24 38 L32 32 Z"></path>
+    <path d="M12 32 L26 24 L32 32 Z"></path>
+    <path d="M24 14 L32 26 L32 12 Z" opacity="0"></path>
+  </g>
 </svg>

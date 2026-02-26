@@ -49,3 +49,6 @@ flutter:
     - assets/thumbnails/toms-hardware.svg
     - assets/thumbnails/ars-technica.svg
     - assets/thumbnails/hacker-news.svg
+    - assets/thumbnails/register.svg
+    - assets/thumbnails/verge.svg
+    - assets/thumbnails/wired.svg

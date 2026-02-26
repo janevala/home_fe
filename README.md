@@ -20,7 +20,6 @@ This app is written in Dart. It can be used both as mobile application, desktop 
 - Locale bloc?
 - Add language selection + use preference saved to cookie
 - Localize timeago.format
-- Re-do SVGs, add 3 new ones, add flags: English, Finnish, German, Thai, Brazil, Spain
 - Add Error text theme, and put it into use in error scenarios
 - RssEvent vs RssArchiveEvent?
 - Rename rssBloc to generic

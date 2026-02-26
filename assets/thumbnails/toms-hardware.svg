@@ -1,35 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="25" result="coloredBlur"/>
-      <feMerge>
-        <feMergeNode in="coloredBlur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-  </defs>
-
-  <!-- Neon outer ring -->
-  <circle cx="512" cy="512" r="420"
-          stroke="#ff003c"
-          stroke-width="40"
-          fill="none"
-          filter="url(#glow)"/>
-
-  <!-- Inner dark glass circle -->
-  <circle cx="512" cy="512" r="380"
-          fill="#0a0f1a"
-          opacity="0.9"/>
-
-  <!-- Text -->
-  <text x="50%" y="55%"
-        text-anchor="middle"
-        font-family="Arial, Helvetica, sans-serif"
-        font-size="280"
-        fill="#ff003c"
-        filter="url(#glow)"
-        font-weight="bold">
-    TH
-  </text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <g fill="none" stroke="currentColor" stroke-width="4">
+    <rect x="18" y="18" width="28" height="28" rx="4"></rect>
+    <rect x="26" y="26" width="12" height="12" fill="currentColor" stroke="none"></rect>
+    <path d="M10 24h8M10 32h8M10 40h8M46 24h8M46 32h8M46 40h8"></path>
+  </g>
 </svg>
