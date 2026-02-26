@@ -19,6 +19,11 @@ class DashboardScreen extends StatefulWidget {
 class DashboardScreenState extends State<DashboardScreen> {
   late SharedPreferences storage;
 
+  String token = '';
+  String backVersion = '';
+  String frontVersion = '';
+  bool freshLogin = true;
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -26,22 +31,30 @@ class DashboardScreenState extends State<DashboardScreen> {
       context.read<RssArchiveBloc>().add(RefreshArchive());
     });
 
-    _loadSharedPreferences();
+    _loadPersisted();
 
     super.initState();
   }
 
-  Future<void> _loadSharedPreferences() async {
+  Future<void> _loadPersisted() async {
     String token = await PersistentStorage.read('token') ?? '';
+
     setState(() {
       this.token = token;
     });
   }
 
-  String token = '';
-  String backVersion = '';
-  String frontVersion = '';
-  bool freshLogin = true;
+  Future<void> _persist(Map<String, dynamic> data) async {
+    await PersistentStorage.delete(data.entries.first.key);
+    await PersistentStorage.write(
+      data.entries.first.key,
+      data.entries.first.value.toString(),
+    );
+  }
+
+  Future<void> _dePersist(Map<String, dynamic> data) async {
+    await PersistentStorage.delete(data.entries.first.key);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -271,16 +284,4 @@ class DashboardScreenState extends State<DashboardScreen> {
       ),
     );
   }
-}
-
-Future<void> _persist(Map<String, dynamic> data) async {
-  await PersistentStorage.delete(data.entries.first.key);
-  await PersistentStorage.write(
-    data.entries.first.key,
-    data.entries.first.value.toString(),
-  );
-}
-
-Future<void> _dePersist(Map<String, dynamic> data) async {
-  await PersistentStorage.delete(data.entries.first.key);
 }

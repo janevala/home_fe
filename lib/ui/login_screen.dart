@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:homefe/assets/i18n/generated/app_localizations.dart';
 import 'package:homefe/bloc/login_bloc.dart';
+import 'package:homefe/bloc/theme_cubit.dart';
 import 'package:homefe/functions.dart';
 import 'package:homefe/logger/logger.dart';
 import 'package:homefe/persistence/persistent_storage.dart';
@@ -115,12 +116,7 @@ class LoginScreenState extends State<LoginScreen> {
               if (state is LoginSuccess) {
                 _persist({'token': state.token.accessToken});
 
-                final brightness = MediaQuery.of(context).platformBrightness;
-                _persist({
-                  'platform_brightness': brightness == Brightness.dark
-                      ? 'dark'
-                      : 'light',
-                });
+                _persistTheme();
 
                 Future.delayed(const Duration(seconds: 1), () {
                   if (mounted) {
@@ -149,6 +145,18 @@ class LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _persistTheme() async {
+    final mode = context.read<ThemeCubit>().mode;
+    if (mode == ThemeMode.system) {
+      final brightness = MediaQuery.of(context).platformBrightness;
+      if (brightness == Brightness.dark) {
+        context.read<ThemeCubit>().setTheme(ThemeMode.dark);
+      } else {
+        context.read<ThemeCubit>().setTheme(ThemeMode.light);
+      }
+    }
   }
 }
 
