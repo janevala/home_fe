@@ -7,11 +7,9 @@ import 'package:homefe/functions.dart';
 import 'package:homefe/logger/logger.dart';
 import 'package:homefe/persistence/persistent_storage.dart';
 import 'package:homefe/podo/login/login_body.dart';
-import 'package:homefe/podo/token/token.dart';
 import 'package:homefe/ui/spinner.dart';
 import 'package:flutter/foundation.dart';
 import 'package:homefe/constants/app_version.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

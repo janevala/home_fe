@@ -40,6 +40,8 @@ class DashboardScreenState extends State<DashboardScreen> {
   String token = '';
   String backVersion = '';
   String frontVersion = '';
+  bool isDarkMode = false;
+  bool freshLogin = true;
 
   @override
   Widget build(BuildContext context) {
@@ -53,28 +55,127 @@ class DashboardScreenState extends State<DashboardScreen> {
           children: [
             DrawerHeader(
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Theme.of(
+                      context,
+                    ).colorScheme.primary.withValues(alpha: 0.8),
+                    Theme.of(
+                      context,
+                    ).colorScheme.secondary.withValues(alpha: 0.6),
+                  ],
+                ),
               ),
-              child: Center(child: Text('Token: $token')), //TODO
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Theme.of(
+                      context,
+                    ).colorScheme.onPrimary.withValues(alpha: 0.2),
+                    child: Icon(
+                      Icons.person,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    '${AppLocalizations.of(context)!.token}: ${token.isNotEmpty ? token : 'No token'}',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    freshLogin
+                        ? AppLocalizations.of(context)!.welcome
+                        : AppLocalizations.of(context)!.welcomeBack,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onPrimary.withValues(alpha: 0.8),
+                    ),
+                  ),
+                ],
+              ),
             ),
+
             ListTile(
+              leading: Icon(
+                Icons.dark_mode_outlined,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
               title: Text(
-                'Back: $backVersion', //TODO
+                isDarkMode
+                    ? AppLocalizations.of(context)!.darkMode
+                    : AppLocalizations.of(context)!.lightMode,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+              ),
+              trailing: Switch(
+                value: isDarkMode,
+                onChanged: (value) {
+                  setState(() {
+                    isDarkMode = value;
+                  });
+                },
+              ),
+            ),
+
+            // ListTile(
+            //   leading: Icon(
+            //     Icons.help_outline,
+            //     color: Theme.of(context).colorScheme.onSurface,
+            //   ),
+            //   title: Text(
+            //     AppLocalizations.of(context)!.about,
+            //     style: TextStyle(
+            //       color: Theme.of(context).colorScheme.onSurface,
+            //     ),
+            //   ),
+            //   onTap: () {},
+            // ),
+            const Divider(),
+
+            ListTile(
+              leading: Icon(
+                Icons.info_outline,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
+              title: Text(
+                AppLocalizations.of(context)!.serverVersion(backVersion),
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
             ),
             ListTile(
+              leading: Icon(
+                Icons.phone_android,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
               title: Text(
-                'Front: $frontVersion', //TODO
+                AppLocalizations.of(context)!.appVersion(appVersion),
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
             ),
+
+            const Divider(),
             ListTile(
-              title: Text(AppLocalizations.of(context)!.logout),
+              leading: Icon(
+                Icons.logout,
+                color: Theme.of(context).colorScheme.error,
+              ),
+              title: Text(
+                AppLocalizations.of(context)!.logout,
+                style: TextStyle(color: Theme.of(context).colorScheme.error),
+              ),
               onTap: () {
                 _dePersist({'token': token});
                 Future.delayed(const Duration(seconds: 1), () {

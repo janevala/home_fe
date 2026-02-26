@@ -102,6 +102,11 @@ class AppTheme {
       listTileTheme: const ListTileThemeData(
         contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       ),
+      dividerTheme: DividerThemeData(
+        color: _lightColorScheme.primaryContainer,
+        thickness: 1,
+        space: 1,
+      ),
     );
   }
 
@@ -136,67 +141,56 @@ class AppTheme {
       listTileTheme: const ListTileThemeData(
         contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       ),
+      dividerTheme: DividerThemeData(
+        color: _darkColorScheme.primaryContainer,
+        thickness: 1,
+        space: 1,
+      ),
     );
   }
-
-  static const Color _cupertinoLightPrimary = Color(0xFF007AFF);
-  static const Color _cupertinoLightSecondary = Color(0xFF5856D6);
-  static const Color _cupertinoLightBackground = Color(0xFFF2F2F7);
-  static const Color _cupertinoLightSurface = Color(0xFFFFFFFF);
-  static const Color _cupertinoLightLabel = Color(0xFF000000);
-  static const Color _cupertinoLightSecondaryLabel = Color(0xFF3C3C43);
-  static const Color _cupertinoLightTertiaryLabel = Color(0xFF3C3C4399);
-
-  static const Color _cupertinoDarkPrimary = Color(0xFF0A84FF);
-  static const Color _cupertinoDarkSecondary = Color(0xFF5E5CE6);
-  static const Color _cupertinoDarkBackground = Color(0xFF000000);
-  static const Color _cupertinoDarkSurface = Color(0xFF1C1C1E);
-  static const Color _cupertinoDarkLabel = Color(0xFFFFFFFF);
-  static const Color _cupertinoDarkSecondaryLabel = Color(0xFFEBEBF5);
-  static const Color _cupertinoDarkTertiaryLabel = Color(0xFFEBEBF599);
 
   static ThemeData get cupertinoLightTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
       colorScheme: ColorScheme.fromSeed(
-        seedColor: _cupertinoLightPrimary,
+        seedColor: _lightColorScheme.primary,
         brightness: Brightness.light,
-        surface: _cupertinoLightSurface,
-        onSurface: _cupertinoLightLabel,
-        surfaceContainer: _cupertinoLightBackground,
-        onSurfaceVariant: _cupertinoLightSecondaryLabel,
-        primary: _cupertinoLightPrimary,
+        surface: _lightColorScheme.surface,
+        onSurface: _lightColorScheme.onSurface,
+        surfaceContainer: _lightColorScheme.surfaceContainer,
+        onSurfaceVariant: _lightColorScheme.onSurfaceVariant,
+        primary: _lightColorScheme.primary,
         onPrimary: Colors.white,
-        secondary: _cupertinoLightSecondary,
+        secondary: _lightColorScheme.secondary,
         onSecondary: Colors.white,
       ),
       appBarTheme: AppBarTheme(
-        backgroundColor: _cupertinoLightSurface,
-        foregroundColor: _cupertinoLightLabel,
+        backgroundColor: _lightColorScheme.surface,
+        foregroundColor: _lightColorScheme.onSurface,
         elevation: 0,
         centerTitle: true,
-        titleTextStyle: const TextStyle(
-          color: _cupertinoLightLabel,
+        titleTextStyle: TextStyle(
+          color: _lightColorScheme.onSurface,
           fontSize: 17,
           fontWeight: FontWeight.w600,
         ),
-        iconTheme: const IconThemeData(color: _cupertinoLightLabel),
+        iconTheme: IconThemeData(color: _lightColorScheme.onSurface),
       ),
       cardTheme: CardThemeData(
-        color: _cupertinoLightSurface,
+        color: _lightColorScheme.surface,
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
           side: BorderSide(
-            color: _cupertinoLightTertiaryLabel.withValues(alpha: 0.2),
+            color: _lightColorScheme.onSurface.withValues(alpha: 0.2),
             width: 0.5,
           ),
         ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: _cupertinoLightPrimary,
+          backgroundColor: _lightColorScheme.primary,
           foregroundColor: Colors.white,
           elevation: 0,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -205,7 +199,7 @@ class AppTheme {
       ),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
-          foregroundColor: _cupertinoLightPrimary,
+          foregroundColor: _lightColorScheme.primary,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
       ),
@@ -213,18 +207,18 @@ class AppTheme {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
-            color: _cupertinoLightTertiaryLabel.withValues(alpha: 0.3),
+            color: _lightColorScheme.onSurface.withValues(alpha: 0.3),
           ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
-            color: _cupertinoLightTertiaryLabel.withValues(alpha: 0.3),
+            color: _lightColorScheme.onSurface.withValues(alpha: 0.3),
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: _cupertinoLightPrimary, width: 2),
+          borderSide: BorderSide(color: _lightColorScheme.primary, width: 2),
         ),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
@@ -233,14 +227,19 @@ class AppTheme {
       ),
       listTileTheme: ListTileThemeData(
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-        titleTextStyle: const TextStyle(
-          color: _cupertinoLightLabel,
+        titleTextStyle: TextStyle(
+          color: _lightColorScheme.onSurface,
           fontSize: 17,
         ),
         subtitleTextStyle: TextStyle(
-          color: _cupertinoLightSecondaryLabel,
+          color: _lightColorScheme.onSurfaceVariant,
           fontSize: 15,
         ),
+      ),
+      dividerTheme: DividerThemeData(
+        color: _lightColorScheme.primaryContainer,
+        thickness: 1,
+        space: 1,
       ),
     );
   }
@@ -250,43 +249,43 @@ class AppTheme {
       useMaterial3: true,
       brightness: Brightness.dark,
       colorScheme: ColorScheme.fromSeed(
-        seedColor: _cupertinoDarkPrimary,
+        seedColor: _darkColorScheme.primary,
         brightness: Brightness.dark,
-        surface: _cupertinoDarkSurface,
-        onSurface: _cupertinoDarkLabel,
-        surfaceContainer: _cupertinoDarkBackground,
-        onSurfaceVariant: _cupertinoDarkSecondaryLabel,
-        primary: _cupertinoDarkPrimary,
+        surface: _darkColorScheme.surface,
+        onSurface: _darkColorScheme.onSurface,
+        surfaceContainer: _darkColorScheme.surfaceContainer,
+        onSurfaceVariant: _darkColorScheme.onSurfaceVariant,
+        primary: _darkColorScheme.primary,
         onPrimary: Colors.white,
-        secondary: _cupertinoDarkSecondary,
+        secondary: _darkColorScheme.secondary,
         onSecondary: Colors.white,
       ),
       appBarTheme: AppBarTheme(
-        backgroundColor: _cupertinoDarkSurface,
-        foregroundColor: _cupertinoDarkLabel,
+        backgroundColor: _darkColorScheme.surface,
+        foregroundColor: _darkColorScheme.onSurface,
         elevation: 0,
         centerTitle: true,
-        titleTextStyle: const TextStyle(
-          color: _cupertinoDarkLabel,
+        titleTextStyle: TextStyle(
+          color: _darkColorScheme.onSurface,
           fontSize: 17,
           fontWeight: FontWeight.w600,
         ),
-        iconTheme: const IconThemeData(color: _cupertinoDarkLabel),
+        iconTheme: IconThemeData(color: _darkColorScheme.onSurface),
       ),
       cardTheme: CardThemeData(
-        color: _cupertinoDarkSurface,
+        color: _darkColorScheme.surface,
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
           side: BorderSide(
-            color: _cupertinoDarkTertiaryLabel.withValues(alpha: 0.2),
+            color: _darkColorScheme.onSurfaceVariant.withValues(alpha: 0.2),
             width: 0.5,
           ),
         ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: _cupertinoDarkPrimary,
+          backgroundColor: _darkColorScheme.primary,
           foregroundColor: Colors.white,
           elevation: 0,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -295,7 +294,7 @@ class AppTheme {
       ),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
-          foregroundColor: _cupertinoDarkPrimary,
+          foregroundColor: _darkColorScheme.primary,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
       ),
@@ -303,18 +302,18 @@ class AppTheme {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
-            color: _cupertinoDarkTertiaryLabel.withValues(alpha: 0.3),
+            color: _darkColorScheme.onSurfaceVariant.withValues(alpha: 0.3),
           ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
-            color: _cupertinoDarkTertiaryLabel.withValues(alpha: 0.3),
+            color: _darkColorScheme.onSurfaceVariant.withValues(alpha: 0.3),
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: _cupertinoDarkPrimary, width: 2),
+          borderSide: BorderSide(color: _darkColorScheme.primary, width: 2),
         ),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
@@ -323,14 +322,19 @@ class AppTheme {
       ),
       listTileTheme: ListTileThemeData(
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-        titleTextStyle: const TextStyle(
-          color: _cupertinoDarkLabel,
+        titleTextStyle: TextStyle(
+          color: _darkColorScheme.onSurface,
           fontSize: 17,
         ),
         subtitleTextStyle: TextStyle(
-          color: _cupertinoDarkSecondaryLabel,
+          color: _darkColorScheme.onSurfaceVariant,
           fontSize: 15,
         ),
+      ),
+      dividerTheme: DividerThemeData(
+        color: _darkColorScheme.primaryContainer,
+        thickness: 1,
+        space: 1,
       ),
     );
   }

@@ -1,8 +1,5 @@
 {
   "title": "ข่าวที่น่าสนใจ",
-  "@title": {
-    "description": "Title of the app"
-  },
   "yes": "ใช่",
   "no": "ไม่",
   "cancel": "ยกเลิก",
@@ -17,5 +14,12 @@
   "newsArchive": "ข้อมูลข่าว",
   "pleaseEnterToken": "กรุณากรอกรหัสผ่าน",
   "token": "Token",
-  "login": "เข้าสู่ระบบ"
+  "login": "เข้าสู่ระบบ",
+  "serverVersion": "เวอร์ชันเซิร์ฟเวอร์: {version}",
+  "appVersion": "เวอร์ชันแอป: {version}",
+  "about": "เกี่ยวกับ",
+  "lightMode": "โหมดสว่าง",
+  "darkMode": "โหมดมืด",
+  "welcomeBack": "ยินดีต้อนรับกลับ!",
+  "welcome": "ยินดีต้อนรับ!"
 }
