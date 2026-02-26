@@ -34,11 +34,8 @@ openItem(BuildContext context, NewsItem item) async {
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: SizedBox(width: width * 0.8, child: SelectableText(item.title)),
-        content: SizedBox(
-          width: width * 0.8,
-          child: SingleChildScrollView(child: SelectableText(description)),
-        ),
+        title: SelectableText(item.title),
+        content: SelectableText(description),
         actions: [
           TextButton(
             onPressed: () async {
