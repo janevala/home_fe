@@ -161,7 +161,7 @@ class DashboardScreenState extends State<DashboardScreen> {
 
             ListTile(
               leading: Icon(
-                Icons.info_outline,
+                Icons.dns,
                 color: Theme.of(context).colorScheme.onSurface,
               ),
               title: Text(

@@ -42,7 +42,6 @@ class LoginScreenState extends State<LoginScreen> {
     String languageCode = getLanguageCode(context);
     logger.i("LANGUAGE $languageCode");
     _persist({'system_language': languageCode});
-    // TODO: DO THEME BLOC AND CONSIDER ENABLING IT
   }
 
   @override
