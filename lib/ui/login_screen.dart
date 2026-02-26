@@ -150,6 +150,7 @@ class LoginScreenState extends State<LoginScreen> {
   Future<void> _persistTheme() async {
     final mode = context.read<ThemeCubit>().mode;
     if (mode == ThemeMode.system) {
+      _persist({'first_time_user': true});
       final brightness = MediaQuery.of(context).platformBrightness;
       if (brightness == Brightness.dark) {
         context.read<ThemeCubit>().setTheme(ThemeMode.dark);

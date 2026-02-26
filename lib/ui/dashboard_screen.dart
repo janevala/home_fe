@@ -22,7 +22,7 @@ class DashboardScreenState extends State<DashboardScreen> {
   String token = '';
   String backVersion = '';
   String frontVersion = '';
-  bool freshLogin = true;
+  bool firstTimeUser = true;
 
   @override
   void initState() {
@@ -38,9 +38,12 @@ class DashboardScreenState extends State<DashboardScreen> {
 
   Future<void> _loadPersisted() async {
     String token = await PersistentStorage.read('token') ?? '';
+    String firstTimeUser =
+        await PersistentStorage.read('first_time_user') ?? 'true';
 
     setState(() {
       this.token = token;
+      this.firstTimeUser = firstTimeUser == 'true';
     });
   }
 
@@ -103,7 +106,7 @@ class DashboardScreenState extends State<DashboardScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    freshLogin
+                    firstTimeUser
                         ? AppLocalizations.of(context)!.welcome
                         : AppLocalizations.of(context)!.welcomeBack,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -193,6 +196,7 @@ class DashboardScreenState extends State<DashboardScreen> {
               ),
               onTap: () {
                 _dePersist({'token': dynamic});
+                _persist({'first_time_user': false});
                 Future.delayed(const Duration(milliseconds: 500), () {
                   // ignore: use_build_context_synchronously
                   context.pop();
