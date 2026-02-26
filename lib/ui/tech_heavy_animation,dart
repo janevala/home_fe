@@ -1,9 +1,10 @@
-import 'package:simple_animations/simple_animations.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' show pi;
 
-class FuturisticAnimation extends StatelessWidget {
-  const FuturisticAnimation({super.key});
+class TechHeavyAnimation extends StatelessWidget {
+  const TechHeavyAnimation({super.key, required this.mode});
+
+  final ThemeMode mode;
 
   @override
   Widget build(BuildContext context) {

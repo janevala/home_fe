@@ -9,7 +9,6 @@ class ThemeCubit extends Cubit<ThemeMode> {
     _load().then((value) {
       if (value != null) {
         _mode = ThemeMode.values.firstWhere((e) => e.name == value);
-        emit(mode!);
       }
     });
   }
