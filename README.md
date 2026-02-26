@@ -68,6 +68,7 @@ sudo docker network connect home-network front-host
 
 ### Docker transfer prebuilt container
 ```
+sudo docker ps
 sudo docker commit ID news-frontend:rel8
 sudo docker save -o news-frontend-rel8.tar news-frontend:rel8
 sudo gzip news-frontend-rel8.tar
