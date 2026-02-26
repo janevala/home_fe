@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:homefe/assets/i18n/generated/app_localizations.dart';
 import 'package:homefe/bloc/rss_bloc.dart';
+import 'package:homefe/bloc/theme_cubit.dart';
 import 'package:homefe/constants/app_version.dart';
 import 'package:homefe/persistence/persistent_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -40,7 +41,6 @@ class DashboardScreenState extends State<DashboardScreen> {
   String token = '';
   String backVersion = '';
   String frontVersion = '';
-  bool isDarkMode = false;
   bool freshLogin = true;
 
   @override
@@ -103,27 +103,29 @@ class DashboardScreenState extends State<DashboardScreen> {
               ),
             ),
 
-            ListTile(
-              leading: Icon(
-                Icons.dark_mode_outlined,
-                color: Theme.of(context).colorScheme.onSurface,
-              ),
-              title: Text(
-                isDarkMode
-                    ? AppLocalizations.of(context)!.darkMode
-                    : AppLocalizations.of(context)!.lightMode,
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onSurface,
-                ),
-              ),
-              trailing: Switch(
-                value: isDarkMode,
-                onChanged: (value) {
-                  setState(() {
-                    isDarkMode = value;
-                  });
-                },
-              ),
+            BlocBuilder<ThemeCubit, ThemeMode>(
+              builder: (context, themeMode) {
+                return ListTile(
+                  leading: Icon(
+                    Icons.dark_mode_outlined,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+                  title: Text(
+                    themeMode == ThemeMode.dark
+                        ? AppLocalizations.of(context)!.darkMode
+                        : AppLocalizations.of(context)!.lightMode,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
+                  trailing: Switch(
+                    value: themeMode == ThemeMode.dark,
+                    onChanged: (value) {
+                      context.read<ThemeCubit>().toggleTheme();
+                    },
+                  ),
+                );
+              },
             ),
 
             // ListTile(
@@ -177,8 +179,8 @@ class DashboardScreenState extends State<DashboardScreen> {
                 style: TextStyle(color: Theme.of(context).colorScheme.error),
               ),
               onTap: () {
-                _dePersist({'token': token});
-                Future.delayed(const Duration(seconds: 1), () {
+                _dePersist({'token': dynamic});
+                Future.delayed(const Duration(milliseconds: 500), () {
                   // ignore: use_build_context_synchronously
                   context.pop();
                   // ignore: use_build_context_synchronously
@@ -269,6 +271,14 @@ class DashboardScreenState extends State<DashboardScreen> {
       ),
     );
   }
+}
+
+Future<void> _persist(Map<String, dynamic> data) async {
+  await PersistentStorage.delete(data.entries.first.key);
+  await PersistentStorage.write(
+    data.entries.first.key,
+    data.entries.first.value.toString(),
+  );
 }
 
 Future<void> _dePersist(Map<String, dynamic> data) async {

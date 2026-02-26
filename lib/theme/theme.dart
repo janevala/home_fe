@@ -2,14 +2,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  static ThemeData getThemeForPlatform({required bool isDarkMode}) {
-    if (defaultTargetPlatform == TargetPlatform.iOS ||
-        (kIsWeb && defaultTargetPlatform == TargetPlatform.macOS)) {
-      return isDarkMode ? cupertinoDarkTheme : cupertinoLightTheme;
-    }
+  // static ThemeData getThemeForPlatform({required bool isDarkMode}) {
+  //   if (defaultTargetPlatform == TargetPlatform.iOS ||
+  //       (kIsWeb && defaultTargetPlatform == TargetPlatform.macOS)) {
+  //     return isDarkMode ? cupertinoDarkTheme : cupertinoLightTheme;
+  //   }
 
-    return isDarkMode ? darkTheme : lightTheme;
-  }
+  //   return isDarkMode ? darkTheme : lightTheme;
+  // }
 
   static const ColorScheme _lightColorScheme = ColorScheme(
     brightness: Brightness.light,

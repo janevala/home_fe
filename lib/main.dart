@@ -6,6 +6,7 @@ import 'package:homefe/api/api_repository.dart';
 import 'package:homefe/assets/i18n/generated/app_localizations.dart';
 import 'package:homefe/bloc/login_bloc.dart';
 import 'package:homefe/bloc/rss_bloc.dart';
+import 'package:homefe/bloc/theme_cubit.dart';
 import 'package:homefe/constants/app_version.dart';
 import 'package:homefe/podo/rss/rss_site.dart';
 import 'package:homefe/ui/archive_screen.dart';
@@ -17,11 +18,23 @@ import 'package:go_router/go_router.dart';
 import 'package:homefe/theme/theme.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ThemedApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class ThemedApp extends StatelessWidget {
+  const ThemedApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [BlocProvider<ThemeCubit>(create: (context) => ThemeCubit())],
+      child: const App(),
+    );
+  }
+}
+
+class App extends StatelessWidget {
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -50,19 +63,23 @@ class MyApp extends StatelessWidget {
         ),
       ],
 
-      child: MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.lightTheme,
-        darkTheme: AppTheme.darkTheme,
-        themeMode: ThemeMode.light,
-        localizationsDelegates: [
-          AppLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: [Locale('en'), Locale('th')],
-        routerConfig: router,
+      child: BlocBuilder<ThemeCubit, ThemeMode>(
+        builder: (context, themeMode) {
+          return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            themeMode: themeMode,
+            localizationsDelegates: [
+              AppLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: [Locale('en'), Locale('th'), Locale('fi')],
+            routerConfig: router,
+          );
+        },
       ),
     );
   }

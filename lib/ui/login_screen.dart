@@ -114,6 +114,14 @@ class LoginScreenState extends State<LoginScreen> {
             listener: (BuildContext context, LoginState state) {
               if (state is LoginSuccess) {
                 _persist({'token': state.token.accessToken});
+
+                final brightness = MediaQuery.of(context).platformBrightness;
+                _persist({
+                  'platform_brightness': brightness == Brightness.dark
+                      ? 'dark'
+                      : 'light',
+                });
+
                 Future.delayed(const Duration(seconds: 1), () {
                   if (mounted) {
                     // ignore: use_build_context_synchronously
