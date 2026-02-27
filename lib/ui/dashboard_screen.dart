@@ -7,7 +7,7 @@ import 'package:homefe/bloc/rss_bloc.dart';
 import 'package:homefe/bloc/theme_cubit.dart';
 import 'package:homefe/constants/app_version.dart';
 import 'package:homefe/persistence/persistent_storage.dart';
-import 'package:homefe/ui/app_animation.dart';
+// import 'package:homefe/ui/app_animation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardScreen extends StatefulWidget {

@@ -1,6 +1,21 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+class AppColors {
+  static const Color linkBlue = Color(0xFF1976D2); // Standard web link blue
+}
+
 class AppTheme {
+  static ThemeData getThemeForPlatform({required bool isDarkMode}) {
+    return isDarkMode ? cupertinoDarkTheme : cupertinoLightTheme;
+    if (defaultTargetPlatform == TargetPlatform.iOS ||
+        (kIsWeb && defaultTargetPlatform == TargetPlatform.macOS)) {
+      return isDarkMode ? cupertinoDarkTheme : cupertinoLightTheme;
+    }
+
+    return isDarkMode ? darkTheme : lightTheme;
+  }
+
   static const ColorScheme _lightColorScheme = ColorScheme(
     brightness: Brightness.light,
     primary: Color(0xFF1976D2), // Blue primary
@@ -97,6 +112,28 @@ class AppTheme {
         thickness: 1,
         space: 1,
       ),
+      textTheme: TextTheme(
+        titleLarge: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w500,
+          color: _lightColorScheme.onSurface,
+        ),
+        bodyLarge: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w400,
+          color: _lightColorScheme.onSurface,
+        ),
+        bodyMedium: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
+          color: _lightColorScheme.onSurface,
+        ),
+        labelLarge: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
+          color: _lightColorScheme.onSurface,
+        ),
+      ),
     );
   }
 
@@ -135,6 +172,28 @@ class AppTheme {
         color: _darkColorScheme.primaryContainer,
         thickness: 1,
         space: 1,
+      ),
+      textTheme: TextTheme(
+        titleLarge: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w500,
+          color: _darkColorScheme.onSurface,
+        ),
+        bodyLarge: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w400,
+          color: _darkColorScheme.onSurface,
+        ),
+        bodyMedium: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
+          color: _darkColorScheme.onSurface,
+        ),
+        labelLarge: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
+          color: _darkColorScheme.onSurface,
+        ),
       ),
     );
   }
@@ -231,6 +290,28 @@ class AppTheme {
         thickness: 1,
         space: 1,
       ),
+      textTheme: TextTheme(
+        titleLarge: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w500,
+          color: _lightColorScheme.onSurface,
+        ),
+        bodyLarge: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w400,
+          color: _lightColorScheme.onSurface,
+        ),
+        bodyMedium: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
+          color: _lightColorScheme.onSurface,
+        ),
+        labelLarge: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
+          color: _lightColorScheme.onSurface,
+        ),
+      ),
     );
   }
 
@@ -325,6 +406,28 @@ class AppTheme {
         color: _darkColorScheme.primaryContainer,
         thickness: 1,
         space: 1,
+      ),
+      textTheme: TextTheme(
+        titleLarge: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w500,
+          color: _darkColorScheme.onSurface,
+        ),
+        bodyLarge: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w400,
+          color: _darkColorScheme.onSurface,
+        ),
+        bodyMedium: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
+          color: _darkColorScheme.onSurface,
+        ),
+        labelLarge: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
+          color: _darkColorScheme.onSurface,
+        ),
       ),
     );
   }

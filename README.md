@@ -5,12 +5,12 @@ Home FE is news feed application, and is mean to use together with Home BE, wich
 This app is written in Dart. It can be used both as mobile application, desktop application (Windows, Mac, Linux) and web application.
 
 # TODO
-- Text theme's are lacking/missing/inconsistent between cupertino and non-cupertino
-- Cupertino is not currently used because function was removed during theme bloc work
-- Translate: Open, Read . functions open dialog needs translation, fonts check according to theme
+## Back and front
 - Translate backend message: archive updated with 1234 items
 
 ## Front
+- Theme is buggy, fix it
+
 ### HTTPS
     - buy https://techeavy.news from godaddy
     - enable secure_persistent_storage

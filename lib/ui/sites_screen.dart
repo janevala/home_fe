@@ -47,16 +47,6 @@ class SitesScreenState extends State<SitesScreen> {
                         final site = state.rssSites.sites[index];
 
                         return Card(
-                          elevation: 2,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            side: BorderSide(
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.outlineVariant,
-                              width: 1,
-                            ),
-                          ),
                           child: InkWell(
                             borderRadius: BorderRadius.circular(12),
                             onTap: () =>
@@ -68,10 +58,9 @@ class SitesScreenState extends State<SitesScreen> {
                                 children: [
                                   Text(
                                     site.title,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleMedium
-                                        ?.copyWith(fontWeight: FontWeight.w600),
+                                    style: Theme.of(
+                                      context,
+                                    ).textTheme.titleLarge,
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -80,9 +69,6 @@ class SitesScreenState extends State<SitesScreen> {
                                     site.url,
                                     style: Theme.of(context).textTheme.bodySmall
                                         ?.copyWith(
-                                          color: Theme.of(
-                                            context,
-                                          ).colorScheme.primary,
                                           decoration: TextDecoration.underline,
                                         ),
                                     maxLines: 1,
@@ -100,13 +86,16 @@ class SitesScreenState extends State<SitesScreen> {
               );
             } else if (state is Failure) {
               return Center(
-                child: Text(state.error, style: const TextStyle(fontSize: 18)),
+                child: Text(
+                  state.error,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
               );
             } else {
               return Center(
                 child: Text(
                   AppLocalizations.of(context)!.generalError,
-                  style: TextStyle(fontSize: 18),
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               );
             }

@@ -4,9 +4,37 @@ import 'package:homefe/assets/i18n/generated/app_localizations.dart';
 import 'package:homefe/functions.dart';
 import 'package:homefe/podo/rss/news_item.dart';
 import 'package:homefe/podo/rss/rss_site.dart';
+import 'package:homefe/theme/theme.dart';
 import 'package:rss_dart/domain/rss_item.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:collection/collection.dart';
+
+final Map<String, String> _urlMap = {
+  "": "assets/thumbnails/random-source.svg",
+  "Phoronix": "assets/thumbnails/phoronix.svg",
+  "Slashdot": "assets/thumbnails/slashdot.svg",
+  "TechCrunch": "assets/thumbnails/techcrunch.svg",
+  "Dpreview": "assets/thumbnails/dpreview.svg",
+  "Tom's Hardware": "assets/thumbnails/toms-hardware.svg",
+  "Ars Technica": "assets/thumbnails/ars-technica.svg",
+  "Hacker News": "assets/thumbnails/hacker-news.svg",
+  "The Register": "assets/thumbnails/register.svg",
+  "The Verge": "assets/thumbnails/verge.svg",
+  "Wired": "assets/thumbnails/wired.svg",
+};
+
+Widget _buildImagePreview(SvgPicture? image) {
+  return ClipRRect(borderRadius: BorderRadius.circular(8), child: image);
+}
+
+String _parseBaseUrl(String url) {
+  try {
+    final uri = Uri.parse(url);
+    return '${uri.scheme}://${uri.host}';
+  } catch (e) {
+    return url;
+  }
+}
 
 class JsonFeedTile extends StatelessWidget {
   JsonFeedTile({
@@ -26,15 +54,6 @@ class JsonFeedTile extends StatelessWidget {
   DateTime get _publishedDate => parsePublishedParsed(item.publishedParsed);
   bool get _isToday => _publishedDate.day == DateTime.now().day;
 
-  static String _parseBaseUrl(String url) {
-    try {
-      final uri = Uri.parse(url);
-      return '${uri.scheme}://${uri.host}';
-    } catch (e) {
-      return url;
-    }
-  }
-
   String _formatDate() {
     final now = DateTime.now();
     return _isToday
@@ -44,11 +63,7 @@ class JsonFeedTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final textTheme = theme.textTheme;
-
     return Card(
-      margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
       child: InkWell(
         onTap: onItemTap,
         onLongPress: onItemLongPress,
@@ -58,13 +73,16 @@ class JsonFeedTile extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildHeader(textTheme),
+              _buildHeader(context),
               const SizedBox(height: 8),
               if (_description.isNotEmpty) ...[
-                Text(_description, style: textTheme.bodyMedium),
+                Text(
+                  _description,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
                 const SizedBox(height: 12),
               ],
-              _buildFooter(theme, context),
+              _buildFooter(context),
             ],
           ),
         ),
@@ -72,14 +90,17 @@ class JsonFeedTile extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader(TextTheme textTheme) {
+  Widget _buildHeader(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(
-          _isToday ? Icons.timer_outlined : Icons.calendar_today,
-          size: 20,
-          color: Colors.grey[600],
+        Padding(
+          padding: const EdgeInsets.only(top: 2),
+          child: Icon(
+            _isToday ? Icons.timer_outlined : Icons.calendar_today,
+            size: 20,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          ),
         ),
         const SizedBox(width: 6),
         Expanded(
@@ -88,9 +109,7 @@ class JsonFeedTile extends StatelessWidget {
             children: [
               Text(
                 '${_formatDate()} • ${item.title}',
-                style: textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
+                style: Theme.of(context).textTheme.titleLarge,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -101,7 +120,7 @@ class JsonFeedTile extends StatelessWidget {
     );
   }
 
-  Widget _buildFooter(ThemeData theme, BuildContext context) {
+  Widget _buildFooter(BuildContext context) {
     SvgPicture? image = _getImage();
 
     return Row(
@@ -112,7 +131,7 @@ class JsonFeedTile extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: ColoredBox(
-              color: theme.colorScheme.inversePrimary,
+              color: Theme.of(context).colorScheme.inversePrimary,
               child: _buildImagePreview(image),
             ),
           ),
@@ -120,9 +139,10 @@ class JsonFeedTile extends StatelessWidget {
         ],
         Text(
           _baseUrl,
-          style: theme.textTheme.bodyMedium?.copyWith(
-            color: theme.colorScheme.primary,
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
             decoration: TextDecoration.underline,
+            color: AppColors.linkBlue,
+            decorationColor: AppColors.linkBlue,
           ),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
@@ -130,24 +150,6 @@ class JsonFeedTile extends StatelessWidget {
       ],
     );
   }
-
-  Widget _buildImagePreview(SvgPicture? image) {
-    return ClipRRect(borderRadius: BorderRadius.circular(8), child: image);
-  }
-
-  final Map<String, String> _urlMap = {
-    "": "assets/thumbnails/random-source.svg",
-    "Phoronix": "assets/thumbnails/phoronix.svg",
-    "Slashdot": "assets/thumbnails/slashdot.svg",
-    "TechCrunch": "assets/thumbnails/techcrunch.svg",
-    "Dpreview": "assets/thumbnails/dpreview.svg",
-    "Tom's Hardware": "assets/thumbnails/toms-hardware.svg",
-    "Ars Technica": "assets/thumbnails/ars-technica.svg",
-    "Hacker News": "assets/thumbnails/hacker-news.svg",
-    "The Register": "assets/thumbnails/register.svg",
-    "The Verge": "assets/thumbnails/verge.svg",
-    "Wired": "assets/thumbnails/wired.svg",
-  };
 
   SvgPicture? _getImage() {
     if (item.source == null) {
@@ -201,6 +203,7 @@ class RssFeedTile extends StatelessWidget {
   final RssSite site;
   final int index;
 
+  String get _baseUrl => _parseBaseUrl(item.link ?? '');
   String get _description => parseDescription(
     NewsItem(
       item.title ?? '',
@@ -211,18 +214,33 @@ class RssFeedTile extends StatelessWidget {
     true,
   );
 
-  Widget _buildHeader(BuildContext context, TextTheme textTheme) {
+  DateTime get _publishedDate => parsePublishedParsed(item.pubDate);
+  bool get _isToday => _publishedDate.day == DateTime.now().day;
+
+  Widget _buildHeader(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(Icons.article_outlined, size: 20, color: Colors.grey[600]),
+        Padding(
+          padding: const EdgeInsets.only(top: 2),
+          child: Icon(
+            _isToday ? Icons.timer_outlined : Icons.calendar_today,
+            size: 20,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          ),
+        ),
         const SizedBox(width: 6),
         Expanded(
-          child: Text(
-            item.title ?? AppLocalizations.of(context)!.noTitle,
-            style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '${_formatDate()} • ${item.title ?? AppLocalizations.of(context)!.noTitle}',
+                style: Theme.of(context).textTheme.titleLarge,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
           ),
         ),
       ],
@@ -230,41 +248,38 @@ class RssFeedTile extends StatelessWidget {
   }
 
   String _formatDate() {
-    if (item.pubDate != null) {
-      DateTime pubDate = parsePublishedParsed(item.pubDate);
-      return timeago.format(pubDate, locale: 'en');
-    }
-
-    return '';
+    final now = DateTime.now();
+    return _isToday
+        ? timeago.format(_publishedDate, locale: 'en_short', clock: now)
+        : timeago.format(_publishedDate, locale: 'en', clock: now);
   }
 
-  Widget _buildFooter(ThemeData theme, BuildContext context) {
+  Widget _buildFooter(BuildContext context) {
+    SvgPicture? image = _getImage();
+
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Expanded(
-          child: Text(
-            site.title,
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: theme.colorScheme.primary,
+        if (image != null) ...[
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: ColoredBox(
+              color: Theme.of(context).colorScheme.inversePrimary,
+              child: _buildImagePreview(image),
             ),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
           ),
-        ),
-        const SizedBox(width: 8),
-        Row(
-          children: [
-            if (item.pubDate != null) ...[
-              const Icon(Icons.schedule_outlined, size: 16, color: Colors.grey),
-              const SizedBox(width: 4),
-              Text(
-                _formatDate(),
-                style: theme.textTheme.bodySmall?.copyWith(color: Colors.grey),
-              ),
-            ],
-          ],
+          const SizedBox(width: 12),
+        ],
+        Text(
+          _baseUrl,
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            decoration: TextDecoration.underline,
+            color: AppColors.linkBlue,
+            decorationColor: AppColors.linkBlue,
+          ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
       ],
     );
@@ -272,11 +287,7 @@ class RssFeedTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final textTheme = theme.textTheme;
-
     return Card(
-      margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
       child: InkWell(
         onTap: openItem,
         borderRadius: BorderRadius.circular(12),
@@ -285,17 +296,48 @@ class RssFeedTile extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildHeader(context, textTheme),
+              _buildHeader(context),
+              const SizedBox(height: 8),
               if (_description.isNotEmpty) ...[
-                const SizedBox(height: 8),
-                Text(_description, style: textTheme.bodyMedium),
+                Text(
+                  _description,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                const SizedBox(height: 12),
               ],
-              const SizedBox(height: 12),
-              _buildFooter(theme, context),
+              _buildFooter(context),
             ],
           ),
         ),
       ),
     );
+  }
+
+  SvgPicture? _getImage() {
+    try {
+      String source = site.title;
+
+      for (final key in _urlMap.keys) {
+        if (source == key) {
+          String? value = _urlMap.entries
+              .firstWhereOrNull((entry) => entry.key == key)
+              ?.value;
+          if (value != null) {
+            return SvgPicture.asset(
+              value,
+              key: ValueKey(value),
+              width: 80,
+              height: 80,
+            );
+          } else {
+            return null;
+          }
+        }
+      }
+    } catch (e) {
+      return null;
+    }
+
+    return null;
   }
 }

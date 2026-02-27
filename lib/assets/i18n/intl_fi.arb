@@ -21,5 +21,7 @@
   "lightMode": "Vaalea tila",
   "darkMode": "Tumma tila",
   "welcomeBack": "Tervetuloa takaisin!",
-  "welcome": "Tervetuloa!"
+  "welcome": "Tervetuloa!",
+  "open": "Avaa",
+  "read": "Lue"
 }

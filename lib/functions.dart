@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:homefe/assets/i18n/generated/app_localizations.dart';
 import 'package:homefe/podo/rss/news_item.dart';
 import 'package:html/parser.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -33,8 +34,14 @@ openItem(BuildContext context, NewsItem item) async {
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: SelectableText(item.title),
-        content: SelectableText(description),
+        title: SelectableText(
+          item.title,
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
+        content: SelectableText(
+          description,
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
         actions: [
           TextButton(
             onPressed: () async {
@@ -44,11 +51,17 @@ openItem(BuildContext context, NewsItem item) async {
                 await launchUrl(Uri.parse(item.link));
               }
             },
-            child: const Text('Open'), //TODO
+            child: Text(
+              AppLocalizations.of(context)!.open,
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Close'), //TODO
+            child: Text(
+              AppLocalizations.of(context)!.close,
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
           ),
         ],
       );
