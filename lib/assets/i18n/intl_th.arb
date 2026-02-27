@@ -23,5 +23,8 @@
   "welcomeBack": "ยินดีต้อนรับกลับ!",
   "welcome": "ยินดีต้อนรับ!",
   "open": "เปิด",
-  "read": "อ่าน"
+  "read": "อ่าน",
+  "newsUpdateWithItems": "ข่าวอัปเดต {count} ข่าว",
+  "newsUpdatedWithNoItems": "ข่าวอัปเดต {count} ข่าว",
+  "newsNoItems": "ไม่มีข่าว"
 }

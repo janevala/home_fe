@@ -5,8 +5,8 @@ Home FE is news feed application, and is mean to use together with Home BE, wich
 This app is written in Dart. It can be used both as mobile application, desktop application (Windows, Mac, Linux) and web application.
 
 # TODO
-## Back and front
-- Translate backend message: archive updated with 1234 items
+
+## Change code line lenght to 120
 
 ## Front
 - Theme is buggy, fix it

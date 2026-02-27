@@ -213,10 +213,24 @@ class DashboardScreenState extends State<DashboardScreen>
       body: BlocListener<RssArchiveBloc, RssState>(
         listener: (context, state) {
           if (state is ArchiveRefreshDone) {
+            String message = '';
+            final response = state.message.split(" ");
+            if (response[0] == 'NUPD') {
+              message = AppLocalizations.of(
+                context,
+              )!.newsUpdateWithItems(response[1]);
+            } else if (response[0] == 'UPD') {
+              message = AppLocalizations.of(
+                context,
+              )!.newsUpdatedWithNoItems(response[1]);
+            } else {
+              message = AppLocalizations.of(context)!.newsNoItems;
+            }
+
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
-                  state.message,
+                  message,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onSurface,
                   ),

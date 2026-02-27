@@ -23,5 +23,8 @@
   "welcomeBack": "Tervetuloa takaisin!",
   "welcome": "Tervetuloa!",
   "open": "Avaa",
-  "read": "Lue"
+  "read": "Lue",
+  "newsUpdateWithItems": "Uutiset ajantasalla. {count} uutista",
+  "newsUpdatedWithNoItems": "Uutiset päivitetty. {count} uutista",
+  "newsNoItems": "Uutisia ei saatavilla"
 }

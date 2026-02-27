@@ -23,5 +23,8 @@
   "welcomeBack": "Welcome back!",
   "welcome": "Welcome!",
   "open": "Open",
-  "read": "Read"
+  "read": "Read",
+  "newsUpdateWithItems": "News updated with {count} items",
+  "newsUpdatedWithNoItems": "News up to date with {count} items",
+  "newsNoItems": "No news items"
 }
