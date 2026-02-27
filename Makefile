@@ -65,5 +65,6 @@ clean:
 	yes | dart pub cache clean
 	dart run build_runner clean 2>/dev/null || true
 	flutter clean
+	rm -f *.tar.gz
 
 rebuild: clean build
