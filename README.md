@@ -24,15 +24,10 @@ This app is written in Dart. It can be used both as mobile application, desktop 
 - Locale bloc?
 - Add language selection + use preference saved to cookie
 - Localize timeago.format
-- Add Error text theme, and put it into use in error scenarios
-- RssEvent vs RssArchiveEvent?
-- Rename rssBloc to generic
-- Width and height detection
-- Add wide screen layout, and keep current one for narrow
-- Add dark mode and light mode
-- Analytics and to what acount? create account?
 - Deploy identifiable version of Gemma to Ollama
 - Add LLM with version, to translated table entry in Backend. Show in frontend
+- Rename rssBloc to generic
+- Analytics and to what acount? create account?
 
 # Flutter notes
 ```
