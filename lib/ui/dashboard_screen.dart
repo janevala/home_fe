@@ -7,6 +7,7 @@ import 'package:homefe/bloc/rss_bloc.dart';
 import 'package:homefe/bloc/theme_cubit.dart';
 import 'package:homefe/constants/app_version.dart';
 import 'package:homefe/persistence/persistent_storage.dart';
+import 'package:homefe/ui/app_animation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -16,7 +17,8 @@ class DashboardScreen extends StatefulWidget {
   DashboardScreenState createState() => DashboardScreenState();
 }
 
-class DashboardScreenState extends State<DashboardScreen> {
+class DashboardScreenState extends State<DashboardScreen>
+    with SingleTickerProviderStateMixin {
   late SharedPreferences storage;
 
   String token = '';
@@ -254,6 +256,17 @@ class DashboardScreenState extends State<DashboardScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
+                      // AppAnimation(
+                      //   animation: Tween<double>(begin: 0, end: 1).animate(
+                      //     CurvedAnimation(
+                      //       parent: AnimationController(
+                      //         duration: const Duration(seconds: 3),
+                      //         vsync: this,
+                      //       ),
+                      //       curve: Curves.easeInOut,
+                      //     ),
+                      //   ),
+                      // ),
                       if (!kIsWeb && !kIsWasm)
                         ElevatedButton(
                           onPressed: () {
