@@ -6,8 +6,6 @@ This app is written in Dart. It can be used both as mobile application, desktop 
 
 # TODO
 
-## Change code line lenght to 120
-
 ## Front
 - Theme is buggy, fix it
 
