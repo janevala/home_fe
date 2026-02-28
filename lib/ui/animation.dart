@@ -63,7 +63,7 @@ class _AppAnimationState extends State<AppAnimation> with TickerProviderStateMix
       ),
     );
 
-    _firstRotate = Tween<double>(begin: 0, end: 2 * pi).animate(
+    _firstRotate = Tween<double>(begin: 0, end: pi).animate(
       CurvedAnimation(
         parent: _firstRotateController,
         curve: Curves.linear,
@@ -84,7 +84,7 @@ class _AppAnimationState extends State<AppAnimation> with TickerProviderStateMix
       ),
     );
 
-    _secondRotate = Tween<double>(begin: 0, end: 2 * pi).animate(
+    _secondRotate = Tween<double>(begin: 0, end: pi).animate(
       CurvedAnimation(
         parent: _secondRotateController,
         curve: Curves.easeInOut,
@@ -105,7 +105,7 @@ class _AppAnimationState extends State<AppAnimation> with TickerProviderStateMix
       ),
     );
 
-    _thirdRotate = Tween<double>(begin: 0, end: 2 * pi).animate(
+    _thirdRotate = Tween<double>(begin: 0, end: pi).animate(
       CurvedAnimation(
         parent: _thirdRotateController,
         curve: Curves.easeInOut,
