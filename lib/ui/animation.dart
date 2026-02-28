@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:homefe/logger/logger.dart' show logger;
 
@@ -214,7 +215,11 @@ class _AppAnimationState extends State<AppAnimation> with TickerProviderStateMix
   }
 
   Widget _buildTripleLogos() {
-    final sizes = [50, 75, 100, 125, 150];
+    var sizes = [50, 75, 100, 125, 150];
+    if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
+      sizes = [20, 30, 40, 50, 60];
+    }
+
     final firstSize = sizes[Random().nextInt(5)];
     final remainingSizes1 = sizes.where((size) => size != firstSize).toList();
     final secondSize = remainingSizes1[Random().nextInt(4)];
@@ -234,7 +239,11 @@ class _AppAnimationState extends State<AppAnimation> with TickerProviderStateMix
   }
 
   Widget _buildDualLogos() {
-    final sizes = [50, 100, 150];
+    var sizes = [50, 100, 150];
+    if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
+      sizes = [40, 50, 60];
+    }
+
     final firstSize = sizes[Random().nextInt(3)];
     final remainingSizes = sizes.where((size) => size != firstSize).toList();
     final secondSize = remainingSizes[Random().nextInt(2)];
