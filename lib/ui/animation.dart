@@ -197,13 +197,19 @@ class _AppAnimationState extends State<AppAnimation> with TickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SizedBox(
+    if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
+      return SizedBox(
+        width: 200,
+        height: 50,
+        child: Center(child: _animatedLogo(context)),
+      );
+    } else {
+      return SizedBox(
         width: 400,
-        height: 400,
-        child: _animatedLogo(context),
-      ),
-    );
+        height: 150,
+        child: Center(child: _animatedLogo(context)),
+      );
+    }
   }
 
   Widget _animatedLogo(BuildContext context) {
@@ -217,7 +223,7 @@ class _AppAnimationState extends State<AppAnimation> with TickerProviderStateMix
   Widget _buildTripleLogos() {
     var sizes = [50, 75, 100, 125, 150];
     if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
-      sizes = [20, 30, 40, 50, 60];
+      sizes = [30, 35, 40, 45, 50];
     }
 
     final firstSize = sizes[Random().nextInt(5)];
@@ -241,7 +247,7 @@ class _AppAnimationState extends State<AppAnimation> with TickerProviderStateMix
   Widget _buildDualLogos() {
     var sizes = [50, 100, 150];
     if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
-      sizes = [40, 50, 60];
+      sizes = [40, 45, 50];
     }
 
     final firstSize = sizes[Random().nextInt(3)];
