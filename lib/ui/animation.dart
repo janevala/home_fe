@@ -1,0 +1,320 @@
+import 'dart:math';
+
+import 'package:flutter/material.dart';
+import 'package:homefe/logger/logger.dart' show logger;
+
+class AppAnimation extends StatefulWidget {
+  const AppAnimation({super.key});
+
+  @override
+  State<AppAnimation> createState() => _AppAnimationState();
+}
+
+class _AppAnimationState extends State<AppAnimation> with TickerProviderStateMixin {
+  late final Animation<double> _firstRotate;
+  late final Animation<double> _firstFadeIn;
+  late final Animation<double> _firstResizeOut;
+  late final AnimationController _firstRotateController;
+  late final AnimationController _firstFadeController;
+  late final AnimationController _firstResizeController;
+
+  late final Animation<double> _secondRotate;
+  late final Animation<double> _secondFadeIn;
+  late final Animation<double> _secondResizeOut;
+  late final AnimationController _secondRotateController;
+  late final AnimationController _secondFadeController;
+  late final AnimationController _secondResizeController;
+
+  late final Animation<double> _thirdRotate;
+  late final Animation<double> _thirdFadeIn;
+  late final Animation<double> _thirdResizeOut;
+  late final AnimationController _thirdRotateController;
+  late final AnimationController _thirdFadeController;
+  late final AnimationController _thirdResizeController;
+
+  late final AnimationController _waitController;
+
+  int _cycleStep = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _firstFadeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1500));
+    _firstRotateController = AnimationController(vsync: this, duration: Duration(milliseconds: 1600));
+    _firstResizeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1600));
+
+    // second is always slightly slower
+    _secondFadeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1600));
+    _secondRotateController = AnimationController(vsync: this, duration: Duration(milliseconds: 1700));
+    _secondResizeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1700));
+
+    // third is even slower
+    _thirdFadeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1700));
+    _thirdRotateController = AnimationController(vsync: this, duration: Duration(milliseconds: 1800));
+    _thirdResizeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1800));
+
+    _waitController = AnimationController(vsync: this, duration: Duration(milliseconds: 1800));
+
+    _firstFadeIn = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _firstFadeController,
+        curve: Curves.easeIn,
+      ),
+    );
+
+    _firstRotate = Tween<double>(begin: 0, end: 2 * pi).animate(
+      CurvedAnimation(
+        parent: _firstRotateController,
+        curve: Curves.linear,
+      ),
+    );
+
+    _firstResizeOut = Tween<double>(begin: 1, end: 0).animate(
+      CurvedAnimation(
+        parent: _firstResizeController,
+        curve: Curves.easeInOut,
+      ),
+    );
+
+    _secondFadeIn = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _secondFadeController,
+        curve: Curves.easeInOut,
+      ),
+    );
+
+    _secondRotate = Tween<double>(begin: 0, end: 2 * pi).animate(
+      CurvedAnimation(
+        parent: _secondRotateController,
+        curve: Curves.easeInOut,
+      ),
+    );
+
+    _secondResizeOut = Tween<double>(begin: 1, end: 0).animate(
+      CurvedAnimation(
+        parent: _secondResizeController,
+        curve: Curves.easeInOut,
+      ),
+    );
+
+    _thirdFadeIn = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _thirdFadeController,
+        curve: Curves.easeInOut,
+      ),
+    );
+
+    _thirdRotate = Tween<double>(begin: 0, end: 2 * pi).animate(
+      CurvedAnimation(
+        parent: _thirdRotateController,
+        curve: Curves.easeInOut,
+      ),
+    );
+
+    _thirdResizeOut = Tween<double>(begin: 1, end: 0).animate(
+      CurvedAnimation(
+        parent: _thirdResizeController,
+        curve: Curves.easeInOut,
+      ),
+    );
+
+    _startAnimationLoop();
+  }
+
+  void _startAnimationLoop() {
+    if (_cycleStep == 0) {
+      _firstFadeController
+          .forward()
+          .then((_) => _firstRotateController.forward())
+          .then((_) => _firstResizeController.forward());
+
+      _secondFadeController
+          .forward()
+          .then((_) => _secondRotateController.forward())
+          .then((_) => _secondResizeController.forward());
+
+      _thirdFadeController
+          .forward()
+          .then((_) => _thirdRotateController.forward())
+          .then((_) => _thirdResizeController.forward())
+          .then((_) => _waitController.forward())
+          .then((_) {
+            _resetAndRestart();
+          });
+    } else {
+      _firstFadeController
+          .forward()
+          .then((_) => _firstRotateController.forward())
+          .then((_) => _firstResizeController.forward());
+
+      _secondFadeController
+          .forward()
+          .then((_) => _secondRotateController.forward())
+          .then((_) => _secondResizeController.forward())
+          .then((_) => _waitController.forward())
+          .then((_) {
+            _resetAndRestart();
+          });
+    }
+  }
+
+  void _resetAndRestart() {
+    _firstFadeController.reset();
+    _firstRotateController.reset();
+    _firstResizeController.reset();
+    _secondFadeController.reset();
+    _secondRotateController.reset();
+    _secondResizeController.reset();
+    _thirdFadeController.reset();
+    _thirdRotateController.reset();
+    _thirdResizeController.reset();
+    _waitController.reset();
+
+    int randomStepZeroOrOne = Random().nextInt(2);
+
+    setState(() {
+      _cycleStep = randomStepZeroOrOne;
+    });
+
+    _startAnimationLoop();
+  }
+
+  @override
+  void dispose() {
+    _firstRotateController.dispose();
+    _firstFadeController.dispose();
+    _firstResizeController.dispose();
+    _secondRotateController.dispose();
+    _secondFadeController.dispose();
+    _secondResizeController.dispose();
+    _thirdRotateController.dispose();
+    _thirdFadeController.dispose();
+    _thirdResizeController.dispose();
+    _waitController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: SizedBox(
+        width: 400,
+        height: 400,
+        child: _animatedLogo(context),
+      ),
+    );
+  }
+
+  Widget _animatedLogo(BuildContext context) {
+    if (_cycleStep == 0) {
+      return _buildTripleLogos();
+    } else {
+      return _buildDualLogos();
+    }
+  }
+
+  Widget _buildTripleLogos() {
+    final sizes = [50, 75, 100, 125, 150];
+    final firstSize = sizes[Random().nextInt(5)];
+    final remainingSizes1 = sizes.where((size) => size != firstSize).toList();
+    final secondSize = remainingSizes1[Random().nextInt(4)];
+    final remainingSizes2 = remainingSizes1.where((size) => size != secondSize).toList();
+    final thirdSize = remainingSizes2[Random().nextInt(3)];
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        _buildFirstAnimatedLogo(firstSize),
+        const SizedBox(width: 15),
+        _buildSecondAnimatedLogo(secondSize),
+        const SizedBox(width: 15),
+        _buildThirdAnimatedLogo(thirdSize),
+      ],
+    );
+  }
+
+  Widget _buildDualLogos() {
+    final sizes = [50, 100, 150];
+    final firstSize = sizes[Random().nextInt(3)];
+    final remainingSizes = sizes.where((size) => size != firstSize).toList();
+    final secondSize = remainingSizes[Random().nextInt(2)];
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        _buildFirstAnimatedLogo(firstSize),
+        const SizedBox(width: 20),
+        _buildSecondAnimatedLogo(secondSize),
+      ],
+    );
+  }
+
+  Widget _buildFirstAnimatedLogo(int size) {
+    return Center(
+      child: AnimatedBuilder(
+        animation: Listenable.merge([_firstFadeIn, _firstRotate, _firstResizeOut]),
+        builder: (context, child) => Transform.rotate(
+          angle: _firstRotate.value,
+          child: Opacity(
+            opacity: _firstFadeIn.value * _firstResizeOut.value,
+            child: Transform.scale(
+              scale: _firstResizeOut.value,
+              child: child,
+            ),
+          ),
+        ),
+        child: SizedBox(
+          height: size.toDouble(),
+          width: size.toDouble(),
+          child: FlutterLogo(),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSecondAnimatedLogo(int size) {
+    return Center(
+      child: AnimatedBuilder(
+        animation: Listenable.merge([_secondFadeIn, _secondRotate, _secondResizeOut]),
+        builder: (context, child) => Transform.rotate(
+          angle: _secondRotate.value,
+          child: Opacity(
+            opacity: _secondFadeIn.value,
+            child: Transform.scale(
+              scale: _secondResizeOut.value,
+              child: child,
+            ),
+          ),
+        ),
+        child: SizedBox(
+          height: size.toDouble(),
+          width: size.toDouble(),
+          child: FlutterLogo(),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildThirdAnimatedLogo(int size) {
+    return Center(
+      child: AnimatedBuilder(
+        animation: Listenable.merge([_thirdFadeIn, _thirdRotate, _thirdResizeOut]),
+        builder: (context, child) => Transform.rotate(
+          angle: _thirdRotate.value,
+          child: Opacity(
+            opacity: _thirdFadeIn.value,
+            child: Transform.scale(
+              scale: _thirdResizeOut.value,
+              child: child,
+            ),
+          ),
+        ),
+        child: SizedBox(
+          height: size.toDouble(),
+          width: size.toDouble(),
+          child: FlutterLogo(),
+        ),
+      ),
+    );
+  }
+}
