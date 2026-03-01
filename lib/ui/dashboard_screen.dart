@@ -8,6 +8,7 @@ import 'package:homefe/bloc/theme_cubit.dart';
 import 'package:homefe/constants/app_version.dart';
 import 'package:homefe/persistence/persistent_storage.dart';
 import 'package:homefe/ui/animation.dart';
+import 'package:homefe/ui/flag_selection.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -24,6 +25,7 @@ class DashboardScreenState extends State<DashboardScreen> {
   String backVersion = '';
   String frontVersion = '';
   bool firstTimeUser = true;
+  bool showAnimation = true;
 
   @override
   void initState() {
@@ -266,7 +268,15 @@ class DashboardScreenState extends State<DashboardScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      AppAnimation(),
+                      showAnimation
+                          ? AppAnimation(
+                              onAnimationComplete: () {
+                                setState(() {
+                                  showAnimation = false;
+                                });
+                              },
+                            )
+                          : FlagSelection(),
                       const SizedBox(height: 32),
                       if (!kIsWeb && !kIsWasm)
                         ElevatedButton(

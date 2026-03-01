@@ -4,7 +4,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class AppAnimation extends StatefulWidget {
-  const AppAnimation({super.key});
+  const AppAnimation({super.key, this.onAnimationComplete});
+
+  final VoidCallback? onAnimationComplete;
 
   @override
   State<AppAnimation> createState() => _AppAnimationState();
@@ -137,6 +139,9 @@ class _AppAnimationState extends State<AppAnimation> with TickerProviderStateMix
         .then((_) => _waitController.forward())
         .then((_) {
           _resetAndStop();
+          if (widget.onAnimationComplete != null) {
+            widget.onAnimationComplete!();
+          }
         });
   }
 
