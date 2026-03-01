@@ -6,8 +6,17 @@ This app is written in Dart. It can be used both as mobile application, desktop 
 
 # TODO
 
+## Next week
 ## Front
 - Theme is buggy, fix it
+- Include memory json from /jq to Podos
+- Enable localizations, copy idea from old all
+
+## Back
+- When checking archive, return oldest item, besides status and count
+- Change return type to json
+- Start doing translations
+
 
 ### HTTPS
     - buy https://techeavy.news from godaddy
