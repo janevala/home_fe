@@ -6,6 +6,7 @@ import 'package:homefe/assets/i18n/generated/app_localizations.dart';
 import 'package:homefe/bloc/rss_bloc.dart';
 import 'package:homefe/bloc/theme_cubit.dart';
 import 'package:homefe/constants/app_version.dart';
+import 'package:homefe/logger/logger.dart';
 import 'package:homefe/persistence/persistent_storage.dart';
 import 'package:homefe/ui/animation.dart';
 import 'package:homefe/ui/flag_selection.dart';
@@ -47,6 +48,8 @@ class DashboardScreenState extends State<DashboardScreen> {
       this.token = token;
       this.firstTimeUser = firstTimeUser == 'true';
     });
+
+    logger.d('Loaded persisted data: token=$token, first_time_user=$firstTimeUser');
   }
 
   Future<void> _persist(Map<String, dynamic> data) async {
@@ -276,7 +279,11 @@ class DashboardScreenState extends State<DashboardScreen> {
                                 });
                               },
                             )
-                          : FlagSelection(),
+                          : FlagSelection(
+                              welcomeMessage: firstTimeUser
+                                  ? AppLocalizations.of(context)!.welcome
+                                  : AppLocalizations.of(context)!.welcomeBack,
+                            ),
                       const SizedBox(height: 32),
                       if (!kIsWeb && !kIsWasm)
                         ElevatedButton(

@@ -53,7 +53,7 @@ class _AppAnimationState extends State<AppAnimation> with TickerProviderStateMix
     _thirdRotateController = AnimationController(vsync: this, duration: Duration(milliseconds: 1800));
     _thirdResizeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1800));
 
-    _waitController = AnimationController(vsync: this, duration: Duration(milliseconds: 1800));
+    _waitController = AnimationController(vsync: this, duration: Duration(milliseconds: 500));
 
     _firstFadeIn = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(

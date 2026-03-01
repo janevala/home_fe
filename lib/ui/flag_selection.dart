@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:homefe/assets/i18n/generated/app_localizations.dart';
 
 class FlagSelection extends StatefulWidget {
-  const FlagSelection({super.key, this.onSelectedCountryCode});
+  const FlagSelection({super.key, this.onSelectedCountryCode, required this.welcomeMessage});
 
   final Function? onSelectedCountryCode;
+  final String welcomeMessage;
 
   @override
   State<FlagSelection> createState() => _FlagSelectionState();
@@ -40,7 +41,7 @@ class _FlagSelectionState extends State<FlagSelection> with TickerProviderStateM
   }
 
   void _resetAndStop() {
-    _firstFadeController.reset();
+    // _firstFadeController.reset();
   }
 
   @override
@@ -79,7 +80,7 @@ class _FlagSelectionState extends State<FlagSelection> with TickerProviderStateM
           child: child,
         ),
         child: Text(
-          AppLocalizations.of(context)!.welcomeBack,
+          widget.welcomeMessage,
           style: Theme.of(context).textTheme.headlineMedium,
         ),
       ),
