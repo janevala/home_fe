@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:homefe/logger/logger.dart' show logger;
 
 class AppAnimation extends StatefulWidget {
   const AppAnimation({super.key});
@@ -34,8 +33,6 @@ class _AppAnimationState extends State<AppAnimation> with TickerProviderStateMix
   late final AnimationController _thirdResizeController;
 
   late final AnimationController _waitController;
-
-  int _cycleStep = 0;
 
   @override
   void initState() {
@@ -123,43 +120,27 @@ class _AppAnimationState extends State<AppAnimation> with TickerProviderStateMix
   }
 
   void _startAnimationLoop() {
-    if (_cycleStep == 0) {
-      _firstFadeController
-          .forward()
-          .then((_) => _firstRotateController.forward())
-          .then((_) => _firstResizeController.forward());
+    _firstFadeController
+        .forward()
+        .then((_) => _firstRotateController.forward())
+        .then((_) => _firstResizeController.forward());
 
-      _secondFadeController
-          .forward()
-          .then((_) => _secondRotateController.forward())
-          .then((_) => _secondResizeController.forward());
+    _secondFadeController
+        .forward()
+        .then((_) => _secondRotateController.forward())
+        .then((_) => _secondResizeController.forward());
 
-      _thirdFadeController
-          .forward()
-          .then((_) => _thirdRotateController.forward())
-          .then((_) => _thirdResizeController.forward())
-          .then((_) => _waitController.forward())
-          .then((_) {
-            _resetAndRestart();
-          });
-    } else {
-      _firstFadeController
-          .forward()
-          .then((_) => _firstRotateController.forward())
-          .then((_) => _firstResizeController.forward());
-
-      _secondFadeController
-          .forward()
-          .then((_) => _secondRotateController.forward())
-          .then((_) => _secondResizeController.forward())
-          .then((_) => _waitController.forward())
-          .then((_) {
-            _resetAndRestart();
-          });
-    }
+    _thirdFadeController
+        .forward()
+        .then((_) => _thirdRotateController.forward())
+        .then((_) => _thirdResizeController.forward())
+        .then((_) => _waitController.forward())
+        .then((_) {
+          _resetAndStop();
+        });
   }
 
-  void _resetAndRestart() {
+  void _resetAndStop() {
     _firstFadeController.reset();
     _firstRotateController.reset();
     _firstResizeController.reset();
@@ -170,14 +151,6 @@ class _AppAnimationState extends State<AppAnimation> with TickerProviderStateMix
     _thirdRotateController.reset();
     _thirdResizeController.reset();
     _waitController.reset();
-
-    int randomStepZeroOrOne = Random().nextInt(2);
-
-    setState(() {
-      _cycleStep = randomStepZeroOrOne;
-    });
-
-    _startAnimationLoop();
   }
 
   @override
@@ -213,11 +186,7 @@ class _AppAnimationState extends State<AppAnimation> with TickerProviderStateMix
   }
 
   Widget _animatedLogo(BuildContext context) {
-    if (_cycleStep == 0) {
-      return _buildTripleLogos();
-    } else {
-      return _buildDualLogos();
-    }
+    return _buildTripleLogos();
   }
 
   Widget _buildTripleLogos() {
@@ -240,26 +209,6 @@ class _AppAnimationState extends State<AppAnimation> with TickerProviderStateMix
         _buildSecondAnimatedLogo(secondSize),
         const SizedBox(width: 15),
         _buildThirdAnimatedLogo(thirdSize),
-      ],
-    );
-  }
-
-  Widget _buildDualLogos() {
-    var sizes = [50, 100, 150];
-    if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
-      sizes = [40, 45, 50];
-    }
-
-    final firstSize = sizes[Random().nextInt(3)];
-    final remainingSizes = sizes.where((size) => size != firstSize).toList();
-    final secondSize = remainingSizes[Random().nextInt(2)];
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        _buildFirstAnimatedLogo(firstSize),
-        const SizedBox(width: 20),
-        _buildSecondAnimatedLogo(secondSize),
       ],
     );
   }
