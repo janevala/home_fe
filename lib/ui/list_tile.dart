@@ -37,7 +37,7 @@ String _parseBaseUrl(String url) {
 }
 
 class JsonFeedTile extends StatelessWidget {
-  JsonFeedTile({
+  const JsonFeedTile({
     super.key,
     required this.onItemTap,
     this.onItemLongPress,
@@ -166,9 +166,7 @@ class JsonFeedTile extends StatelessWidget {
 
       for (final key in _urlMap.keys) {
         if (source == key) {
-          String? value = _urlMap.entries
-              .firstWhereOrNull((entry) => entry.key == key)
-              ?.value;
+          String? value = _urlMap.entries.firstWhereOrNull((entry) => entry.key == key)?.value;
           if (value != null) {
             return SvgPicture.asset(
               value,
@@ -319,9 +317,7 @@ class RssFeedTile extends StatelessWidget {
 
       for (final key in _urlMap.keys) {
         if (source == key) {
-          String? value = _urlMap.entries
-              .firstWhereOrNull((entry) => entry.key == key)
-              ?.value;
+          String? value = _urlMap.entries.firstWhereOrNull((entry) => entry.key == key)?.value;
           if (value != null) {
             return SvgPicture.asset(
               value,

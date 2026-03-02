@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:homefe/assets/i18n/generated/app_localizations.dart';
+// import 'package:homefe/assets/i18n/generated/app_localizations.dart';
 
 class FlagSelection extends StatefulWidget {
   const FlagSelection({super.key, this.onSelectedCountryCode, required this.welcomeMessage});
