@@ -12,7 +12,7 @@ class LocaleCubit extends Cubit<Locale> {
     userChangedLanguage = true;
     emit(locale);
 
-    _persist({'lang': locale.languageCode});
+    _persist({'user_language': locale.languageCode});
   }
 
   bool hasUserChangedLanguage() {

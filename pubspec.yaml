@@ -52,3 +52,7 @@ flutter:
     - assets/thumbnails/register.svg
     - assets/thumbnails/verge.svg
     - assets/thumbnails/wired.svg
+    - assets/flags/english.svg
+    - assets/flags/english-british.svg
+    - assets/flags/thai.svg
+    - assets/flags/finnish.svg

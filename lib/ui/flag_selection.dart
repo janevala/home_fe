@@ -1,11 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:homefe/assets/i18n/generated/app_localizations.dart';
+import 'package:homefe/bloc/locale_cubit.dart';
 // import 'package:homefe/assets/i18n/generated/app_localizations.dart';
 
 class FlagSelection extends StatefulWidget {
-  const FlagSelection({super.key, this.onSelectedCountryCode, required this.welcomeMessage});
+  const FlagSelection({super.key, required this.welcomeMessage});
 
-  final Function? onSelectedCountryCode;
   final String welcomeMessage;
 
   @override
@@ -34,9 +37,6 @@ class _FlagSelectionState extends State<FlagSelection> with TickerProviderStateM
   void _showFlags() {
     _firstFadeController.forward().then((_) {
       _resetAndStop();
-      if (widget.onSelectedCountryCode != null) {
-        widget.onSelectedCountryCode!();
-      }
     });
   }
 
@@ -79,9 +79,64 @@ class _FlagSelectionState extends State<FlagSelection> with TickerProviderStateM
           opacity: _firstFadeIn.value,
           child: child,
         ),
-        child: Text(
-          widget.welcomeMessage,
-          style: Theme.of(context).textTheme.headlineMedium,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              widget.welcomeMessage,
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Tooltip(
+                  message: AppLocalizations.of(context)!.localeEnTranslated,
+                  child: InkWell(
+                    onTap: () {
+                      context.read<LocaleCubit>().changeLocaleTo(Locale('en'));
+                    },
+                    child: SvgPicture.asset(
+                      'assets/flags/english.svg',
+                      key: ValueKey('en'),
+                      width: 80,
+                      height: 80,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Tooltip(
+                  message: AppLocalizations.of(context)!.localeThTranslated,
+                  child: InkWell(
+                    onTap: () {
+                      context.read<LocaleCubit>().changeLocaleTo(Locale('th'));
+                    },
+                    child: SvgPicture.asset(
+                      'assets/flags/thai.svg',
+                      key: ValueKey('th'),
+                      width: 80,
+                      height: 80,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Tooltip(
+                  message: AppLocalizations.of(context)!.localeFiTranslated,
+                  child: InkWell(
+                    onTap: () {
+                      context.read<LocaleCubit>().changeLocaleTo(Locale('fi'));
+                    },
+                    child: SvgPicture.asset(
+                      'assets/flags/finnish.svg',
+                      key: ValueKey('fi'),
+                      width: 80,
+                      height: 80,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

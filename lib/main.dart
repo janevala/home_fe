@@ -84,13 +84,16 @@ class App extends StatelessWidget {
             supportedLocales: [Locale('en'), Locale('th'), Locale('fi'), Locale('de'), Locale('es'), Locale('pt')],
             localeListResolutionCallback: (locales, supportedLocales) {
               String usedLanguage = 'en';
-              // List<Locale> systemLocales = View.of(context).platformDispatcher.locales;
+              List<Locale> systemLocales = View.of(context).platformDispatcher.locales;
 
-              // if (supportedLocales.map((s) => s.languageCode).contains(systemLocales.first.languageCode)) {
-              //   usedLanguage = systemLocales.first.languageCode;
-              // }
+              if (supportedLocales.map((s) => s.languageCode).contains(systemLocales.first.languageCode)) {
+                usedLanguage = systemLocales.first.languageCode;
+              }
 
-              // bool userChanged = BlocProvider.of<LocaleCubit>(context).hasUserChangedLanguage();
+              bool userChanged = BlocProvider.of<LocaleCubit>(context).hasUserChangedLanguage();
+              if (userChanged) {
+                usedLanguage = BlocProvider.of<LocaleCubit>(context).state.languageCode;
+              }
 
               Intl.defaultLocale = usedLanguage;
 
