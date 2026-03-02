@@ -24,7 +24,7 @@
   "welcome": "Welcome!",
   "open": "Open",
   "read": "Read",
-  "newsUpdateWithItems": "News updated with {count} items. Archive is {days} old",
-  "newsUpdatedWithNoItems": "News up to date with {count} items. Archive is {days} old",
+  "newsUpdateWithItems": "News updated with {count} items. Archive is {days} days old",
+  "newsUpdatedWithNoItems": "News up to date with {count} items. Archive is {days} days old",
   "newsNoItems": "No news items"
 }

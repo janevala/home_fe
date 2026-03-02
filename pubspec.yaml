@@ -27,7 +27,6 @@ dependencies:
   logger: 2.6.2
   flutter_svg: 2.2.1
   shared_preferences: 2.2.2
-  simple_animations: 5.1.0
   # flutter_secure_storage: 9.2.4 # AFTER HTTPS, WASM, remove shared_preferences
 
 dev_dependencies:
