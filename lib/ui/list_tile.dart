@@ -42,11 +42,13 @@ class JsonFeedTile extends StatelessWidget {
     required this.onItemTap,
     this.onItemLongPress,
     required this.item,
+    required this.locale,
   });
 
   final VoidCallback onItemTap;
   final VoidCallback? onItemLongPress;
   final NewsItem item;
+  final Locale locale;
 
   String get _baseUrl => _parseBaseUrl(item.link);
   String get _description => parseDescription(item, true);
@@ -56,9 +58,10 @@ class JsonFeedTile extends StatelessWidget {
 
   String _formatDate() {
     final now = DateTime.now();
+
     return _isToday
-        ? timeago.format(_publishedDate, locale: 'en_short', clock: now)
-        : timeago.format(_publishedDate, locale: 'en', clock: now);
+        ? timeago.format(_publishedDate, locale: '${locale.languageCode}_short', clock: now)
+        : timeago.format(_publishedDate, locale: locale.languageCode, clock: now);
   }
 
   @override

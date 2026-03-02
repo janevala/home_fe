@@ -42,8 +42,7 @@ class ArchiveScreenState extends State<ArchiveScreen> {
   }
 
   void _onScroll() {
-    if (_scrollContoller.position.pixels >=
-        (_scrollContoller.position.maxScrollExtent)) {
+    if (_scrollContoller.position.pixels >= (_scrollContoller.position.maxScrollExtent)) {
       context.read<RssArchiveBloc>().add(LoadMoreArchive());
     }
   }
@@ -172,6 +171,7 @@ class ArchiveScreenState extends State<ArchiveScreen> {
                 //   );
                 // },
                 item: item,
+                locale: Localizations.localeOf(context),
               );
             },
           ),
@@ -192,6 +192,7 @@ class ArchiveScreenState extends State<ArchiveScreen> {
               key: Key(item.link),
               onItemTap: () => openItem(context, item),
               item: item,
+              locale: Localizations.localeOf(context),
             );
           },
         ),

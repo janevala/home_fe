@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:homefe/assets/i18n/generated/app_localizations.dart';
 import 'package:homefe/bloc/login_bloc.dart';
 import 'package:homefe/bloc/theme_cubit.dart';
-import 'package:homefe/functions.dart';
 import 'package:homefe/logger/logger.dart';
 import 'package:homefe/persistence/persistent_storage.dart';
 import 'package:homefe/podo/login/login_body.dart';
@@ -36,13 +35,13 @@ class LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    String languageCode = getLanguageCode(context);
-    logger.i("LANGUAGE $languageCode");
-    _persist({'system_language': languageCode});
-  }
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //   String languageCode = getLanguageCode(context);
+  //   logger.i("LANGUAGE $languageCode");
+  //   _persist({'system_language': languageCode});
+  // }
 
   @override
   Widget build(BuildContext context) {

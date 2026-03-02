@@ -9,6 +9,7 @@ import 'package:homefe/bloc/login_bloc.dart';
 import 'package:homefe/bloc/rss_bloc.dart';
 import 'package:homefe/bloc/theme_cubit.dart';
 import 'package:homefe/constants/app_version.dart';
+import 'package:homefe/constants/supported_locals.dart';
 import 'package:homefe/podo/rss/rss_site.dart';
 import 'package:homefe/ui/archive_screen.dart';
 import 'package:homefe/ui/dashboard_screen.dart';
@@ -18,8 +19,18 @@ import 'package:homefe/ui/sites_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:homefe/theme/theme.dart';
 import 'package:intl/intl.dart';
+import 'package:timeago/timeago.dart';
 
 void main() {
+  setLocaleMessages('de', DeMessages());
+  setLocaleMessages('de_short', DeShortMessages());
+  setLocaleMessages('fi', FiMessages());
+  setLocaleMessages('fi_short', FiShortMessages());
+  setLocaleMessages('th', ThMessages());
+  setLocaleMessages('th_short', ThShortMessages());
+  setLocaleMessages('pt_BR', PtBrMessages());
+  setLocaleMessages('pt_BR_short', PtBrShortMessages());
+
   runApp(const ThemedApp());
 }
 
@@ -70,36 +81,42 @@ class App extends StatelessWidget {
 
       child: BlocBuilder<ThemeCubit, ThemeMode>(
         builder: (context, themeMode) {
-          return MaterialApp.router(
-            debugShowCheckedModeBanner: false,
-            theme: AppTheme.getThemeForPlatform(isDarkMode: false),
-            darkTheme: AppTheme.getThemeForPlatform(isDarkMode: true),
-            themeMode: themeMode,
-            localizationsDelegates: [
-              AppLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: [Locale('en'), Locale('th'), Locale('fi'), Locale('de'), Locale('es'), Locale('pt')],
-            localeListResolutionCallback: (locales, supportedLocales) {
-              String usedLanguage = 'en';
-              List<Locale> systemLocales = View.of(context).platformDispatcher.locales;
+          return BlocBuilder<LocaleCubit, Locale>(
+            builder: (context, locale) {
+              return MaterialApp.router(
+                debugShowCheckedModeBanner: false,
+                theme: AppTheme.getThemeForPlatform(isDarkMode: false),
+                darkTheme: AppTheme.getThemeForPlatform(isDarkMode: true),
+                themeMode: themeMode,
+                locale: locale,
+                localizationsDelegates: [
+                  AppLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
+                supportedLocales: supportedLocales,
+                localeListResolutionCallback: (locales, supportedLocales) {
+                  String usedLanguage = locale.languageCode;
 
-              if (supportedLocales.map((s) => s.languageCode).contains(systemLocales.first.languageCode)) {
-                usedLanguage = systemLocales.first.languageCode;
-              }
+                  if (context.read<LocaleCubit>().hasUserChangedLanguage()) {
+                    Intl.defaultLocale = usedLanguage;
+                    return locale;
+                  } else {
+                    List<Locale> systemLocales = View.of(context).platformDispatcher.locales;
+                    if (supportedLocales.map((s) => s.languageCode).contains(systemLocales.first.languageCode)) {
+                      usedLanguage = systemLocales.first.languageCode;
+                      context.read<LocaleCubit>().changeLocaleTo(Locale(usedLanguage));
+                    }
 
-              bool userChanged = BlocProvider.of<LocaleCubit>(context).hasUserChangedLanguage();
-              if (userChanged) {
-                usedLanguage = BlocProvider.of<LocaleCubit>(context).state.languageCode;
-              }
+                    Intl.defaultLocale = usedLanguage;
 
-              Intl.defaultLocale = usedLanguage;
-
-              return Locale(usedLanguage, '');
+                    return Locale(usedLanguage);
+                  }
+                },
+                routerConfig: router,
+              );
             },
-            routerConfig: router,
           );
         },
       ),

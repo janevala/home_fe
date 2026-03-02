@@ -8,8 +8,7 @@ This app is written in Dart. It can be used both as mobile application, desktop 
 
 ## Next week
 ## Front
-- Theme is buggy, fix it
-- Enable localizations, copy idea from old all
+- Theme is buggy, fix it, or is it buggy?
 
 ## Back
 - Start doing translations

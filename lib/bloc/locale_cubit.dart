@@ -4,19 +4,19 @@ import 'package:homefe/logger/logger.dart';
 import 'package:homefe/persistence/persistent_storage.dart';
 
 class LocaleCubit extends Cubit<Locale> {
-  bool userChangedLanguage = false;
+  bool changedLanguage = false;
   LocaleCubit() : super(const Locale('en'));
 
   Future<void> changeLocaleTo(Locale locale) async {
     logger.d('LocaleCubit changeLocaleTo: $locale');
-    userChangedLanguage = true;
+    changedLanguage = true;
     emit(locale);
 
-    _persist({'user_language': locale.languageCode});
+    _persist({'language': locale.languageCode});
   }
 
   bool hasUserChangedLanguage() {
-    return userChangedLanguage;
+    return changedLanguage;
   }
 }
 
