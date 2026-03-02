@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:homefe/api/api_repository.dart';
 import 'package:homefe/logger/logger.dart';
 import 'package:homefe/podo/answer/answer_body.dart';
+import 'package:homefe/podo/backend/archive.dart';
 import 'package:homefe/podo/backend/config.dart';
 import 'package:homefe/podo/question/question_body.dart';
 import 'package:homefe/podo/rss/news_item.dart';
@@ -75,9 +76,9 @@ class SearchLoad extends RssEvent {
 }
 
 class ArchiveRefreshDone extends RssEvent {
-  final String message;
+  final ArchiveStats stats;
 
-  ArchiveRefreshDone(this.message);
+  ArchiveRefreshDone(this.stats);
 }
 
 class AnswerSuccess extends RssEvent {
@@ -194,7 +195,7 @@ class RssArchiveBloc extends Bloc<RssEvent, RssState> {
       emit(SlowLoading());
       final (returnCode, data) = await repo.refresh();
       if (returnCode == 200) {
-        emit(ArchiveRefreshDone(data));
+        emit(ArchiveRefreshDone(ArchiveStats.fromJson(data)));
       } else {
         emit(Failure('Error: $data'));
       }

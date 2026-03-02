@@ -24,7 +24,7 @@
   "welcome": "ยินดีต้อนรับ!",
   "open": "เปิด",
   "read": "อ่าน",
-  "newsUpdateWithItems": "ข่าวอัปเดต {count} ข่าว",
-  "newsUpdatedWithNoItems": "ข่าวอัปเดต {count} ข่าว",
+  "newsUpdateWithItems": "ข่าวอัปเดต {count} ข่าว, ข้อมูลข่าวมีอายุ {days} วัน",
+  "newsUpdatedWithNoItems": "ข่าวอัปเดต {count} ข่าว, ข้อมูลข่าวมีอายุ {days} วัน",
   "newsNoItems": "ไม่มีข่าว"
 }

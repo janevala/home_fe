@@ -24,7 +24,7 @@
   "welcome": "Tervetuloa!",
   "open": "Avaa",
   "read": "Lue",
-  "newsUpdateWithItems": "Uutiset ajantasalla. {count} uutista",
-  "newsUpdatedWithNoItems": "Uutiset päivitetty. {count} uutista",
+  "newsUpdateWithItems": "Uutiset ajantasalla, {count} uutista. Arkisto on {days} päivää vanhaa",
+  "newsUpdatedWithNoItems": "Uutiset päivitetty, {count} uutista. Arkisto on {days} päivää vanhaa",
   "newsNoItems": "Uutisia ei saatavilla"
 }

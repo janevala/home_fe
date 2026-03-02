@@ -17,9 +17,8 @@ class ApiRepository {
   ApiRepository({required this.client});
 
   Future<Token?> login(LoginBody loginBody) async {
-    const clientId =
-        '75247409848-7gdm1b0i5d9kuaeumco7n5ov00ojevlg.apps.googleusercontent.com';
-    const clientSecret = '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';
+    const clientId = 'clientId';
+    const clientSecret = 'clientSecret';
     Map<String, dynamic> data = {
       'username': loginBody.username,
       'password': loginBody.password,
@@ -53,9 +52,8 @@ class ApiRepository {
 
   /// NOT VERIFIED BECAUSE OAUTH IS NOT USED (YET)
   Future<Token?> refreshLogin(RefreshTokenBody refreshTokenBody) async {
-    const clientId =
-        '75247409848-0fu1932smoiih7vrrhcqn5jqv3s0bago.apps.googleusercontent.com';
-    const clientSecret = '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';
+    const clientId = 'clientId';
+    const clientSecret = 'clientSecret';
     Map<String, dynamic> data = {
       'grant_type': refreshTokenBody.grantType,
       'refresh_token': refreshTokenBody.refreshToken,
@@ -129,14 +127,14 @@ class ApiRepository {
     return null;
   }
 
-  Future<(int, String)> refresh() async {
+  Future<(int, dynamic)> refresh() async {
     List<Future<dynamic>> futures = [];
     futures.add(client.get('/refresh', parameters: {"code": "123"}));
     List<dynamic> results = await Future.wait(futures);
 
     if (results.isNotEmpty) {
       int returnCode = results.first.statusCode;
-      String data = results.first.data.toString();
+      dynamic data = results.first.data;
       return (returnCode, data);
     }
 

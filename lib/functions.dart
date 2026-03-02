@@ -76,6 +76,7 @@ DateTime parsePublishedParsed(String? str) {
 
   DateFormat format1 = DateFormat('EEE, dd MMM yyyy HH:mm:ss Z');
   DateFormat format2 = DateFormat('yyyy-MM-ddTHH:mm:ssZ');
+  DateFormat format3 = DateFormat('yyyy-MM-dd HH:mm:ss Z');
 
   try {
     return format1.parse(str, true);
@@ -83,7 +84,11 @@ DateTime parsePublishedParsed(String? str) {
     try {
       return format2.parse(str, true);
     } catch (e2) {
-      return DateTime.now();
+      try {
+        return format3.parse(str, true);
+      } catch (e3) {
+        return DateTime.now();
+      }
     }
   }
 }

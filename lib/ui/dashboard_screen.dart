@@ -6,6 +6,7 @@ import 'package:homefe/assets/i18n/generated/app_localizations.dart';
 import 'package:homefe/bloc/rss_bloc.dart';
 import 'package:homefe/bloc/theme_cubit.dart';
 import 'package:homefe/constants/app_version.dart';
+import 'package:homefe/functions.dart';
 import 'package:homefe/logger/logger.dart';
 import 'package:homefe/persistence/persistent_storage.dart';
 import 'package:homefe/ui/animation.dart';
@@ -214,16 +215,17 @@ class DashboardScreenState extends State<DashboardScreen> {
       body: BlocListener<RssArchiveBloc, RssState>(
         listener: (context, state) {
           if (state is ArchiveRefreshDone) {
-            String message = '';
-            final response = state.message.split(" ");
-            if (response[0] == 'NUPD') {
+            String message;
+            DateTime oldestItemDate = parsePublishedParsed(state.stats.oldest);
+            int days = DateTime.now().difference(oldestItemDate).inDays;
+            if (state.stats.status == 'Refreshed') {
               message = AppLocalizations.of(
                 context,
-              )!.newsUpdateWithItems(response[1]);
-            } else if (response[0] == 'UPD') {
+              )!.newsUpdateWithItems(state.stats.count.toString(), days.toString());
+            } else if (state.stats.status.startsWith('Not needed')) {
               message = AppLocalizations.of(
                 context,
-              )!.newsUpdatedWithNoItems(response[1]);
+              )!.newsUpdatedWithNoItems(state.stats.count.toString(), days.toString());
             } else {
               message = AppLocalizations.of(context)!.newsNoItems;
             }
