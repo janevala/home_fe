@@ -1,4 +1,4 @@
-import 'package:homefe/podo/backend/by_size.dart';
+// import 'package:homefe/podo/backend/by_size.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'memory.g.dart';
@@ -6,25 +6,25 @@ part 'memory.g.dart';
 @JsonSerializable()
 class MemoryStats {
   @JsonKey(name: 'Alloc')
-  late String alloc;
-  @JsonKey(name: 'BySize')
-  late List<BySize> bySize;
+  late int alloc;
+  // @JsonKey(name: 'BySize')
+  // late List<BySize> bySize;
   @JsonKey(name: 'NumGC')
-  late String numGC;
+  late int numGC;
   @JsonKey(name: 'PauseEnd')
-  late List<String> pauseEnd;
+  late List<int> pauseEnd;
   @JsonKey(name: 'PauseNs')
-  late List<String> pauseNs;
+  late List<int> pauseNs;
   @JsonKey(name: 'PauseTotalNs')
-  late String pauseTotalNs;
+  late int pauseTotalNs;
   @JsonKey(name: 'Sys')
-  late String sys;
+  late int sys;
   @JsonKey(name: 'TotalAlloc')
-  late String totalAlloc;
+  late int totalAlloc;
 
   MemoryStats(
     this.alloc,
-    this.bySize,
+    // this.bySize,
     this.numGC,
     this.pauseEnd,
     this.pauseNs,

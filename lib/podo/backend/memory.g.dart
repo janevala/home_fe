@@ -7,22 +7,18 @@ part of 'memory.dart';
 // **************************************************************************
 
 MemoryStats _$MemoryStatsFromJson(Map<String, dynamic> json) => MemoryStats(
-  json['Alloc'] as String,
-  (json['BySize'] as List<dynamic>)
-      .map((e) => BySize.fromJson(e as Map<String, dynamic>))
-      .toList(),
-  json['NumGC'] as String,
-  (json['PauseEnd'] as List<dynamic>).map((e) => e as String).toList(),
-  (json['PauseNs'] as List<dynamic>).map((e) => e as String).toList(),
-  json['PauseTotalNs'] as String,
-  json['Sys'] as String,
-  json['TotalAlloc'] as String,
+  (json['Alloc'] as num).toInt(),
+  (json['NumGC'] as num).toInt(),
+  (json['PauseEnd'] as List<dynamic>).map((e) => (e as num).toInt()).toList(),
+  (json['PauseNs'] as List<dynamic>).map((e) => (e as num).toInt()).toList(),
+  (json['PauseTotalNs'] as num).toInt(),
+  (json['Sys'] as num).toInt(),
+  (json['TotalAlloc'] as num).toInt(),
 );
 
 Map<String, dynamic> _$MemoryStatsToJson(MemoryStats instance) =>
     <String, dynamic>{
       'Alloc': instance.alloc,
-      'BySize': instance.bySize,
       'NumGC': instance.numGC,
       'PauseEnd': instance.pauseEnd,
       'PauseNs': instance.pauseNs,
