@@ -9,7 +9,6 @@ This app is written in Dart. It can be used both as mobile application, desktop 
 ## Next week
 ## Front
 - Theme is buggy, fix it
-- Include memory json from /jq to Podos
 - Enable localizations, copy idea from old all
 
 ## Back
