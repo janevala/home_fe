@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:homefe/assets/i18n/generated/app_localizations.dart';
-import 'package:homefe/bloc/locale_cubit.dart';
 import 'package:homefe/podo/rss/news_item.dart';
 import 'package:html/parser.dart';
 import 'package:url_launcher/url_launcher.dart';

@@ -13,7 +13,6 @@
   "newsSites": "แหล่งข่าว",
   "newsArchive": "ข้อมูลข่าว",
   "pleaseEnterToken": "กรุณากรอกรหัสผ่าน",
-  "token": "Token",
   "login": "เข้าสู่ระบบ",
   "serverVersion": "เวอร์ชันเซิร์ฟเวอร์: {version}",
   "appVersion": "เวอร์ชันแอป: {version}",
@@ -27,10 +26,11 @@
   "newsUpdateWithItems": "ข่าวอัปเดต {count} ข่าว, ข้อมูลข่าวมีอายุ {days} วัน",
   "newsUpdatedWithNoItems": "ข่าวอัปเดต {count} ข่าว, ข้อมูลข่าวมีอายุ {days} วัน",
   "newsNoItems": "ไม่มีข่าว",
-  "localeDeTranslated": "German",
-  "localeEnTranslated": "English",
-  "localeEsTranslated": "Spanish",
-  "localeFiTranslated": "Finnish",
-  "localePtTranslated": "Portuguese",
-  "localeThTranslated": "Thai"
+  "token" : "รหัสผ่าน",
+  "localeDeTranslated": "เยอรมัน",
+  "localeEnTranslated": "อังกฤษ",
+  "localeEsTranslated": "สเปน",
+  "localeFiTranslated": "ฟินแลนด์",
+  "localePtTranslated": "โปรตุเกส",
+  "localeThTranslated": "ไทย"
 }
