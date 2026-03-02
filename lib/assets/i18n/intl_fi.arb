@@ -26,5 +26,11 @@
   "read": "Lue",
   "newsUpdateWithItems": "Uutiset ajantasalla, {count} uutista. Arkisto on {days} päivää vanha",
   "newsUpdatedWithNoItems": "Uutiset päivitetty, {count} uutista. Arkisto on {days} päivää vanha",
-  "newsNoItems": "Uutisia ei saatavilla"
+  "newsNoItems": "Uutisia ei saatavilla",
+  "localeDeTranslated": "German",
+  "localeEnTranslated": "English",
+  "localeEsTranslated": "Spanish",
+  "localeFiTranslated": "Finnish",
+  "localePtTranslated": "Portuguese",
+  "localeThTranslated": "Thai"
 }

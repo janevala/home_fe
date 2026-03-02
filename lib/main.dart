@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:homefe/api/api_client.dart';
 import 'package:homefe/api/api_repository.dart';
 import 'package:homefe/assets/i18n/generated/app_localizations.dart';
+import 'package:homefe/bloc/locale_cubit.dart';
 import 'package:homefe/bloc/login_bloc.dart';
 import 'package:homefe/bloc/rss_bloc.dart';
 import 'package:homefe/bloc/theme_cubit.dart';
@@ -16,6 +17,7 @@ import 'package:homefe/ui/feed_screen.dart';
 import 'package:homefe/ui/sites_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:homefe/theme/theme.dart';
+import 'package:intl/intl.dart';
 
 void main() {
   runApp(const ThemedApp());
@@ -27,7 +29,10 @@ class ThemedApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider<ThemeCubit>(create: (context) => ThemeCubit())],
+      providers: [
+        BlocProvider<ThemeCubit>(create: (context) => ThemeCubit()),
+        BlocProvider<LocaleCubit>(create: (context) => LocaleCubit()),
+      ],
       child: const App(),
     );
   }
@@ -76,7 +81,21 @@ class App extends StatelessWidget {
               GlobalMaterialLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-            supportedLocales: [Locale('en'), Locale('th'), Locale('fi')],
+            supportedLocales: [Locale('en'), Locale('th'), Locale('fi'), Locale('de'), Locale('es'), Locale('pt')],
+            localeListResolutionCallback: (locales, supportedLocales) {
+              String usedLanguage = 'en';
+              List<Locale> systemLocales = View.of(context).platformDispatcher.locales;
+
+              if (supportedLocales.map((s) => s.languageCode).contains(systemLocales.first.languageCode)) {
+                usedLanguage = systemLocales.first.languageCode;
+              }
+
+              // bool userChanged = BlocProvider.of<LocaleCubit>(context).hasUserChangedLanguage();
+
+              Intl.defaultLocale = usedLanguage;
+
+              return Locale(usedLanguage, '');
+            },
             routerConfig: router,
           );
         },

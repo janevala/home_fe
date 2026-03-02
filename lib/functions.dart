@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homefe/assets/i18n/generated/app_localizations.dart';
+import 'package:homefe/bloc/locale_cubit.dart';
 import 'package:homefe/podo/rss/news_item.dart';
 import 'package:html/parser.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -97,3 +98,24 @@ String getLanguageCode(BuildContext context) {
   Locale locale = Localizations.localeOf(context);
   return locale.languageCode;
 }
+
+String fetchLanguageSelectorSelected(BuildContext context, Locale locale) {
+  switch (locale.languageCode) {
+    case 'de':
+      return AppLocalizations.of(context)!.localeDeTranslated;
+    case 'en':
+      return AppLocalizations.of(context)!.localeEnTranslated;
+    case 'es':
+      return AppLocalizations.of(context)!.localeEsTranslated;
+    case 'fi':
+      return AppLocalizations.of(context)!.localeFiTranslated;
+    case 'pt':
+      return AppLocalizations.of(context)!.localePtTranslated;
+    default:
+      return locale.languageCode;
+  }
+}
+
+// void updateOnLocaleChange(BuildContext context, Locale newLocale) {
+//   context.read<LocaleCubit>().changeLocaleTo(newLocale);
+// }
