@@ -18,6 +18,7 @@ Config _$ConfigFromJson(Map<String, dynamic> json) => Config(
   (json['num_cgo_call'] as num).toInt(),
   DatabaseStats.fromJson(json['db_stats'] as Map<String, dynamic>),
   HttpStats.fromJson(json['http_stats'] as Map<String, dynamic>),
+  MemoryStats.fromJson(json['memory_stats'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$ConfigToJson(Config instance) => <String, dynamic>{
@@ -32,4 +33,5 @@ Map<String, dynamic> _$ConfigToJson(Config instance) => <String, dynamic>{
   'num_cgo_call': instance.numCgoCall,
   'db_stats': instance.dbStats,
   'http_stats': instance.httpStats,
+  'memory_stats': instance.memoryStats,
 };

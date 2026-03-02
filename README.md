@@ -13,8 +13,6 @@ This app is written in Dart. It can be used both as mobile application, desktop 
 - Enable localizations, copy idea from old all
 
 ## Back
-- When checking archive, return oldest item, besides status and count
-- Change return type to json
 - Start doing translations
 
 

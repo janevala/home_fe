@@ -1,4 +1,3 @@
-// ignore: depend_on_referenced_packages
 import 'package:json_annotation/json_annotation.dart';
 
 part 'http.g.dart';
@@ -24,8 +23,7 @@ class HttpStats {
     this.totalResponseTime,
   );
 
-  factory HttpStats.fromJson(Map<String, dynamic> json) =>
-      _$HttpStatsFromJson(json);
+  factory HttpStats.fromJson(Map<String, dynamic> json) => _$HttpStatsFromJson(json);
 
   Map<String, dynamic> toJson() => _$HttpStatsToJson(this);
 }

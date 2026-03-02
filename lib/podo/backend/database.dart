@@ -1,4 +1,3 @@
-// ignore: depend_on_referenced_packages
 import 'package:json_annotation/json_annotation.dart';
 
 part 'database.g.dart';
@@ -36,8 +35,7 @@ class DatabaseStats {
     this.waitDuration,
   );
 
-  factory DatabaseStats.fromJson(Map<String, dynamic> json) =>
-      _$DatabaseStatsFromJson(json);
+  factory DatabaseStats.fromJson(Map<String, dynamic> json) => _$DatabaseStatsFromJson(json);
 
   Map<String, dynamic> toJson() => _$DatabaseStatsToJson(this);
 }
