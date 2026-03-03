@@ -1,19 +1,19 @@
-{
-	"name": "front-host",
-	"build": {
-		"dockerfile": "Dockerfile",
-		"context": ".."
-	},
-	"runArgs": ["--network=home-network", "--name=front-host"],
-	"forwardPorts": [
-		7070
-	],
-	"portsAttributes": {
-		"7070": {
-			"label": "Application",
-			"onAutoForward": "notify"
-		}
-	},
-	"postCreateCommand": "flutter pub get",
-	"remoteUser": "root"
-}
+// {
+// 	"name": "front-host",
+// 	"build": {
+// 		"dockerfile": "Dockerfile",
+// 		"context": ".."
+// 	},
+// 	"runArgs": ["--network=home-network", "--name=front-host"],
+// 	"forwardPorts": [
+// 		7070
+// 	],
+// 	"portsAttributes": {
+// 		"7070": {
+// 			"label": "Application",
+// 			"onAutoForward": "notify"
+// 		}
+// 	},
+// 	"postCreateCommand": "flutter pub get",
+// 	"remoteUser": "root"
+// }
