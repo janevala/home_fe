@@ -23,9 +23,12 @@ class DashboardScreen extends StatefulWidget {
 class DashboardScreenState extends State<DashboardScreen> {
   late SharedPreferences storage;
 
-  String token = '';
-  String backVersion = '';
-  String frontVersion = '';
+  String? token;
+  String? backVersion;
+  String? frontVersion;
+  DateTime? oldestItemDate;
+
+  int totalItems = 0;
   bool firstTimeUser = true;
   bool showAnimation = true;
 
@@ -104,7 +107,7 @@ class DashboardScreenState extends State<DashboardScreen> {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    '${AppLocalizations.of(context)!.token}: ${token.isNotEmpty ? token : 'No token'}',
+                    '${AppLocalizations.of(context)!.token}: ${token ?? 'No token'}',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       color: Theme.of(context).colorScheme.onPrimary,
                       fontWeight: FontWeight.w500,
@@ -148,19 +151,6 @@ class DashboardScreenState extends State<DashboardScreen> {
               },
             ),
 
-            // ListTile(
-            //   leading: Icon(
-            //     Icons.help_outline,
-            //     color: Theme.of(context).colorScheme.onSurface,
-            //   ),
-            //   title: Text(
-            //     AppLocalizations.of(context)!.about,
-            //     style: TextStyle(
-            //       color: Theme.of(context).colorScheme.onSurface,
-            //     ),
-            //   ),
-            //   onTap: () {},
-            // ),
             const Divider(),
 
             ListTile(
@@ -169,7 +159,33 @@ class DashboardScreenState extends State<DashboardScreen> {
                 color: Theme.of(context).colorScheme.onSurface,
               ),
               title: Text(
-                AppLocalizations.of(context)!.serverVersion(backVersion),
+                AppLocalizations.of(context)!.serverVersion(backVersion ?? 'Unknown'),
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+              ),
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.storage,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
+              title: Text(
+                AppLocalizations.of(context)!.newsItemCount(totalItems),
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+              ),
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.calendar_today,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
+              title: Text(
+                AppLocalizations.of(context)!.newsArchiveStart(
+                  oldestItemDate != null ? getLocalizedDate(context, oldestItemDate) ?? 'Unknown' : 'Unknown',
+                ),
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.onSurface,
                 ),
@@ -216,16 +232,17 @@ class DashboardScreenState extends State<DashboardScreen> {
         listener: (context, state) {
           if (state is ArchiveRefreshDone) {
             String message;
-            DateTime oldestItemDate = parsePublishedParsed(state.stats.oldest);
-            int days = DateTime.now().difference(oldestItemDate).inDays;
+
+            oldestItemDate = parsePublishedParsed(state.stats.oldest);
+            totalItems = state.stats.count;
             if (state.stats.status == 'Refreshed') {
               message = AppLocalizations.of(
                 context,
-              )!.newsUpdateWithItems(state.stats.count.toString(), days.toString());
+              )!.newsUpdateWithItems(state.stats.count.toString());
             } else if (state.stats.status.startsWith('Not needed')) {
               message = AppLocalizations.of(
                 context,
-              )!.newsUpdatedWithNoItems(state.stats.count.toString(), days.toString());
+              )!.newsUpdatedWithNoItems(state.stats.count.toString());
             } else {
               message = AppLocalizations.of(context)!.newsNoItems;
             }

@@ -8,6 +8,7 @@ This app is written in Dart. It can be used both as mobile application, desktop 
 
 ## Next week
 ## Front
+- Logos and animations suck
 - Theme is buggy, fix it, or is it buggy?
 
 ## Back

@@ -39,8 +39,6 @@ class LoginScreenState extends State<LoginScreen> {
   // void didChangeDependencies() {
   //   super.didChangeDependencies();
   //   String languageCode = getLanguageCode(context);
-  //   logger.i("LANGUAGE $languageCode");
-  //   _persist({'system_language': languageCode});
   // }
 
   @override
