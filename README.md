@@ -10,11 +10,14 @@ This app is written in Dart. It can be used both as mobile application, desktop 
 ## Front BUGS
 - Theme is buggy, fix it, or is it buggy?
 - If archive update, drawer panel is buggy
+- Use Windsurf to fix TH translations
 - Logos suck
 
 ## Back
 - Are translated entries good enough
 - Start doing translations
+- Ping is ollama alive
+- Ping what translations are available
 
 
 ### HTTPS
