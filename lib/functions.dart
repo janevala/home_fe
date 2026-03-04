@@ -119,9 +119,7 @@ String fetchLanguageSelectorSelected(BuildContext context, Locale locale) {
 //   context.read<LocaleCubit>().changeLocaleTo(newLocale);
 // }
 
-String? getLocalizedDate(BuildContext context, DateTime? date) {
-  if (date == null) return null;
-
+String getLocalizedDate(BuildContext context, DateTime date) {
   final String locale = Localizations.localeOf(context).languageCode;
   final DateFormat formatter = DateFormat.yMMMd(locale);
   return formatter.format(date);

@@ -184,7 +184,9 @@ class DashboardScreenState extends State<DashboardScreen> {
               ),
               title: Text(
                 AppLocalizations.of(context)!.newsArchiveStart(
-                  oldestItemDate != null ? getLocalizedDate(context, oldestItemDate) ?? 'Unknown' : 'Unknown',
+                  oldestItemDate != null
+                      ? getLocalizedDate(context, oldestItemDate!)
+                      : AppLocalizations.of(context)!.unknown,
                 ),
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.onSurface,

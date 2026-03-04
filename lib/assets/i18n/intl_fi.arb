@@ -28,6 +28,8 @@
   "token" : "Tunniste",
   "newsItemCount": "{count} uutista",
   "newsArchiveStart": "Arkiston aloitus {date}",
+  "unknown": "Unknown",
+  "translationMayContainErrors": "Translation may contain errors",
   "localeDeTranslated": "Saksa",
   "localeEnTranslated": "Englanti",
   "localeEsTranslated": "Espanja",

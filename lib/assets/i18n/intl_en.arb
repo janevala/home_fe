@@ -29,6 +29,8 @@
   "token" : "Token",
   "newsItemCount": "{count} items",
   "newsArchiveStart": "Archive start {date}",
+  "unknown": "Unknown",
+  "translationMayContainErrors": "Translation may contain errors",
   "localeDeTranslated": "German",
   "localeEnTranslated": "English",
   "localeEsTranslated": "Spanish",
