@@ -7,11 +7,13 @@ This app is written in Dart. It can be used both as mobile application, desktop 
 # TODO
 
 ## Next week
-## Front
-- Logos and animations suck
+## Front BUGS
 - Theme is buggy, fix it, or is it buggy?
+- If archive update, drawer panel is buggy
+- Logos suck
 
 ## Back
+- Are translated entries good enough
 - Start doing translations
 
 
