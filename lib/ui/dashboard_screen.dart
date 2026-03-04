@@ -249,6 +249,8 @@ class DashboardScreenState extends State<DashboardScreen> {
               message = AppLocalizations.of(context)!.newsNoItems;
             }
 
+            setState(() {});
+
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(

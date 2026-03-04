@@ -137,6 +137,36 @@ class _FlagSelectionState extends State<FlagSelection> with TickerProviderStateM
                     ),
                   ),
                 ),
+                const SizedBox(width: 16),
+                Tooltip(
+                  message: AppLocalizations.of(context)!.localeDeTranslated,
+                  child: InkWell(
+                    onTap: () {
+                      context.read<LocaleCubit>().changeLocaleTo(Locale('de'));
+                    },
+                    child: SvgPicture.asset(
+                      'assets/flags/german.svg',
+                      key: ValueKey('de'),
+                      width: 80,
+                      height: 80,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Tooltip(
+                  message: AppLocalizations.of(context)!.localePtTranslated,
+                  child: InkWell(
+                    onTap: () {
+                      context.read<LocaleCubit>().changeLocaleTo(Locale('pt'));
+                    },
+                    child: SvgPicture.asset(
+                      'assets/flags/brazil.svg',
+                      key: ValueKey('pt'),
+                      width: 80,
+                      height: 80,
+                    ),
+                  ),
+                ),
               ],
             ),
           ],
