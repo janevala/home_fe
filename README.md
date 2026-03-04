@@ -1,26 +1,22 @@
 # Home FE
 
-Home FE is news feed application, and is mean to use together with Home BE, wich provides the backend data for this client app.
-
-This app is written in Dart. It can be used both as mobile application, desktop application (Windows, Mac, Linux) and web application.
+Tech Heavy News Frontend.
 
 # TODO
+## Front Bugs
+- Use Windsurf to fix arb translations
+- Dark/light theme logic is buggy, fix it, or is it buggy?
+- Language Bloc is buggy, it will override already chosen language
+- Create mobile theme's. Check fonts and paddings, margins, etc. When Platform is iOS or Android
 
-## Next week
-## Front BUGS
-- Theme is buggy, fix it, or is it buggy?
-- If archive update, drawer panel is buggy
-- Use Windsurf to fix TH translations
-- Logos suck
+## Front features
+- Add contact mailto: janevala@proton.me
 
 ## Back
-- Are translated entries good enough
-- Start doing translations
 - Ping is ollama alive
 - Ping what translations are available
 
-
-### HTTPS
+## HTTPS
     - buy https://techeavy.news from godaddy
     - enable secure_persistent_storage
     - enable https in nginx
@@ -29,13 +25,7 @@ This app is written in Dart. It can be used both as mobile application, desktop 
     - enable https in firewall
     - Docker???
 
-### Rest of TODOs
-- Locale bloc?
-- Add language selection + use preference saved to cookie
-- Localize timeago.format
-- Deploy identifiable version of Gemma to Ollama
-- Add LLM with version, to translated table entry in Backend. Show in frontend
-- Rename rssBloc to generic
+## Nice to have TODOs
 - Analytics and to what acount? create account?
 
 # Flutter notes
@@ -43,12 +33,6 @@ This app is written in Dart. It can be used both as mobile application, desktop 
 dart run build_runner build --delete-conflicting-outputs
 flutter pub get
 ```
-
-### OAuth2 grant types, not in use currently
-
-1. Resource Owner Password Credentials Grant: This grant type allows users to provide their username and password directly to the client, which then exchanges them for an access token.
-
-2. Refresh Token Grant: Once the client has obtained an initial access token, it can use a refresh token to request a new access token without requiring the user to re-authenticate.
 
 ### HTTPS & WASM
 
@@ -71,6 +55,12 @@ sudo docker run --name front-host --network home-network -p 80:7070 --restart al
 
 sudo docker network connect home-network front-host
 ```
+
+### OAuth2 grant types, not in use currently
+
+1. Resource Owner Password Credentials Grant: This grant type allows users to provide their username and password directly to the client, which then exchanges them for an access token.
+
+2. Refresh Token Grant: Once the client has obtained an initial access token, it can use a refresh token to request a new access token without requiring the user to re-authenticate.
 
 ### Docker transfer prebuilt container
 ```
