@@ -59,6 +59,9 @@ class JsonFeedTile extends StatelessWidget {
   String _formatDate() {
     final now = DateTime.now();
 
+    // return _isToday
+    //     ? timeago.format(_publishedDate, locale: 'pt_BR_short', clock: now)
+    //     : timeago.format(_publishedDate, locale: 'pt_BR', clock: now);
     return _isToday
         ? timeago.format(_publishedDate, locale: '${locale.languageCode}_short', clock: now)
         : timeago.format(_publishedDate, locale: locale.languageCode, clock: now);

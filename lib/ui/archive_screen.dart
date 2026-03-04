@@ -160,6 +160,10 @@ class ArchiveScreenState extends State<ArchiveScreen> {
               }
 
               NewsItem item = items[index];
+              Locale locale = Localizations.localeOf(context);
+              if (locale.countryCode == "pt") {
+                locale = Locale('pt_BR');
+              }
               return JsonFeedTile(
                 key: Key(item.link),
                 onItemTap: () => openItem(context, item),
@@ -171,7 +175,7 @@ class ArchiveScreenState extends State<ArchiveScreen> {
                 //   );
                 // },
                 item: item,
-                locale: Localizations.localeOf(context),
+                locale: locale,
               );
             },
           ),
@@ -181,6 +185,11 @@ class ArchiveScreenState extends State<ArchiveScreen> {
   }
 
   Widget _buildSearchList(BuildContext context, List<NewsItem> items) {
+    Locale locale = Localizations.localeOf(context);
+    if (locale.countryCode == "pt") {
+      locale = Locale('pt_BR');
+    }
+
     return Flexible(
       child: Focus(
         autofocus: true,
@@ -192,7 +201,7 @@ class ArchiveScreenState extends State<ArchiveScreen> {
               key: Key(item.link),
               onItemTap: () => openItem(context, item),
               item: item,
-              locale: Localizations.localeOf(context),
+              locale: locale,
             );
           },
         ),
