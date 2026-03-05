@@ -1,4 +1,3 @@
-// ignore: depend_on_referenced_packages
 import 'package:json_annotation/json_annotation.dart';
 
 part 'news_item.g.dart';
@@ -21,12 +20,22 @@ class NewsItem {
   late String? source;
   @JsonKey(name: 'linkImage')
   late String? linkImage;
+  @JsonKey(name: 'llm')
+  late String? llm;
 
-  NewsItem(this.title, this.description, this.link, this.published,
-      [this.content, this.publishedParsed, this.source, this.linkImage]);
+  NewsItem(
+    this.title,
+    this.description,
+    this.link,
+    this.published, [
+    this.content,
+    this.publishedParsed,
+    this.source,
+    this.linkImage,
+    this.llm,
+  ]);
 
-  factory NewsItem.fromJson(Map<String, dynamic> json) =>
-      _$NewsItemFromJson(json);
+  factory NewsItem.fromJson(Map<String, dynamic> json) => _$NewsItemFromJson(json);
 
   Map<String, dynamic> toJson() => _$NewsItemToJson(this);
 }

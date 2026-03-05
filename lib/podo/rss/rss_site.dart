@@ -1,4 +1,3 @@
-// ignore: depend_on_referenced_packages
 import 'package:json_annotation/json_annotation.dart';
 
 part 'rss_site.g.dart';
@@ -12,8 +11,7 @@ class RssSite {
 
   RssSite(this.title, this.url);
 
-  factory RssSite.fromJson(Map<String, dynamic> json) =>
-      _$RssSiteFromJson(json);
+  factory RssSite.fromJson(Map<String, dynamic> json) => _$RssSiteFromJson(json);
 
   Map<String, dynamic> toJson() => _$RssSiteToJson(this);
 }
