@@ -317,7 +317,7 @@ class DashboardScreenState extends State<DashboardScreen> {
                   width: width * 0.6,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    // crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       showAnimation
                           ? AppAnimation(
@@ -332,7 +332,7 @@ class DashboardScreenState extends State<DashboardScreen> {
                                   ? AppLocalizations.of(context)!.welcome
                                   : AppLocalizations.of(context)!.welcomeBack,
                             ),
-                      const SizedBox(height: 64),
+                      const SizedBox(height: 32),
                       // if (!kIsWeb && !kIsWasm)
                       //   ElevatedButton(
                       //     onPressed: () {

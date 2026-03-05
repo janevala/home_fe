@@ -37,9 +37,9 @@ class _AppAnimationState extends State<AppAnimation> with TickerProviderStateMix
 
   late final AnimationController _waitController;
 
-  double _containerWidth = 400;
-  double _containerHeight = 150;
-  List<int> _logoSizes = [50, 75, 100, 125, 150];
+  double _containerWidth = 500;
+  double _containerHeight = 200;
+  List<int> _logoSizes = [80, 90, 100, 110, 120];
 
   @override
   void initState() {
@@ -47,8 +47,8 @@ class _AppAnimationState extends State<AppAnimation> with TickerProviderStateMix
 
     if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
       _containerWidth = 200;
-      _containerHeight = 50;
-      _logoSizes = [30, 35, 40, 45, 50];
+      _containerHeight = 100;
+      _logoSizes = [40, 50, 60, 70, 80];
     }
 
     _firstFadeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1500));

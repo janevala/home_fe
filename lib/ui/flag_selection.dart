@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:homefe/assets/i18n/generated/app_localizations.dart';
 import 'package:homefe/bloc/locale_cubit.dart';
-// import 'package:homefe/assets/i18n/generated/app_localizations.dart';
 
 class FlagSelection extends StatefulWidget {
   const FlagSelection({super.key, required this.welcomeMessage});
@@ -17,11 +16,11 @@ class FlagSelection extends StatefulWidget {
 
 class _FlagSelectionState extends State<FlagSelection> with TickerProviderStateMixin {
   late final Animation<double> _firstFadeIn;
-  late final AnimationController _firstFadeController;
+  late final AnimationController _fadeController;
 
-  double _containerWidth = 400;
-  double _containerHeight = 70;
-  double _flagSize = 80;
+  double _containerWidth = 500;
+  double _containerHeight = 200;
+  double _flagSize = 100;
 
   @override
   void initState() {
@@ -29,15 +28,15 @@ class _FlagSelectionState extends State<FlagSelection> with TickerProviderStateM
 
     if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
       _containerWidth = 200;
-      _containerHeight = 50;
-      _flagSize = 50;
+      _containerHeight = 100;
+      _flagSize = 60;
     }
 
-    _firstFadeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1500));
+    _fadeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1500));
 
     _firstFadeIn = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(
-        parent: _firstFadeController,
+        parent: _fadeController,
         curve: Curves.easeIn,
       ),
     );
@@ -46,7 +45,7 @@ class _FlagSelectionState extends State<FlagSelection> with TickerProviderStateM
   }
 
   void _showFlags() {
-    _firstFadeController.forward().then((_) {
+    _fadeController.forward().then((_) {
       _resetAndStop();
     });
   }
@@ -55,7 +54,7 @@ class _FlagSelectionState extends State<FlagSelection> with TickerProviderStateM
 
   @override
   void dispose() {
-    _firstFadeController.dispose();
+    _fadeController.dispose();
     super.dispose();
   }
 
@@ -65,92 +64,86 @@ class _FlagSelectionState extends State<FlagSelection> with TickerProviderStateM
       width: _containerWidth,
       height: _containerHeight,
       child: Center(
-        child: _buildFlagBattery(),
-      ),
-    );
-  }
-
-  Widget _buildFlagBattery() {
-    return Center(
-      child: AnimatedBuilder(
-        animation: _firstFadeIn,
-        builder: (context, child) => Opacity(
-          opacity: _firstFadeIn.value,
-          child: child,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              widget.welcomeMessage,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Tooltip(
-                  message: AppLocalizations.of(context)!.localeEnTranslated,
-                  child: InkWell(
-                    onTap: () {
-                      context.read<LocaleCubit>().changeLocaleTo(Locale('en'));
-                    },
-                    child: SvgPicture.asset(
-                      'assets/flags/flag-en.svg',
-                      key: ValueKey('en'),
-                      width: _flagSize,
-                      height: _flagSize,
+        child: AnimatedBuilder(
+          animation: _firstFadeIn,
+          builder: (context, child) => Opacity(
+            opacity: _firstFadeIn.value,
+            child: child,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                widget.welcomeMessage,
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Tooltip(
+                    message: AppLocalizations.of(context)!.localeEnTranslated,
+                    child: InkWell(
+                      onTap: () {
+                        context.read<LocaleCubit>().changeLocaleTo(Locale('en'));
+                      },
+                      child: SvgPicture.asset(
+                        'assets/flags/flag-en.svg',
+                        key: ValueKey('en'),
+                        width: _flagSize,
+                        height: _flagSize,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 16),
-                Tooltip(
-                  message: AppLocalizations.of(context)!.localeThTranslated,
-                  child: InkWell(
-                    onTap: () {
-                      context.read<LocaleCubit>().changeLocaleTo(Locale('th'));
-                    },
-                    child: SvgPicture.asset(
-                      'assets/flags/flag-th.svg',
-                      key: ValueKey('th'),
-                      width: _flagSize,
-                      height: _flagSize,
+                  const SizedBox(width: 16),
+                  Tooltip(
+                    message: AppLocalizations.of(context)!.localeThTranslated,
+                    child: InkWell(
+                      onTap: () {
+                        context.read<LocaleCubit>().changeLocaleTo(Locale('th'));
+                      },
+                      child: SvgPicture.asset(
+                        'assets/flags/flag-th.svg',
+                        key: ValueKey('th'),
+                        width: _flagSize,
+                        height: _flagSize,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 16),
-                Tooltip(
-                  message: AppLocalizations.of(context)!.localeFiTranslated,
-                  child: InkWell(
-                    onTap: () {
-                      context.read<LocaleCubit>().changeLocaleTo(Locale('fi'));
-                    },
-                    child: SvgPicture.asset(
-                      'assets/flags/flag-fi.svg',
-                      key: ValueKey('fi'),
-                      width: _flagSize,
-                      height: _flagSize,
+                  const SizedBox(width: 16),
+                  Tooltip(
+                    message: AppLocalizations.of(context)!.localeFiTranslated,
+                    child: InkWell(
+                      onTap: () {
+                        context.read<LocaleCubit>().changeLocaleTo(Locale('fi'));
+                      },
+                      child: SvgPicture.asset(
+                        'assets/flags/flag-fi.svg',
+                        key: ValueKey('fi'),
+                        width: _flagSize,
+                        height: _flagSize,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 16),
-                Tooltip(
-                  message: AppLocalizations.of(context)!.localeDeTranslated,
-                  child: InkWell(
-                    onTap: () {
-                      context.read<LocaleCubit>().changeLocaleTo(Locale('de'));
-                    },
-                    child: SvgPicture.asset(
-                      'assets/flags/flag-de.svg',
-                      key: ValueKey('de'),
-                      width: _flagSize,
-                      height: _flagSize,
+                  const SizedBox(width: 16),
+                  Tooltip(
+                    message: AppLocalizations.of(context)!.localeDeTranslated,
+                    child: InkWell(
+                      onTap: () {
+                        context.read<LocaleCubit>().changeLocaleTo(Locale('de'));
+                      },
+                      child: SvgPicture.asset(
+                        'assets/flags/flag-de.svg',
+                        key: ValueKey('de'),
+                        width: _flagSize,
+                        height: _flagSize,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
