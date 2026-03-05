@@ -44,10 +44,6 @@ class LoginScreenState extends State<LoginScreen> {
     } else {
       await _persistSystemTheme();
     }
-
-    if (await _hasLanguage()) {
-      await _setLanguage();
-    }
   }
 
   @override
@@ -147,20 +143,6 @@ class LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
-  }
-
-  Future<bool> _hasLanguage() async {
-    final langCode = await PersistentStorage.read('language_code');
-    return langCode != null;
-  }
-
-  Future<void> _setLanguage() async {
-    final langCode = await PersistentStorage.read('language_code');
-    if (langCode != null) {
-      if (mounted) {
-        context.read<LocaleCubit>().changeLocaleTo(Locale(langCode));
-      }
-    }
   }
 
   Future<bool> _hasTheme() async {

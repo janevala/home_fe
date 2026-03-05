@@ -4,7 +4,9 @@ import 'package:homefe/persistence/persistent_storage.dart';
 
 class LocaleCubit extends Cubit<Locale> {
   bool changed = false;
-  LocaleCubit() : super(const Locale('en'));
+  LocaleCubit() : super(const Locale('en')) {
+    _loadStoredLocale();
+  }
 
   Future<void> changeLocaleTo(Locale locale) async {
     changed = true;
@@ -15,6 +17,13 @@ class LocaleCubit extends Cubit<Locale> {
 
   bool wasLocaleChanged() {
     return changed;
+  }
+
+  Future<void> _loadStoredLocale() async {
+    final storedLanguage = await PersistentStorage.read('language_code');
+    if (storedLanguage != null) {
+      emit(Locale(storedLanguage));
+    }
   }
 }
 
