@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:homefe/assets/i18n/generated/app_localizations.dart';
-import 'package:homefe/bloc/locale_cubit.dart';
 import 'package:homefe/bloc/login_bloc.dart';
 import 'package:homefe/bloc/theme_cubit.dart';
 import 'package:homefe/logger/logger.dart';
@@ -42,7 +41,7 @@ class LoginScreenState extends State<LoginScreen> {
     if (await _hasTheme()) {
       await _setTheme();
     } else {
-      await _persistSystemTheme();
+      await _setSystemTheme();
     }
   }
 
@@ -159,7 +158,7 @@ class LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  Future<void> _persistSystemTheme() async {
+  Future<void> _setSystemTheme() async {
     final mode = context.read<ThemeCubit>().mode;
     if (mode == ThemeMode.system) {
       _persist({'first_time_user': true});

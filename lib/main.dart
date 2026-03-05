@@ -10,7 +10,6 @@ import 'package:homefe/bloc/rss_bloc.dart';
 import 'package:homefe/bloc/theme_cubit.dart';
 import 'package:homefe/constants/app_version.dart';
 import 'package:homefe/constants/supported_locals.dart';
-import 'package:homefe/persistence/persistent_storage.dart';
 import 'package:homefe/podo/rss/rss_site.dart';
 import 'package:homefe/ui/archive_screen.dart';
 import 'package:homefe/ui/dashboard_screen.dart';
