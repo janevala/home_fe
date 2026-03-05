@@ -35,11 +35,15 @@ class LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  // @override
-  // void didChangeDependencies() {
-  //   super.didChangeDependencies();
-  //   String languageCode = getLanguageCode(context);
-  // }
+  @override
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
+    if (await _noTheme()) {
+      await _persistSystemTheme();
+    } else {
+      await _setTheme();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -110,29 +114,13 @@ class LoginScreenState extends State<LoginScreen> {
             ),
             listener: (BuildContext context, LoginState state) async {
               if (state is LoginSuccess) {
-                if (await _noTheme()) {
-                  Future.delayed(const Duration(milliseconds: 250), () {
-                    if (mounted) {
-                      _persist({'token': state.token.accessToken});
-                      _persistTheme();
-
-                      Future.delayed(const Duration(milliseconds: 250), () {
-                        if (mounted) {
-                          // ignore: use_build_context_synchronously
-                          GoRouter.of(context).go('/dashboard');
-                        }
-                      });
-                    }
-                  });
-                } else {
-                  Future.delayed(const Duration(milliseconds: 250), () {
-                    if (mounted) {
-                      _persist({'token': state.token.accessToken});
-                      // ignore: use_build_context_synchronously
-                      GoRouter.of(context).go('/dashboard');
-                    }
-                  });
-                }
+                Future.delayed(const Duration(milliseconds: 250), () {
+                  if (mounted) {
+                    _persist({'token': state.token.accessToken});
+                    // ignore: use_build_context_synchronously
+                    GoRouter.of(context).go('/dashboard');
+                  }
+                });
               } else if (state is LoginFailure) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
@@ -161,7 +149,16 @@ class LoginScreenState extends State<LoginScreen> {
     return theme == null;
   }
 
-  Future<void> _persistTheme() async {
+  Future<void> _setTheme() async {
+    final theme = await PersistentStorage.read('theme_mode');
+    if (theme != null) {
+      if (mounted) {
+        context.read<ThemeCubit>().setTheme(ThemeMode.values.firstWhere((e) => e.name == theme));
+      }
+    }
+  }
+
+  Future<void> _persistSystemTheme() async {
     final mode = context.read<ThemeCubit>().mode;
     if (mode == ThemeMode.system) {
       _persist({'first_time_user': true});
