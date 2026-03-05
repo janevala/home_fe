@@ -108,18 +108,31 @@ class LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-            listener: (BuildContext context, LoginState state) {
+            listener: (BuildContext context, LoginState state) async {
               if (state is LoginSuccess) {
-                _persist({'token': state.token.accessToken});
+                if (await _noTheme()) {
+                  Future.delayed(const Duration(milliseconds: 250), () {
+                    if (mounted) {
+                      _persist({'token': state.token.accessToken});
+                      _persistTheme();
 
-                _persistTheme();
-
-                Future.delayed(const Duration(seconds: 1), () {
-                  if (mounted) {
-                    // ignore: use_build_context_synchronously
-                    GoRouter.of(context).go('/dashboard');
-                  }
-                });
+                      Future.delayed(const Duration(milliseconds: 250), () {
+                        if (mounted) {
+                          // ignore: use_build_context_synchronously
+                          GoRouter.of(context).go('/dashboard');
+                        }
+                      });
+                    }
+                  });
+                } else {
+                  Future.delayed(const Duration(milliseconds: 250), () {
+                    if (mounted) {
+                      _persist({'token': state.token.accessToken});
+                      // ignore: use_build_context_synchronously
+                      GoRouter.of(context).go('/dashboard');
+                    }
+                  });
+                }
               } else if (state is LoginFailure) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
@@ -141,6 +154,11 @@ class LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  Future<bool> _noTheme() async {
+    final theme = await PersistentStorage.read('theme_mode');
+    return theme == null;
   }
 
   Future<void> _persistTheme() async {

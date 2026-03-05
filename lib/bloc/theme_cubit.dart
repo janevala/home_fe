@@ -17,12 +17,12 @@ class ThemeCubit extends Cubit<ThemeMode> {
 
   void toggleTheme() {
     _mode = _mode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
-    _persistIfNotExist({'theme_mode': _mode!.name});
+    _persist({'theme_mode': _mode!.name});
     emit(_mode!);
   }
 
   void setTheme(ThemeMode mode) {
-    _persistIfNotExist({'theme_mode': mode.name});
+    _persist({'theme_mode': mode.name});
     _mode = mode;
     emit(_mode!);
   }
@@ -32,12 +32,10 @@ Future<String?> _load() async {
   return await PersistentStorage.read('theme_mode');
 }
 
-Future<void> _persistIfNotExist(Map<String, dynamic> data) async {
-  final existing = await PersistentStorage.read(data.entries.first.key);
-  if (existing == null) {
-    await PersistentStorage.write(
-      data.entries.first.key,
-      data.entries.first.value.toString(),
-    );
-  }
+Future<void> _persist(Map<String, dynamic> data) async {
+  await PersistentStorage.delete(data.entries.first.key);
+  await PersistentStorage.write(
+    data.entries.first.key,
+    data.entries.first.value.toString(),
+  );
 }
