@@ -1,10 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- Slash -->
-  <path d="M18 50 L46 14" stroke="currentColor" stroke-width="6" stroke-linecap="round"></path>
-
-  <!-- Lower dot -->
-  <circle cx="18" cy="50" r="6" fill="currentColor"></circle>
-
-  <!-- Upper dot -->
-  <circle cx="46" cy="14" r="6" fill="currentColor"></circle>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none">
+  <!-- Dot -->
+  <circle cx="12" cy="36" r="5" fill="#168C2E"/>
+  <!-- Bold slash -->
+  <line x1="16" y1="42" x2="36" y2="6" stroke="#168C2E" stroke-width="7" stroke-linecap="round"/>
 </svg>

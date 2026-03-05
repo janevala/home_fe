@@ -10,7 +10,7 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:collection/collection.dart';
 
 final Map<String, String> _urlMap = {
-  "": "assets/thumbnails/random-source.svg",
+  "": "assets/thumbnails/random.svg",
   "Phoronix": "assets/thumbnails/phoronix.svg",
   "Slashdot": "assets/thumbnails/slashdot.svg",
   "TechCrunch": "assets/thumbnails/techcrunch.svg",
@@ -18,8 +18,8 @@ final Map<String, String> _urlMap = {
   "Tom's Hardware": "assets/thumbnails/toms-hardware.svg",
   "Ars Technica": "assets/thumbnails/ars-technica.svg",
   "Hacker News": "assets/thumbnails/hacker-news.svg",
-  "The Register": "assets/thumbnails/register.svg",
-  "The Verge": "assets/thumbnails/verge.svg",
+  "The Register": "assets/thumbnails/the-register.svg",
+  "The Verge": "assets/thumbnails/the-verge.svg",
   "Wired": "assets/thumbnails/wired.svg",
 };
 

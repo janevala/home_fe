@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480" width="48" height="48">
+  <defs>
+    <!-- Outer rounded shape for entire icon -->
+    <clipPath id="cp_outer">
+      <rect width="480" height="480" rx="100" ry="100"/>
+    </clipPath>
+    <!-- Left half only -->
+    <clipPath id="cp_left">
+      <rect x="0" y="0" width="240" height="480"/>
+    </clipPath>
+    <!-- Right half only -->
+    <clipPath id="cp_right">
+      <rect x="240" y="0" width="240" height="480"/>
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#cp_outer)">
+
+    <!-- ╔══════════════════════════════╗ -->
+    <!-- ║   LEFT HALF — US FLAG        ║ -->
+    <!-- ╚══════════════════════════════╝ -->
+    <g clip-path="url(#cp_left)">
+
+      <!-- 13 stripes across full 480 width; each stripe = 480/13 ≈ 36.9px -->
+      <rect x="0"   y="0"     width="480" height="480" fill="#B22234"/>
+      <rect x="0"   y="36.9"  width="480" height="36.9" fill="#FFFFFF"/>
+      <rect x="0"   y="110.8" width="480" height="36.9" fill="#FFFFFF"/>
+      <rect x="0"   y="184.6" width="480" height="36.9" fill="#FFFFFF"/>
+      <rect x="0"   y="258.5" width="480" height="36.9" fill="#FFFFFF"/>
+      <rect x="0"   y="332.3" width="480" height="36.9" fill="#FFFFFF"/>
+      <rect x="0"   y="406.2" width="480" height="36.9" fill="#FFFFFF"/>
+
+      <!-- Canton: blue rectangle, top-left, spans 7 stripes tall, ~40% wide -->
+      <rect x="0" y="0" width="192" height="258.5" fill="#3C3B6E"/>
+
+      <!-- Stars: 9 rows alternating 6 and 5 stars -->
+      <!-- Row spacing: 258.5/9 ≈ 28.7  Col spacing: 192/6 = 32 -->
+      <g fill="#FFFFFF">
+        <!-- Row 1: 6 stars at y=14 -->
+        <circle cx="16"  cy="14"  r="10"/>
+        <circle cx="48"  cy="14"  r="10"/>
+        <circle cx="80"  cy="14"  r="10"/>
+        <circle cx="112" cy="14"  r="10"/>
+        <circle cx="144" cy="14"  r="10"/>
+        <circle cx="176" cy="14"  r="10"/>
+        <!-- Row 2: 5 stars offset at y=43 -->
+        <circle cx="32"  cy="43"  r="10"/>
+        <circle cx="64"  cy="43"  r="10"/>
+        <circle cx="96"  cy="43"  r="10"/>
+        <circle cx="128" cy="43"  r="10"/>
+        <circle cx="160" cy="43"  r="10"/>
+        <!-- Row 3: 6 stars at y=72 -->
+        <circle cx="16"  cy="72"  r="10"/>
+        <circle cx="48"  cy="72"  r="10"/>
+        <circle cx="80"  cy="72"  r="10"/>
+        <circle cx="112" cy="72"  r="10"/>
+        <circle cx="144" cy="72"  r="10"/>
+        <circle cx="176" cy="72"  r="10"/>
+        <!-- Row 4: 5 stars at y=101 -->
+        <circle cx="32"  cy="101" r="10"/>
+        <circle cx="64"  cy="101" r="10"/>
+        <circle cx="96"  cy="101" r="10"/>
+        <circle cx="128" cy="101" r="10"/>
+        <circle cx="160" cy="101" r="10"/>
+        <!-- Row 5: 6 stars at y=130 -->
+        <circle cx="16"  cy="130" r="10"/>
+        <circle cx="48"  cy="130" r="10"/>
+        <circle cx="80"  cy="130" r="10"/>
+        <circle cx="112" cy="130" r="10"/>
+        <circle cx="144" cy="130" r="10"/>
+        <circle cx="176" cy="130" r="10"/>
+        <!-- Row 6: 5 stars at y=158 -->
+        <circle cx="32"  cy="158" r="10"/>
+        <circle cx="64"  cy="158" r="10"/>
+        <circle cx="96"  cy="158" r="10"/>
+        <circle cx="128" cy="158" r="10"/>
+        <circle cx="160" cy="158" r="10"/>
+        <!-- Row 7: 6 stars at y=187 -->
+        <circle cx="16"  cy="187" r="10"/>
+        <circle cx="48"  cy="187" r="10"/>
+        <circle cx="80"  cy="187" r="10"/>
+        <circle cx="112" cy="187" r="10"/>
+        <circle cx="144" cy="187" r="10"/>
+        <circle cx="176" cy="187" r="10"/>
+        <!-- Row 8: 5 stars at y=216 -->
+        <circle cx="32"  cy="216" r="10"/>
+        <circle cx="64"  cy="216" r="10"/>
+        <circle cx="96"  cy="216" r="10"/>
+        <circle cx="128" cy="216" r="10"/>
+        <circle cx="160" cy="216" r="10"/>
+        <!-- Row 9: 6 stars at y=245 -->
+        <circle cx="16"  cy="245" r="10"/>
+        <circle cx="48"  cy="245" r="10"/>
+        <circle cx="80"  cy="245" r="10"/>
+        <circle cx="112" cy="245" r="10"/>
+        <circle cx="144" cy="245" r="10"/>
+        <circle cx="176" cy="245" r="10"/>
+      </g>
+    </g>
+
+    <!-- ╔══════════════════════════════╗ -->
+    <!-- ║   RIGHT HALF — UK FLAG       ║ -->
+    <!-- ╚══════════════════════════════╝ -->
+    <g clip-path="url(#cp_right)">
+
+      <!-- Blue ground -->
+      <rect x="0" y="0" width="480" height="480" fill="#012169"/>
+
+      <!-- St Andrew's Cross (Scotland) — white diagonals, 96px wide -->
+      <line x1="0" y1="0"   x2="480" y2="480" stroke="#FFFFFF" stroke-width="96"/>
+      <line x1="0" y1="480" x2="480" y2="0"   stroke="#FFFFFF" stroke-width="96"/>
+
+      <!-- St Patrick's Cross (Ireland) — red counter-charged diagonals
+           Upper-left and lower-right quadrants: red shifted down-right (dy=+32)
+           Upper-right and lower-left quadrants: red shifted up-right (dy=-32) -->
+      <!-- Top-left → bottom-right, red portion (offset so it's only on one side) -->
+      <line x1="-32" y1="0"   x2="448" y2="480" stroke="#C8102E" stroke-width="32"/>
+      <!-- Bottom-left → top-right, red portion (offset other side) -->
+      <line x1="32"  y1="480" x2="512" y2="0"   stroke="#C8102E" stroke-width="32"/>
+
+      <!-- St George's Cross (England) — white fimbriation then red, centered -->
+      <!-- Horizontal -->
+      <rect x="0"   y="192" width="480" height="96" fill="#FFFFFF"/>
+      <rect x="0"   y="208" width="480" height="64" fill="#C8102E"/>
+      <!-- Vertical -->
+      <rect x="192" y="0"   width="96" height="480" fill="#FFFFFF"/>
+      <rect x="208" y="0"   width="64" height="480" fill="#C8102E"/>
+
+    </g>
+
+    <!-- Centre split line -->
+    <line x1="240" y1="0" x2="240" y2="480" stroke="#FFFFFF" stroke-width="2" opacity="0.4"/>
+
+  </g>
+</svg>

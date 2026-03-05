@@ -41,7 +41,7 @@ flutter:
   generate: true
   uses-material-design: true
   assets:
-    - assets/thumbnails/random-source.svg
+    - assets/thumbnails/random.svg
     - assets/thumbnails/phoronix.svg
     - assets/thumbnails/slashdot.svg
     - assets/thumbnails/techcrunch.svg
@@ -49,11 +49,10 @@ flutter:
     - assets/thumbnails/toms-hardware.svg
     - assets/thumbnails/ars-technica.svg
     - assets/thumbnails/hacker-news.svg
-    - assets/thumbnails/register.svg
-    - assets/thumbnails/verge.svg
+    - assets/thumbnails/the-register.svg
+    - assets/thumbnails/the-verge.svg
     - assets/thumbnails/wired.svg
-    - assets/flags/english.svg
-    - assets/flags/thai.svg
-    - assets/flags/finnish.svg
-    - assets/flags/german.svg
-    - assets/flags/brazil.svg
+    - assets/flags/flag-en.svg
+    - assets/flags/flag-th.svg
+    - assets/flags/flag-fi.svg
+    - assets/flags/flag-de.svg

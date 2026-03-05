@@ -84,10 +84,7 @@ class _FlagSelectionState extends State<FlagSelection> with TickerProviderStateM
           children: [
             Text(
               widget.welcomeMessage,
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: Theme.of(context).colorScheme.primary,
-                fontWeight: FontWeight.w500,
-              ),
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
             const SizedBox(height: 16),
             Row(
@@ -100,7 +97,7 @@ class _FlagSelectionState extends State<FlagSelection> with TickerProviderStateM
                       context.read<LocaleCubit>().changeLocaleTo(Locale('en'));
                     },
                     child: SvgPicture.asset(
-                      'assets/flags/english.svg',
+                      'assets/flags/flag-en.svg',
                       key: ValueKey('en'),
                       width: 80,
                       height: 80,
@@ -115,7 +112,7 @@ class _FlagSelectionState extends State<FlagSelection> with TickerProviderStateM
                       context.read<LocaleCubit>().changeLocaleTo(Locale('th'));
                     },
                     child: SvgPicture.asset(
-                      'assets/flags/thai.svg',
+                      'assets/flags/flag-th.svg',
                       key: ValueKey('th'),
                       width: 80,
                       height: 80,
@@ -130,8 +127,23 @@ class _FlagSelectionState extends State<FlagSelection> with TickerProviderStateM
                       context.read<LocaleCubit>().changeLocaleTo(Locale('fi'));
                     },
                     child: SvgPicture.asset(
-                      'assets/flags/finnish.svg',
+                      'assets/flags/flag-fi.svg',
                       key: ValueKey('fi'),
+                      width: 80,
+                      height: 80,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Tooltip(
+                  message: AppLocalizations.of(context)!.localeEsTranslated,
+                  child: InkWell(
+                    onTap: () {
+                      context.read<LocaleCubit>().changeLocaleTo(Locale('es'));
+                    },
+                    child: SvgPicture.asset(
+                      'assets/flags/flag-es.svg',
+                      key: ValueKey('es'),
                       width: 80,
                       height: 80,
                     ),
@@ -145,23 +157,8 @@ class _FlagSelectionState extends State<FlagSelection> with TickerProviderStateM
                       context.read<LocaleCubit>().changeLocaleTo(Locale('de'));
                     },
                     child: SvgPicture.asset(
-                      'assets/flags/german.svg',
+                      'assets/flags/flag-de.svg',
                       key: ValueKey('de'),
-                      width: 80,
-                      height: 80,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Tooltip(
-                  message: AppLocalizations.of(context)!.localePtTranslated,
-                  child: InkWell(
-                    onTap: () {
-                      context.read<LocaleCubit>().changeLocaleTo(Locale('pt'));
-                    },
-                    child: SvgPicture.asset(
-                      'assets/flags/brazil.svg',
-                      key: ValueKey('pt'),
                       width: 80,
                       height: 80,
                     ),

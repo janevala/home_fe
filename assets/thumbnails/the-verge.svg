@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none">
+  <!-- Prism / V shape with color spectrum feel -->
+  <!-- Left face -->
+  <polygon points="24,40 4,8 24,18" fill="#FF3B6B"/>
+  <!-- Right face -->
+  <polygon points="24,40 44,8 24,18" fill="#7B3BFF"/>
+  <!-- Center highlight -->
+  <polygon points="24,40 24,18 28,12 20,12" fill="#FF8C3B" opacity="0.7"/>
+</svg>

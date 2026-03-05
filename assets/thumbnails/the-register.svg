@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none">
+  <!-- Register / flag-like bit grid -->
+  <!-- 8 register bits arranged in 2 rows -->
+  <rect x="5"  y="10" width="8" height="12" rx="1.5" fill="#B83232"/>
+  <rect x="15" y="10" width="8" height="12" rx="1.5" fill="#B83232" opacity="0.35"/>
+  <rect x="25" y="10" width="8" height="12" rx="1.5" fill="#B83232"/>
+  <rect x="35" y="10" width="8" height="12" rx="1.5" fill="#B83232" opacity="0.35"/>
+  <rect x="5"  y="26" width="8" height="12" rx="1.5" fill="#B83232" opacity="0.35"/>
+  <rect x="15" y="26" width="8" height="12" rx="1.5" fill="#B83232"/>
+  <rect x="25" y="26" width="8" height="12" rx="1.5" fill="#B83232" opacity="0.35"/>
+  <rect x="35" y="26" width="8" height="12" rx="1.5" fill="#B83232"/>
+</svg>

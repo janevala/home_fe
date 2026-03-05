@@ -1,7 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <g fill="none" stroke="currentColor" stroke-width="4">
-    <rect x="18" y="18" width="28" height="28" rx="4"></rect>
-    <rect x="26" y="26" width="12" height="12" fill="currentColor" stroke="none"></rect>
-    <path d="M10 24h8M10 32h8M10 40h8M46 24h8M46 32h8M46 40h8"></path>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none">
+  <!-- CPU die -->
+  <rect x="13" y="13" width="22" height="22" rx="2" stroke="#D42A2A" stroke-width="2.5"/>
+  <!-- Inner core -->
+  <rect x="18" y="18" width="12" height="12" rx="1" fill="#D42A2A" opacity="0.25"/>
+  <rect x="18" y="18" width="12" height="12" rx="1" stroke="#D42A2A" stroke-width="1.5"/>
+  <!-- Pins top/bottom -->
+  <line x1="18" y1="13" x2="18" y2="7"  stroke="#D42A2A" stroke-width="2" stroke-linecap="round"/>
+  <line x1="24" y1="13" x2="24" y2="7"  stroke="#D42A2A" stroke-width="2" stroke-linecap="round"/>
+  <line x1="30" y1="13" x2="30" y2="7"  stroke="#D42A2A" stroke-width="2" stroke-linecap="round"/>
+  <line x1="18" y1="35" x2="18" y2="41" stroke="#D42A2A" stroke-width="2" stroke-linecap="round"/>
+  <line x1="24" y1="35" x2="24" y2="41" stroke="#D42A2A" stroke-width="2" stroke-linecap="round"/>
+  <line x1="30" y1="35" x2="30" y2="41" stroke="#D42A2A" stroke-width="2" stroke-linecap="round"/>
+  <!-- Pins left/right -->
+  <line x1="13" y1="18" x2="7"  y2="18" stroke="#D42A2A" stroke-width="2" stroke-linecap="round"/>
+  <line x1="13" y1="24" x2="7"  y2="24" stroke="#D42A2A" stroke-width="2" stroke-linecap="round"/>
+  <line x1="13" y1="30" x2="7"  y2="30" stroke="#D42A2A" stroke-width="2" stroke-linecap="round"/>
+  <line x1="35" y1="18" x2="41" y2="18" stroke="#D42A2A" stroke-width="2" stroke-linecap="round"/>
+  <line x1="35" y1="24" x2="41" y2="24" stroke="#D42A2A" stroke-width="2" stroke-linecap="round"/>
+  <line x1="35" y1="30" x2="41" y2="30" stroke="#D42A2A" stroke-width="2" stroke-linecap="round"/>
 </svg>

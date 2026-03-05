@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none">
+  <!-- Refresh/random arrows -->
+  <path d="M36 12 A16 16 0 1 0 40 28" stroke="#6B7FD4" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <!-- Arrow head -->
+  <polyline points="32,6 36,12 42,10" stroke="#6B7FD4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- Center sparkle / random dot -->
+  <circle cx="24" cy="24" r="3" fill="#6B7FD4"/>
+  <circle cx="18" cy="18" r="1.5" fill="#6B7FD4" opacity="0.6"/>
+  <circle cx="30" cy="30" r="1.5" fill="#6B7FD4" opacity="0.6"/>
+  <circle cx="30" cy="18" r="1.5" fill="#6B7FD4" opacity="0.4"/>
+  <circle cx="18" cy="30" r="1.5" fill="#6B7FD4" opacity="0.4"/>
+</svg>

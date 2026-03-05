@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <defs>
+    <clipPath id="round">
+      <rect width="48" height="48" rx="10" ry="10"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#round)">
+    <rect width="48" height="48" fill="#FFFFFF"/>
+    <!-- Horizontal bar -->
+    <rect y="18" width="48" height="12" fill="#003580"/>
+    <!-- Vertical bar (offset left per Nordic cross) -->
+    <rect x="14" width="12" height="48" fill="#003580"/>
+  </g>
+</svg>
