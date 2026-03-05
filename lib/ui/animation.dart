@@ -37,9 +37,20 @@ class _AppAnimationState extends State<AppAnimation> with TickerProviderStateMix
 
   late final AnimationController _waitController;
 
+  double _containerWidth = 400;
+  double _containerHeight = 150;
+  List<int> _logoSizes = [50, 75, 100, 125, 150];
+
   @override
   void initState() {
     super.initState();
+
+    if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
+      _containerWidth = 200;
+      _containerHeight = 50;
+      _logoSizes = [30, 35, 40, 45, 50];
+    }
+
     _firstFadeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1500));
     _firstRotateController = AnimationController(vsync: this, duration: Duration(milliseconds: 1600));
     _firstResizeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1600));
@@ -176,19 +187,11 @@ class _AppAnimationState extends State<AppAnimation> with TickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
-    if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
-      return SizedBox(
-        width: 200,
-        height: 50,
-        child: Center(child: _animatedLogo(context)),
-      );
-    } else {
-      return SizedBox(
-        width: 400,
-        height: 150,
-        child: Center(child: _animatedLogo(context)),
-      );
-    }
+    return SizedBox(
+      width: _containerWidth,
+      height: _containerHeight,
+      child: Center(child: _animatedLogo(context)),
+    );
   }
 
   Widget _animatedLogo(BuildContext context) {
@@ -196,13 +199,8 @@ class _AppAnimationState extends State<AppAnimation> with TickerProviderStateMix
   }
 
   Widget _buildTripleLogos() {
-    var sizes = [50, 75, 100, 125, 150];
-    if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
-      sizes = [30, 35, 40, 45, 50];
-    }
-
-    final firstSize = sizes[Random().nextInt(5)];
-    final remainingSizes1 = sizes.where((size) => size != firstSize).toList();
+    final firstSize = _logoSizes[Random().nextInt(5)];
+    final remainingSizes1 = _logoSizes.where((size) => size != firstSize).toList();
     final secondSize = remainingSizes1[Random().nextInt(4)];
     final remainingSizes2 = remainingSizes1.where((size) => size != secondSize).toList();
     final thirdSize = remainingSizes2[Random().nextInt(3)];

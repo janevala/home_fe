@@ -19,9 +19,20 @@ class _FlagSelectionState extends State<FlagSelection> with TickerProviderStateM
   late final Animation<double> _firstFadeIn;
   late final AnimationController _firstFadeController;
 
+  double _containerWidth = 400;
+  double _containerHeight = 150;
+  double _flagSize = 80;
+
   @override
   void initState() {
     super.initState();
+
+    if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
+      _containerWidth = 200;
+      _containerHeight = 50;
+      _flagSize = 40;
+    }
+
     _firstFadeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1500));
 
     _firstFadeIn = Tween<double>(begin: 0, end: 1).animate(
@@ -40,9 +51,7 @@ class _FlagSelectionState extends State<FlagSelection> with TickerProviderStateM
     });
   }
 
-  void _resetAndStop() {
-    // _firstFadeController.reset();
-  }
+  void _resetAndStop() {}
 
   @override
   void dispose() {
@@ -52,23 +61,13 @@ class _FlagSelectionState extends State<FlagSelection> with TickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
-    if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
-      return SizedBox(
-        width: 200,
-        height: 50,
-        child: Center(
-          child: _buildFlagBattery(),
-        ),
-      );
-    } else {
-      return SizedBox(
-        width: 400,
-        height: 150,
-        child: Center(
-          child: _buildFlagBattery(),
-        ),
-      );
-    }
+    return SizedBox(
+      width: _containerWidth,
+      height: _containerHeight,
+      child: Center(
+        child: _buildFlagBattery(),
+      ),
+    );
   }
 
   Widget _buildFlagBattery() {
@@ -99,8 +98,8 @@ class _FlagSelectionState extends State<FlagSelection> with TickerProviderStateM
                     child: SvgPicture.asset(
                       'assets/flags/flag-en.svg',
                       key: ValueKey('en'),
-                      width: 80,
-                      height: 80,
+                      width: _flagSize,
+                      height: _flagSize,
                     ),
                   ),
                 ),
@@ -114,8 +113,8 @@ class _FlagSelectionState extends State<FlagSelection> with TickerProviderStateM
                     child: SvgPicture.asset(
                       'assets/flags/flag-th.svg',
                       key: ValueKey('th'),
-                      width: 80,
-                      height: 80,
+                      width: _flagSize,
+                      height: _flagSize,
                     ),
                   ),
                 ),
@@ -129,8 +128,8 @@ class _FlagSelectionState extends State<FlagSelection> with TickerProviderStateM
                     child: SvgPicture.asset(
                       'assets/flags/flag-fi.svg',
                       key: ValueKey('fi'),
-                      width: 80,
-                      height: 80,
+                      width: _flagSize,
+                      height: _flagSize,
                     ),
                   ),
                 ),
@@ -144,8 +143,8 @@ class _FlagSelectionState extends State<FlagSelection> with TickerProviderStateM
                     child: SvgPicture.asset(
                       'assets/flags/flag-de.svg',
                       key: ValueKey('de'),
-                      width: 80,
-                      height: 80,
+                      width: _flagSize,
+                      height: _flagSize,
                     ),
                   ),
                 ),
