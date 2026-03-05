@@ -63,11 +63,11 @@ sudo docker network connect home-network front-host
 ### Docker transfer prebuilt container
 ```
 sudo docker ps
-sudo docker commit ID news-frontend:rel15
-sudo docker save -o news-frontend-rel15.tar news-frontend:rel15
-sudo gzip news-frontend-rel15.tar
-sudo chown jay news-frontend-rel15.tar.gz
-scp news-frontend-rel15.tar.gz jay@IP:
-sudo docker load -i news-frontend-rel15.tar.gz
-sudo docker run -d --name news-frontend --network home-network -p 80:7070 news-frontend:rel15
+sudo docker commit ID news-frontend:rel16
+sudo docker save -o news-frontend-rel16.tar news-frontend:rel16
+sudo gzip news-frontend-rel16.tar
+sudo chown jay news-frontend-rel16.tar.gz
+scp news-frontend-rel16.tar.gz jay@IP:
+sudo docker load -i news-frontend-rel16.tar.gz
+sudo docker run -d --name news-frontend --network home-network -p 80:7070 news-frontend:rel16
 ```

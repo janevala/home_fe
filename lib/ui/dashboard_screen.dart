@@ -332,23 +332,23 @@ class DashboardScreenState extends State<DashboardScreen> {
                                   ? AppLocalizations.of(context)!.welcome
                                   : AppLocalizations.of(context)!.welcomeBack,
                             ),
-                      const SizedBox(height: 32),
-                      if (!kIsWeb && !kIsWasm)
-                        ElevatedButton(
-                          onPressed: () {
-                            GoRouter.of(context).push('/sites');
-                          },
-                          child: Text(AppLocalizations.of(context)!.newsSites),
-                        ),
-                      if (!kIsWeb && !kIsWasm) const SizedBox(height: 32),
+                      const SizedBox(height: 64),
+                      // if (!kIsWeb && !kIsWasm)
+                      //   ElevatedButton(
+                      //     onPressed: () {
+                      //       GoRouter.of(context).push('/sites');
+                      //     },
+                      //     child: Text(AppLocalizations.of(context)!.newsSites),
+                      //   ),
+                      // if (!kIsWeb && !kIsWasm) const SizedBox(height: 32),
                       ElevatedButton(
                         style: state is SlowLoading
                             ? ButtonStyle(
                                 backgroundColor: WidgetStateProperty.all(
-                                  Theme.of(context).colorScheme.surface,
+                                  Theme.of(context).colorScheme.primary.withValues(alpha: 0.5),
                                 ),
                                 foregroundColor: WidgetStateProperty.all(
-                                  Theme.of(context).colorScheme.onSurface,
+                                  Theme.of(context).colorScheme.onPrimary.withValues(alpha: 0.5),
                                 ),
                               )
                             : null,

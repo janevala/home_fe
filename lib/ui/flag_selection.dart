@@ -20,7 +20,7 @@ class _FlagSelectionState extends State<FlagSelection> with TickerProviderStateM
   late final AnimationController _firstFadeController;
 
   double _containerWidth = 400;
-  double _containerHeight = 150;
+  double _containerHeight = 70;
   double _flagSize = 80;
 
   @override
@@ -30,7 +30,7 @@ class _FlagSelectionState extends State<FlagSelection> with TickerProviderStateM
     if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
       _containerWidth = 200;
       _containerHeight = 50;
-      _flagSize = 40;
+      _flagSize = 50;
     }
 
     _firstFadeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1500));
