@@ -124,3 +124,24 @@ String getLocalizedDate(BuildContext context, DateTime date) {
   final DateFormat formatter = DateFormat.yMMMd(locale);
   return formatter.format(date);
 }
+
+Future<void> sendEmail({required String subject, required String body}) async {
+  final Uri emailLaunchUri = Uri(
+    scheme: 'mailto',
+    path: 'janevala@proton.me',
+    query: _encodeQueryParameters(<String, String>{
+      'subject': subject,
+      'body': body,
+    }),
+  );
+
+  if (await canLaunchUrl(emailLaunchUri)) {
+    await launchUrl(emailLaunchUri);
+  } else {
+    throw 'Could not launch $emailLaunchUri';
+  }
+}
+
+String? _encodeQueryParameters(Map<String, String> params) {
+  return params.entries.map((e) => '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}').join('&');
+}

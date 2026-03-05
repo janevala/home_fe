@@ -4,10 +4,13 @@ Tech Heavy News Frontend.
 
 # TODO
 ## Front Bugs
-- Use Windsurf to fix arb translations
+- More translations needed in ARB: contact
+
 - Dark/light theme logic is buggy, fix it, or is it buggy?
 - Language Bloc is buggy, it will override already chosen language
 - Create mobile theme's. Check fonts and paddings, margins, etc. When Platform is iOS or Android
+- Buttons need to stand out from their background, especially dark
+- Welcome message color, text colors in theme?
 
 ## Front features
 - Add contact mailto: janevala@proton.me

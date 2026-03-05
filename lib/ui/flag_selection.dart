@@ -136,21 +136,6 @@ class _FlagSelectionState extends State<FlagSelection> with TickerProviderStateM
                 ),
                 const SizedBox(width: 16),
                 Tooltip(
-                  message: AppLocalizations.of(context)!.localeEsTranslated,
-                  child: InkWell(
-                    onTap: () {
-                      context.read<LocaleCubit>().changeLocaleTo(Locale('es'));
-                    },
-                    child: SvgPicture.asset(
-                      'assets/flags/flag-es.svg',
-                      key: ValueKey('es'),
-                      width: 80,
-                      height: 80,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Tooltip(
                   message: AppLocalizations.of(context)!.localeDeTranslated,
                   child: InkWell(
                     onTap: () {

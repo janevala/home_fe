@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class AppAnimation extends StatefulWidget {
   const AppAnimation({super.key, this.onAnimationComplete});
@@ -232,10 +233,11 @@ class _AppAnimationState extends State<AppAnimation> with TickerProviderStateMix
             ),
           ),
         ),
-        child: SizedBox(
-          height: size.toDouble(),
+        child: SvgPicture.asset(
+          'assets/app-logo-light.svg',
+          key: ValueKey('logo1'),
           width: size.toDouble(),
-          child: FlutterLogo(),
+          height: size.toDouble(),
         ),
       ),
     );
@@ -255,10 +257,11 @@ class _AppAnimationState extends State<AppAnimation> with TickerProviderStateMix
             ),
           ),
         ),
-        child: SizedBox(
-          height: size.toDouble(),
+        child: SvgPicture.asset(
+          'assets/app-logo-light.svg',
+          key: ValueKey('logo2'),
           width: size.toDouble(),
-          child: FlutterLogo(),
+          height: size.toDouble(),
         ),
       ),
     );
@@ -278,10 +281,11 @@ class _AppAnimationState extends State<AppAnimation> with TickerProviderStateMix
             ),
           ),
         ),
-        child: SizedBox(
-          height: size.toDouble(),
+        child: SvgPicture.asset(
+          'assets/app-logo-light.svg',
+          key: ValueKey('logo3'),
           width: size.toDouble(),
-          child: FlutterLogo(),
+          height: size.toDouble(),
         ),
       ),
     );

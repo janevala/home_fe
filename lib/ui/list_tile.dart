@@ -139,10 +139,7 @@ class JsonFeedTile extends StatelessWidget {
         if (image != null) ...[
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
-            child: ColoredBox(
-              color: Theme.of(context).colorScheme.inversePrimary,
-              child: _buildImagePreview(image),
-            ),
+            child: _buildImagePreview(image),
           ),
           const SizedBox(width: 12),
         ],
@@ -271,10 +268,7 @@ class RssFeedTile extends StatelessWidget {
         if (image != null) ...[
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
-            child: ColoredBox(
-              color: Theme.of(context).colorScheme.inversePrimary,
-              child: _buildImagePreview(image),
-            ),
+            child: _buildImagePreview(image),
           ),
           const SizedBox(width: 12),
         ],

@@ -207,6 +207,31 @@ class DashboardScreenState extends State<DashboardScreen> {
             ),
 
             const Divider(),
+            Tooltip(
+              message: AppLocalizations.of(context)!.contactTooltip,
+              child: InkWell(
+                onTap: () async {
+                  sendEmail(
+                    subject: AppLocalizations.of(context)!.contactSubject,
+                    body: '',
+                  );
+                },
+                child: ListTile(
+                  leading: Icon(
+                    Icons.email_outlined,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+                  title: Text(
+                    AppLocalizations.of(context)!.contact,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
+            const Divider(),
             ListTile(
               leading: Icon(
                 Icons.logout,
