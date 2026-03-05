@@ -99,7 +99,7 @@ class App extends StatelessWidget {
                 localeListResolutionCallback: (locales, supportedLocales) {
                   String usedLanguage = locale.languageCode;
 
-                  if (context.read<LocaleCubit>().hasUserChangedLanguage()) {
+                  if (context.read<LocaleCubit>().wasLocaleChanged()) {
                     Intl.defaultLocale = usedLanguage;
                     return locale;
                   } else {

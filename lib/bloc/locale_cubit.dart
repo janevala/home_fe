@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:homefe/logger/logger.dart';
 import 'package:homefe/persistence/persistent_storage.dart';
 
 class LocaleCubit extends Cubit<Locale> {
-  bool changedLanguage = false;
+  bool changed = false;
   LocaleCubit() : super(const Locale('en'));
 
   Future<void> changeLocaleTo(Locale locale) async {
-    logger.d('LocaleCubit changeLocaleTo: $locale');
-    changedLanguage = true;
+    changed = true;
     emit(locale);
 
-    _persist({'language': locale.languageCode});
+    _persist({'language_code': locale.languageCode});
   }
 
-  bool hasUserChangedLanguage() {
-    return changedLanguage;
+  bool wasLocaleChanged() {
+    return changed;
   }
 }
 

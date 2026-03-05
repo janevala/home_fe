@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:homefe/assets/i18n/generated/app_localizations.dart';
+import 'package:homefe/bloc/locale_cubit.dart';
 import 'package:homefe/bloc/login_bloc.dart';
 import 'package:homefe/bloc/theme_cubit.dart';
 import 'package:homefe/logger/logger.dart';
@@ -42,6 +43,10 @@ class LoginScreenState extends State<LoginScreen> {
       await _persistSystemTheme();
     } else {
       await _setTheme();
+    }
+
+    if (await _hasLanguage()) {
+      await _setLanguage();
     }
   }
 
@@ -142,6 +147,20 @@ class LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  Future<bool> _hasLanguage() async {
+    final langCode = await PersistentStorage.read('language_code');
+    return langCode != null;
+  }
+
+  Future<void> _setLanguage() async {
+    final langCode = await PersistentStorage.read('language_code');
+    if (langCode != null) {
+      if (mounted) {
+        context.read<LocaleCubit>().changeLocaleTo(Locale(langCode));
+      }
+    }
   }
 
   Future<bool> _noTheme() async {

@@ -4,15 +4,10 @@ Tech Heavy News Frontend.
 
 # TODO
 ## Front Bugs
-- More translations needed in ARB: contact
-
-- Language Bloc is buggy, it will override already chosen language
+- Language Bloc is buggy, wont survive browser refresh
 - Create mobile theme's. Check fonts and paddings, margins, etc. When Platform is iOS or Android
 - Buttons need to stand out from their background, especially dark
 - Welcome message color, text colors in theme?
-
-## Front features
-- Add contact mailto: janevala@proton.me
 
 ## Back
 - Ping is ollama alive
@@ -28,6 +23,7 @@ Tech Heavy News Frontend.
     - Docker???
 
 ## Nice to have TODOs
+- Server stats as in backend page, or similar. Data already in front
 - Analytics and to what acount? create account?
 
 # Flutter notes
