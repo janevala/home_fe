@@ -6,7 +6,6 @@ Tech Heavy News Frontend.
 ## Front Bugs
 - More translations needed in ARB: contact
 
-- Dark/light theme logic is buggy, fix it, or is it buggy?
 - Language Bloc is buggy, it will override already chosen language
 - Create mobile theme's. Check fonts and paddings, margins, etc. When Platform is iOS or Android
 - Buttons need to stand out from their background, especially dark

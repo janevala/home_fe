@@ -84,7 +84,7 @@ class _FlagSelectionState extends State<FlagSelection> with TickerProviderStateM
           children: [
             Text(
               widget.welcomeMessage,
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 16),
             Row(
