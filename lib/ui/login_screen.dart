@@ -39,10 +39,10 @@ class LoginScreenState extends State<LoginScreen> {
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
-    if (await _noTheme()) {
-      await _persistSystemTheme();
-    } else {
+    if (await _hasTheme()) {
       await _setTheme();
+    } else {
+      await _persistSystemTheme();
     }
 
     if (await _hasLanguage()) {
@@ -163,9 +163,9 @@ class LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  Future<bool> _noTheme() async {
+  Future<bool> _hasTheme() async {
     final theme = await PersistentStorage.read('theme_mode');
-    return theme == null;
+    return theme != null;
   }
 
   Future<void> _setTheme() async {
