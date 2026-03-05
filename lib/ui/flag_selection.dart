@@ -27,7 +27,7 @@ class _FlagSelectionState extends State<FlagSelection> with TickerProviderStateM
     super.initState();
 
     if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
-      _containerWidth = 200;
+      _containerWidth = 300;
       _containerHeight = 100;
       _flagSize = 60;
     }
