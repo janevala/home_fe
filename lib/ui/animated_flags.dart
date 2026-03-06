@@ -5,16 +5,16 @@ import 'package:flutter_svg/svg.dart';
 import 'package:homefe/assets/i18n/generated/app_localizations.dart';
 import 'package:homefe/bloc/locale_cubit.dart';
 
-class FlagSelection extends StatefulWidget {
-  const FlagSelection({super.key, required this.welcomeMessage});
+class AnimatedFlags extends StatefulWidget {
+  const AnimatedFlags({super.key, required this.welcomeMessage});
 
   final String welcomeMessage;
 
   @override
-  State<FlagSelection> createState() => _FlagSelectionState();
+  State<AnimatedFlags> createState() => _AnimatedFlagsState();
 }
 
-class _FlagSelectionState extends State<FlagSelection> with TickerProviderStateMixin {
+class _AnimatedFlagsState extends State<AnimatedFlags> with TickerProviderStateMixin {
   late final Animation<double> _firstFadeIn;
   late final AnimationController _fadeController;
 

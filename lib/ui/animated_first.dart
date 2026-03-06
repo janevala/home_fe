@@ -4,16 +4,16 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class AppAnimation extends StatefulWidget {
-  const AppAnimation({super.key, this.onAnimationComplete});
+class AnimatedFirst extends StatefulWidget {
+  const AnimatedFirst({super.key, this.onAnimationComplete});
 
   final VoidCallback? onAnimationComplete;
 
   @override
-  State<AppAnimation> createState() => _AppAnimationState();
+  State<AnimatedFirst> createState() => _AnimatedFirstState();
 }
 
-class _AppAnimationState extends State<AppAnimation> with TickerProviderStateMixin {
+class _AnimatedFirstState extends State<AnimatedFirst> with TickerProviderStateMixin {
   late final Animation<double> _firstRotate;
   late final Animation<double> _firstFadeIn;
   late final Animation<double> _firstResizeOut;

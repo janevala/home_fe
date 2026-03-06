@@ -9,8 +9,8 @@ import 'package:homefe/constants/app_version.dart';
 import 'package:homefe/functions.dart';
 import 'package:homefe/logger/logger.dart';
 import 'package:homefe/persistence/persistent_storage.dart';
-import 'package:homefe/ui/animation.dart';
-import 'package:homefe/ui/flag_selection.dart';
+import 'package:homefe/ui/animated_first.dart';
+import 'package:homefe/ui/animated_flags.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -320,14 +320,14 @@ class DashboardScreenState extends State<DashboardScreen> {
                     // crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       showAnimation
-                          ? AppAnimation(
+                          ? AnimatedFirst(
                               onAnimationComplete: () {
                                 setState(() {
                                   showAnimation = false;
                                 });
                               },
                             )
-                          : FlagSelection(
+                          : AnimatedFlags(
                               welcomeMessage: firstTimeUser
                                   ? AppLocalizations.of(context)!.welcome
                                   : AppLocalizations.of(context)!.welcomeBack,
