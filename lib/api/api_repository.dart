@@ -114,7 +114,6 @@ class ApiRepository {
     List<dynamic> results = await Future.wait(futures);
 
     if (results.isNotEmpty) {
-      /// NOTE BACKEND RETURN TYPE DOES NOT NEED DECODING
       return NewsItems.fromJson(results.first.data);
     }
 
