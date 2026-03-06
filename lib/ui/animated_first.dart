@@ -37,17 +37,14 @@ class _AnimatedFirstState extends State<AnimatedFirst> with TickerProviderStateM
 
   late final AnimationController _waitController;
 
-  double _containerWidth = 500;
   List<int> _logoSizes = [80, 90, 100, 110, 120];
 
   @override
   void initState() {
     super.initState();
 
-    if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
-      _containerWidth = 200;
-      _logoSizes = [40, 50, 60, 70, 80];
-    }
+    _logoSizes = [40, 50, 60, 70, 80];
+    if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {}
 
     _firstFadeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1500));
     _firstRotateController = AnimationController(vsync: this, duration: Duration(milliseconds: 1600));
@@ -186,7 +183,6 @@ class _AnimatedFirstState extends State<AnimatedFirst> with TickerProviderStateM
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: _containerWidth,
       child: Center(child: _animatedLogo(context)),
     );
   }
