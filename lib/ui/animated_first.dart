@@ -38,7 +38,6 @@ class _AnimatedFirstState extends State<AnimatedFirst> with TickerProviderStateM
   late final AnimationController _waitController;
 
   double _containerWidth = 500;
-  double _containerHeight = 200;
   List<int> _logoSizes = [80, 90, 100, 110, 120];
 
   @override
@@ -47,7 +46,6 @@ class _AnimatedFirstState extends State<AnimatedFirst> with TickerProviderStateM
 
     if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
       _containerWidth = 200;
-      _containerHeight = 100;
       _logoSizes = [40, 50, 60, 70, 80];
     }
 
@@ -189,7 +187,6 @@ class _AnimatedFirstState extends State<AnimatedFirst> with TickerProviderStateM
   Widget build(BuildContext context) {
     return SizedBox(
       width: _containerWidth,
-      height: _containerHeight,
       child: Center(child: _animatedLogo(context)),
     );
   }
