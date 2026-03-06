@@ -18,14 +18,17 @@ class _AnimatedFlagsState extends State<AnimatedFlags> with TickerProviderStateM
   late final Animation<double> _firstFadeIn;
   late final AnimationController _fadeController;
 
+  double _containerHeight = 170;
   double _flagSize = 100;
 
   @override
   void initState() {
     super.initState();
 
-    _flagSize = 50;
-    if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {}
+    if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
+      _containerHeight = 100;
+      _flagSize = 50;
+    }
 
     _fadeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1500));
 
@@ -56,6 +59,7 @@ class _AnimatedFlagsState extends State<AnimatedFlags> with TickerProviderStateM
   @override
   Widget build(BuildContext context) {
     return SizedBox(
+      height: _containerHeight,
       child: Center(
         child: AnimatedBuilder(
           animation: _firstFadeIn,
