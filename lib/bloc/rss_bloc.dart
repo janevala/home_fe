@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:homefe/api/api_repository.dart';
+import 'package:homefe/bloc/locale_cubit.dart';
 import 'package:homefe/logger/logger.dart';
 import 'package:homefe/podo/answer/answer_body.dart';
 import 'package:homefe/podo/backend/archive.dart';
@@ -93,14 +94,20 @@ class ConfigSuccess extends RssEvent {
   ConfigSuccess(this.config);
 }
 
-class RssArchiveEvent extends RssEvent {}
+class RssArchiveEvent extends RssEvent {
+  final String? language;
 
-class LoadMoreArchive extends RssArchiveEvent {}
+  RssArchiveEvent({this.language});
+}
+
+class LoadMoreArchive extends RssArchiveEvent {
+  LoadMoreArchive({super.language});
+}
 
 class SearchArchive extends RssArchiveEvent {
   final String query;
 
-  SearchArchive({required this.query});
+  SearchArchive({required this.query, super.language});
 }
 
 // TODO: this is probably redundant
@@ -153,6 +160,7 @@ class RssArchiveBloc extends Bloc<RssEvent, RssState> {
           NewsItems? newsItems = await repo.archive(
             offset: offset,
             limit: limit,
+            language: event.language,
           );
 
           int totalItems = newsItems?.totalItems ?? 0;
@@ -177,7 +185,7 @@ class RssArchiveBloc extends Bloc<RssEvent, RssState> {
 
     on<SearchArchive>((event, emit) async {
       try {
-        NewsItems? newsItems = await repo.search(query: event.query);
+        NewsItems? newsItems = await repo.search(query: event.query, language: event.language);
 
         if (newsItems == null) {
           emit(SearchLoad([]));

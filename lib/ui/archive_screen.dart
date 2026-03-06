@@ -28,7 +28,9 @@ class ArchiveScreenState extends State<ArchiveScreen> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<RssArchiveBloc>().add(ResetArchive());
-      context.read<RssArchiveBloc>().add(LoadMoreArchive());
+      final locale = Localizations.localeOf(context);
+      final language = locale.languageCode;
+      context.read<RssArchiveBloc>().add(LoadMoreArchive(language: language));
     });
   }
 
@@ -43,7 +45,9 @@ class ArchiveScreenState extends State<ArchiveScreen> {
 
   void _onScroll() {
     if (_scrollContoller.position.pixels >= (_scrollContoller.position.maxScrollExtent)) {
-      context.read<RssArchiveBloc>().add(LoadMoreArchive());
+      final locale = Localizations.localeOf(context);
+      final language = locale.languageCode;
+      context.read<RssArchiveBloc>().add(LoadMoreArchive(language: language));
     }
   }
 
@@ -70,7 +74,9 @@ class ArchiveScreenState extends State<ArchiveScreen> {
                   onPressed: () {
                     _searchController.clear();
                     context.read<RssArchiveBloc>().add(ResetArchive());
-                    context.read<RssArchiveBloc>().add(LoadMoreArchive());
+                    final locale = Localizations.localeOf(context);
+                    final language = locale.languageCode;
+                    context.read<RssArchiveBloc>().add(LoadMoreArchive(language: language));
                   },
                 ),
                 hintText: AppLocalizations.of(context)!.searchArchive,
@@ -80,11 +86,14 @@ class ArchiveScreenState extends State<ArchiveScreen> {
                 ),
               ),
               onChanged: (value) {
+                final locale = Localizations.localeOf(context);
+                final language = locale.languageCode;
+
                 if (value.isEmpty) {
-                  context.read<RssArchiveBloc>().add(LoadMoreArchive());
+                  context.read<RssArchiveBloc>().add(LoadMoreArchive(language: language));
                 } else {
                   context.read<RssArchiveBloc>().add(
-                    SearchArchive(query: _searchController.text),
+                    SearchArchive(query: _searchController.text, language: language),
                   );
                 }
               },

@@ -97,12 +97,18 @@ class ApiRepository {
     return null;
   }
 
-  Future<NewsItems?> archive({int offset = 0, int limit = 10}) async {
+  Future<NewsItems?> archive({int offset = 0, int limit = 10, String? language}) async {
+    Map<String, dynamic> parameters = {"code": "123", "offset": offset, "limit": limit};
+
+    if (language != null) {
+      parameters["lang"] = language;
+    }
+
     List<Future<dynamic>> futures = [];
     futures.add(
       client.get(
         '/archive',
-        parameters: {"code": "123", "offset": offset, "limit": limit},
+        parameters: parameters,
       ),
     );
     List<dynamic> results = await Future.wait(futures);
@@ -115,9 +121,15 @@ class ApiRepository {
     return null;
   }
 
-  Future<NewsItems?> search({required String query}) async {
+  Future<NewsItems?> search({required String query, String? language}) async {
+    Map<String, dynamic> parameters = {"code": "123", "q": query};
+
+    if (language != null) {
+      parameters["lang"] = language;
+    }
+
     List<Future<dynamic>> futures = [];
-    futures.add(client.get('/search', parameters: {"code": "123", "q": query}));
+    futures.add(client.get('/search', parameters: parameters));
     List<dynamic> results = await Future.wait(futures);
 
     if (results.isNotEmpty) {
