@@ -5,19 +5,20 @@ class _MobileConfig {
   static const double textScaleFactor = 0.9;
   static const EdgeInsets cardMargin = EdgeInsets.symmetric(horizontal: 4, vertical: 2);
   static const EdgeInsets listTilePadding = EdgeInsets.symmetric(horizontal: 4, vertical: 2);
-  static const EdgeInsets buttonPadding = EdgeInsets.symmetric(horizontal: 16, vertical: 8);
-  static const EdgeInsets inputPadding = EdgeInsets.symmetric(horizontal: 12, vertical: 8);
-  static const BorderRadius cardBorderRadius = BorderRadius.all(Radius.circular(8));
-  static const BorderRadius buttonBorderRadius = BorderRadius.all(Radius.circular(6));
-  static const BorderRadius inputBorderRadius = BorderRadius.all(Radius.circular(6));
-  static const BorderRadius dialogBorderRadius = BorderRadius.all(Radius.circular(12));
+  static const EdgeInsets buttonPadding = EdgeInsets.symmetric(horizontal: 4, vertical: 2);
+  static const EdgeInsets inputPadding = EdgeInsets.symmetric(horizontal: 4, vertical: 2);
+  static const BorderRadius cardBorderRadius = BorderRadius.all(Radius.circular(AppBorderRadius.sm));
+  static const BorderRadius buttonBorderRadius = BorderRadius.all(Radius.circular(AppBorderRadius.sm));
+  static const BorderRadius inputBorderRadius = BorderRadius.all(Radius.circular(AppBorderRadius.sm));
+  static const BorderRadius dialogBorderRadius = BorderRadius.all(Radius.circular(AppBorderRadius.sm));
+  static const BorderRadius drawerBorderRadius = BorderRadius.all(Radius.circular(AppBorderRadius.sm));
   static const double dialogElevation = 6.0;
 }
 
 class AppBorderRadius {
-  static const double sm = 8.0; // Buttons, inputs
-  static const double md = 12.0; // Cards, list tiles
-  static const double lg = 16.0; // Dialogs, bottom sheets
+  static const double sm = 8.0;
+  static const double md = 12.0;
+  static const double lg = 16.0;
 }
 
 class AppColors {
@@ -108,11 +109,8 @@ class AppTheme {
         ),
       ),
       drawerTheme: baseTheme.drawerTheme.copyWith(
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topRight: Radius.circular(8),
-            bottomRight: Radius.circular(8),
-          ),
+        shape: RoundedRectangleBorder(
+          borderRadius: _MobileConfig.drawerBorderRadius,
         ),
       ),
     );
