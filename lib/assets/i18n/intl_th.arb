@@ -21,6 +21,7 @@
   "welcomeBack": "ยินดีต้อนรับกลับ!",
   "welcome": "ยินดีต้อนรับ!",
   "open": "เปิด",
+  "openOriginal": "Open original",
   "read": "อ่าน",
   "newsUpdateWithItems": "อัปเดตข่าวใหม่ {count} รายการ",
   "newsUpdatedWithNoItems": "อัปเดตข่าวใหม่ {count} รายการ",

@@ -50,64 +50,61 @@ class LoginScreenState extends State<LoginScreen> {
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: AppBar(title: Text(AppLocalizations.of(context)!.title)),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.titleShort)),
       body: SafeArea(
         child: BlocProvider<LoginBloc>(
           create: (context) => context.read<LoginBloc>(),
           child: BlocListener<LoginBloc, LoginState>(
             child: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(32),
-                child: Form(
-                  key: _formKey,
-                  child: SizedBox(
-                    width: width * 0.6,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        TextFormField(
-                          decoration: InputDecoration(
-                            labelText: AppLocalizations.of(context)!.token,
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return AppLocalizations.of(
-                                context,
-                              )!.pleaseEnterToken;
-                            }
-                            return null;
-                          },
-                          onChanged: (String value) {
-                            setState(() {
-                              userName = value;
-                            });
-                          },
-                          onFieldSubmitted: (String value) {
-                            if (_formKey.currentState!.validate()) {
-                              context.read<LoginBloc>().add(
-                                LoginEvent(
-                                  LoginBody(userName, '123', 'password'),
-                                ),
-                              );
-                            }
-                          },
+              child: Form(
+                key: _formKey,
+                child: SizedBox(
+                  width: width * 0.7,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      TextFormField(
+                        decoration: InputDecoration(
+                          labelText: AppLocalizations.of(context)!.token,
                         ),
-                        const SizedBox(height: 32),
-                        ElevatedButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              context.read<LoginBloc>().add(
-                                LoginEvent(
-                                  LoginBody(userName, '123', 'password'),
-                                ),
-                              );
-                            }
-                          },
-                          child: Text(AppLocalizations.of(context)!.login),
-                        ),
-                      ],
-                    ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return AppLocalizations.of(
+                              context,
+                            )!.pleaseEnterToken;
+                          }
+                          return null;
+                        },
+                        onChanged: (String value) {
+                          setState(() {
+                            userName = value;
+                          });
+                        },
+                        onFieldSubmitted: (String value) {
+                          if (_formKey.currentState!.validate()) {
+                            context.read<LoginBloc>().add(
+                              LoginEvent(
+                                LoginBody(userName, '123', 'password'),
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                      const SizedBox(height: 32),
+                      ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            context.read<LoginBloc>().add(
+                              LoginEvent(
+                                LoginBody(userName, '123', 'password'),
+                              ),
+                            );
+                          }
+                        },
+                        child: Text(AppLocalizations.of(context)!.login),
+                      ),
+                    ],
                   ),
                 ),
               ),

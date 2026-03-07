@@ -208,28 +208,43 @@ class DashboardScreenState extends State<DashboardScreen> {
             const Divider(),
             Tooltip(
               message: AppLocalizations.of(context)!.contactTooltip,
-              child: InkWell(
-                onTap: () async {
-                  sendEmail(
-                    subject: AppLocalizations.of(context)!.contactSubject,
-                    body: '',
-                  );
-                },
-                child: ListTile(
-                  leading: Icon(
-                    Icons.email_outlined,
+              child: ListTile(
+                leading: Icon(
+                  Icons.email_outlined,
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+                title: Text(
+                  AppLocalizations.of(context)!.contact,
+                  style: TextStyle(
                     color: Theme.of(context).colorScheme.onSurface,
-                  ),
-                  title: Text(
-                    AppLocalizations.of(context)!.contact,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
                   ),
                 ),
               ),
             ),
 
+            // Tooltip(
+            //   message: AppLocalizations.of(context)!.contactTooltip,
+            //   child: InkWell(
+            //     onTap: () async {
+            //       sendEmail(
+            //         subject: AppLocalizations.of(context)!.contactSubject,
+            //         body: '',
+            //       );
+            //     },
+            //     child: ListTile(
+            //       leading: Icon(
+            //         Icons.email_outlined,
+            //         color: Theme.of(context).colorScheme.onSurface,
+            //       ),
+            //       title: Text(
+            //         AppLocalizations.of(context)!.contact,
+            //         style: TextStyle(
+            //           color: Theme.of(context).colorScheme.onSurface,
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
             const Divider(),
             ListTile(
               leading: Icon(
@@ -310,52 +325,49 @@ class DashboardScreenState extends State<DashboardScreen> {
         child: BlocBuilder<RssArchiveBloc, RssState>(
           builder: (context, state) {
             return Center(
-              child: Padding(
-                padding: const EdgeInsets.all(32),
-                child: SizedBox(
-                  width: width * 0.6,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    // crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      showAnimation
-                          ? AnimatedFirst(
-                              onAnimationComplete: () {
-                                setState(() {
-                                  showAnimation = false;
-                                });
-                              },
+              child: SizedBox(
+                width: width * 0.7,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    showAnimation
+                        ? AnimatedFirst(
+                            onAnimationComplete: () {
+                              setState(() {
+                                showAnimation = false;
+                              });
+                            },
+                          )
+                        : AnimatedFlags(
+                            welcomeMessage: firstTimeUser
+                                ? AppLocalizations.of(context)!.welcome
+                                : AppLocalizations.of(context)!.welcomeBack,
+                          ),
+                    const SizedBox(height: 64),
+                    // if (!kIsWeb && !kIsWasm)
+                    //   ElevatedButton(
+                    //     onPressed: () {
+                    //       GoRouter.of(context).push('/sites');
+                    //     },
+                    //     child: Text(AppLocalizations.of(context)!.newsSites),
+                    //   ),
+                    // if (!kIsWeb && !kIsWasm) const SizedBox(height: 32),
+                    ElevatedButton(
+                      style: state is SlowLoading
+                          ? ButtonStyle(
+                              backgroundColor: WidgetStateProperty.all(
+                                Theme.of(context).colorScheme.primary.withValues(alpha: 0.5),
+                              ),
+                              foregroundColor: WidgetStateProperty.all(
+                                Theme.of(context).colorScheme.onPrimary.withValues(alpha: 0.5),
+                              ),
                             )
-                          : AnimatedFlags(
-                              welcomeMessage: firstTimeUser
-                                  ? AppLocalizations.of(context)!.welcome
-                                  : AppLocalizations.of(context)!.welcomeBack,
-                            ),
-                      const SizedBox(height: 32),
-                      // if (!kIsWeb && !kIsWasm)
-                      //   ElevatedButton(
-                      //     onPressed: () {
-                      //       GoRouter.of(context).push('/sites');
-                      //     },
-                      //     child: Text(AppLocalizations.of(context)!.newsSites),
-                      //   ),
-                      // if (!kIsWeb && !kIsWasm) const SizedBox(height: 32),
-                      ElevatedButton(
-                        style: state is SlowLoading
-                            ? ButtonStyle(
-                                backgroundColor: WidgetStateProperty.all(
-                                  Theme.of(context).colorScheme.primary.withValues(alpha: 0.5),
-                                ),
-                                foregroundColor: WidgetStateProperty.all(
-                                  Theme.of(context).colorScheme.onPrimary.withValues(alpha: 0.5),
-                                ),
-                              )
-                            : null,
-                        onPressed: state is SlowLoading ? null : () => GoRouter.of(context).push('/archive'),
-                        child: Text(AppLocalizations.of(context)!.newsArchive),
-                      ),
-                    ],
-                  ),
+                          : null,
+                      onPressed: state is SlowLoading ? null : () => GoRouter.of(context).push('/archive'),
+                      child: Text(AppLocalizations.of(context)!.newsArchive),
+                    ),
+                  ],
                 ),
               ),
             );

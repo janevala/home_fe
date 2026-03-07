@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:homefe/assets/i18n/generated/app_localizations.dart';
 import 'package:homefe/podo/rss/news_item.dart';
 import 'package:html/parser.dart';
+import 'package:timeago/timeago.dart' as timeago;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 
@@ -20,7 +21,7 @@ String parseDescription(NewsItem item, bool cutLong) {
     if (cutLong) {
       return text.length > 500 ? '${text.substring(0, 500)}...' : text;
     } else {
-      return text;
+      return "$text\n\n${item.llm!}";
     }
   } catch (e) {
     return item.description;
@@ -52,7 +53,7 @@ openItem(BuildContext context, NewsItem item) async {
               }
             },
             child: Text(
-              AppLocalizations.of(context)!.open,
+              item.llm == 'original' ? AppLocalizations.of(context)!.open : AppLocalizations.of(context)!.openOriginal,
               style: Theme.of(context).textTheme.labelLarge,
             ),
           ),
@@ -120,8 +121,9 @@ String fetchLanguageSelectorSelected(BuildContext context, Locale locale) {
 // }
 
 String getLocalizedDate(BuildContext context, DateTime date) {
-  final String locale = Localizations.localeOf(context).languageCode;
-  final DateFormat formatter = DateFormat.yMMMd(locale);
+  final Locale locale = Localizations.localeOf(context);
+  // return timeago.format(date, locale: locale.languageCode, clock: DateTime.now());
+  final DateFormat formatter = DateFormat.yMMMd(locale.languageCode);
   return formatter.format(date);
 }
 

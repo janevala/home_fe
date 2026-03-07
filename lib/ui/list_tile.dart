@@ -53,7 +53,7 @@ class JsonFeedTile extends StatelessWidget {
   String get _baseUrl => _parseBaseUrl(item.link);
   String get _description => parseDescription(item, true);
 
-  DateTime get _publishedDate => parsePublishedParsed(item.publishedParsed);
+  DateTime get _publishedDate => parsePublishedParsed(item.publishedParsed).toLocal();
   bool get _isToday => _publishedDate.day == DateTime.now().day;
 
   String _formatDate() {
@@ -152,6 +152,18 @@ class JsonFeedTile extends StatelessWidget {
           ),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
+        ),
+        const Spacer(),
+        item.llm == 'original'
+            ? Icon(
+                Icons.check,
+              )
+            : Icon(
+                Icons.auto_fix_high,
+              ),
+        Text(
+          item.llm ?? AppLocalizations.of(context)!.unknown,
+          style: Theme.of(context).textTheme.bodyMedium,
         ),
       ],
     );
