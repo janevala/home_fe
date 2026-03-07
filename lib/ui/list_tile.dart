@@ -75,7 +75,9 @@ class JsonFeedTile extends StatelessWidget {
         child: InkWell(
           onTap: onItemTap,
           onLongPress: onItemLongPress,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius:
+              (Theme.of(context).cardTheme.shape as RoundedRectangleBorder?)?.borderRadius as BorderRadius? ??
+              BorderRadius.circular(12),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -104,7 +106,9 @@ class JsonFeedTile extends StatelessWidget {
         child: InkWell(
           onTap: onItemTap,
           onLongPress: onItemLongPress,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius:
+              (Theme.of(context).cardTheme.shape as RoundedRectangleBorder?)?.borderRadius as BorderRadius? ??
+              BorderRadius.circular(12),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -169,7 +173,9 @@ class JsonFeedTile extends StatelessWidget {
       children: [
         if (image != null) ...[
           ClipRRect(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius:
+                (Theme.of(context).cardTheme.shape as RoundedRectangleBorder?)?.borderRadius as BorderRadius? ??
+                BorderRadius.circular(12),
             child: _buildImagePreview(image),
           ),
           const SizedBox(width: 12),
@@ -188,9 +194,11 @@ class JsonFeedTile extends StatelessWidget {
         item.llm == 'original'
             ? Icon(
                 Icons.check,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               )
             : Icon(
                 Icons.auto_fix_high,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
         Text(
           item.llm ?? AppLocalizations.of(context)!.unknown,
@@ -310,7 +318,9 @@ class RssFeedTile extends StatelessWidget {
       children: [
         if (image != null) ...[
           ClipRRect(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius:
+                (Theme.of(context).cardTheme.shape as RoundedRectangleBorder?)?.borderRadius as BorderRadius? ??
+                BorderRadius.circular(12),
             child: _buildImagePreview(image),
           ),
           const SizedBox(width: 12),
@@ -335,7 +345,9 @@ class RssFeedTile extends StatelessWidget {
       return Card(
         child: InkWell(
           onTap: openItem,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius:
+              (Theme.of(context).cardTheme.shape as RoundedRectangleBorder?)?.borderRadius as BorderRadius? ??
+              BorderRadius.circular(12),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -361,7 +373,9 @@ class RssFeedTile extends StatelessWidget {
     return Card(
       child: InkWell(
         onTap: openItem,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius:
+            (Theme.of(context).cardTheme.shape as RoundedRectangleBorder?)?.borderRadius as BorderRadius? ??
+            BorderRadius.circular(12),
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
