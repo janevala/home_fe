@@ -1,18 +1,88 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+class _MobileConfig {
+  static const double textScaleFactor = 0.9;
+  static const EdgeInsets cardMargin = EdgeInsets.symmetric(horizontal: 8, vertical: 4);
+  static const EdgeInsets listTilePadding = EdgeInsets.symmetric(horizontal: 12, vertical: 2);
+  static const EdgeInsets buttonPadding = EdgeInsets.symmetric(horizontal: 16, vertical: 8);
+  static const EdgeInsets inputPadding = EdgeInsets.symmetric(horizontal: 12, vertical: 8);
+  static const BorderRadius cardBorderRadius = BorderRadius.all(Radius.circular(8));
+  static const BorderRadius buttonBorderRadius = BorderRadius.all(Radius.circular(6));
+  static const BorderRadius inputBorderRadius = BorderRadius.all(Radius.circular(6));
+}
+
 class AppColors {
   static const Color linkBlue = Color(0xFF1976D2); // Standard web link blue
 }
 
 class AppTheme {
   static ThemeData getThemeForPlatform({required bool isDarkMode}) {
-    return isDarkMode ? cupertinoDarkTheme : cupertinoLightTheme;
+    ThemeData baseTheme;
+
     if (defaultTargetPlatform == TargetPlatform.iOS) {
-      return isDarkMode ? cupertinoDarkTheme : cupertinoLightTheme;
+      baseTheme = isDarkMode ? cupertinoDarkTheme : cupertinoLightTheme;
+    } else {
+      baseTheme = isDarkMode ? darkTheme : lightTheme;
     }
 
-    return isDarkMode ? darkTheme : lightTheme;
+    if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
+      return _applyMobileAdjustments(baseTheme, isDarkMode);
+    }
+
+    return baseTheme;
+  }
+
+  static TextTheme _applyMobileTextScaling(TextTheme baseTheme) {
+    return baseTheme.copyWith(
+      titleLarge: baseTheme.titleLarge?.copyWith(
+        fontSize: (baseTheme.titleLarge?.fontSize ?? 20) * _MobileConfig.textScaleFactor,
+      ),
+      bodyLarge: baseTheme.bodyLarge?.copyWith(
+        fontSize: (baseTheme.bodyLarge?.fontSize ?? 16) * _MobileConfig.textScaleFactor,
+      ),
+      bodyMedium: baseTheme.bodyMedium?.copyWith(
+        fontSize: (baseTheme.bodyMedium?.fontSize ?? 14) * _MobileConfig.textScaleFactor,
+      ),
+      labelLarge: baseTheme.labelLarge?.copyWith(
+        fontSize: (baseTheme.labelLarge?.fontSize ?? 14) * _MobileConfig.textScaleFactor,
+      ),
+    );
+  }
+
+  static ThemeData _applyMobileAdjustments(ThemeData baseTheme, bool isDarkMode) {
+    return baseTheme.copyWith(
+      textTheme: _applyMobileTextScaling(baseTheme.textTheme),
+      cardTheme: baseTheme.cardTheme.copyWith(
+        margin: _MobileConfig.cardMargin,
+        shape: RoundedRectangleBorder(borderRadius: _MobileConfig.cardBorderRadius),
+      ),
+      listTileTheme: baseTheme.listTileTheme.copyWith(
+        contentPadding: _MobileConfig.listTilePadding,
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(borderRadius: _MobileConfig.buttonBorderRadius),
+          padding: _MobileConfig.buttonPadding,
+        ),
+      ),
+      inputDecorationTheme: baseTheme.inputDecorationTheme.copyWith(
+        contentPadding: _MobileConfig.inputPadding,
+        border: OutlineInputBorder(borderRadius: _MobileConfig.inputBorderRadius),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: _MobileConfig.inputBorderRadius,
+          borderSide: BorderSide(
+            color: isDarkMode
+                ? baseTheme.colorScheme.onSurfaceVariant.withValues(alpha: 0.3)
+                : baseTheme.colorScheme.onSurface.withValues(alpha: 0.3),
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: _MobileConfig.inputBorderRadius,
+          borderSide: BorderSide(color: baseTheme.colorScheme.primary, width: 2),
+        ),
+      ),
+    );
   }
 
   static const ColorScheme _lightColorScheme = ColorScheme(
