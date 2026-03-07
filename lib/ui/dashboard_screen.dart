@@ -83,12 +83,8 @@ class DashboardScreenState extends State<DashboardScreen> {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    Theme.of(
-                      context,
-                    ).colorScheme.primary.withValues(alpha: 0.8),
-                    Theme.of(
-                      context,
-                    ).colorScheme.secondary.withValues(alpha: 0.6),
+                    Theme.of(context).colorScheme.primary.withValues(alpha: 0.6),
+                    Theme.of(context).colorScheme.secondary.withValues(alpha: 0.1),
                   ],
                 ),
               ),
@@ -96,30 +92,19 @@ class DashboardScreenState extends State<DashboardScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CircleAvatar(
-                    backgroundColor: Theme.of(
-                      context,
-                    ).colorScheme.onPrimary.withValues(alpha: 0.2),
-                    child: Icon(
-                      Icons.person,
-                      color: Theme.of(context).colorScheme.onPrimary,
-                    ),
+                    child: const Icon(Icons.person),
                   ),
                   const SizedBox(height: 16),
                   Text(
                     '${AppLocalizations.of(context)!.token}: ${token ?? 'No token'}',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.onPrimary,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     firstTimeUser ? AppLocalizations.of(context)!.welcome : AppLocalizations.of(context)!.welcomeBack,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Theme.of(
-                        context,
-                      ).colorScheme.onPrimary.withValues(alpha: 0.8),
-                    ),
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],
               ),
@@ -128,17 +113,11 @@ class DashboardScreenState extends State<DashboardScreen> {
             BlocBuilder<ThemeCubit, ThemeMode>(
               builder: (context, themeMode) {
                 return ListTile(
-                  leading: Icon(
-                    Icons.dark_mode_outlined,
-                    color: Theme.of(context).colorScheme.onSurface,
-                  ),
+                  leading: const Icon(Icons.dark_mode_outlined),
                   title: Text(
                     themeMode == ThemeMode.dark
                         ? AppLocalizations.of(context)!.darkMode
                         : AppLocalizations.of(context)!.lightMode,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
                   ),
                   trailing: Switch(
                     value: themeMode == ThemeMode.dark,
@@ -153,55 +132,31 @@ class DashboardScreenState extends State<DashboardScreen> {
             const Divider(),
 
             ListTile(
-              leading: Icon(
-                Icons.dns,
-                color: Theme.of(context).colorScheme.onSurface,
-              ),
+              leading: const Icon(Icons.dns),
               title: Text(
                 AppLocalizations.of(context)!.serverVersion(backVersion ?? 'Unknown'),
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onSurface,
-                ),
               ),
             ),
             ListTile(
-              leading: Icon(
-                Icons.storage,
-                color: Theme.of(context).colorScheme.onSurface,
-              ),
+              leading: const Icon(Icons.storage),
               title: Text(
                 AppLocalizations.of(context)!.newsItemCount(totalItems),
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onSurface,
-                ),
               ),
             ),
             ListTile(
-              leading: Icon(
-                Icons.calendar_today,
-                color: Theme.of(context).colorScheme.onSurface,
-              ),
+              leading: const Icon(Icons.calendar_today),
               title: Text(
                 AppLocalizations.of(context)!.newsArchiveStart(
                   oldestItemDate != null
                       ? getLocalizedDate(context, oldestItemDate!)
                       : AppLocalizations.of(context)!.unknown,
                 ),
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onSurface,
-                ),
               ),
             ),
             ListTile(
-              leading: Icon(
-                Icons.phone_android,
-                color: Theme.of(context).colorScheme.onSurface,
-              ),
+              leading: const Icon(Icons.phone_android),
               title: Text(
                 AppLocalizations.of(context)!.appVersion(appVersion),
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onSurface,
-                ),
               ),
             ),
 
@@ -209,15 +164,9 @@ class DashboardScreenState extends State<DashboardScreen> {
             Tooltip(
               message: AppLocalizations.of(context)!.contactTooltip,
               child: ListTile(
-                leading: Icon(
-                  Icons.email_outlined,
-                  color: Theme.of(context).colorScheme.onSurface,
-                ),
+                leading: const Icon(Icons.email_outlined),
                 title: Text(
                   AppLocalizations.of(context)!.contact,
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.onSurface,
-                  ),
                 ),
               ),
             ),
@@ -247,13 +196,9 @@ class DashboardScreenState extends State<DashboardScreen> {
             // ),
             const Divider(),
             ListTile(
-              leading: Icon(
-                Icons.logout,
-                color: Theme.of(context).colorScheme.error,
-              ),
+              leading: const Icon(Icons.logout),
               title: Text(
                 AppLocalizations.of(context)!.logout,
-                style: TextStyle(color: Theme.of(context).colorScheme.error),
               ),
               onTap: () {
                 _dePersist({'token': dynamic});

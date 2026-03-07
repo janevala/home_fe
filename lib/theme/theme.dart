@@ -61,6 +61,12 @@ class AppTheme {
       ),
       listTileTheme: baseTheme.listTileTheme.copyWith(
         contentPadding: _MobileConfig.listTilePadding,
+        titleTextStyle: baseTheme.textTheme.titleMedium?.copyWith(
+          fontSize: (baseTheme.textTheme.titleMedium?.fontSize ?? 16) * _MobileConfig.textScaleFactor,
+        ),
+        subtitleTextStyle: baseTheme.textTheme.bodyMedium?.copyWith(
+          fontSize: (baseTheme.textTheme.bodyMedium?.fontSize ?? 14) * _MobileConfig.textScaleFactor,
+        ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
@@ -93,6 +99,14 @@ class AppTheme {
         ),
         contentTextStyle: baseTheme.textTheme.bodyLarge?.copyWith(
           fontSize: (baseTheme.textTheme.bodyLarge?.fontSize ?? 16) * _MobileConfig.textScaleFactor,
+        ),
+      ),
+      drawerTheme: baseTheme.drawerTheme.copyWith(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(8),
+            bottomRight: Radius.circular(8),
+          ),
         ),
       ),
     );
@@ -241,6 +255,18 @@ class AppTheme {
         actionsPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         insetPadding: const EdgeInsets.symmetric(horizontal: 40, vertical: 24),
       ),
+      drawerTheme: DrawerThemeData(
+        backgroundColor: _lightColorScheme.surface,
+        surfaceTintColor: _lightColorScheme.surfaceTint,
+        shadowColor: _lightColorScheme.shadow.withValues(alpha: 0.2),
+        elevation: 1,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(16),
+            bottomRight: Radius.circular(16),
+          ),
+        ),
+      ),
       textTheme: _lightTextTheme,
     );
   }
@@ -327,6 +353,18 @@ class AppTheme {
         ),
         actionsPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         insetPadding: const EdgeInsets.symmetric(horizontal: 40, vertical: 24),
+      ),
+      drawerTheme: DrawerThemeData(
+        backgroundColor: _darkColorScheme.surface,
+        surfaceTintColor: _darkColorScheme.surfaceTint,
+        shadowColor: _darkColorScheme.shadow.withValues(alpha: 0.4),
+        elevation: 2,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(16),
+            bottomRight: Radius.circular(16),
+          ),
+        ),
       ),
       textTheme: _darkTextTheme,
     );
@@ -460,6 +498,22 @@ class AppTheme {
         insetPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
         alignment: Alignment.center,
       ),
+      drawerTheme: DrawerThemeData(
+        backgroundColor: _lightColorScheme.surface,
+        surfaceTintColor: Colors.transparent,
+        shadowColor: Colors.transparent,
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: const BorderRadius.only(
+            topRight: Radius.circular(16),
+            bottomRight: Radius.circular(16),
+          ),
+          side: BorderSide(
+            color: _lightColorScheme.onSurface.withValues(alpha: 0.1),
+            width: 0.5,
+          ),
+        ),
+      ),
       textTheme: _cupertinoLightTextTheme,
     );
   }
@@ -591,6 +645,22 @@ class AppTheme {
         actionsPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         insetPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
         alignment: Alignment.center,
+      ),
+      drawerTheme: DrawerThemeData(
+        backgroundColor: _darkColorScheme.surface,
+        surfaceTintColor: Colors.transparent,
+        shadowColor: Colors.transparent,
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: const BorderRadius.only(
+            topRight: Radius.circular(16),
+            bottomRight: Radius.circular(16),
+          ),
+          side: BorderSide(
+            color: _darkColorScheme.onSurfaceVariant.withValues(alpha: 0.2),
+            width: 0.5,
+          ),
+        ),
       ),
       textTheme: _cupertinoDarkTextTheme,
     );
