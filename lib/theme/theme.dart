@@ -84,6 +84,7 @@ class AppTheme {
         centerTitle: true,
         elevation: 2,
         scrolledUnderElevation: 4,
+        titleTextStyle: TextStyle(),
       ),
       cardTheme: const CardThemeData(
         elevation: 2,
@@ -141,10 +142,11 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       colorScheme: _darkColorScheme,
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         centerTitle: true,
         elevation: 2,
         scrolledUnderElevation: 4,
+        titleTextStyle: TextStyle(),
       ),
       cardTheme: const CardThemeData(
         elevation: 2,
@@ -219,11 +221,7 @@ class AppTheme {
         foregroundColor: _lightColorScheme.onSurface,
         elevation: 0,
         centerTitle: true,
-        titleTextStyle: TextStyle(
-          color: _lightColorScheme.onSurface,
-          fontSize: 17,
-          fontWeight: FontWeight.w600,
-        ),
+        titleTextStyle: TextStyle(),
         iconTheme: IconThemeData(color: _lightColorScheme.onSurface),
       ),
       cardTheme: CardThemeData(
@@ -336,11 +334,7 @@ class AppTheme {
         foregroundColor: _darkColorScheme.onSurface,
         elevation: 0,
         centerTitle: true,
-        titleTextStyle: TextStyle(
-          color: _darkColorScheme.onSurface,
-          fontSize: 17,
-          fontWeight: FontWeight.w600,
-        ),
+        titleTextStyle: TextStyle(),
         iconTheme: IconThemeData(color: _darkColorScheme.onSurface),
       ),
       cardTheme: CardThemeData(
