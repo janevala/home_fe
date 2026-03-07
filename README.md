@@ -4,10 +4,8 @@ Tech Heavy News Frontend.
 
 # TODO
 ## Front Bugs
-- Language Bloc is buggy, wont survive browser refresh
+- Search is broken because localization
 - Create mobile theme's. Check fonts and paddings, margins, etc. When Platform is iOS or Android
-- Buttons need to stand out from their background, especially dark
-- Welcome message color, text colors in theme?
 
 ## Back
 - Ping is ollama alive
