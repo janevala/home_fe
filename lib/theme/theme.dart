@@ -76,15 +76,40 @@ class AppTheme {
     surfaceTint: Color(0xFF90CAF9),
   );
 
+  static TextTheme get _lightTextTheme {
+    return TextTheme(
+      titleLarge: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.w500,
+        color: _lightColorScheme.onSurface,
+      ),
+      bodyLarge: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+        color: _lightColorScheme.onSurface,
+      ),
+      bodyMedium: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+        color: _lightColorScheme.onSurface,
+      ),
+      labelLarge: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+        color: _lightColorScheme.onSurface,
+      ),
+    );
+  }
+
   static ThemeData get lightTheme {
     return ThemeData(
       useMaterial3: true,
       colorScheme: _lightColorScheme,
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         centerTitle: true,
         elevation: 2,
         scrolledUnderElevation: 4,
-        titleTextStyle: TextStyle(),
+        titleTextStyle: _lightTextTheme.titleLarge,
       ),
       cardTheme: const CardThemeData(
         elevation: 2,
@@ -113,27 +138,31 @@ class AppTheme {
         thickness: 1,
         space: 1,
       ),
-      textTheme: TextTheme(
-        titleLarge: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.w500,
-          color: _lightColorScheme.onSurface,
-        ),
-        bodyLarge: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w400,
-          color: _lightColorScheme.onSurface,
-        ),
-        bodyMedium: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w400,
-          color: _lightColorScheme.onSurface,
-        ),
-        labelLarge: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
-          color: _lightColorScheme.onSurface,
-        ),
+      textTheme: _lightTextTheme,
+    );
+  }
+
+  static TextTheme get _darkTextTheme {
+    return TextTheme(
+      titleLarge: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.w500,
+        color: _darkColorScheme.onSurface,
+      ),
+      bodyLarge: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+        color: _darkColorScheme.onSurface,
+      ),
+      bodyMedium: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+        color: _darkColorScheme.onSurface,
+      ),
+      labelLarge: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+        color: _darkColorScheme.onSurface,
       ),
     );
   }
@@ -146,7 +175,7 @@ class AppTheme {
         centerTitle: true,
         elevation: 2,
         scrolledUnderElevation: 4,
-        titleTextStyle: TextStyle(),
+        titleTextStyle: _darkTextTheme.titleLarge,
       ),
       cardTheme: const CardThemeData(
         elevation: 2,
@@ -175,27 +204,31 @@ class AppTheme {
         thickness: 1,
         space: 1,
       ),
-      textTheme: TextTheme(
-        titleLarge: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.w500,
-          color: _darkColorScheme.onSurface,
-        ),
-        bodyLarge: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w400,
-          color: _darkColorScheme.onSurface,
-        ),
-        bodyMedium: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w400,
-          color: _darkColorScheme.onSurface,
-        ),
-        labelLarge: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
-          color: _darkColorScheme.onSurface,
-        ),
+      textTheme: _darkTextTheme,
+    );
+  }
+
+  static TextTheme get _cupertinoLightTextTheme {
+    return TextTheme(
+      titleLarge: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.w500,
+        color: _lightColorScheme.onSurface,
+      ),
+      bodyLarge: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+        color: _lightColorScheme.onSurface,
+      ),
+      bodyMedium: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+        color: _lightColorScheme.onSurface,
+      ),
+      labelLarge: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+        color: _lightColorScheme.onSurface,
       ),
     );
   }
@@ -221,7 +254,7 @@ class AppTheme {
         foregroundColor: _lightColorScheme.onSurface,
         elevation: 0,
         centerTitle: true,
-        titleTextStyle: TextStyle(),
+        titleTextStyle: _cupertinoLightTextTheme.titleLarge,
         iconTheme: IconThemeData(color: _lightColorScheme.onSurface),
       ),
       cardTheme: CardThemeData(
@@ -288,27 +321,31 @@ class AppTheme {
         thickness: 1,
         space: 1,
       ),
-      textTheme: TextTheme(
-        titleLarge: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.w500,
-          color: _lightColorScheme.onSurface,
-        ),
-        bodyLarge: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w400,
-          color: _lightColorScheme.onSurface,
-        ),
-        bodyMedium: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w400,
-          color: _lightColorScheme.onSurface,
-        ),
-        labelLarge: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
-          color: _lightColorScheme.onSurface,
-        ),
+      textTheme: _cupertinoLightTextTheme,
+    );
+  }
+
+  static TextTheme get _cupertinoDarkTextTheme {
+    return TextTheme(
+      titleLarge: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.w500,
+        color: _darkColorScheme.onSurface,
+      ),
+      bodyLarge: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+        color: _darkColorScheme.onSurface,
+      ),
+      bodyMedium: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+        color: _darkColorScheme.onSurface,
+      ),
+      labelLarge: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+        color: _darkColorScheme.onSurface,
       ),
     );
   }
@@ -334,7 +371,7 @@ class AppTheme {
         foregroundColor: _darkColorScheme.onSurface,
         elevation: 0,
         centerTitle: true,
-        titleTextStyle: TextStyle(),
+        titleTextStyle: _cupertinoDarkTextTheme.titleLarge,
         iconTheme: IconThemeData(color: _darkColorScheme.onSurface),
       ),
       cardTheme: CardThemeData(
@@ -401,28 +438,7 @@ class AppTheme {
         thickness: 1,
         space: 1,
       ),
-      textTheme: TextTheme(
-        titleLarge: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.w500,
-          color: _darkColorScheme.onSurface,
-        ),
-        bodyLarge: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w400,
-          color: _darkColorScheme.onSurface,
-        ),
-        bodyMedium: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w400,
-          color: _darkColorScheme.onSurface,
-        ),
-        labelLarge: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
-          color: _darkColorScheme.onSurface,
-        ),
-      ),
+      textTheme: _cupertinoDarkTextTheme,
     );
   }
 }
