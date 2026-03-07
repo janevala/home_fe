@@ -7,9 +7,7 @@ class AppColors {
 
 class AppTheme {
   static ThemeData getThemeForPlatform({required bool isDarkMode}) {
-    // return isDarkMode ? darkTheme : lightTheme;
-    return isDarkMode ? cupertinoDarkTheme : cupertinoLightTheme;
-    if (defaultTargetPlatform == TargetPlatform.iOS || (kIsWeb && defaultTargetPlatform == TargetPlatform.macOS)) {
+    if (defaultTargetPlatform == TargetPlatform.iOS) {
       return isDarkMode ? cupertinoDarkTheme : cupertinoLightTheme;
     }
 
@@ -117,6 +115,9 @@ class AppTheme {
           borderRadius: BorderRadius.all(Radius.circular(12)),
         ),
       ),
+      listTileTheme: const ListTileThemeData(
+        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -129,9 +130,6 @@ class AppTheme {
           horizontal: 16,
           vertical: 12,
         ),
-      ),
-      listTileTheme: const ListTileThemeData(
-        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       ),
       dividerTheme: DividerThemeData(
         color: _lightColorScheme.primaryContainer,
@@ -183,6 +181,9 @@ class AppTheme {
           borderRadius: BorderRadius.all(Radius.circular(12)),
         ),
       ),
+      listTileTheme: const ListTileThemeData(
+        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -195,9 +196,6 @@ class AppTheme {
           horizontal: 16,
           vertical: 12,
         ),
-      ),
-      listTileTheme: const ListTileThemeData(
-        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       ),
       dividerTheme: DividerThemeData(
         color: _darkColorScheme.primaryContainer,
@@ -268,6 +266,9 @@ class AppTheme {
           ),
         ),
       ),
+      listTileTheme: ListTileThemeData(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: _lightColorScheme.primary,
@@ -303,17 +304,6 @@ class AppTheme {
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
           vertical: 12,
-        ),
-      ),
-      listTileTheme: ListTileThemeData(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-        titleTextStyle: TextStyle(
-          color: _lightColorScheme.onSurface,
-          fontSize: 17,
-        ),
-        subtitleTextStyle: TextStyle(
-          color: _lightColorScheme.onSurfaceVariant,
-          fontSize: 15,
         ),
       ),
       dividerTheme: DividerThemeData(
@@ -385,6 +375,9 @@ class AppTheme {
           ),
         ),
       ),
+      listTileTheme: ListTileThemeData(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: _darkColorScheme.primary,
@@ -420,17 +413,6 @@ class AppTheme {
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
           vertical: 12,
-        ),
-      ),
-      listTileTheme: ListTileThemeData(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-        titleTextStyle: TextStyle(
-          color: _darkColorScheme.onSurface,
-          fontSize: 17,
-        ),
-        subtitleTextStyle: TextStyle(
-          color: _darkColorScheme.onSurfaceVariant,
-          fontSize: 15,
         ),
       ),
       dividerTheme: DividerThemeData(
