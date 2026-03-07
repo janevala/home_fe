@@ -191,6 +191,10 @@ class AppTheme {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
+          backgroundColor: _lightColorScheme.primary,
+          foregroundColor: _lightColorScheme.onPrimary,
+          elevation: 2,
+          shadowColor: _lightColorScheme.primary.withValues(alpha: 0.3),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         ),
@@ -257,6 +261,10 @@ class AppTheme {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
+          backgroundColor: _darkColorScheme.primary,
+          foregroundColor: _darkColorScheme.onPrimary,
+          elevation: 3,
+          shadowColor: _darkColorScheme.shadow.withValues(alpha: 0.4),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         ),
