@@ -71,9 +71,7 @@ class JsonFeedTile extends StatelessWidget {
         child: InkWell(
           onTap: onItemTap,
           onLongPress: onItemLongPress,
-          borderRadius:
-              (Theme.of(context).cardTheme.shape as RoundedRectangleBorder?)?.borderRadius as BorderRadius? ??
-              BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(AppBorderRadius.md),
           child: Padding(
             padding: const EdgeInsets.all(8),
             child: Column(
@@ -102,9 +100,7 @@ class JsonFeedTile extends StatelessWidget {
         child: InkWell(
           onTap: onItemTap,
           onLongPress: onItemLongPress,
-          borderRadius:
-              (Theme.of(context).cardTheme.shape as RoundedRectangleBorder?)?.borderRadius as BorderRadius? ??
-              BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(AppBorderRadius.md),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -169,9 +165,7 @@ class JsonFeedTile extends StatelessWidget {
       children: [
         if (image != null) ...[
           ClipRRect(
-            borderRadius:
-                (Theme.of(context).cardTheme.shape as RoundedRectangleBorder?)?.borderRadius as BorderRadius? ??
-                BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(AppBorderRadius.md),
             child: ClipRRect(child: image),
           ),
           (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android)
@@ -316,9 +310,7 @@ class RssFeedTile extends StatelessWidget {
       children: [
         if (image != null) ...[
           ClipRRect(
-            borderRadius:
-                (Theme.of(context).cardTheme.shape as RoundedRectangleBorder?)?.borderRadius as BorderRadius? ??
-                BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(AppBorderRadius.md),
             child: ClipRRect(child: image),
           ),
           (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android)
@@ -345,9 +337,7 @@ class RssFeedTile extends StatelessWidget {
       return Card(
         child: InkWell(
           onTap: openItem,
-          borderRadius:
-              (Theme.of(context).cardTheme.shape as RoundedRectangleBorder?)?.borderRadius as BorderRadius? ??
-              BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(AppBorderRadius.md),
           child: Padding(
             padding: const EdgeInsets.all(8),
             child: Column(
@@ -373,9 +363,7 @@ class RssFeedTile extends StatelessWidget {
     return Card(
       child: InkWell(
         onTap: openItem,
-        borderRadius:
-            (Theme.of(context).cardTheme.shape as RoundedRectangleBorder?)?.borderRadius as BorderRadius? ??
-            BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(AppBorderRadius.md),
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(

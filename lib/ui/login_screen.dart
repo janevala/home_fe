@@ -67,6 +67,7 @@ class LoginScreenState extends State<LoginScreen> {
                       TextFormField(
                         decoration: InputDecoration(
                           labelText: AppLocalizations.of(context)!.token,
+                          border: Theme.of(context).inputDecorationTheme.border,
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {

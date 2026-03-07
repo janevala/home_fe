@@ -80,10 +80,7 @@ class ArchiveScreenState extends State<ArchiveScreen> {
                   },
                 ),
                 hintText: AppLocalizations.of(context)!.searchArchive,
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey, width: 2),
-                  borderRadius: BorderRadius.circular(4),
-                ),
+                border: Theme.of(context).inputDecorationTheme.border,
               ),
               onChanged: (value) {
                 final locale = Localizations.localeOf(context);
