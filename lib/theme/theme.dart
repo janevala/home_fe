@@ -7,6 +7,7 @@ class AppColors {
 
 class AppTheme {
   static ThemeData getThemeForPlatform({required bool isDarkMode}) {
+    return isDarkMode ? cupertinoDarkTheme : cupertinoLightTheme;
     if (defaultTargetPlatform == TargetPlatform.iOS) {
       return isDarkMode ? cupertinoDarkTheme : cupertinoLightTheme;
     }

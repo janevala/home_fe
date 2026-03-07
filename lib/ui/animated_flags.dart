@@ -18,17 +18,9 @@ class _AnimatedFlagsState extends State<AnimatedFlags> with TickerProviderStateM
   late final Animation<double> _firstFadeIn;
   late final AnimationController _fadeController;
 
-  double _containerHeight = 170;
-  double _flagSize = 100;
-
   @override
   void initState() {
     super.initState();
-
-    if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
-      _containerHeight = 100;
-      _flagSize = 50;
-    }
 
     _fadeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1500));
 
@@ -58,8 +50,87 @@ class _AnimatedFlagsState extends State<AnimatedFlags> with TickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
+    if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
+      return SizedBox(
+        height: 100,
+        child: Center(
+          child: AnimatedBuilder(
+            animation: _firstFadeIn,
+            builder: (context, child) => Opacity(
+              opacity: _firstFadeIn.value,
+              child: child,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  widget.welcomeMessage,
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+                const SizedBox(height: 32),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        context.read<LocaleCubit>().changeLocaleTo(Locale('en'));
+                      },
+                      child: SvgPicture.asset(
+                        'assets/flags/flag-en.svg',
+                        key: ValueKey('en'),
+                        width: 50,
+                        height: 50,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    InkWell(
+                      onTap: () {
+                        context.read<LocaleCubit>().changeLocaleTo(Locale('th'));
+                      },
+                      child: SvgPicture.asset(
+                        'assets/flags/flag-th.svg',
+                        key: ValueKey('th'),
+                        width: 50,
+                        height: 50,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    InkWell(
+                      onTap: () {
+                        context.read<LocaleCubit>().changeLocaleTo(Locale('fi'));
+                      },
+                      child: SvgPicture.asset(
+                        'assets/flags/flag-fi.svg',
+                        key: ValueKey('fi'),
+                        width: 50,
+                        height: 50,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    InkWell(
+                      onTap: () {
+                        context.read<LocaleCubit>().changeLocaleTo(Locale('de'));
+                      },
+                      child: SvgPicture.asset(
+                        'assets/flags/flag-de.svg',
+                        key: ValueKey('de'),
+                        width: 50,
+                        height: 50,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
     return SizedBox(
-      height: _containerHeight,
+      height: 170,
       child: Center(
         child: AnimatedBuilder(
           animation: _firstFadeIn,
@@ -89,8 +160,8 @@ class _AnimatedFlagsState extends State<AnimatedFlags> with TickerProviderStateM
                       child: SvgPicture.asset(
                         'assets/flags/flag-en.svg',
                         key: ValueKey('en'),
-                        width: _flagSize,
-                        height: _flagSize,
+                        width: 100,
+                        height: 100,
                       ),
                     ),
                   ),
@@ -104,8 +175,8 @@ class _AnimatedFlagsState extends State<AnimatedFlags> with TickerProviderStateM
                       child: SvgPicture.asset(
                         'assets/flags/flag-th.svg',
                         key: ValueKey('th'),
-                        width: _flagSize,
-                        height: _flagSize,
+                        width: 100,
+                        height: 100,
                       ),
                     ),
                   ),
@@ -119,8 +190,8 @@ class _AnimatedFlagsState extends State<AnimatedFlags> with TickerProviderStateM
                       child: SvgPicture.asset(
                         'assets/flags/flag-fi.svg',
                         key: ValueKey('fi'),
-                        width: _flagSize,
-                        height: _flagSize,
+                        width: 100,
+                        height: 100,
                       ),
                     ),
                   ),
@@ -134,8 +205,8 @@ class _AnimatedFlagsState extends State<AnimatedFlags> with TickerProviderStateM
                       child: SvgPicture.asset(
                         'assets/flags/flag-de.svg',
                         key: ValueKey('de'),
-                        width: _flagSize,
-                        height: _flagSize,
+                        width: 100,
+                        height: 100,
                       ),
                     ),
                   ),

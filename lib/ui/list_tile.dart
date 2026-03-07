@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:homefe/assets/i18n/generated/app_localizations.dart';
@@ -69,6 +70,34 @@ class JsonFeedTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
+      return Card(
+        child: InkWell(
+          onTap: onItemTap,
+          onLongPress: onItemLongPress,
+          borderRadius: BorderRadius.circular(12),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildHeader(context),
+                const SizedBox(height: 8),
+                if (_description.isNotEmpty) ...[
+                  Text(
+                    _description,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  const SizedBox(height: 12),
+                ],
+                _buildFooter(context),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
     return Tooltip(
       message: item.source ?? AppLocalizations.of(context)!.unknown,
       child: Card(
@@ -300,6 +329,33 @@ class RssFeedTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
+      return Card(
+        child: InkWell(
+          onTap: openItem,
+          borderRadius: BorderRadius.circular(12),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildHeader(context),
+                const SizedBox(height: 8),
+                if (_description.isNotEmpty) ...[
+                  Text(
+                    _description,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  const SizedBox(height: 12),
+                ],
+                _buildFooter(context),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
     return Card(
       child: InkWell(
         onTap: openItem,
