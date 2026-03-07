@@ -78,20 +78,23 @@ class JsonFeedTile extends StatelessWidget {
           borderRadius:
               (Theme.of(context).cardTheme.shape as RoundedRectangleBorder?)?.borderRadius as BorderRadius? ??
               BorderRadius.circular(12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildHeader(context),
-              const SizedBox(height: 8),
-              if (_description.isNotEmpty) ...[
-                Text(
-                  _description,
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                const SizedBox(height: 12),
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildHeader(context),
+                const SizedBox(height: 8),
+                if (_description.isNotEmpty) ...[
+                  Text(
+                    _description,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  const SizedBox(height: 12),
+                ],
+                _buildFooter(context),
               ],
-              _buildFooter(context),
-            ],
+            ),
           ),
         ),
       );
@@ -106,20 +109,23 @@ class JsonFeedTile extends StatelessWidget {
           borderRadius:
               (Theme.of(context).cardTheme.shape as RoundedRectangleBorder?)?.borderRadius as BorderRadius? ??
               BorderRadius.circular(12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildHeader(context),
-              const SizedBox(height: 8),
-              if (_description.isNotEmpty) ...[
-                Text(
-                  _description,
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                const SizedBox(height: 12),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildHeader(context),
+                const SizedBox(height: 8),
+                if (_description.isNotEmpty) ...[
+                  Text(
+                    _description,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  const SizedBox(height: 12),
+                ],
+                _buildFooter(context),
               ],
-              _buildFooter(context),
-            ],
+            ),
           ),
         ),
       ),
@@ -342,6 +348,36 @@ class RssFeedTile extends StatelessWidget {
           borderRadius:
               (Theme.of(context).cardTheme.shape as RoundedRectangleBorder?)?.borderRadius as BorderRadius? ??
               BorderRadius.circular(12),
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildHeader(context),
+                const SizedBox(height: 8),
+                if (_description.isNotEmpty) ...[
+                  Text(
+                    _description,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  const SizedBox(height: 12),
+                ],
+                _buildFooter(context),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
+    return Card(
+      child: InkWell(
+        onTap: openItem,
+        borderRadius:
+            (Theme.of(context).cardTheme.shape as RoundedRectangleBorder?)?.borderRadius as BorderRadius? ??
+            BorderRadius.circular(12),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -357,30 +393,6 @@ class RssFeedTile extends StatelessWidget {
               _buildFooter(context),
             ],
           ),
-        ),
-      );
-    }
-
-    return Card(
-      child: InkWell(
-        onTap: openItem,
-        borderRadius:
-            (Theme.of(context).cardTheme.shape as RoundedRectangleBorder?)?.borderRadius as BorderRadius? ??
-            BorderRadius.circular(12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildHeader(context),
-            const SizedBox(height: 8),
-            if (_description.isNotEmpty) ...[
-              Text(
-                _description,
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-              const SizedBox(height: 12),
-            ],
-            _buildFooter(context),
-          ],
         ),
       ),
     );
