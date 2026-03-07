@@ -24,10 +24,6 @@ final Map<String, String> _urlMap = {
   "Wired": "assets/thumbnails/wired.svg",
 };
 
-Widget _buildImagePreview(SvgPicture? image) {
-  return ClipRRect(borderRadius: BorderRadius.circular(8), child: image);
-}
-
 String _parseBaseUrl(String url) {
   try {
     final uri = Uri.parse(url);
@@ -176,9 +172,11 @@ class JsonFeedTile extends StatelessWidget {
             borderRadius:
                 (Theme.of(context).cardTheme.shape as RoundedRectangleBorder?)?.borderRadius as BorderRadius? ??
                 BorderRadius.circular(12),
-            child: _buildImagePreview(image),
+            child: ClipRRect(child: image),
           ),
-          const SizedBox(width: 12),
+          (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android)
+              ? SizedBox(width: 8)
+              : SizedBox(width: 16),
         ],
         Text(
           _baseUrl,
@@ -321,9 +319,11 @@ class RssFeedTile extends StatelessWidget {
             borderRadius:
                 (Theme.of(context).cardTheme.shape as RoundedRectangleBorder?)?.borderRadius as BorderRadius? ??
                 BorderRadius.circular(12),
-            child: _buildImagePreview(image),
+            child: ClipRRect(child: image),
           ),
-          const SizedBox(width: 12),
+          (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android)
+              ? SizedBox(width: 8)
+              : SizedBox(width: 16),
         ],
         Text(
           _baseUrl,
