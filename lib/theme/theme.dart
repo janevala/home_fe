@@ -10,6 +10,8 @@ class _MobileConfig {
   static const BorderRadius cardBorderRadius = BorderRadius.all(Radius.circular(8));
   static const BorderRadius buttonBorderRadius = BorderRadius.all(Radius.circular(6));
   static const BorderRadius inputBorderRadius = BorderRadius.all(Radius.circular(6));
+  static const BorderRadius dialogBorderRadius = BorderRadius.all(Radius.circular(12));
+  static const double dialogElevation = 6.0;
 }
 
 class AppColors {
@@ -80,6 +82,17 @@ class AppTheme {
         focusedBorder: OutlineInputBorder(
           borderRadius: _MobileConfig.inputBorderRadius,
           borderSide: BorderSide(color: baseTheme.colorScheme.primary, width: 2),
+        ),
+      ),
+      dialogTheme: baseTheme.dialogTheme.copyWith(
+        shape: RoundedRectangleBorder(
+          borderRadius: _MobileConfig.dialogBorderRadius,
+        ),
+        titleTextStyle: baseTheme.textTheme.titleLarge?.copyWith(
+          fontSize: (baseTheme.textTheme.titleLarge?.fontSize ?? 20) * _MobileConfig.textScaleFactor,
+        ),
+        contentTextStyle: baseTheme.textTheme.bodyLarge?.copyWith(
+          fontSize: (baseTheme.textTheme.bodyLarge?.fontSize ?? 16) * _MobileConfig.textScaleFactor,
         ),
       ),
     );
@@ -211,6 +224,23 @@ class AppTheme {
         thickness: 1,
         space: 1,
       ),
+      dialogTheme: DialogThemeData(
+        backgroundColor: _lightColorScheme.surface,
+        elevation: _MobileConfig.dialogElevation,
+        shadowColor: _lightColorScheme.shadow.withValues(alpha: 0.2),
+        surfaceTintColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: _MobileConfig.dialogBorderRadius,
+        ),
+        titleTextStyle: _lightTextTheme.titleLarge?.copyWith(
+          color: _lightColorScheme.onSurface,
+        ),
+        contentTextStyle: _lightTextTheme.bodyLarge?.copyWith(
+          color: _lightColorScheme.onSurfaceVariant,
+        ),
+        actionsPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        insetPadding: const EdgeInsets.symmetric(horizontal: 40, vertical: 24),
+      ),
       textTheme: _lightTextTheme,
     );
   }
@@ -280,6 +310,23 @@ class AppTheme {
         color: _darkColorScheme.primaryContainer,
         thickness: 1,
         space: 1,
+      ),
+      dialogTheme: DialogThemeData(
+        backgroundColor: _darkColorScheme.surface,
+        elevation: _MobileConfig.dialogElevation,
+        shadowColor: _darkColorScheme.shadow.withValues(alpha: 0.4),
+        surfaceTintColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: _MobileConfig.dialogBorderRadius,
+        ),
+        titleTextStyle: _darkTextTheme.titleLarge?.copyWith(
+          color: _darkColorScheme.onSurface,
+        ),
+        contentTextStyle: _darkTextTheme.bodyLarge?.copyWith(
+          color: _darkColorScheme.onSurfaceVariant,
+        ),
+        actionsPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        insetPadding: const EdgeInsets.symmetric(horizontal: 40, vertical: 24),
       ),
       textTheme: _darkTextTheme,
     );
@@ -390,6 +437,29 @@ class AppTheme {
         thickness: 1,
         space: 1,
       ),
+      dialogTheme: DialogThemeData(
+        backgroundColor: _lightColorScheme.surface,
+        elevation: 0,
+        shadowColor: Colors.transparent,
+        surfaceTintColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(14),
+          side: BorderSide(
+            color: _lightColorScheme.onSurface.withValues(alpha: 0.15),
+            width: 0.5,
+          ),
+        ),
+        titleTextStyle: _cupertinoLightTextTheme.titleLarge?.copyWith(
+          color: _lightColorScheme.onSurface,
+          fontWeight: FontWeight.w600,
+        ),
+        contentTextStyle: _cupertinoLightTextTheme.bodyLarge?.copyWith(
+          color: _lightColorScheme.onSurfaceVariant,
+        ),
+        actionsPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        insetPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+        alignment: Alignment.center,
+      ),
       textTheme: _cupertinoLightTextTheme,
     );
   }
@@ -498,6 +568,29 @@ class AppTheme {
         color: _darkColorScheme.primaryContainer,
         thickness: 1,
         space: 1,
+      ),
+      dialogTheme: DialogThemeData(
+        backgroundColor: _darkColorScheme.surface,
+        elevation: 0,
+        shadowColor: Colors.transparent,
+        surfaceTintColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(14),
+          side: BorderSide(
+            color: _darkColorScheme.onSurfaceVariant.withValues(alpha: 0.2),
+            width: 0.5,
+          ),
+        ),
+        titleTextStyle: _cupertinoDarkTextTheme.titleLarge?.copyWith(
+          color: _darkColorScheme.onSurface,
+          fontWeight: FontWeight.w600,
+        ),
+        contentTextStyle: _cupertinoDarkTextTheme.bodyLarge?.copyWith(
+          color: _darkColorScheme.onSurfaceVariant,
+        ),
+        actionsPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        insetPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+        alignment: Alignment.center,
       ),
       textTheme: _cupertinoDarkTextTheme,
     );

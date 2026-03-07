@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:homefe/assets/i18n/generated/app_localizations.dart';
 import 'package:homefe/podo/rss/news_item.dart';
 import 'package:html/parser.dart';
-import 'package:timeago/timeago.dart' as timeago;
+// import 'package:timeago/timeago.dart' as timeago;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 
 String parseDescription(NewsItem item, bool cutLong) {
   if (item.source == 'Dpreview' || item.source == 'Hacker News') {
-    return item.title;
+    return '${item.title}\n\n(llm: ${item.llm ?? 'original'})';
   }
 
   if (item.description.isEmpty) return '';
@@ -21,7 +21,7 @@ String parseDescription(NewsItem item, bool cutLong) {
     if (cutLong) {
       return text.length > 500 ? '${text.substring(0, 500)}...' : text;
     } else {
-      return "$text\n\n${item.llm!}";
+      return "$text\n\n(llm: ${item.llm ?? 'original'})";
     }
   } catch (e) {
     return item.description;
@@ -37,11 +37,9 @@ openItem(BuildContext context, NewsItem item) async {
       return AlertDialog(
         title: SelectableText(
           item.title,
-          style: Theme.of(context).textTheme.bodyLarge,
         ),
         content: SelectableText(
           description,
-          style: Theme.of(context).textTheme.bodyMedium,
         ),
         actions: [
           TextButton(
@@ -54,14 +52,12 @@ openItem(BuildContext context, NewsItem item) async {
             },
             child: Text(
               item.llm == 'original' ? AppLocalizations.of(context)!.open : AppLocalizations.of(context)!.openOriginal,
-              style: Theme.of(context).textTheme.labelLarge,
             ),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
             child: Text(
               AppLocalizations.of(context)!.close,
-              style: Theme.of(context).textTheme.labelLarge,
             ),
           ),
         ],
