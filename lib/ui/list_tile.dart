@@ -159,7 +159,9 @@ class JsonFeedTile extends StatelessWidget {
   }
 
   Widget _buildFooter(BuildContext context) {
-    SvgPicture? image = _getImage();
+    SvgPicture? image = (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android)
+        ? _getImage(50)
+        : _getImage(100);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -198,7 +200,7 @@ class JsonFeedTile extends StatelessWidget {
     );
   }
 
-  SvgPicture? _getImage() {
+  SvgPicture? _getImage(double size) {
     if (item.source == null) {
       return SvgPicture.asset(
         'assets/thumbnails/random-source.svg',
@@ -218,8 +220,8 @@ class JsonFeedTile extends StatelessWidget {
             return SvgPicture.asset(
               value,
               key: ValueKey(value),
-              width: 80,
-              height: 80,
+              width: size,
+              height: size,
             );
           } else {
             return null;
