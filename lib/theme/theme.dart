@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 class _MobileConfig {
   static const double textScaleFactor = 0.9;
-  static const EdgeInsets cardMargin = EdgeInsets.symmetric(horizontal: 8, vertical: 4);
-  static const EdgeInsets listTilePadding = EdgeInsets.symmetric(horizontal: 12, vertical: 2);
+  static const EdgeInsets cardMargin = EdgeInsets.symmetric(horizontal: 4, vertical: 2);
+  static const EdgeInsets listTilePadding = EdgeInsets.symmetric(horizontal: 4, vertical: 2);
   static const EdgeInsets buttonPadding = EdgeInsets.symmetric(horizontal: 16, vertical: 8);
   static const EdgeInsets inputPadding = EdgeInsets.symmetric(horizontal: 12, vertical: 8);
   static const BorderRadius cardBorderRadius = BorderRadius.all(Radius.circular(8));
