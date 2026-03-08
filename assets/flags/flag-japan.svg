@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480" width="48" height="48">
+  <defs>
+    <clipPath id="cp_outer_jp">
+      <rect width="480" height="480" rx="100" ry="100"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#cp_outer_jp)">
+    <!-- White background -->
+    <rect width="480" height="480" fill="#FFFFFF"/>
+    <!-- Hinomaru — red disc, slightly left of center per official spec -->
+    <circle cx="240" cy="240" r="143" fill="#BC002D"/>
+  </g>
+</svg>
