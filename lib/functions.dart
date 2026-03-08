@@ -7,8 +7,8 @@ import 'package:intl/intl.dart';
 
 String parseDescription(NewsItem item, bool cutLong, bool showLlm, String? warningText) {
   if (item.source == 'Dpreview' || item.source == 'Hacker News') {
-    if (showLlm) {
-      return '${item.title}\n\n(llm: ${item.llm ?? 'original'}, ${warningText ?? ''})';
+    if (showLlm && warningText != null) {
+      return '${item.title}\n\n(llm: ${item.llm ?? 'original'}, $warningText)';
     } else {
       return item.title;
     }
@@ -22,14 +22,14 @@ String parseDescription(NewsItem item, bool cutLong, bool showLlm, String? warni
     text.replaceAll(' \n', '');
 
     if (cutLong) {
-      if (showLlm) {
-        return "${text.length > 500 ? '${text.substring(0, 500)}...' : text}\n\n(llm: ${item.llm ?? 'original'}, ${warningText ?? ''})";
+      if (showLlm && warningText != null) {
+        return "${text.length > 500 ? '${text.substring(0, 500)}...' : text}\n\n(llm: ${item.llm ?? 'original'}, $warningText)";
       } else {
         return text.length > 500 ? '${text.substring(0, 500)}...' : text;
       }
     } else {
-      if (showLlm) {
-        return "$text\n\n(llm: ${item.llm ?? 'original'}, ${warningText ?? ''})";
+      if (showLlm && warningText != null) {
+        return "$text\n\n(llm: ${item.llm ?? 'original'}, $warningText)";
       } else {
         return text;
       }
