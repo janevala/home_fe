@@ -48,7 +48,7 @@ class JsonFeedTile extends StatelessWidget {
   final Locale locale;
 
   String get _baseUrl => _parseBaseUrl(item.link);
-  String get _description => parseDescription(item, true, false, null);
+  String get _description => parseDescription(item, true, null);
 
   DateTime get _publishedDate => parsePublishedParsed(item.publishedParsed).toLocal();
   bool get _isToday => _publishedDate.day == DateTime.now().day;
@@ -259,7 +259,6 @@ class RssFeedTile extends StatelessWidget {
       item.pubDate.toString(),
     ),
     true,
-    false,
     null,
   );
 

@@ -5,35 +5,38 @@ import 'package:html/parser.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 
-String parseDescription(NewsItem item, bool cutLong, bool showLlm, String? warningText) {
+String parseDescription(NewsItem item, bool cutLong, String? warningText) {
   if (item.source == 'Dpreview' || item.source == 'Hacker News') {
-    if (showLlm && warningText != null) {
-      return '${item.title}\n\n(llm: ${item.llm ?? 'original'}, $warningText)';
-    } else {
-      return item.title;
+    String description = item.title;
+    if (warningText != null) {
+      description += '\n\n(llm: ${item.llm ?? 'original'}, $warningText)';
     }
+    return description;
   }
 
-  if (item.description.isEmpty) return '';
+  if (item.description.isEmpty) {
+    String description = item.title;
+    if (warningText != null) {
+      description += '\n\n(llm: ${item.llm ?? 'original'}, $warningText)';
+    }
+
+    return description;
+  }
 
   try {
     final document = parse(item.description);
-    final text = document.body?.text ?? '';
-    text.replaceAll(' \n', '');
+    String description = document.body?.text ?? '';
+    description = description.replaceAll(' \n', '');
 
-    if (cutLong) {
-      if (showLlm && warningText != null) {
-        return "${text.length > 500 ? '${text.substring(0, 500)}...' : text}\n\n(llm: ${item.llm ?? 'original'}, $warningText)";
-      } else {
-        return text.length > 500 ? '${text.substring(0, 500)}...' : text;
-      }
-    } else {
-      if (showLlm && warningText != null) {
-        return "$text\n\n(llm: ${item.llm ?? 'original'}, $warningText)";
-      } else {
-        return text;
-      }
+    if (cutLong && description.length > 500) {
+      description = '${description.substring(0, 500)}...';
     }
+
+    if (warningText != null) {
+      description += '\n\n(llm: ${item.llm ?? 'original'}, $warningText)';
+    }
+
+    return description;
   } catch (e) {
     return item.description;
   }
@@ -44,7 +47,7 @@ openItem(BuildContext context, NewsItem item) async {
   if (item.llm != null && item.llm != 'original') {
     warningText = AppLocalizations.of(context)!.translationMayContainErrors;
   }
-  String description = parseDescription(item, false, true, warningText);
+  String description = parseDescription(item, false, warningText);
 
   showDialog(
     context: context,
