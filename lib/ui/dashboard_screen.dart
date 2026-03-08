@@ -132,12 +132,6 @@ class DashboardScreenState extends State<DashboardScreen> {
             const Divider(),
 
             ListTile(
-              leading: const Icon(Icons.dns),
-              title: Text(
-                AppLocalizations.of(context)!.serverVersion(backVersion ?? 'Unknown'),
-              ),
-            ),
-            ListTile(
               leading: const Icon(Icons.storage),
               title: Text(
                 AppLocalizations.of(context)!.newsItemCount(totalItems),
@@ -151,6 +145,12 @@ class DashboardScreenState extends State<DashboardScreen> {
                       ? getLocalizedDate(context, oldestItemDate!)
                       : AppLocalizations.of(context)!.unknown,
                 ),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.dns),
+              title: Text(
+                AppLocalizations.of(context)!.serverVersion(backVersion ?? 'Unknown'),
               ),
             ),
             ListTile(
