@@ -5,7 +5,6 @@ Tech Heavy News Frontend.
 # TODO
 ## Front Bugs
 - Search is broken because localization
-- Create mobile theme's. Check fonts and paddings, margins, etc. When Platform is iOS or Android
 
 ## Back
 - Ping is ollama alive

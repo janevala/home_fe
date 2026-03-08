@@ -52,7 +52,7 @@ class _AnimatedFlagsState extends State<AnimatedFlags> with TickerProviderStateM
   Widget build(BuildContext context) {
     if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
       return SizedBox(
-        height: 100,
+        height: 120,
         child: Center(
           child: AnimatedBuilder(
             animation: _firstFadeIn,

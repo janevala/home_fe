@@ -47,7 +47,7 @@ class SitesScreenState extends State<SitesScreen> {
 
                         return Card(
                           child: InkWell(
-                            borderRadius: BorderRadius.circular(AppBorderRadius.md),
+                            borderRadius: BorderRadius.circular(Radi.medium),
                             onTap: () => GoRouter.of(context).go('/site', extra: site),
                             child: Padding(
                               padding: const EdgeInsets.all(16),

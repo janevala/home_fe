@@ -6,9 +6,13 @@ import 'package:html/parser.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 
-String parseDescription(NewsItem item, bool cutLong) {
+String parseDescription(NewsItem item, bool cutLong, bool showLlm) {
   if (item.source == 'Dpreview' || item.source == 'Hacker News') {
-    return '${item.title}\n\n(llm: ${item.llm ?? 'original'})';
+    if (showLlm) {
+      return '${item.title}\n\n(llm: ${item.llm ?? 'original'})';
+    } else {
+      return item.title;
+    }
   }
 
   if (item.description.isEmpty) return '';
@@ -19,9 +23,17 @@ String parseDescription(NewsItem item, bool cutLong) {
     text.replaceAll(' \n', '');
 
     if (cutLong) {
-      return text.length > 500 ? '${text.substring(0, 500)}...' : text;
+      if (showLlm) {
+        return "${text.length > 500 ? '${text.substring(0, 500)}...' : text}\n\n(llm: ${item.llm ?? 'original'})";
+      } else {
+        return text.length > 500 ? '${text.substring(0, 500)}...' : text;
+      }
     } else {
-      return "$text\n\n(llm: ${item.llm ?? 'original'})";
+      if (showLlm) {
+        return "$text\n\n(llm: ${item.llm ?? 'original'})";
+      } else {
+        return text;
+      }
     }
   } catch (e) {
     return item.description;
@@ -29,7 +41,7 @@ String parseDescription(NewsItem item, bool cutLong) {
 }
 
 openItem(BuildContext context, NewsItem item) async {
-  String description = parseDescription(item, false);
+  String description = parseDescription(item, false, true);
 
   showDialog(
     context: context,

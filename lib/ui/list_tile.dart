@@ -48,7 +48,7 @@ class JsonFeedTile extends StatelessWidget {
   final Locale locale;
 
   String get _baseUrl => _parseBaseUrl(item.link);
-  String get _description => parseDescription(item, true);
+  String get _description => parseDescription(item, true, false);
 
   DateTime get _publishedDate => parsePublishedParsed(item.publishedParsed).toLocal();
   bool get _isToday => _publishedDate.day == DateTime.now().day;
@@ -71,7 +71,7 @@ class JsonFeedTile extends StatelessWidget {
         child: InkWell(
           onTap: onItemTap,
           onLongPress: onItemLongPress,
-          borderRadius: BorderRadius.circular(AppBorderRadius.md),
+          borderRadius: BorderRadius.circular(Radi.medium),
           child: Padding(
             padding: const EdgeInsets.all(8),
             child: Column(
@@ -100,7 +100,7 @@ class JsonFeedTile extends StatelessWidget {
         child: InkWell(
           onTap: onItemTap,
           onLongPress: onItemLongPress,
-          borderRadius: BorderRadius.circular(AppBorderRadius.md),
+          borderRadius: BorderRadius.circular(Radi.medium),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -165,7 +165,7 @@ class JsonFeedTile extends StatelessWidget {
       children: [
         if (image != null) ...[
           ClipRRect(
-            borderRadius: BorderRadius.circular(AppBorderRadius.md),
+            borderRadius: BorderRadius.circular(Radi.medium),
             child: ClipRRect(child: image),
           ),
           (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android)
@@ -259,6 +259,7 @@ class RssFeedTile extends StatelessWidget {
       item.pubDate.toString(),
     ),
     true,
+    false,
   );
 
   DateTime get _publishedDate => parsePublishedParsed(item.pubDate);
@@ -310,7 +311,7 @@ class RssFeedTile extends StatelessWidget {
       children: [
         if (image != null) ...[
           ClipRRect(
-            borderRadius: BorderRadius.circular(AppBorderRadius.md),
+            borderRadius: BorderRadius.circular(Radi.medium),
             child: ClipRRect(child: image),
           ),
           (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android)
@@ -337,7 +338,7 @@ class RssFeedTile extends StatelessWidget {
       return Card(
         child: InkWell(
           onTap: openItem,
-          borderRadius: BorderRadius.circular(AppBorderRadius.md),
+          borderRadius: BorderRadius.circular(Radi.medium),
           child: Padding(
             padding: const EdgeInsets.all(8),
             child: Column(
@@ -363,7 +364,7 @@ class RssFeedTile extends StatelessWidget {
     return Card(
       child: InkWell(
         onTap: openItem,
-        borderRadius: BorderRadius.circular(AppBorderRadius.md),
+        borderRadius: BorderRadius.circular(Radi.medium),
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(

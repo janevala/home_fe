@@ -45,7 +45,7 @@ class _AnimatedFirstState extends State<AnimatedFirst> with TickerProviderStateM
     super.initState();
 
     if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
-      _containerHeight = 100;
+      _containerHeight = 120;
       _logoSizes = [40, 50, 60, 70, 80];
     }
 
