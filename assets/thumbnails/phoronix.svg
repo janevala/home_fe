@@ -1,12 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none">
-  <!-- Stylized bar chart / benchmark bars with circuit dot accent -->
-  <rect x="6" y="28" width="7" height="14" rx="1.5" fill="#E8742A"/>
-  <rect x="16" y="18" width="7" height="24" rx="1.5" fill="#E8742A"/>
-  <rect x="26" y="10" width="7" height="32" rx="1.5" fill="#E8742A"/>
-  <!-- Circuit line top -->
-  <polyline points="9.5,28 9.5,22 19.5,22 19.5,18" stroke="#E8742A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.45"/>
-  <polyline points="19.5,18 29.5,18 29.5,10" stroke="#E8742A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.45"/>
-  <!-- Upward arrow -->
-  <polyline points="38,20 42,14 42,14 46,20" stroke="#E8742A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-  <line x1="42" y1="14" x2="42" y2="36" stroke="#E8742A" stroke-width="2" stroke-linecap="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480" width="48" height="48">
+  <!-- Ascending bar chart with upward arrow -->
+  <!-- Bar 1 -->
+  <rect x="40"  y="300" width="80" height="140" rx="12" fill="#E8742A"/>
+  <!-- Bar 2 -->
+  <rect x="160" y="200" width="80" height="240" rx="12" fill="#E8742A"/>
+  <!-- Bar 3 -->
+  <rect x="280" y="100" width="80" height="340" rx="12" fill="#E8742A"/>
+  <!-- Upward arrow right side -->
+  <line x1="420" y1="400" x2="420" y2="60" stroke="#E8742A" stroke-width="28" stroke-linecap="round"/>
+  <polyline points="360,140 420,60 480,140" stroke="#E8742A" stroke-width="28" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
 </svg>

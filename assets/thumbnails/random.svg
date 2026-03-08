@@ -1,12 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none">
-  <!-- Refresh/random arrows -->
-  <path d="M36 12 A16 16 0 1 0 40 28" stroke="#6B7FD4" stroke-width="3" stroke-linecap="round" fill="none"/>
-  <!-- Arrow head -->
-  <polyline points="32,6 36,12 42,10" stroke="#6B7FD4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-  <!-- Center sparkle / random dot -->
-  <circle cx="24" cy="24" r="3" fill="#6B7FD4"/>
-  <circle cx="18" cy="18" r="1.5" fill="#6B7FD4" opacity="0.6"/>
-  <circle cx="30" cy="30" r="1.5" fill="#6B7FD4" opacity="0.6"/>
-  <circle cx="30" cy="18" r="1.5" fill="#6B7FD4" opacity="0.4"/>
-  <circle cx="18" cy="30" r="1.5" fill="#6B7FD4" opacity="0.4"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480" width="48" height="48">
+  <!-- Circular refresh arrow -->
+  <path d="M 380,240 A 150,150 0 1 0 338,370" fill="none" stroke="#6B7FD4" stroke-width="36" stroke-linecap="round"/>
+  <!-- Arrowhead at end of arc -->
+  <polygon points="338,370  290,340  370,300" fill="#6B7FD4"/>
+  <!-- Three random dots inside suggesting dice/random -->
+  <circle cx="190" cy="200" r="28" fill="#6B7FD4"/>
+  <circle cx="240" cy="260" r="28" fill="#6B7FD4"/>
+  <circle cx="290" cy="200" r="28" fill="#6B7FD4"/>
 </svg>

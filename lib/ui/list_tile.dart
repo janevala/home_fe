@@ -169,7 +169,7 @@ class JsonFeedTile extends StatelessWidget {
             child: ClipRRect(child: image),
           ),
           (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android)
-              ? SizedBox(width: 8)
+              ? SizedBox(width: 4)
               : SizedBox(width: 16),
         ],
         Text(
@@ -195,6 +195,8 @@ class JsonFeedTile extends StatelessWidget {
         Text(
           item.llm ?? AppLocalizations.of(context)!.unknown,
           style: Theme.of(context).textTheme.bodyMedium,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
       ],
     );

@@ -1,6 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none">
-  <!-- Lightning bolt / crunch shape -->
-  <polygon points="28,4 14,26 22,26 18,44 36,20 27,20" fill="#0A8F3C" stroke="none"/>
-  <!-- Subtle highlight facet -->
-  <polygon points="28,4 22,26 27,20 36,20" fill="#0DC552" opacity="0.4"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480" width="48" height="48">
+  <defs>
+    <clipPath id="cp_tc4">
+      <rect width="480" height="480" rx="100" ry="100"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#cp_tc4)">
+    <rect width="480" height="480" fill="#0A8F3C"/>
+
+    <!-- T: centered in left half (0–240), letter width=160, so x: 40–200, center=120 -->
+    <!-- Crossbar -->
+    <line x1="40"  y1="130" x2="200" y2="130" stroke="#FFFFFF" stroke-width="50" stroke-linecap="round"/>
+    <!-- Stem -->
+    <line x1="120" y1="130" x2="120" y2="350" stroke="#FFFFFF" stroke-width="50" stroke-linecap="round"/>
+
+    <!-- C: centered in right half (240–480), letter width=160, center=360 -->
+    <!-- radius=110 so top=240-110=130, bottom=240+110=350 -->
+    <!-- Arc start/end at x=360+110*cos(40°)≈444, y=240±110*sin(40°)≈171/309 -->
+    <path d="M 444,165 A 110,110 0 1 0 444,315"
+      fill="none" stroke="#FFFFFF" stroke-width="50" stroke-linecap="round"/>
+
+  </g>
 </svg>
