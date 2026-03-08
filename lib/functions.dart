@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:homefe/assets/i18n/generated/app_localizations.dart';
 import 'package:homefe/podo/rss/news_item.dart';
 import 'package:html/parser.dart';
-// import 'package:timeago/timeago.dart' as timeago;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 
-String parseDescription(NewsItem item, bool cutLong, bool showLlm) {
+String parseDescription(NewsItem item, bool cutLong, bool showLlm, String? warningText) {
   if (item.source == 'Dpreview' || item.source == 'Hacker News') {
     if (showLlm) {
-      return '${item.title}\n\n(llm: ${item.llm ?? 'original'})';
+      return '${item.title}\n\n(llm: ${item.llm ?? 'original'}, ${warningText ?? ''})';
     } else {
       return item.title;
     }
@@ -24,13 +23,13 @@ String parseDescription(NewsItem item, bool cutLong, bool showLlm) {
 
     if (cutLong) {
       if (showLlm) {
-        return "${text.length > 500 ? '${text.substring(0, 500)}...' : text}\n\n(llm: ${item.llm ?? 'original'})";
+        return "${text.length > 500 ? '${text.substring(0, 500)}...' : text}\n\n(llm: ${item.llm ?? 'original'}, ${warningText ?? ''})";
       } else {
         return text.length > 500 ? '${text.substring(0, 500)}...' : text;
       }
     } else {
       if (showLlm) {
-        return "$text\n\n(llm: ${item.llm ?? 'original'})";
+        return "$text\n\n(llm: ${item.llm ?? 'original'}, ${warningText ?? ''})";
       } else {
         return text;
       }
@@ -41,7 +40,11 @@ String parseDescription(NewsItem item, bool cutLong, bool showLlm) {
 }
 
 openItem(BuildContext context, NewsItem item) async {
-  String description = parseDescription(item, false, true);
+  String? warningText;
+  if (item.llm != null && item.llm != 'original') {
+    warningText = AppLocalizations.of(context)!.translationMayContainErrors;
+  }
+  String description = parseDescription(item, false, true, warningText);
 
   showDialog(
     context: context,

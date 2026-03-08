@@ -7,6 +7,19 @@ Tech Heavy News Frontend.
 - Search is broken because localization
 
 ## Back
+
+- Join translation queries in both search and archive requests
+```rows, err := db.Query(
+    `SELECT fi.link, fi.published, fi.source, fi.thumbnail, fi.uuid,
+            ft.published_parsed, ft.language, ft.title, ft.description, ft.llm
+     FROM feed_translations ft
+     JOIN feed_items fi ON fi.id = ft.item_id
+     WHERE ft.language = $2
+       AND (ft.title ILIKE '%' || $1 || '%'
+            OR ft.description ILIKE '%' || $1 || '%')
+     ORDER BY ft.published_parsed DESC
+     LIMIT 50`, searchQuery, lang)```
+
 - Ping is ollama alive
 - Ping what translations are available
 
