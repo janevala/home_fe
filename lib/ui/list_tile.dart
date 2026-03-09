@@ -86,7 +86,7 @@ class JsonFeedTile extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                 ],
-                _buildFooter(context),
+                _buildMobileFooter(context),
               ],
             ),
           ),
@@ -115,7 +115,7 @@ class JsonFeedTile extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                 ],
-                _buildFooter(context),
+                _buildWebFooter(context),
               ],
             ),
           ),
@@ -154,10 +154,8 @@ class JsonFeedTile extends StatelessWidget {
     );
   }
 
-  Widget _buildFooter(BuildContext context) {
-    SvgPicture? image = (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android)
-        ? _getImage(50)
-        : _getImage(100);
+  Widget _buildWebFooter(BuildContext context) {
+    SvgPicture? image = _getImage(100);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -168,9 +166,7 @@ class JsonFeedTile extends StatelessWidget {
             borderRadius: BorderRadius.circular(Radi.medium),
             child: ClipRRect(child: image),
           ),
-          (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android)
-              ? SizedBox(width: 4)
-              : SizedBox(width: 16),
+          SizedBox(width: 16),
         ],
         Text(
           _baseUrl,
@@ -197,6 +193,60 @@ class JsonFeedTile extends StatelessWidget {
           style: Theme.of(context).textTheme.bodyMedium,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildMobileFooter(BuildContext context) {
+    SvgPicture? image = _getImage(50);
+
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            if (image != null) ...[
+              ClipRRect(
+                borderRadius: BorderRadius.circular(Radi.medium),
+                child: ClipRRect(child: image),
+              ),
+              SizedBox(width: 4),
+            ],
+            Text(
+              _baseUrl,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                decoration: TextDecoration.underline,
+                color: AppColors.linkBlue,
+                decorationColor: AppColors.linkBlue,
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // const Spacer(),
+            item.llm == 'original'
+                ? Icon(
+                    Icons.check,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  )
+                : Icon(
+                    Icons.auto_fix_high,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
+            Text(
+              item.llm ?? AppLocalizations.of(context)!.unknown,
+              style: Theme.of(context).textTheme.bodyMedium,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
         ),
       ],
     );
