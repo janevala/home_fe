@@ -42,6 +42,41 @@ class _AnimatedFlagsState extends State<AnimatedFlags> with TickerProviderStateM
 
   void _resetAndStop() {}
 
+  bool _isCurrentLocale(String languageCode) {
+    return context.read<LocaleCubit>().state.languageCode == languageCode;
+  }
+
+  Widget _buildFlag(String code, String asset, String tooltip, {bool isMobile = false}) {
+    final isCurrent = _isCurrentLocale(code);
+    final size = isMobile ? 50.0 : 100.0;
+
+    return Tooltip(
+      message: tooltip,
+      child: InkWell(
+        onTap: () => context.read<LocaleCubit>().changeLocaleTo(Locale(code)),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(
+              color: isCurrent ? Theme.of(context).colorScheme.primary : Colors.transparent,
+              width: 2,
+            ),
+            color: isCurrent ? Theme.of(context).colorScheme.primary.withOpacity(0.1) : Colors.transparent,
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(isCurrent ? 4 : 0),
+            child: SvgPicture.asset(
+              asset,
+              key: ValueKey(code),
+              width: size,
+              height: size,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   void dispose() {
     _fadeController.dispose();
@@ -50,6 +85,13 @@ class _AnimatedFlagsState extends State<AnimatedFlags> with TickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
+    final flags = [
+      {'code': 'en', 'asset': 'assets/flags/flag-en.svg', 'tooltip': AppLocalizations.of(context)!.localeEnTranslated},
+      {'code': 'th', 'asset': 'assets/flags/flag-th.svg', 'tooltip': AppLocalizations.of(context)!.localeThTranslated},
+      {'code': 'fi', 'asset': 'assets/flags/flag-fi.svg', 'tooltip': AppLocalizations.of(context)!.localeFiTranslated},
+      {'code': 'de', 'asset': 'assets/flags/flag-de.svg', 'tooltip': AppLocalizations.of(context)!.localeDeTranslated},
+    ];
+
     if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
       return SizedBox(
         height: 120,
@@ -72,55 +114,17 @@ class _AnimatedFlagsState extends State<AnimatedFlags> with TickerProviderStateM
                 const SizedBox(height: 32),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        context.read<LocaleCubit>().changeLocaleTo(Locale('en'));
-                      },
-                      child: SvgPicture.asset(
-                        'assets/flags/flag-en.svg',
-                        key: ValueKey('en'),
-                        width: 50,
-                        height: 50,
+                  children: flags.map((flag) {
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 16),
+                      child: _buildFlag(
+                        flag['code']!,
+                        flag['asset']!,
+                        flag['tooltip']!,
+                        isMobile: true,
                       ),
-                    ),
-                    const SizedBox(width: 16),
-                    InkWell(
-                      onTap: () {
-                        context.read<LocaleCubit>().changeLocaleTo(Locale('th'));
-                      },
-                      child: SvgPicture.asset(
-                        'assets/flags/flag-th.svg',
-                        key: ValueKey('th'),
-                        width: 50,
-                        height: 50,
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    InkWell(
-                      onTap: () {
-                        context.read<LocaleCubit>().changeLocaleTo(Locale('fi'));
-                      },
-                      child: SvgPicture.asset(
-                        'assets/flags/flag-fi.svg',
-                        key: ValueKey('fi'),
-                        width: 50,
-                        height: 50,
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    InkWell(
-                      onTap: () {
-                        context.read<LocaleCubit>().changeLocaleTo(Locale('de'));
-                      },
-                      child: SvgPicture.asset(
-                        'assets/flags/flag-de.svg',
-                        key: ValueKey('de'),
-                        width: 50,
-                        height: 50,
-                      ),
-                    ),
-                  ],
+                    );
+                  }).toList(),
                 ),
               ],
             ),
@@ -150,67 +154,17 @@ class _AnimatedFlagsState extends State<AnimatedFlags> with TickerProviderStateM
               const SizedBox(height: 32),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Tooltip(
-                    message: AppLocalizations.of(context)!.localeEnTranslated,
-                    child: InkWell(
-                      onTap: () {
-                        context.read<LocaleCubit>().changeLocaleTo(Locale('en'));
-                      },
-                      child: SvgPicture.asset(
-                        'assets/flags/flag-en.svg',
-                        key: ValueKey('en'),
-                        width: 100,
-                        height: 100,
-                      ),
+                children: flags.map((flag) {
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 16),
+                    child: _buildFlag(
+                      flag['code']!,
+                      flag['asset']!,
+                      flag['tooltip']!,
+                      isMobile: false,
                     ),
-                  ),
-                  const SizedBox(width: 16),
-                  Tooltip(
-                    message: AppLocalizations.of(context)!.localeThTranslated,
-                    child: InkWell(
-                      onTap: () {
-                        context.read<LocaleCubit>().changeLocaleTo(Locale('th'));
-                      },
-                      child: SvgPicture.asset(
-                        'assets/flags/flag-th.svg',
-                        key: ValueKey('th'),
-                        width: 100,
-                        height: 100,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Tooltip(
-                    message: AppLocalizations.of(context)!.localeFiTranslated,
-                    child: InkWell(
-                      onTap: () {
-                        context.read<LocaleCubit>().changeLocaleTo(Locale('fi'));
-                      },
-                      child: SvgPicture.asset(
-                        'assets/flags/flag-fi.svg',
-                        key: ValueKey('fi'),
-                        width: 100,
-                        height: 100,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Tooltip(
-                    message: AppLocalizations.of(context)!.localeDeTranslated,
-                    child: InkWell(
-                      onTap: () {
-                        context.read<LocaleCubit>().changeLocaleTo(Locale('de'));
-                      },
-                      child: SvgPicture.asset(
-                        'assets/flags/flag-de.svg',
-                        key: ValueKey('de'),
-                        width: 100,
-                        height: 100,
-                      ),
-                    ),
-                  ),
-                ],
+                  );
+                }).toList(),
               ),
             ],
           ),
