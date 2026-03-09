@@ -61,7 +61,7 @@ class _AnimatedFlagsState extends State<AnimatedFlags> with TickerProviderStateM
               color: isCurrent ? Theme.of(context).colorScheme.primary : Colors.transparent,
               width: 2,
             ),
-            color: isCurrent ? Theme.of(context).colorScheme.primary.withOpacity(0.1) : Colors.transparent,
+            color: isCurrent ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.1) : Colors.transparent,
           ),
           child: Padding(
             padding: EdgeInsets.all(isCurrent ? 4 : 0),

@@ -205,7 +205,7 @@ class JsonFeedTile extends StatelessWidget {
   SvgPicture? _getImage(double size) {
     if (item.source == null) {
       return SvgPicture.asset(
-        'assets/thumbnails/random-source.svg',
+        'assets/thumbnails/random.svg',
         key: const ValueKey('random-source'),
         width: 80,
         height: 80,
