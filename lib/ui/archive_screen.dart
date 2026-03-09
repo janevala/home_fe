@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:homefe/assets/i18n/generated/app_localizations.dart';
@@ -19,6 +20,13 @@ class ArchiveScreen extends StatefulWidget {
 class ArchiveScreenState extends State<ArchiveScreen> {
   final _scrollContoller = ScrollController();
   final _searchController = TextEditingController();
+  bool _isSearchVisible = true;
+
+  void _toggleSearchVisibility() {
+    setState(() {
+      _isSearchVisible = !_isSearchVisible;
+    });
+  }
 
   @override
   void initState() {
@@ -49,6 +57,16 @@ class ArchiveScreenState extends State<ArchiveScreen> {
       final language = locale.languageCode;
       context.read<RssArchiveBloc>().add(LoadMoreArchive(language: language));
     }
+
+    if (_scrollContoller.position.userScrollDirection == ScrollDirection.reverse) {
+      if (_isSearchVisible) {
+        _toggleSearchVisibility();
+      }
+    } else if (_scrollContoller.position.userScrollDirection == ScrollDirection.forward) {
+      if (!_isSearchVisible) {
+        _toggleSearchVisibility();
+      }
+    }
   }
 
   @override
@@ -72,36 +90,40 @@ class ArchiveScreenState extends State<ArchiveScreen> {
                 child: CustomScrollView(
                   controller: _scrollContoller,
                   slivers: [
-                    SliverToBoxAdapter(
-                      child: TextField(
-                        controller: _searchController,
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.search),
-                          suffixIcon: IconButton(
-                            icon: Icon(Icons.clear),
-                            onPressed: () {
-                              _searchController.clear();
-                              context.read<RssArchiveBloc>().add(ResetArchive());
-                              final locale = Localizations.localeOf(context);
-                              final language = locale.languageCode;
-                              context.read<RssArchiveBloc>().add(LoadMoreArchive(language: language));
-                            },
+                    SliverAnimatedOpacity(
+                      opacity: _isSearchVisible ? 1.0 : 0.0,
+                      duration: const Duration(milliseconds: 250),
+                      sliver: SliverToBoxAdapter(
+                        child: TextField(
+                          controller: _searchController,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.search),
+                            suffixIcon: IconButton(
+                              icon: Icon(Icons.clear),
+                              onPressed: () {
+                                _searchController.clear();
+                                context.read<RssArchiveBloc>().add(ResetArchive());
+                                final locale = Localizations.localeOf(context);
+                                final language = locale.languageCode;
+                                context.read<RssArchiveBloc>().add(LoadMoreArchive(language: language));
+                              },
+                            ),
+                            hintText: AppLocalizations.of(context)!.searchArchive,
+                            border: Theme.of(context).inputDecorationTheme.border,
                           ),
-                          hintText: AppLocalizations.of(context)!.searchArchive,
-                          border: Theme.of(context).inputDecorationTheme.border,
-                        ),
-                        onChanged: (value) {
-                          final locale = Localizations.localeOf(context);
-                          final language = locale.languageCode;
+                          onChanged: (value) {
+                            final locale = Localizations.localeOf(context);
+                            final language = locale.languageCode;
 
-                          if (value.isEmpty) {
-                            context.read<RssArchiveBloc>().add(LoadMoreArchive(language: language));
-                          } else {
-                            context.read<RssArchiveBloc>().add(
-                              SearchArchive(query: _searchController.text, language: language),
-                            );
-                          }
-                        },
+                            if (value.isEmpty) {
+                              context.read<RssArchiveBloc>().add(LoadMoreArchive(language: language));
+                            } else {
+                              context.read<RssArchiveBloc>().add(
+                                SearchArchive(query: _searchController.text, language: language),
+                              );
+                            }
+                          },
+                        ),
                       ),
                     ),
                     if (state is Loading)
