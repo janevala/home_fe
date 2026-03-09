@@ -22,12 +22,6 @@ class ArchiveScreenState extends State<ArchiveScreen> {
   final _searchController = TextEditingController();
   bool _isSearchVisible = true;
 
-  void _toggleSearchVisibility() {
-    setState(() {
-      _isSearchVisible = !_isSearchVisible;
-    });
-  }
-
   @override
   void initState() {
     super.initState();
@@ -60,11 +54,15 @@ class ArchiveScreenState extends State<ArchiveScreen> {
 
     if (_scrollContoller.position.userScrollDirection == ScrollDirection.reverse) {
       if (_isSearchVisible) {
-        _toggleSearchVisibility();
+        setState(() {
+          _isSearchVisible = !_isSearchVisible;
+        });
       }
     } else if (_scrollContoller.position.userScrollDirection == ScrollDirection.forward) {
       if (!_isSearchVisible) {
-        _toggleSearchVisibility();
+        setState(() {
+          _isSearchVisible = !_isSearchVisible;
+        });
       }
     }
   }
