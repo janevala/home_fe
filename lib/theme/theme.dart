@@ -122,6 +122,12 @@ class AppTheme {
   static ThemeData _applyMobileAdjustments(ThemeData baseTheme, bool isDarkMode) {
     return baseTheme.copyWith(
       textTheme: _adaptForMobile(baseTheme.textTheme),
+      appBarTheme: baseTheme.appBarTheme.copyWith(
+        titleTextStyle: baseTheme.appBarTheme.titleTextStyle?.copyWith(
+          fontSize: (baseTheme.appBarTheme.titleTextStyle?.fontSize ?? 20) * _AdaptMobile.textScaleFactor,
+        ),
+        toolbarHeight: 48.0,
+      ),
       cardTheme: baseTheme.cardTheme.copyWith(
         margin: _AdaptMobile.cardMargin,
         shape: RoundedRectangleBorder(borderRadius: _AdaptMobile.cardBorderRadius),
