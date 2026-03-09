@@ -6,10 +6,10 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 
 String parseDescription(NewsItem item, bool cutLong, String? warningText) {
-  if (item.source == 'Dpreview' || item.source == 'Hacker News') {
+  if (item.source == 'Dpreview') {
     String description = item.title;
     if (warningText != null) {
-      description += '\n\n(llm: ${item.llm ?? 'original'}, $warningText)';
+      description += '\n\n(LLM: ${item.llm ?? 'original'}. $warningText)';
     }
     return description;
   }
@@ -17,7 +17,7 @@ String parseDescription(NewsItem item, bool cutLong, String? warningText) {
   if (item.description.isEmpty) {
     String description = item.title;
     if (warningText != null) {
-      description += '\n\n(llm: ${item.llm ?? 'original'}, $warningText)';
+      description += '\n\n(LLM: ${item.llm ?? 'original'}. $warningText)';
     }
 
     return description;
@@ -33,7 +33,7 @@ String parseDescription(NewsItem item, bool cutLong, String? warningText) {
     }
 
     if (warningText != null) {
-      description += '\n\n(llm: ${item.llm ?? 'original'}, $warningText)';
+      description += '\n\n(LLM: ${item.llm ?? 'original'}. $warningText)';
     }
 
     return description;
