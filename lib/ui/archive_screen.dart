@@ -63,154 +63,141 @@ class ArchiveScreenState extends State<ArchiveScreen> {
         ),
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.search),
-                suffixIcon: IconButton(
-                  icon: Icon(Icons.clear),
-                  onPressed: () {
-                    _searchController.clear();
-                    context.read<RssArchiveBloc>().add(ResetArchive());
-                    final locale = Localizations.localeOf(context);
-                    final language = locale.languageCode;
-                    context.read<RssArchiveBloc>().add(LoadMoreArchive(language: language));
-                  },
-                ),
-                hintText: AppLocalizations.of(context)!.searchArchive,
-                border: Theme.of(context).inputDecorationTheme.border,
-              ),
-              onChanged: (value) {
-                final locale = Localizations.localeOf(context);
-                final language = locale.languageCode;
+        child: BlocBuilder<RssArchiveBloc, RssState>(
+          builder: (context, state) {
+            return CallbackShortcuts(
+              bindings: getCallbackShortcuts(_scrollContoller),
+              child: Focus(
+                autofocus: true,
+                child: CustomScrollView(
+                  controller: _scrollContoller,
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: TextField(
+                        controller: _searchController,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.search),
+                          suffixIcon: IconButton(
+                            icon: Icon(Icons.clear),
+                            onPressed: () {
+                              _searchController.clear();
+                              context.read<RssArchiveBloc>().add(ResetArchive());
+                              final locale = Localizations.localeOf(context);
+                              final language = locale.languageCode;
+                              context.read<RssArchiveBloc>().add(LoadMoreArchive(language: language));
+                            },
+                          ),
+                          hintText: AppLocalizations.of(context)!.searchArchive,
+                          border: Theme.of(context).inputDecorationTheme.border,
+                        ),
+                        onChanged: (value) {
+                          final locale = Localizations.localeOf(context);
+                          final language = locale.languageCode;
 
-                if (value.isEmpty) {
-                  context.read<RssArchiveBloc>().add(LoadMoreArchive(language: language));
-                } else {
-                  context.read<RssArchiveBloc>().add(
-                    SearchArchive(query: _searchController.text, language: language),
-                  );
-                }
-              },
-            ),
-            BlocBuilder<RssArchiveBloc, RssState>(
-              builder: (context, state) {
-                if (state is Loading) {
-                  return Flexible(child: Center(child: const Spinner()));
-                } else if (state is ArchiveLoad) {
-                  return _buildList(context, state.items, _scrollContoller);
-                } else if (state is ArchiveLoadMore) {
-                  return _buildList(
-                    context,
-                    state.items,
-                    _scrollContoller,
-                    isLoadingMore: true,
-                  );
-                } else if (state is SearchLoad) {
-                  return _buildSearchList(context, state.items);
-                } else if (state is Failure) {
-                  return Flexible(
-                    child: Center(
-                      child: Text(
-                        state.error,
-                        style: const TextStyle(fontSize: 18),
+                          if (value.isEmpty) {
+                            context.read<RssArchiveBloc>().add(LoadMoreArchive(language: language));
+                          } else {
+                            context.read<RssArchiveBloc>().add(
+                              SearchArchive(query: _searchController.text, language: language),
+                            );
+                          }
+                        },
                       ),
                     ),
-                  );
-                } else if (state is AnswerSuccess) {
-                  return Flexible(
-                    child: Center(
-                      child: Text(
-                        state.answer,
-                        style: const TextStyle(fontSize: 18),
+                    if (state is Loading)
+                      SliverFillRemaining(
+                        child: Center(child: const Spinner()),
+                      )
+                    else if (state is ArchiveLoad)
+                      _buildSliverList(context, state.items, isLoadingMore: false)
+                    else if (state is ArchiveLoadMore)
+                      _buildSliverList(context, state.items, isLoadingMore: true)
+                    else if (state is SearchLoad)
+                      _buildSearchSliverList(context, state.items)
+                    else if (state is Failure)
+                      SliverFillRemaining(
+                        child: Center(
+                          child: Text(
+                            state.error,
+                            style: const TextStyle(fontSize: 18),
+                          ),
+                        ),
+                      )
+                    else if (state is AnswerSuccess)
+                      SliverFillRemaining(
+                        child: Center(
+                          child: Text(
+                            state.answer,
+                            style: const TextStyle(fontSize: 18),
+                          ),
+                        ),
+                      )
+                    else
+                      SliverFillRemaining(
+                        child: Center(
+                          child: Text(
+                            AppLocalizations.of(context)!.generalError,
+                            style: const TextStyle(fontSize: 18),
+                          ),
+                        ),
                       ),
-                    ),
-                  );
-                } else {
-                  return Flexible(
-                    child: Center(
-                      child: Text(
-                        AppLocalizations.of(context)!.generalError,
-                        style: const TextStyle(fontSize: 18),
-                      ),
-                    ),
-                  );
-                }
-              },
-            ),
-          ],
+                  ],
+                ),
+              ),
+            );
+          },
         ),
       ),
     );
   }
 
-  Widget _buildList(
+  SliverList _buildSliverList(
     BuildContext context,
-    List<NewsItem> items,
-    ScrollController scroll, {
+    List<NewsItem> items, {
     bool isLoadingMore = false,
   }) {
-    return Flexible(
-      child: CallbackShortcuts(
-        bindings: getCallbackShortcuts(scroll),
-        child: Focus(
-          autofocus: true,
-          child: ListView.builder(
-            controller: scroll,
-            itemCount: items.length + (isLoadingMore ? 1 : 0),
-            itemBuilder: (BuildContext context, int index) {
-              if (index >= items.length) {
-                return Center(child: CircularProgressIndicator());
-              }
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) {
+          if (index >= items.length) {
+            return Center(child: CircularProgressIndicator());
+          }
 
-              NewsItem item = items[index];
-              Locale locale = Localizations.localeOf(context);
-              if (locale.countryCode == "pt") {
-                locale = Locale('pt_BR');
-              }
-              return JsonFeedTile(
-                key: Key(item.link),
-                onItemTap: () => openItem(context, item),
-                // onItemTap: () {
-                //   context.read<RssArchiveBloc>().add(
-                //     QuestionEvent(
-                //       'Generate text in Finnish. Just text itself, no explanation needed. Text: ${item.title}',
-                //     ),
-                //   );
-                // },
-                item: item,
-                locale: locale,
-              );
-            },
-          ),
-        ),
+          NewsItem item = items[index];
+          Locale locale = Localizations.localeOf(context);
+          if (locale.countryCode == "pt") {
+            locale = Locale('pt_BR');
+          }
+          return JsonFeedTile(
+            key: Key(item.link),
+            onItemTap: () => openItem(context, item),
+            item: item,
+            locale: locale,
+          );
+        },
+        childCount: items.length + (isLoadingMore ? 1 : 0),
       ),
     );
   }
 
-  Widget _buildSearchList(BuildContext context, List<NewsItem> items) {
+  SliverList _buildSearchSliverList(BuildContext context, List<NewsItem> items) {
     Locale locale = Localizations.localeOf(context);
     if (locale.countryCode == "pt") {
       locale = Locale('pt_BR');
     }
 
-    return Flexible(
-      child: Focus(
-        autofocus: true,
-        child: ListView.builder(
-          itemCount: items.length,
-          itemBuilder: (BuildContext context, int index) {
-            NewsItem item = items[index];
-            return JsonFeedTile(
-              key: Key(item.link),
-              onItemTap: () => openItem(context, item),
-              item: item,
-              locale: locale,
-            );
-          },
-        ),
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) {
+          NewsItem item = items[index];
+          return JsonFeedTile(
+            key: Key(item.link),
+            onItemTap: () => openItem(context, item),
+            item: item,
+            locale: locale,
+          );
+        },
+        childCount: items.length,
       ),
     );
   }
