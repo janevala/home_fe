@@ -6,7 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 
 String parseDescription(NewsItem item, bool cutLong, String? warningText) {
-  if (item.source == 'Dpreview') {
+  if (item.source == 'Dpreview' || (item.source == 'Hacker News' && item.llm == 'original')) {
     String description = item.title;
     if (warningText != null) {
       description += '\n\n(LLM: ${item.llm ?? 'original'}. $warningText)';
