@@ -8,14 +8,21 @@ if [ ! -f ".env" ]; then
     exit 1
 fi
 
-sudo docker build --no-cache -f Dockerfile -t news-frontend .
+REL=$(cat .env | grep REL | cut -d '=' -f2)
+
+# Build
+time sudo docker build --no-cache -f Dockerfile -t news-frontend .
 sudo docker run --name front-host --network home-network -p 80:7070 --restart always -d news-frontend
 
+# Commit and save
+sudo docker commit front-host news-frontend:$REL
+sudo docker save -o news-frontend-$REL.tar news-frontend:$REL
+sudo gzip news-frontend-$REL.tar
+sudo chown jay news-frontend-$REL.tar.gz
+scp news-frontend-$REL.tar.gz <user>@<your.remote.host>:
 
-sudo docker commit front-host news-frontend:rel18
-sudo docker save -o news-frontend-rel18.tar news-frontend:rel18
-sudo gzip news-frontend-rel18.tar
-sudo chown jay news-frontend-rel18.tar.gz
-scp news-frontend-rel18.tar.gz jay@IP:
-sudo docker load -i news-frontend-rel18.tar.gz
-sudo docker run -d --name news-frontend --network home-network -p 80:7070 news-frontend:rel18
+# Load and run on production
+docker context use production-context
+docker load -i news-frontend-$REL.tar.gz
+docker run -d --name news-frontend --network home-network -p 80:7070 news-frontend:$REL
+docker context use default

@@ -76,7 +76,7 @@ sudo docker commit front-host news-frontend:rel18
 sudo docker save -o news-frontend-rel18.tar news-frontend:rel18
 sudo gzip news-frontend-rel18.tar
 sudo chown jay news-frontend-rel18.tar.gz
-scp news-frontend-rel18.tar.gz jay@IP:
+scp news-frontend-rel18.tar.gz <user>@<your.remote.host>:
 sudo docker load -i news-frontend-rel18.tar.gz
 sudo docker run -d --name news-frontend --network home-network -p 80:7070 news-frontend:rel18
 ```
