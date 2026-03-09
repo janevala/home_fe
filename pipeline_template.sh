@@ -1,7 +1,9 @@
 #!/bin/bash -x
 
 # Pre-requisites:
-# 1. This is run on development server that has access to Ollama server, or in Ollama server itself
+# 1. This is run on development server that has access to Ollama server (config.json)
+# 2. Remove old containers from both production and development servers
+# 3. SSH keys are configured to production
 
 if [ ! -f ".env" ]; then
     echo "Error: .env file not found"

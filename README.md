@@ -2,6 +2,12 @@
 
 Tech Heavy News Frontend.
 
+# Get Started, dev evironment files needed. Copy from templates:
+.env
+.vscode/launch.json
+pipeline.sh
+
+
 # TODO
 ## Front Bugs
 - Search is broken because localization
