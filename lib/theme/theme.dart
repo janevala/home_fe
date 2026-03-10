@@ -2,9 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class _AdaptMobile {
-  static const double textScaleFactor = 0.8;
+  static const double textScaleFactor = 0.9;
   static const EdgeInsets cardMargin = EdgeInsets.symmetric(horizontal: 4, vertical: 2);
-  // static const EdgeInsets listTilePadding = EdgeInsets.symmetric(horizontal: 12, vertical: 2);
+  static const EdgeInsets listTilePadding = EdgeInsets.symmetric(horizontal: 16, vertical: 2);
   static const EdgeInsets buttonPadding = EdgeInsets.symmetric(horizontal: 4, vertical: 2);
   static const EdgeInsets inputPadding = EdgeInsets.symmetric(horizontal: 4, vertical: 2);
   static const BorderRadius cardBorderRadius = BorderRadius.all(Radius.circular(Radi.small));
@@ -133,7 +133,7 @@ class AppTheme {
         shape: RoundedRectangleBorder(borderRadius: _AdaptMobile.cardBorderRadius),
       ),
       listTileTheme: baseTheme.listTileTheme.copyWith(
-        // contentPadding: _AdaptMobile.listTilePadding,
+        contentPadding: _AdaptMobile.listTilePadding,
         titleTextStyle: baseTheme.textTheme.titleMedium?.copyWith(
           fontSize: (baseTheme.textTheme.titleMedium?.fontSize ?? 16) * _AdaptMobile.textScaleFactor,
         ),
