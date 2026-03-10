@@ -31,6 +31,8 @@ class DashboardScreenState extends State<DashboardScreen> {
   bool firstTimeUser = true;
   bool showAnimation = true;
 
+  bool slowLoadingDone = false;
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -217,6 +219,7 @@ class DashboardScreenState extends State<DashboardScreen> {
       body: BlocListener<RssArchiveBloc, RssState>(
         listener: (context, state) {
           if (state is ArchiveRefreshDone) {
+            slowLoadingDone = true;
             String message;
 
             oldestItemDate = parsePublishedParsed(state.stats.oldest);
@@ -299,7 +302,7 @@ class DashboardScreenState extends State<DashboardScreen> {
                     //   ),
                     // if (!kIsWeb && !kIsWasm) const SizedBox(height: 32),
                     ElevatedButton(
-                      onPressed: state is ArchiveRefreshDone ? () => GoRouter.of(context).push('/archive') : null,
+                      onPressed: slowLoadingDone ? () => GoRouter.of(context).push('/archive') : null,
                       child: Text(AppLocalizations.of(context)!.newsArchive),
                     ),
                   ],
