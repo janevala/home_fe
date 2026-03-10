@@ -114,7 +114,7 @@ class ArchiveScreenState extends State<ArchiveScreen> with TickerProviderStateMi
                       controller: _scrollContoller,
                       slivers: [
                         SliverToBoxAdapter(
-                          child: SizedBox(height: PlatformUtils.isWeb ? 56 : 48),
+                          child: SizedBox(height: 56),
                         ),
                         if (state is Loading)
                           SliverFillRemaining(
