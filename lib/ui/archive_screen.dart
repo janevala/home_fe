@@ -114,7 +114,7 @@ class ArchiveScreenState extends State<ArchiveScreen> with TickerProviderStateMi
                       controller: _scrollContoller,
                       slivers: [
                         SliverToBoxAdapter(
-                          child: SizedBox(height: 56),
+                          child: SizedBox(height: 48),
                         ),
                         if (state is Loading)
                           SliverFillRemaining(
@@ -165,7 +165,7 @@ class ArchiveScreenState extends State<ArchiveScreen> with TickerProviderStateMi
                           return Transform.translate(
                             offset: Offset(0, _slideAnimation.value),
                             child: Container(
-                              padding: const EdgeInsets.all(16),
+                              padding: Theme.of(context).inputDecorationTheme.contentPadding,
                               decoration: BoxDecoration(
                                 color: Theme.of(context).scaffoldBackgroundColor,
                               ),
