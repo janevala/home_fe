@@ -26,6 +26,8 @@ scp news-frontend-$REL.tar.gz <user>@<your.remote.host>:
 
 # Load and run on production
 docker context use production-context
+docker stop news-frontend
+docker rm news-frontend
 docker load -i news-frontend-$REL.tar.gz
 docker run -d --name news-frontend --network home-network -p 80:7070 news-frontend:$REL
 docker context use default
