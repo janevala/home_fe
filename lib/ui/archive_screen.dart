@@ -17,16 +17,35 @@ class ArchiveScreen extends StatefulWidget {
   ArchiveScreenState createState() => ArchiveScreenState();
 }
 
-class ArchiveScreenState extends State<ArchiveScreen> {
+class ArchiveScreenState extends State<ArchiveScreen> with TickerProviderStateMixin {
   final _scrollContoller = ScrollController();
   final _searchController = TextEditingController();
-  bool _isSearchVisible = true;
+
+  bool _isSearchBarVisible = true;
+  late AnimationController _animationController;
+  late Animation<double> _slideAnimation;
 
   @override
   void initState() {
     super.initState();
 
     _scrollContoller.addListener(_onScroll);
+
+    _animationController = AnimationController(
+      duration: const Duration(milliseconds: 300),
+      vsync: this,
+    );
+
+    _slideAnimation =
+        Tween<double>(
+          begin: 0.0,
+          end: -100.0,
+        ).animate(
+          CurvedAnimation(
+            parent: _animationController,
+            curve: Curves.easeInOut,
+          ),
+        );
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<RssArchiveBloc>().add(ResetArchive());
@@ -41,6 +60,7 @@ class ArchiveScreenState extends State<ArchiveScreen> {
     _scrollContoller.removeListener(_onScroll);
     _scrollContoller.dispose();
     _searchController.dispose();
+    _animationController.dispose();
 
     super.dispose();
   }
@@ -53,16 +73,18 @@ class ArchiveScreenState extends State<ArchiveScreen> {
     }
 
     if (_scrollContoller.position.userScrollDirection == ScrollDirection.reverse) {
-      if (_isSearchVisible) {
+      if (_isSearchBarVisible) {
         setState(() {
-          _isSearchVisible = !_isSearchVisible;
+          _isSearchBarVisible = false;
         });
+        _animationController.forward();
       }
     } else if (_scrollContoller.position.userScrollDirection == ScrollDirection.forward) {
-      if (!_isSearchVisible) {
+      if (!_isSearchBarVisible) {
         setState(() {
-          _isSearchVisible = !_isSearchVisible;
+          _isSearchBarVisible = true;
         });
+        _animationController.reverse();
       }
     }
   }
@@ -85,82 +107,104 @@ class ArchiveScreenState extends State<ArchiveScreen> {
               bindings: getCallbackShortcuts(_scrollContoller),
               child: Focus(
                 autofocus: true,
-                child: CustomScrollView(
-                  controller: _scrollContoller,
-                  slivers: [
-                    SliverAnimatedOpacity(
-                      opacity: _isSearchVisible ? 1.0 : 0.0,
-                      duration: const Duration(milliseconds: 250),
-                      sliver: SliverToBoxAdapter(
-                        child: TextField(
-                          controller: _searchController,
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.search),
-                            suffixIcon: IconButton(
-                              icon: Icon(Icons.clear),
-                              onPressed: () {
-                                _searchController.clear();
-                                context.read<RssArchiveBloc>().add(ResetArchive());
-                                final locale = Localizations.localeOf(context);
-                                final language = locale.languageCode;
-                                context.read<RssArchiveBloc>().add(LoadMoreArchive(language: language));
-                              },
-                            ),
-                            hintText: AppLocalizations.of(context)!.searchArchive,
-                            border: Theme.of(context).inputDecorationTheme.border,
-                          ),
-                          onChanged: (value) {
-                            final locale = Localizations.localeOf(context);
-                            final language = locale.languageCode;
-
-                            if (value.isEmpty) {
-                              context.read<RssArchiveBloc>().add(LoadMoreArchive(language: language));
-                            } else {
-                              context.read<RssArchiveBloc>().add(
-                                SearchArchive(query: _searchController.text, language: language),
-                              );
-                            }
-                          },
+                child: Stack(
+                  children: [
+                    CustomScrollView(
+                      controller: _scrollContoller,
+                      slivers: [
+                        SliverToBoxAdapter(
+                          child: SizedBox(height: 80), // Space for fixed search bar
                         ),
+                        if (state is Loading)
+                          SliverFillRemaining(
+                            child: Center(child: const Spinner()),
+                          )
+                        else if (state is ArchiveLoad)
+                          _buildSliverList(context, state.items, isLoadingMore: false)
+                        else if (state is ArchiveLoadMore)
+                          _buildSliverList(context, state.items, isLoadingMore: true)
+                        else if (state is SearchLoad)
+                          _buildSearchSliverList(context, state.items)
+                        else if (state is Failure)
+                          SliverFillRemaining(
+                            child: Center(
+                              child: Text(
+                                state.error,
+                                style: const TextStyle(fontSize: 18),
+                              ),
+                            ),
+                          )
+                        else if (state is AnswerSuccess)
+                          SliverFillRemaining(
+                            child: Center(
+                              child: Text(
+                                state.answer,
+                                style: const TextStyle(fontSize: 18),
+                              ),
+                            ),
+                          )
+                        else
+                          SliverFillRemaining(
+                            child: Center(
+                              child: Text(
+                                AppLocalizations.of(context)!.generalError,
+                                style: const TextStyle(fontSize: 18),
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                    Positioned(
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      child: AnimatedBuilder(
+                        animation: _slideAnimation,
+                        builder: (context, child) {
+                          return Transform.translate(
+                            offset: Offset(0, _slideAnimation.value),
+                            child: Container(
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).scaffoldBackgroundColor,
+                              ),
+                              child: TextField(
+                                controller: _searchController,
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Theme.of(context).scaffoldBackgroundColor,
+                                  prefixIcon: Icon(Icons.search),
+                                  suffixIcon: IconButton(
+                                    icon: Icon(Icons.clear),
+                                    onPressed: () {
+                                      _searchController.clear();
+                                      context.read<RssArchiveBloc>().add(ResetArchive());
+                                      final locale = Localizations.localeOf(context);
+                                      final language = locale.languageCode;
+                                      context.read<RssArchiveBloc>().add(LoadMoreArchive(language: language));
+                                    },
+                                  ),
+                                  hintText: AppLocalizations.of(context)!.searchArchive,
+                                  border: Theme.of(context).inputDecorationTheme.border,
+                                ),
+                                onChanged: (value) {
+                                  final locale = Localizations.localeOf(context);
+                                  final language = locale.languageCode;
+
+                                  if (value.isEmpty) {
+                                    context.read<RssArchiveBloc>().add(LoadMoreArchive(language: language));
+                                  } else {
+                                    context.read<RssArchiveBloc>().add(
+                                      SearchArchive(query: _searchController.text, language: language),
+                                    );
+                                  }
+                                },
+                              ),
+                            ),
+                          );
+                        },
                       ),
                     ),
-                    if (state is Loading)
-                      SliverFillRemaining(
-                        child: Center(child: const Spinner()),
-                      )
-                    else if (state is ArchiveLoad)
-                      _buildSliverList(context, state.items, isLoadingMore: false)
-                    else if (state is ArchiveLoadMore)
-                      _buildSliverList(context, state.items, isLoadingMore: true)
-                    else if (state is SearchLoad)
-                      _buildSearchSliverList(context, state.items)
-                    else if (state is Failure)
-                      SliverFillRemaining(
-                        child: Center(
-                          child: Text(
-                            state.error,
-                            style: const TextStyle(fontSize: 18),
-                          ),
-                        ),
-                      )
-                    else if (state is AnswerSuccess)
-                      SliverFillRemaining(
-                        child: Center(
-                          child: Text(
-                            state.answer,
-                            style: const TextStyle(fontSize: 18),
-                          ),
-                        ),
-                      )
-                    else
-                      SliverFillRemaining(
-                        child: Center(
-                          child: Text(
-                            AppLocalizations.of(context)!.generalError,
-                            style: const TextStyle(fontSize: 18),
-                          ),
-                        ),
-                      ),
                   ],
                 ),
               ),
