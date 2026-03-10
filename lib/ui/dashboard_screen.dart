@@ -299,17 +299,7 @@ class DashboardScreenState extends State<DashboardScreen> {
                     //   ),
                     // if (!kIsWeb && !kIsWasm) const SizedBox(height: 32),
                     ElevatedButton(
-                      style: state is SlowLoading
-                          ? ButtonStyle(
-                              backgroundColor: WidgetStateProperty.all(
-                                Theme.of(context).colorScheme.primary.withValues(alpha: 0.5),
-                              ),
-                              foregroundColor: WidgetStateProperty.all(
-                                Theme.of(context).colorScheme.onPrimary.withValues(alpha: 0.5),
-                              ),
-                            )
-                          : null,
-                      onPressed: state is SlowLoading ? null : () => GoRouter.of(context).push('/archive'),
+                      onPressed: state is ArchiveRefreshDone ? () => GoRouter.of(context).push('/archive') : null,
                       child: Text(AppLocalizations.of(context)!.newsArchive),
                     ),
                   ],
