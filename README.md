@@ -65,7 +65,7 @@ sudo docker network create home-network
 
 grep flutter_bootstrap web/index.html
 sudo docker build --no-cache -f Dockerfile -t news-frontend .
-sudo docker run --name front-host --network home-network -p 80:7070 --restart always -d news-frontend
+sudo docker run --name front-host --network home-network -p 7070:7070 --restart always -d news-frontend
 
 sudo docker network connect home-network front-host
 ```
@@ -84,5 +84,5 @@ sudo gzip news-frontend-rel18.tar
 sudo chown jay news-frontend-rel18.tar.gz
 scp news-frontend-rel18.tar.gz <user>@<your.remote.host>:
 sudo docker load -i news-frontend-rel18.tar.gz
-sudo docker run -d --name news-frontend --network home-network -p 80:7070 news-frontend:rel18
+sudo docker run -d --name news-frontend --network home-network -p 7070:7070 news-frontend:rel18
 ```

@@ -16,7 +16,7 @@ REL=$(cat .env | grep REL | cut -d '=' -f2)
 sudo docker stop news-frontend
 sudo docker rm news-frontend
 time sudo docker build --no-cache -f Dockerfile -t news-frontend .
-sudo docker run --name front-host --network home-network -p 80:7070 --restart always -d news-frontend
+sudo docker run --name front-host --network home-network -p 7070:7070 --restart always -d news-frontend
 
 # Commit and save
 sudo docker commit front-host news-frontend:$REL
@@ -30,5 +30,5 @@ docker context use production-context
 docker stop news-frontend
 docker rm news-frontend
 docker load -i news-frontend-$REL.tar.gz
-docker run -d --name news-frontend --network home-network -p 80:7070 news-frontend:$REL
+docker run -d --name news-frontend --network home-network -p 7070:7070 news-frontend:$REL
 docker context use default
