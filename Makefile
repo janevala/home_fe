@@ -48,7 +48,7 @@ release:
 	flutter pub get
 	dart --disable-analytics
 	dart run build_runner build --delete-conflicting-outputs
-	flutter build web --release -t lib/main.dart --base-href / --dart-define=APP_VERSION=$(VERSION) --dart-define=APP_API=$(API)
+	flutter build web --wasm --release -t lib/main.dart --base-href / --dart-define=APP_VERSION=$(VERSION) --dart-define=APP_API=$(API)
 
 chrome: clean
 	flutter run -d chrome --web-port 7070 --dart-define=APP_VERSION=$(VERSION) --dart-define=APP_API=$(API)
