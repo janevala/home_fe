@@ -5,7 +5,7 @@ RUN apt install -y make bash
 WORKDIR /homefe
 COPY . .
 
-RUN ./start.sh 
+RUN ./build.sh 
 
 FROM nginx:stable-alpine
 COPY --from=builder /homefe/nginx/nginx.http.conf /etc/nginx/conf.d/default.conf
