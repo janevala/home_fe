@@ -13,8 +13,8 @@ fi
 REL=$(cat .env | grep REL | cut -d '=' -f2)
 
 # Build
-sudo docker stop news-frontend
-sudo docker rm news-frontend
+sudo docker stop front-host
+sudo docker rm front-host
 time sudo docker build --no-cache -f Dockerfile -t news-frontend .
 sudo docker run --name front-host --network home-network -p 7070:7070 --restart always -d news-frontend
 
