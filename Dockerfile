@@ -8,7 +8,7 @@ COPY . .
 RUN ./build.sh 
 
 FROM nginx:stable-alpine
-COPY --from=builder /homefe/nginx/nginx.http.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /homefe/nginx/nginx.https_js.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /homefe/build/web /app/web
 
 EXPOSE 7070
