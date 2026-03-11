@@ -13,8 +13,9 @@ fi
 REL=$(cat .env | grep REL | cut -d '=' -f2)
 
 # Build
+sudo docker stop news-frontend
+sudo docker rm news-frontend
 time sudo docker build --no-cache -f Dockerfile -t news-frontend .
-# time ./start.sh
 sudo docker run --name front-host --network home-network -p 80:7070 --restart always -d news-frontend
 
 # Commit and save
