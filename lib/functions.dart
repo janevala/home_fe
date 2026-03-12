@@ -69,7 +69,6 @@ openItem(BuildContext context, NewsItem item) async {
             },
             child: Icon(Icons.share, color: Theme.of(context).colorScheme.primary),
           ),
-          const SizedBox(width: 8),
           InkWell(
             onTap: () {
               Clipboard.setData(ClipboardData(text: '${item.title}\n\n$description'));
@@ -77,7 +76,7 @@ openItem(BuildContext context, NewsItem item) async {
             },
             child: Icon(Icons.copy, color: Theme.of(context).colorScheme.primary),
           ),
-          const SizedBox(width: 16),
+          const SizedBox(width: 4),
           TextButton(
             onPressed: () async {
               Navigator.pop(context, true);

@@ -303,11 +303,6 @@ class DashboardScreenState extends State<DashboardScreen> {
                     // if (!kIsWeb && !kIsWasm) const SizedBox(height: 32),
                     ElevatedButton(
                       onPressed: slowLoadingDone ? () => GoRouter.of(context).push('/archive') : null,
-                      style: ElevatedButton.styleFrom(
-                        textStyle: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
                       child: Text(AppLocalizations.of(context)!.newsArchive),
                     ),
                   ],
