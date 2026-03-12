@@ -64,7 +64,7 @@ openItem(BuildContext context, NewsItem item) async {
         actions: [
           InkWell(
             onTap: () {
-              SharePlus.instance.share(ShareParams(text: '${item.title}\n\n$description'));
+              SharePlus.instance.share(ShareParams(text: '${item.title}\n\n$description\n\n${item.link}'));
               Navigator.pop(context, true);
             },
             child: Icon(Icons.share, color: Theme.of(context).colorScheme.primary),
