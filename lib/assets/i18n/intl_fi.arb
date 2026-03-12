@@ -10,7 +10,7 @@
   "backendError": "Virhe: {error}",
   "searchArchive": "Hae arkistosta...",
   "newsSites": "Uutis sivut",
-  "newsArchive": "Uutis arkisto",
+  "newsArchive": "Uutisarkisto Suomeksi",
   "pleaseEnterToken": "Syötä token",
   "login": "Kirjaudu",
   "serverVersion": "Serveri: {version}",

@@ -10,7 +10,7 @@
   "backendError": "ข้อผิดพลาด: {error}",
   "searchArchive": "ค้นหา",
   "newsSites": "แหล่งข่าว",
-  "newsArchive": "ข้อมูลข่าว",
+  "newsArchive": "ข้อมูลข่าว ไทย",
   "pleaseEnterToken": "กรุณากรอกรหัสผ่าน",
   "login": "เข้าสู่ระบบ",
   "serverVersion": "เวอร์ชันเซิร์ฟเวอร์: {version}",

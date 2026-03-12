@@ -40,13 +40,24 @@ class _AnimatedFirstState extends State<AnimatedFirst> with TickerProviderStateM
   double _containerHeight = 170;
   List<int> _logoSizes = [130, 140, 150, 160, 170];
 
+  String _logoPath = 'assets/app-logo.svg';
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final isLight = Theme.of(context).brightness == Brightness.light;
+    if (isLight) {
+      _logoPath = 'assets/app-logo-light.svg';
+    }
+  }
+
   @override
   void initState() {
     super.initState();
 
     if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
       _containerHeight = 120;
-      _logoSizes = [40, 50, 60, 70, 80];
+      _logoSizes = [65, 70, 85, 90, 100];
     }
 
     _firstFadeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1500));
@@ -232,7 +243,7 @@ class _AnimatedFirstState extends State<AnimatedFirst> with TickerProviderStateM
           ),
         ),
         child: SvgPicture.asset(
-          'assets/app-logo-light.svg',
+          _logoPath,
           key: ValueKey('logo1'),
           width: size.toDouble(),
           height: size.toDouble(),
@@ -256,7 +267,7 @@ class _AnimatedFirstState extends State<AnimatedFirst> with TickerProviderStateM
           ),
         ),
         child: SvgPicture.asset(
-          'assets/app-logo-light.svg',
+          _logoPath,
           key: ValueKey('logo2'),
           width: size.toDouble(),
           height: size.toDouble(),
@@ -280,7 +291,7 @@ class _AnimatedFirstState extends State<AnimatedFirst> with TickerProviderStateM
           ),
         ),
         child: SvgPicture.asset(
-          'assets/app-logo-light.svg',
+          _logoPath,
           key: ValueKey('logo3'),
           width: size.toDouble(),
           height: size.toDouble(),

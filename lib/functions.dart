@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:homefe/assets/i18n/generated/app_localizations.dart';
 import 'package:homefe/podo/rss/news_item.dart';
 import 'package:html/parser.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
+import 'package:share_plus/share_plus.dart';
 
 String parseDescription(NewsItem item, bool cutLong, String? warningText) {
   if (item.source == 'Dpreview' || (item.source == 'Hacker News' && item.llm == 'original')) {
@@ -60,6 +62,22 @@ openItem(BuildContext context, NewsItem item) async {
           description,
         ),
         actions: [
+          InkWell(
+            onTap: () {
+              SharePlus.instance.share(ShareParams(text: '${item.title}\n\n$description'));
+              Navigator.pop(context, true);
+            },
+            child: Icon(Icons.share, color: Theme.of(context).colorScheme.primary),
+          ),
+          const SizedBox(width: 8),
+          InkWell(
+            onTap: () {
+              Clipboard.setData(ClipboardData(text: '${item.title}\n\n$description'));
+              Navigator.pop(context, true);
+            },
+            child: Icon(Icons.copy, color: Theme.of(context).colorScheme.primary),
+          ),
+          const SizedBox(width: 16),
           TextButton(
             onPressed: () async {
               Navigator.pop(context, true);
