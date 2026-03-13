@@ -68,7 +68,6 @@ class App extends StatelessWidget {
             return RssArchiveBloc(
               repo: ApiRepository(client: ApiClient(appApi.trim())),
             );
-            // )..add(LoadMoreArchive());
           },
         ),
         BlocProvider<RssSitesBloc>(

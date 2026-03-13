@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:homefe/assets/i18n/generated/app_localizations.dart';
@@ -7,22 +8,25 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
 
-String parseDescription(NewsItem item, bool cutLong, String? warningText) {
+// title lenght in db = 500
+// description length in db = 1000
+(String, String) parseDescription(NewsItem item, bool cutLong, String? warningText) {
   if (item.source == 'Dpreview' || (item.source == 'Hacker News' && item.llm == 'original')) {
     String description = item.title;
     if (warningText != null) {
       description += '\n\n(LLM: ${item.llm ?? 'original'}. $warningText)';
     }
-    return description;
+
+    return (description, item.title);
   }
 
   if (item.description.isEmpty) {
     String description = item.title;
     if (warningText != null) {
-      description += '\n\n(LLM: ${item.llm ?? 'original'}. $warningText)';
+      description += '\n\n(${item.llm ?? 'original'}. $warningText)';
     }
 
-    return description;
+    return (description, item.title);
   }
 
   try {
@@ -30,17 +34,19 @@ String parseDescription(NewsItem item, bool cutLong, String? warningText) {
     String description = document.body?.text ?? '';
     description = description.replaceAll(' \n', '');
 
-    if (cutLong && description.length > 500) {
-      description = '${description.substring(0, 500)}...';
+    if (cutLong && description.length > 950) {
+      description = '${description.substring(0, 950)}...';
     }
+
+    String descriptionForShare = description;
 
     if (warningText != null) {
-      description += '\n\n(LLM: ${item.llm ?? 'original'}. $warningText)';
+      description += '\n\n(${item.llm ?? 'original'}. $warningText)';
     }
 
-    return description;
+    return (description, descriptionForShare);
   } catch (e) {
-    return item.description;
+    return (item.description, item.description);
   }
 }
 
@@ -49,7 +55,11 @@ openItem(BuildContext context, NewsItem item) async {
   if (item.llm != null && item.llm != 'original') {
     warningText = AppLocalizations.of(context)!.translationMayContainErrors;
   }
-  String description = parseDescription(item, false, warningText);
+
+  String description;
+  String descriptionForShare;
+
+  (description, descriptionForShare) = parseDescription(item, false, warningText);
 
   showDialog(
     context: context,
@@ -62,21 +72,46 @@ openItem(BuildContext context, NewsItem item) async {
           description,
         ),
         actions: [
-          InkWell(
-            onTap: () {
-              SharePlus.instance.share(ShareParams(text: '${item.title}\n\n$description\n\n${item.link}'));
-              Navigator.pop(context, true);
-            },
-            child: Icon(Icons.share, color: Theme.of(context).colorScheme.primary),
+          Row(
+            mainAxisAlignment:
+                defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android
+                ? MainAxisAlignment.end
+                : MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              InkWell(
+                onTap: () {
+                  if (item.title == item.description) {
+                    SharePlus.instance.share(
+                      ShareParams(uri: Uri.parse(item.link), text: '$descriptionForShare\n\n${item.link}'),
+                    );
+                  } else {
+                    SharePlus.instance.share(
+                      ShareParams(
+                        uri: Uri.parse(item.link),
+                        text: '${item.title}\n\n$descriptionForShare\n\n${item.link}',
+                      ),
+                    );
+                  }
+
+                  Navigator.pop(context, true);
+                },
+                child: Icon(Icons.share, color: Theme.of(context).colorScheme.primary),
+              ),
+              InkWell(
+                onTap: () {
+                  if (item.title == item.description) {
+                    Clipboard.setData(ClipboardData(text: '$description\n\n${item.link}'));
+                  } else {
+                    Clipboard.setData(ClipboardData(text: '${item.title}\n\n$descriptionForShare\n\n${item.link}'));
+                  }
+
+                  Navigator.pop(context, true);
+                },
+                child: Icon(Icons.copy, color: Theme.of(context).colorScheme.primary),
+              ),
+            ],
           ),
-          InkWell(
-            onTap: () {
-              Clipboard.setData(ClipboardData(text: '${item.title}\n\n$description'));
-              Navigator.pop(context, true);
-            },
-            child: Icon(Icons.copy, color: Theme.of(context).colorScheme.primary),
-          ),
-          const SizedBox(width: 4),
           TextButton(
             onPressed: () async {
               Navigator.pop(context, true);
