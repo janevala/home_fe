@@ -62,6 +62,7 @@ sudo apt install certbot python3-certbot-nginx
 
 ```
 sudo docker network create home-network
+sudo docker context create production-context --docker "host=ssh://<user>@<your.remote.host>"
 
 grep flutter_bootstrap web/index.html
 sudo docker build --no-cache -f Dockerfile -t news-frontend .
