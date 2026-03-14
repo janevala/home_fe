@@ -88,12 +88,11 @@ openItem(BuildContext context, NewsItem item) async {
             onPressed: () {
               if (item.title == item.description) {
                 SharePlus.instance.share(
-                  ShareParams(uri: Uri.parse(item.link), text: '$descriptionForShare\n\n${item.link}'),
+                  ShareParams(text: '$descriptionForShare\n\n${item.link}'),
                 );
               } else {
                 SharePlus.instance.share(
                   ShareParams(
-                    uri: Uri.parse(item.link),
                     text: '${item.title}\n\n$descriptionForShare\n\n${item.link}',
                   ),
                 );
