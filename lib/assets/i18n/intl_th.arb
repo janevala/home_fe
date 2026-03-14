@@ -28,7 +28,7 @@
   "newsNoItems": "ไม่มีข่าว",
   "token" : "รหัสผ่าน",
   "newsItemCount": "{count} ข่าว",
-  "newsArchiveStart": "เริ่มต้นจาก {date}",
+  "newsArchiveStart": "เริ่มการเก็บถาวรแล้ว {date}",
   "unknown": "ไม่ทราบ",
   "unknownReason": "ไม่ทราบสาเหตุ",
   "contact": "ติดต่อ",

@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:homefe/assets/i18n/generated/app_localizations.dart';
@@ -7,6 +6,7 @@ import 'package:html/parser.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 // title lenght in db = 500
 // description length in db = 1000
@@ -171,15 +171,11 @@ String fetchLanguageSelectorSelected(BuildContext context, Locale locale) {
   }
 }
 
-// void updateOnLocaleChange(BuildContext context, Locale newLocale) {
-//   context.read<LocaleCubit>().changeLocaleTo(newLocale);
-// }
-
 String getLocalizedDate(BuildContext context, DateTime date) {
   final Locale locale = Localizations.localeOf(context);
-  // return timeago.format(date, locale: locale.languageCode, clock: DateTime.now());
-  final DateFormat formatter = DateFormat.yMMMd(locale.languageCode);
-  return formatter.format(date);
+  return timeago.format(date, locale: locale.languageCode, clock: DateTime.now());
+  // final DateFormat formatter = DateFormat.yMMMd(locale.languageCode);
+  // return formatter.format(date);
 }
 
 Future<void> sendEmail({required String subject, required String body}) async {
