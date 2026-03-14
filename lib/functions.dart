@@ -56,10 +56,7 @@ openItem(BuildContext context, NewsItem item) async {
     warningText = AppLocalizations.of(context)!.translationMayContainErrors;
   }
 
-  String description;
-  String descriptionForShare;
-
-  (description, descriptionForShare) = parseDescription(item, false, warningText);
+  final (description, descriptionForShare) = parseDescription(item, false, warningText);
 
   showDialog(
     context: context,
@@ -71,47 +68,10 @@ openItem(BuildContext context, NewsItem item) async {
         content: SelectableText(
           description,
         ),
+        // actionsPadding: EdgeInsets.zero,
+        buttonPadding: EdgeInsets.zero,
+        actionsAlignment: MainAxisAlignment.end,
         actions: [
-          Row(
-            mainAxisAlignment:
-                defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android
-                ? MainAxisAlignment.end
-                : MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              InkWell(
-                onTap: () {
-                  if (item.title == item.description) {
-                    SharePlus.instance.share(
-                      ShareParams(uri: Uri.parse(item.link), text: '$descriptionForShare\n\n${item.link}'),
-                    );
-                  } else {
-                    SharePlus.instance.share(
-                      ShareParams(
-                        uri: Uri.parse(item.link),
-                        text: '${item.title}\n\n$descriptionForShare\n\n${item.link}',
-                      ),
-                    );
-                  }
-
-                  Navigator.pop(context, true);
-                },
-                child: Icon(Icons.share, color: Theme.of(context).colorScheme.primary),
-              ),
-              InkWell(
-                onTap: () {
-                  if (item.title == item.description) {
-                    Clipboard.setData(ClipboardData(text: '$description\n\n${item.link}'));
-                  } else {
-                    Clipboard.setData(ClipboardData(text: '${item.title}\n\n$descriptionForShare\n\n${item.link}'));
-                  }
-
-                  Navigator.pop(context, true);
-                },
-                child: Icon(Icons.copy, color: Theme.of(context).colorScheme.primary),
-              ),
-            ],
-          ),
           TextButton(
             onPressed: () async {
               Navigator.pop(context, true);
@@ -124,11 +84,40 @@ openItem(BuildContext context, NewsItem item) async {
               item.llm == 'original' ? AppLocalizations.of(context)!.open : AppLocalizations.of(context)!.openOriginal,
             ),
           ),
-          TextButton(
+          IconButton(
+            onPressed: () {
+              if (item.title == item.description) {
+                SharePlus.instance.share(
+                  ShareParams(uri: Uri.parse(item.link), text: '$descriptionForShare\n\n${item.link}'),
+                );
+              } else {
+                SharePlus.instance.share(
+                  ShareParams(
+                    uri: Uri.parse(item.link),
+                    text: '${item.title}\n\n$descriptionForShare\n\n${item.link}',
+                  ),
+                );
+              }
+
+              Navigator.pop(context, true);
+            },
+            icon: Icon(Icons.share, color: Theme.of(context).colorScheme.primary),
+          ),
+          IconButton(
+            onPressed: () {
+              if (item.title == item.description) {
+                Clipboard.setData(ClipboardData(text: '$description\n\n${item.link}'));
+              } else {
+                Clipboard.setData(ClipboardData(text: '${item.title}\n\n$descriptionForShare\n\n${item.link}'));
+              }
+
+              Navigator.pop(context, true);
+            },
+            icon: Icon(Icons.copy, color: Theme.of(context).colorScheme.primary),
+          ),
+          IconButton(
             onPressed: () => Navigator.pop(context, true),
-            child: Text(
-              AppLocalizations.of(context)!.close,
-            ),
+            icon: Icon(Icons.close, color: Theme.of(context).colorScheme.primary),
           ),
         ],
       );

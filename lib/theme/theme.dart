@@ -147,6 +147,18 @@ class AppTheme {
           padding: _AdaptMobile.buttonPadding,
         ),
       ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          shape: RoundedRectangleBorder(borderRadius: _AdaptMobile.buttonBorderRadius),
+          padding: _AdaptMobile.buttonPadding,
+        ),
+      ),
+      iconButtonTheme: IconButtonThemeData(
+        style: IconButton.styleFrom(
+          shape: RoundedRectangleBorder(borderRadius: _AdaptMobile.buttonBorderRadius),
+          padding: _AdaptMobile.buttonPadding,
+        ),
+      ),
       inputDecorationTheme: baseTheme.inputDecorationTheme.copyWith(
         contentPadding: _AdaptMobile.inputPadding,
         border: OutlineInputBorder(borderRadius: _AdaptMobile.inputBorderRadius),
@@ -233,6 +245,18 @@ class AppTheme {
           foregroundColor: _lightColorScheme.onPrimary,
           elevation: 2,
           shadowColor: _lightColorScheme.primary.withValues(alpha: 0.3),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Radi.medium)),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        ),
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Radi.medium)),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        ),
+      ),
+      iconButtonTheme: IconButtonThemeData(
+        style: IconButton.styleFrom(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Radi.medium)),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         ),
@@ -333,6 +357,18 @@ class AppTheme {
           foregroundColor: _darkColorScheme.onPrimary,
           elevation: 3,
           shadowColor: _darkColorScheme.shadow.withValues(alpha: 0.4),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Radi.medium)),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        ),
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Radi.medium)),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        ),
+      ),
+      iconButtonTheme: IconButtonThemeData(
+        style: IconButton.styleFrom(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Radi.medium)),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         ),
@@ -448,6 +484,21 @@ class AppTheme {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
+          backgroundColor: _lightColorScheme.primary,
+          foregroundColor: Colors.white,
+          elevation: 0,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Radi.medium)),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        ),
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Radi.medium)),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        ),
+      ),
+      iconButtonTheme: IconButtonThemeData(
+        style: IconButton.styleFrom(
           backgroundColor: _lightColorScheme.primary,
           foregroundColor: Colors.white,
           elevation: 0,
@@ -594,6 +645,18 @@ class AppTheme {
           backgroundColor: _darkColorScheme.primary,
           foregroundColor: Colors.white,
           elevation: 0,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Radi.medium)),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        ),
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Radi.medium)),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        ),
+      ),
+      iconButtonTheme: IconButtonThemeData(
+        style: IconButton.styleFrom(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Radi.medium)),
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         ),
