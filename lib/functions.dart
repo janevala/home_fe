@@ -119,6 +119,8 @@ openItem(BuildContext context, NewsItem item) async {
                     backgroundColor: Theme.of(context).colorScheme.primary,
                   ),
                 );
+
+                Navigator.pop(context, true);
               },
               icon: Icon(Icons.copy, color: Theme.of(context).colorScheme.primary),
             ),
