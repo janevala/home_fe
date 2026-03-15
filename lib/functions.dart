@@ -68,7 +68,6 @@ openItem(BuildContext context, NewsItem item) async {
         content: SelectableText(
           description,
         ),
-        // actionsPadding: EdgeInsets.zero,
         buttonPadding: EdgeInsets.zero,
         actionsAlignment: MainAxisAlignment.end,
         actions: [
@@ -84,35 +83,45 @@ openItem(BuildContext context, NewsItem item) async {
               AppLocalizations.of(context)!.openOriginal,
             ),
           ),
-          IconButton(
-            onPressed: () {
-              if (item.title == item.description) {
-                SharePlus.instance.share(
-                  ShareParams(text: '$descriptionForShare\n\n${item.link}'),
-                );
-              } else {
-                SharePlus.instance.share(
-                  ShareParams(
-                    text: '${item.title}\n\n$descriptionForShare\n\n${item.link}',
+          Tooltip(
+            message: AppLocalizations.of(context)!.shareStory,
+            child: IconButton(
+              onPressed: () {
+                if (item.title == item.description) {
+                  SharePlus.instance.share(
+                    ShareParams(text: '$descriptionForShare\n\n${item.link}'),
+                  );
+                } else {
+                  SharePlus.instance.share(
+                    ShareParams(
+                      text: '${item.title}\n\n$descriptionForShare\n\n${item.link}',
+                    ),
+                  );
+                }
+              },
+              icon: Icon(Icons.share, color: Theme.of(context).colorScheme.primary),
+            ),
+          ),
+          Tooltip(
+            message: AppLocalizations.of(context)!.copyToClipboard,
+            child: IconButton(
+              onPressed: () {
+                if (item.title == item.description) {
+                  Clipboard.setData(ClipboardData(text: '$description\n\n${item.link}'));
+                } else {
+                  Clipboard.setData(ClipboardData(text: '${item.title}\n\n$descriptionForShare\n\n${item.link}'));
+                }
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(AppLocalizations.of(context)!.copiedToClipboard),
+                    duration: const Duration(seconds: 1),
+                    backgroundColor: Theme.of(context).colorScheme.primary,
                   ),
                 );
-              }
-
-              Navigator.pop(context, true);
-            },
-            icon: Icon(Icons.share, color: Theme.of(context).colorScheme.primary),
-          ),
-          IconButton(
-            onPressed: () {
-              if (item.title == item.description) {
-                Clipboard.setData(ClipboardData(text: '$description\n\n${item.link}'));
-              } else {
-                Clipboard.setData(ClipboardData(text: '${item.title}\n\n$descriptionForShare\n\n${item.link}'));
-              }
-
-              Navigator.pop(context, true);
-            },
-            icon: Icon(Icons.copy, color: Theme.of(context).colorScheme.primary),
+              },
+              icon: Icon(Icons.copy, color: Theme.of(context).colorScheme.primary),
+            ),
           ),
           IconButton(
             onPressed: () => Navigator.pop(context, true),
