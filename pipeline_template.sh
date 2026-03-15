@@ -12,23 +12,21 @@ fi
 
 REL=$(cat .env | grep REL | cut -d '=' -f2)
 
-# Build
 sudo docker stop front-host
 sudo docker rm front-host
 time sudo docker build --no-cache -f Dockerfile -t news-frontend .
 sudo docker run --name front-host --network home-network -p 7070:7070 --restart always -d news-frontend
 
-# Commit and save
 sudo docker commit front-host news-frontend:$REL
 sudo docker save -o news-frontend-$REL.tar news-frontend:$REL
-sudo gzip news-frontend-$REL.tar
-sudo chown jay news-frontend-$REL.tar.gz
-scp news-frontend-$REL.tar.gz <user>@<your.remote.host>:
-
-# Load and run on production
-docker context use production-context
-docker stop news-frontend
-docker rm news-frontend
-docker load -i news-frontend-$REL.tar.gz
-docker run -d --name news-frontend --network home-network -p 7070:7070 news-frontend:$REL
-docker context use default
+if [ -f "news-frontend-$REL.tar" ]; then
+    sudo gzip news-frontend-$REL.tar
+    sudo chown jay news-frontend-$REL.tar.gz
+    scp news-frontend-$REL.tar.gz <user>@<your.remote.host>:
+    docker context use production-context
+    docker stop news-frontend
+    docker rm news-frontend
+    docker load -i news-frontend-$REL.tar.gz
+    docker run -d --name news-frontend --network home-network -p 7070:7070 news-frontend:$REL
+    docker context use default
+fi
