@@ -57,6 +57,7 @@ openItem(BuildContext context, NewsItem item) async {
   }
 
   final (description, descriptionForShare) = parseDescription(item, false, warningText);
+  final messenger = ScaffoldMessenger.of(context);
 
   showDialog(
     context: context,
@@ -112,7 +113,7 @@ openItem(BuildContext context, NewsItem item) async {
                   Clipboard.setData(ClipboardData(text: '${item.title}\n\n$descriptionForShare\n\n${item.link}'));
                 }
 
-                ScaffoldMessenger.of(context).showSnackBar(
+                messenger.showSnackBar(
                   SnackBar(
                     content: Text(AppLocalizations.of(context)!.copiedToClipboard),
                     duration: const Duration(seconds: 1),
