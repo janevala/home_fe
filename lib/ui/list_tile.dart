@@ -94,30 +94,27 @@ class JsonFeedTile extends StatelessWidget {
       );
     }
 
-    return Tooltip(
-      message: item.source ?? AppLocalizations.of(context)!.unknown,
-      child: Card(
-        child: InkWell(
-          onTap: onItemTap,
-          onLongPress: onItemLongPress,
-          borderRadius: BorderRadius.circular(Radi.medium),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildHeader(context),
-                const SizedBox(height: 8),
-                if (_description.isNotEmpty) ...[
-                  Text(
-                    _description,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  const SizedBox(height: 12),
-                ],
-                _buildWebFooter(context),
+    return Card(
+      child: InkWell(
+        onTap: onItemTap,
+        onLongPress: onItemLongPress,
+        borderRadius: BorderRadius.circular(Radi.medium),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildHeader(context),
+              const SizedBox(height: 8),
+              if (_description.isNotEmpty) ...[
+                Text(
+                  _description,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                const SizedBox(height: 12),
               ],
-            ),
+              _buildWebFooter(context),
+            ],
           ),
         ),
       ),
