@@ -81,7 +81,7 @@ openItem(BuildContext context, NewsItem item) async {
               }
             },
             child: Text(
-              item.llm == 'original' ? AppLocalizations.of(context)!.open : AppLocalizations.of(context)!.openOriginal,
+              AppLocalizations.of(context)!.openOriginal,
             ),
           ),
           IconButton(

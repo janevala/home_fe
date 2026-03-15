@@ -12,7 +12,7 @@
   "backendError": "Error: {error}",
   "searchArchive": "Search archive...",
   "newsSites": "News sites",
-  "newsArchive": "News archive",
+  "newsArchive": "News archive in English",
   "pleaseEnterToken": "Please enter token",
   "login": "Login",
   "serverVersion": "Server version: {version}",
