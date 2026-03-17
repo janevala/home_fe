@@ -6,7 +6,7 @@ import 'package:html/parser.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:timeago/timeago.dart' as timeago;
+// import 'package:timeago/timeago.dart' as timeago;
 
 // title lenght in db = 500
 // description length in db = 1000
@@ -184,9 +184,9 @@ String fetchLanguageSelectorSelected(BuildContext context, Locale locale) {
 
 String getLocalizedDate(BuildContext context, DateTime date) {
   final Locale locale = Localizations.localeOf(context);
-  return timeago.format(date, locale: '${locale.languageCode}_short', clock: DateTime.now());
-  // final DateFormat formatter = DateFormat.yMMMd(locale.languageCode);
-  // return formatter.format(date);
+  // return timeago.format(date, locale: '${locale.languageCode}_short', clock: DateTime.now());
+  final DateFormat formatter = DateFormat.yMMMd(locale.languageCode);
+  return formatter.format(date);
 }
 
 Future<void> sendEmail({required String subject, required String body}) async {

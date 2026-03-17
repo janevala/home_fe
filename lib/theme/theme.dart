@@ -12,8 +12,8 @@ class _AdaptMobile {
   static const BorderRadius inputBorderRadius = BorderRadius.all(Radius.circular(Radi.small));
   static const BorderRadius dialogBorderRadius = BorderRadius.all(Radius.circular(Radi.small));
   static const BorderRadius drawerBorderRadius = BorderRadius.only(
-    topRight: Radius.circular(Radi.medium),
-    bottomRight: Radius.circular(Radi.medium),
+    topRight: Radius.circular(Radi.small),
+    bottomRight: Radius.circular(Radi.small),
   );
   static const double dialogElevation = 6.0;
 }
