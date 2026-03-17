@@ -10,7 +10,7 @@ pipeline.sh
 
 # TODO
 ## Front Bugs
-- Search is broken because localization
+- take secure storage into use, remove shared preferences
 
 ## Back
 
