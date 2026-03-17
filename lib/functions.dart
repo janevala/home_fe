@@ -184,7 +184,7 @@ String fetchLanguageSelectorSelected(BuildContext context, Locale locale) {
 
 String getLocalizedDate(BuildContext context, DateTime date) {
   final Locale locale = Localizations.localeOf(context);
-  return timeago.format(date, locale: locale.languageCode, clock: DateTime.now());
+  return timeago.format(date, locale: '${locale.languageCode}_short', clock: DateTime.now());
   // final DateFormat formatter = DateFormat.yMMMd(locale.languageCode);
   // return formatter.format(date);
 }
