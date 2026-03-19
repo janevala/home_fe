@@ -91,6 +91,8 @@ class ArchiveScreenState extends State<ArchiveScreen> with TickerProviderStateMi
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.title),
@@ -107,105 +109,110 @@ class ArchiveScreenState extends State<ArchiveScreen> with TickerProviderStateMi
               bindings: getCallbackShortcuts(_scrollContoller),
               child: Focus(
                 autofocus: true,
-                child: Stack(
-                  children: [
-                    CustomScrollView(
-                      controller: _scrollContoller,
-                      slivers: [
-                        SliverToBoxAdapter(
-                          child: SizedBox(height: 48),
+                child: Center(
+                  child: SizedBox(
+                    width: width * 0.6,
+                    child: Stack(
+                      children: [
+                        CustomScrollView(
+                          controller: _scrollContoller,
+                          slivers: [
+                            SliverToBoxAdapter(
+                              child: SizedBox(height: 48),
+                            ),
+                            if (state is Loading)
+                              SliverFillRemaining(
+                                child: Center(child: const Spinner()),
+                              )
+                            else if (state is ArchiveLoad)
+                              _buildSliverList(context, state.items, isLoadingMore: false)
+                            else if (state is ArchiveLoadMore)
+                              _buildSliverList(context, state.items, isLoadingMore: true)
+                            else if (state is SearchLoad)
+                              _buildSearchSliverList(context, state.items)
+                            else if (state is Failure)
+                              SliverFillRemaining(
+                                child: Center(
+                                  child: Text(
+                                    state.error,
+                                    style: const TextStyle(fontSize: 18),
+                                  ),
+                                ),
+                              )
+                            else if (state is AnswerSuccess)
+                              SliverFillRemaining(
+                                child: Center(
+                                  child: Text(
+                                    state.answer,
+                                    style: const TextStyle(fontSize: 18),
+                                  ),
+                                ),
+                              )
+                            else
+                              SliverFillRemaining(
+                                child: Center(
+                                  child: Text(
+                                    AppLocalizations.of(context)!.generalError,
+                                    style: const TextStyle(fontSize: 18),
+                                  ),
+                                ),
+                              ),
+                          ],
                         ),
-                        if (state is Loading)
-                          SliverFillRemaining(
-                            child: Center(child: const Spinner()),
-                          )
-                        else if (state is ArchiveLoad)
-                          _buildSliverList(context, state.items, isLoadingMore: false)
-                        else if (state is ArchiveLoadMore)
-                          _buildSliverList(context, state.items, isLoadingMore: true)
-                        else if (state is SearchLoad)
-                          _buildSearchSliverList(context, state.items)
-                        else if (state is Failure)
-                          SliverFillRemaining(
-                            child: Center(
-                              child: Text(
-                                state.error,
-                                style: const TextStyle(fontSize: 18),
-                              ),
-                            ),
-                          )
-                        else if (state is AnswerSuccess)
-                          SliverFillRemaining(
-                            child: Center(
-                              child: Text(
-                                state.answer,
-                                style: const TextStyle(fontSize: 18),
-                              ),
-                            ),
-                          )
-                        else
-                          SliverFillRemaining(
-                            child: Center(
-                              child: Text(
-                                AppLocalizations.of(context)!.generalError,
-                                style: const TextStyle(fontSize: 18),
-                              ),
-                            ),
-                          ),
-                      ],
-                    ),
-                    Positioned(
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      child: AnimatedBuilder(
-                        animation: _slideAnimation,
-                        builder: (context, child) {
-                          return Transform.translate(
-                            offset: Offset(0, _slideAnimation.value),
-                            child: Container(
-                              padding: Theme.of(context).inputDecorationTheme.contentPadding,
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).scaffoldBackgroundColor,
-                              ),
-                              child: TextField(
-                                controller: _searchController,
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Theme.of(context).scaffoldBackgroundColor,
-                                  prefixIcon: Icon(Icons.search),
-                                  suffixIcon: IconButton(
-                                    icon: Icon(Icons.clear),
-                                    onPressed: () {
-                                      _searchController.clear();
-                                      context.read<RssArchiveBloc>().add(ResetArchive());
+                        Positioned(
+                          top: 0,
+                          left: 0,
+                          right: 0,
+                          child: AnimatedBuilder(
+                            animation: _slideAnimation,
+                            builder: (context, child) {
+                              return Transform.translate(
+                                offset: Offset(0, _slideAnimation.value),
+                                child: Container(
+                                  padding: Theme.of(context).inputDecorationTheme.contentPadding,
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context).scaffoldBackgroundColor,
+                                  ),
+                                  child: TextField(
+                                    controller: _searchController,
+                                    decoration: InputDecoration(
+                                      filled: true,
+                                      fillColor: Theme.of(context).scaffoldBackgroundColor,
+                                      prefixIcon: Icon(Icons.search),
+                                      suffixIcon: IconButton(
+                                        icon: Icon(Icons.clear),
+                                        onPressed: () {
+                                          _searchController.clear();
+                                          context.read<RssArchiveBloc>().add(ResetArchive());
+                                          final locale = Localizations.localeOf(context);
+                                          final language = locale.languageCode;
+                                          context.read<RssArchiveBloc>().add(LoadMoreArchive(language: language));
+                                        },
+                                      ),
+                                      hintText: AppLocalizations.of(context)!.searchArchive,
+                                      border: Theme.of(context).inputDecorationTheme.border,
+                                    ),
+                                    onChanged: (value) {
                                       final locale = Localizations.localeOf(context);
                                       final language = locale.languageCode;
-                                      context.read<RssArchiveBloc>().add(LoadMoreArchive(language: language));
+
+                                      if (value.isEmpty) {
+                                        context.read<RssArchiveBloc>().add(LoadMoreArchive(language: language));
+                                      } else {
+                                        context.read<RssArchiveBloc>().add(
+                                          SearchArchive(query: _searchController.text, language: language),
+                                        );
+                                      }
                                     },
                                   ),
-                                  hintText: AppLocalizations.of(context)!.searchArchive,
-                                  border: Theme.of(context).inputDecorationTheme.border,
                                 ),
-                                onChanged: (value) {
-                                  final locale = Localizations.localeOf(context);
-                                  final language = locale.languageCode;
-
-                                  if (value.isEmpty) {
-                                    context.read<RssArchiveBloc>().add(LoadMoreArchive(language: language));
-                                  } else {
-                                    context.read<RssArchiveBloc>().add(
-                                      SearchArchive(query: _searchController.text, language: language),
-                                    );
-                                  }
-                                },
-                              ),
-                            ),
-                          );
-                        },
-                      ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
             );

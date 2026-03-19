@@ -271,7 +271,7 @@ class DashboardScreenState extends State<DashboardScreen> {
           builder: (context, state) {
             return Center(
               child: SizedBox(
-                width: width * 0.7,
+                width: width * 0.4,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.stretch,

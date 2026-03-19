@@ -55,9 +55,9 @@ class LoginScreenState extends State<LoginScreen> {
         child: BlocProvider<LoginBloc>(
           create: (context) => context.read<LoginBloc>(),
           child: BlocListener<LoginBloc, LoginState>(
-            child: Center(
-              child: Form(
-                key: _formKey,
+            child: Form(
+              key: _formKey,
+              child: Center(
                 child: SizedBox(
                   width: width * 0.7,
                   child: Column(

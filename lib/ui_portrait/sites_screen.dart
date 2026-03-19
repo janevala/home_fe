@@ -35,49 +35,46 @@ class SitesScreenState extends State<SitesScreen> {
             } else if (state is RssSitesSuccess && state.rssSites.sites.isNotEmpty) {
               return Center(
                 child: SizedBox(
-                  width: width * 0.8,
-                  child: Padding(
-                    padding: const EdgeInsets.all(32),
-                    child: ListView.separated(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      itemCount: state.rssSites.sites.length,
-                      separatorBuilder: (context, index) => const SizedBox(height: 12),
-                      itemBuilder: (BuildContext context, int index) {
-                        final site = state.rssSites.sites[index];
+                  width: width * 0.7,
+                  child: ListView.separated(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    itemCount: state.rssSites.sites.length,
+                    separatorBuilder: (context, index) => const SizedBox(height: 12),
+                    itemBuilder: (BuildContext context, int index) {
+                      final site = state.rssSites.sites[index];
 
-                        return Card(
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(Radi.medium),
-                            onTap: () => GoRouter.of(context).go('/site', extra: site),
-                            child: Padding(
-                              padding: const EdgeInsets.all(16),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    site.title,
-                                    style: Theme.of(
-                                      context,
-                                    ).textTheme.titleLarge,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
+                      return Card(
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(Radi.medium),
+                          onTap: () => GoRouter.of(context).go('/site', extra: site),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  site.title,
+                                  style: Theme.of(
+                                    context,
+                                  ).textTheme.titleLarge,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  site.url,
+                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    decoration: TextDecoration.underline,
                                   ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    site.url,
-                                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                      decoration: TextDecoration.underline,
-                                    ),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ],
-                              ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
                             ),
                           ),
-                        );
-                      },
-                    ),
+                        ),
+                      );
+                    },
                   ),
                 ),
               );
