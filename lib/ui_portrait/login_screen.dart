@@ -5,7 +5,7 @@ import 'package:homefe/assets/i18n/generated/app_localizations.dart';
 import 'package:homefe/bloc/login_bloc.dart';
 import 'package:homefe/bloc/theme_cubit.dart';
 import 'package:homefe/logger/logger.dart';
-import 'package:homefe/persistence/persistent_storage.dart';
+import 'package:homefe/persistence/secure_persistent_storage.dart';
 import 'package:homefe/podo/login/login_body.dart';
 import 'package:homefe/ui/spinner.dart';
 import 'package:flutter/foundation.dart';
@@ -143,12 +143,12 @@ class LoginScreenState extends State<LoginScreen> {
   }
 
   Future<bool> _hasTheme() async {
-    final theme = await PersistentStorage.read('theme_mode');
+    final theme = await SecurePersistentStorage.read('theme_mode');
     return theme != null;
   }
 
   Future<void> _setTheme() async {
-    final theme = await PersistentStorage.read('theme_mode');
+    final theme = await SecurePersistentStorage.read('theme_mode');
     if (theme != null) {
       if (mounted) {
         context.read<ThemeCubit>().setTheme(ThemeMode.values.firstWhere((e) => e.name == theme));
@@ -171,8 +171,8 @@ class LoginScreenState extends State<LoginScreen> {
 }
 
 Future<void> _persist(Map<String, dynamic> data) async {
-  await PersistentStorage.delete(data.entries.first.key);
-  await PersistentStorage.write(
+  await SecurePersistentStorage.delete(data.entries.first.key);
+  await SecurePersistentStorage.write(
     data.entries.first.key,
     data.entries.first.value.toString(),
   );

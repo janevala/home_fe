@@ -7,10 +7,9 @@ import 'package:homefe/bloc/theme_cubit.dart';
 import 'package:homefe/constants/app_version.dart';
 import 'package:homefe/functions.dart';
 import 'package:homefe/logger/logger.dart';
-import 'package:homefe/persistence/persistent_storage.dart';
+import 'package:homefe/persistence/secure_persistent_storage.dart';
 import 'package:homefe/ui_portrait/animated_first.dart';
 import 'package:homefe/ui_portrait/animated_flags.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -20,8 +19,6 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class DashboardScreenState extends State<DashboardScreen> {
-  late SharedPreferences storage;
-
   String? token;
   String? backVersion;
   String? frontVersion;
@@ -46,8 +43,8 @@ class DashboardScreenState extends State<DashboardScreen> {
   }
 
   Future<void> _loadPersisted() async {
-    String token = await PersistentStorage.read('token') ?? '';
-    String firstTimeUser = await PersistentStorage.read('first_time_user') ?? 'true';
+    String token = await SecurePersistentStorage.read('token') ?? '';
+    String firstTimeUser = await SecurePersistentStorage.read('first_time_user') ?? 'true';
 
     setState(() {
       this.token = token;
@@ -58,15 +55,15 @@ class DashboardScreenState extends State<DashboardScreen> {
   }
 
   Future<void> _persist(Map<String, dynamic> data) async {
-    await PersistentStorage.delete(data.entries.first.key);
-    await PersistentStorage.write(
+    await SecurePersistentStorage.delete(data.entries.first.key);
+    await SecurePersistentStorage.write(
       data.entries.first.key,
       data.entries.first.value.toString(),
     );
   }
 
   Future<void> _dePersist(Map<String, dynamic> data) async {
-    await PersistentStorage.delete(data.entries.first.key);
+    await SecurePersistentStorage.delete(data.entries.first.key);
   }
 
   @override

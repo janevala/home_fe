@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:homefe/persistence/persistent_storage.dart';
+import 'package:homefe/persistence/secure_persistent_storage.dart';
 
 class LocaleCubit extends Cubit<Locale> {
   bool changed = false;
@@ -20,7 +20,7 @@ class LocaleCubit extends Cubit<Locale> {
   }
 
   Future<void> _loadStoredLocale() async {
-    final storedLanguage = await PersistentStorage.read('language_code');
+    final storedLanguage = await SecurePersistentStorage.read('language_code');
     if (storedLanguage != null) {
       emit(Locale(storedLanguage));
     }
@@ -28,8 +28,8 @@ class LocaleCubit extends Cubit<Locale> {
 }
 
 Future<void> _persist(Map<String, dynamic> data) async {
-  await PersistentStorage.delete(data.entries.first.key);
-  await PersistentStorage.write(
+  await SecurePersistentStorage.delete(data.entries.first.key);
+  await SecurePersistentStorage.write(
     data.entries.first.key,
     data.entries.first.value.toString(),
   );

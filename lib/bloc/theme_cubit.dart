@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:homefe/persistence/persistent_storage.dart';
+import 'package:homefe/persistence/secure_persistent_storage.dart';
 
 class ThemeCubit extends Cubit<ThemeMode> {
   ThemeMode? _mode;
@@ -29,12 +29,12 @@ class ThemeCubit extends Cubit<ThemeMode> {
 }
 
 Future<String?> _load() async {
-  return await PersistentStorage.read('theme_mode');
+  return await SecurePersistentStorage.read('theme_mode');
 }
 
 Future<void> _persist(Map<String, dynamic> data) async {
-  await PersistentStorage.delete(data.entries.first.key);
-  await PersistentStorage.write(
+  await SecurePersistentStorage.delete(data.entries.first.key);
+  await SecurePersistentStorage.write(
     data.entries.first.key,
     data.entries.first.value.toString(),
   );
