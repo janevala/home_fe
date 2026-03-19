@@ -151,86 +151,82 @@ Future<void> openItem(BuildContext context, NewsItem item) async {
   final (description, descriptionForShare) = parseDescription(item, false, warningText);
   final messenger = ScaffoldMessenger.of(context);
 
-  double height = MediaQuery.of(context).size.height * 0.4;
-  double width = MediaQuery.of(context).size.width * 0.4;
+  // double width = MediaQuery.of(context).size.width * 0.4;
 
   showDialog(
     context: context,
     builder: (context) {
-      return Dialog(
-        child: SizedBox(
-          height: height,
-          width: width,
-          child: AlertDialog(
-            title: SelectableText(
-              item.title,
-            ),
-            content: SelectableText(
-              description,
-            ),
-            buttonPadding: EdgeInsets.zero,
-            actionsAlignment: MainAxisAlignment.end,
-            actions: [
-              TextButton(
-                onPressed: () async {
-                  Navigator.pop(context, true);
+      return Padding(
+        padding: const EdgeInsets.only(left: 100, right: 100),
+        child: AlertDialog(
+          title: SelectableText(
+            item.title,
+          ),
+          content: SelectableText(
+            description,
+          ),
+          buttonPadding: EdgeInsets.zero,
+          actionsAlignment: MainAxisAlignment.end,
+          actions: [
+            TextButton(
+              onPressed: () async {
+                Navigator.pop(context, true);
 
-                  if (await canLaunchUrl(Uri.parse(item.link))) {
-                    await launchUrl(Uri.parse(item.link));
-                  }
-                },
-                child: Text(
-                  AppLocalizations.of(context)!.openOriginal,
-                ),
+                if (await canLaunchUrl(Uri.parse(item.link))) {
+                  await launchUrl(Uri.parse(item.link));
+                }
+              },
+              child: Text(
+                AppLocalizations.of(context)!.openOriginal,
               ),
-              Tooltip(
-                message: AppLocalizations.of(context)!.shareStory,
-                child: IconButton(
-                  onPressed: () {
-                    if (item.title == item.description) {
-                      SharePlus.instance.share(
-                        ShareParams(text: '$descriptionForShare\n\n${item.link}'),
-                      );
-                    } else {
-                      SharePlus.instance.share(
-                        ShareParams(
-                          text: '${item.title}\n\n$descriptionForShare\n\n${item.link}',
-                        ),
-                      );
-                    }
-                  },
-                  icon: Icon(Icons.share, color: Theme.of(context).colorScheme.primary),
-                ),
-              ),
-              Tooltip(
-                message: AppLocalizations.of(context)!.copyToClipboard,
-                child: IconButton(
-                  onPressed: () {
-                    if (item.title == item.description) {
-                      Clipboard.setData(ClipboardData(text: '$description\n\n${item.link}'));
-                    } else {
-                      Clipboard.setData(ClipboardData(text: '${item.title}\n\n$descriptionForShare\n\n${item.link}'));
-                    }
-
-                    messenger.showSnackBar(
-                      SnackBar(
-                        content: Text(AppLocalizations.of(context)!.copiedToClipboard),
-                        duration: const Duration(seconds: 1),
-                        backgroundColor: Theme.of(context).colorScheme.primary,
+            ),
+            Tooltip(
+              message: AppLocalizations.of(context)!.shareStory,
+              child: IconButton(
+                onPressed: () {
+                  if (item.title == item.description) {
+                    SharePlus.instance.share(
+                      ShareParams(text: '$descriptionForShare\n\n${item.link}'),
+                    );
+                  } else {
+                    SharePlus.instance.share(
+                      ShareParams(
+                        text: '${item.title}\n\n$descriptionForShare\n\n${item.link}',
                       ),
                     );
+                  }
+                },
+                icon: Icon(Icons.share, color: Theme.of(context).colorScheme.primary),
+              ),
+            ),
+            Tooltip(
+              message: AppLocalizations.of(context)!.copyToClipboard,
+              child: IconButton(
+                onPressed: () {
+                  if (item.title == item.description) {
+                    Clipboard.setData(ClipboardData(text: '$description\n\n${item.link}'));
+                  } else {
+                    Clipboard.setData(ClipboardData(text: '${item.title}\n\n$descriptionForShare\n\n${item.link}'));
+                  }
 
-                    Navigator.pop(context, true);
-                  },
-                  icon: Icon(Icons.copy, color: Theme.of(context).colorScheme.primary),
-                ),
+                  messenger.showSnackBar(
+                    SnackBar(
+                      content: Text(AppLocalizations.of(context)!.copiedToClipboard),
+                      duration: const Duration(seconds: 1),
+                      backgroundColor: Theme.of(context).colorScheme.primary,
+                    ),
+                  );
+
+                  Navigator.pop(context, true);
+                },
+                icon: Icon(Icons.copy, color: Theme.of(context).colorScheme.primary),
               ),
-              IconButton(
-                onPressed: () => Navigator.pop(context, true),
-                icon: Icon(Icons.close, color: Theme.of(context).colorScheme.primary),
-              ),
-            ],
-          ),
+            ),
+            IconButton(
+              onPressed: () => Navigator.pop(context, true),
+              icon: Icon(Icons.close, color: Theme.of(context).colorScheme.primary),
+            ),
+          ],
         ),
       );
     },
