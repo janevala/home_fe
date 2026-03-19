@@ -51,6 +51,14 @@ import 'package:flutter/foundation.dart' show defaultTargetPlatform, TargetPlatf
   }
 }
 
+Future<void> openItem(BuildContext context, NewsItem item) async {
+  if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
+    await openMobileItem(context, item);
+  } else {
+    await openWebItem(context, item);
+  }
+}
+
 Future<void> openMobileItem(BuildContext context, NewsItem item) async {
   String? warningText;
   if (item.llm != null && item.llm != 'original') {
@@ -137,12 +145,7 @@ Future<void> openMobileItem(BuildContext context, NewsItem item) async {
   );
 }
 
-Future<void> openItem(BuildContext context, NewsItem item) async {
-  if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
-    await openMobileItem(context, item);
-    return;
-  }
-
+Future<void> openWebItem(BuildContext context, NewsItem item) async {
   String? warningText;
   if (item.llm != null && item.llm != 'original') {
     warningText = AppLocalizations.of(context)!.translationMayContainErrors;
@@ -151,13 +154,11 @@ Future<void> openItem(BuildContext context, NewsItem item) async {
   final (description, descriptionForShare) = parseDescription(item, false, warningText);
   final messenger = ScaffoldMessenger.of(context);
 
-  // double width = MediaQuery.of(context).size.width * 0.4;
-
   showDialog(
     context: context,
     builder: (context) {
       return Padding(
-        padding: const EdgeInsets.only(left: 100, right: 100),
+        padding: const EdgeInsets.only(left: 200, right: 200),
         child: AlertDialog(
           title: SelectableText(
             item.title,
