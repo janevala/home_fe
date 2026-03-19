@@ -7,6 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
 // import 'package:timeago/timeago.dart' as timeago;
+import 'package:flutter/foundation.dart' show defaultTargetPlatform, TargetPlatform;
 
 // title lenght in db = 500
 // description length in db = 1000
@@ -59,78 +60,88 @@ Future<void> openItem(BuildContext context, NewsItem item) async {
   final (description, descriptionForShare) = parseDescription(item, false, warningText);
   final messenger = ScaffoldMessenger.of(context);
 
+  final isMobile = defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android;
+  double height = isMobile ? MediaQuery.of(context).size.height : MediaQuery.of(context).size.height * 0.4;
+  double width = isMobile ? MediaQuery.of(context).size.width : MediaQuery.of(context).size.width * 0.4;
+
   showDialog(
     context: context,
     builder: (context) {
-      return AlertDialog(
-        title: SelectableText(
-          item.title,
+      return Dialog(
+        child: SizedBox(
+          height: height,
+          width: width,
+          child: AlertDialog(
+            title: SelectableText(
+              item.title,
+            ),
+            content: SelectableText(
+              description,
+            ),
+            buttonPadding: EdgeInsets.zero,
+            actionsAlignment: MainAxisAlignment.end,
+            actions: [
+              TextButton(
+                onPressed: () async {
+                  Navigator.pop(context, true);
+
+                  if (await canLaunchUrl(Uri.parse(item.link))) {
+                    await launchUrl(Uri.parse(item.link));
+                  }
+                },
+                child: Text(
+                  AppLocalizations.of(context)!.openOriginal,
+                ),
+              ),
+              Tooltip(
+                message: AppLocalizations.of(context)!.shareStory,
+                child: IconButton(
+                  onPressed: () {
+                    if (item.title == item.description) {
+                      SharePlus.instance.share(
+                        ShareParams(text: '$descriptionForShare\n\n${item.link}'),
+                      );
+                    } else {
+                      SharePlus.instance.share(
+                        ShareParams(
+                          text: '${item.title}\n\n$descriptionForShare\n\n${item.link}',
+                        ),
+                      );
+                    }
+                  },
+                  icon: Icon(Icons.share, color: Theme.of(context).colorScheme.primary),
+                ),
+              ),
+              Tooltip(
+                message: AppLocalizations.of(context)!.copyToClipboard,
+                child: IconButton(
+                  onPressed: () {
+                    if (item.title == item.description) {
+                      Clipboard.setData(ClipboardData(text: '$description\n\n${item.link}'));
+                    } else {
+                      Clipboard.setData(ClipboardData(text: '${item.title}\n\n$descriptionForShare\n\n${item.link}'));
+                    }
+
+                    messenger.showSnackBar(
+                      SnackBar(
+                        content: Text(AppLocalizations.of(context)!.copiedToClipboard),
+                        duration: const Duration(seconds: 1),
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                      ),
+                    );
+
+                    Navigator.pop(context, true);
+                  },
+                  icon: Icon(Icons.copy, color: Theme.of(context).colorScheme.primary),
+                ),
+              ),
+              IconButton(
+                onPressed: () => Navigator.pop(context, true),
+                icon: Icon(Icons.close, color: Theme.of(context).colorScheme.primary),
+              ),
+            ],
+          ),
         ),
-        content: SelectableText(
-          description,
-        ),
-        buttonPadding: EdgeInsets.zero,
-        actionsAlignment: MainAxisAlignment.end,
-        actions: [
-          TextButton(
-            onPressed: () async {
-              Navigator.pop(context, true);
-
-              if (await canLaunchUrl(Uri.parse(item.link))) {
-                await launchUrl(Uri.parse(item.link));
-              }
-            },
-            child: Text(
-              AppLocalizations.of(context)!.openOriginal,
-            ),
-          ),
-          Tooltip(
-            message: AppLocalizations.of(context)!.shareStory,
-            child: IconButton(
-              onPressed: () {
-                if (item.title == item.description) {
-                  SharePlus.instance.share(
-                    ShareParams(text: '$descriptionForShare\n\n${item.link}'),
-                  );
-                } else {
-                  SharePlus.instance.share(
-                    ShareParams(
-                      text: '${item.title}\n\n$descriptionForShare\n\n${item.link}',
-                    ),
-                  );
-                }
-              },
-              icon: Icon(Icons.share, color: Theme.of(context).colorScheme.primary),
-            ),
-          ),
-          Tooltip(
-            message: AppLocalizations.of(context)!.copyToClipboard,
-            child: IconButton(
-              onPressed: () {
-                if (item.title == item.description) {
-                  Clipboard.setData(ClipboardData(text: '$description\n\n${item.link}'));
-                } else {
-                  Clipboard.setData(ClipboardData(text: '${item.title}\n\n$descriptionForShare\n\n${item.link}'));
-                }
-
-                messenger.showSnackBar(
-                  SnackBar(
-                    content: Text(AppLocalizations.of(context)!.copiedToClipboard),
-                    duration: const Duration(seconds: 1),
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                  ),
-                );
-
-                Navigator.pop(context, true);
-              },
-              icon: Icon(Icons.copy, color: Theme.of(context).colorScheme.primary),
-            ),
-          ),
-          IconButton(
-            onPressed: () => Navigator.pop(context, true),
-            icon: Icon(Icons.close, color: Theme.of(context).colorScheme.primary),
-          ),
-        ],
       );
     },
   );
