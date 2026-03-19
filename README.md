@@ -41,6 +41,7 @@ pipeline.sh
 ## Nice to have TODOs
 - Server stats as in backend page, or similar. Data already in front
 - Analytics and to what acount? create account?
+- Thai locale buddha year
 
 # Flutter notes
 ```

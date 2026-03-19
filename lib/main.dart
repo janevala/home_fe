@@ -11,15 +11,25 @@ import 'package:homefe/bloc/theme_cubit.dart';
 import 'package:homefe/constants/app_version.dart';
 import 'package:homefe/constants/supported_locals.dart';
 import 'package:homefe/podo/rss/rss_site.dart';
-import 'package:homefe/ui/archive_screen.dart';
-import 'package:homefe/ui/dashboard_screen.dart';
-import 'package:homefe/ui/login_screen.dart';
-import 'package:homefe/ui/feed_screen.dart';
-import 'package:homefe/ui/sites_screen.dart';
+import 'package:homefe/ui_portrait/login_screen.dart' as portrait;
+import 'package:homefe/ui_landscape/login_screen.dart' as landscape;
+import 'package:homefe/ui_portrait/dashboard_screen.dart' as portrait;
+import 'package:homefe/ui_landscape/dashboard_screen.dart' as landscape;
+import 'package:homefe/ui_portrait/sites_screen.dart' as portrait;
+import 'package:homefe/ui_landscape/sites_screen.dart' as landscape;
+import 'package:homefe/ui_portrait/feed_screen.dart' as portrait;
+import 'package:homefe/ui_landscape/feed_screen.dart' as landscape;
+import 'package:homefe/ui_portrait/archive_screen.dart' as portrait;
+import 'package:homefe/ui_landscape/archive_screen.dart' as landscape;
 import 'package:go_router/go_router.dart';
 import 'package:homefe/theme/theme.dart';
 import 'package:intl/intl.dart';
 import 'package:timeago/timeago.dart';
+
+import 'package:flutter/foundation.dart' show defaultTargetPlatform, TargetPlatform;
+
+bool get _usePortraitUi =>
+    defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android;
 
 void main() {
   setLocaleMessages('de', DeMessages());
@@ -129,31 +139,33 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/',
       builder: (BuildContext context, GoRouterState state) {
-        return const LoginScreen();
+        return _usePortraitUi ? const portrait.LoginScreen() : const landscape.LoginScreen();
       },
       routes: <RouteBase>[
         GoRoute(
           path: 'dashboard',
           builder: (BuildContext context, GoRouterState state) {
-            return const DashboardScreen();
-          },
-        ),
-        GoRoute(
-          path: 'sites',
-          builder: (BuildContext context, GoRouterState state) {
-            return const SitesScreen();
-          },
-        ),
-        GoRoute(
-          path: 'site',
-          builder: (BuildContext context, GoRouterState state) {
-            return FeedScreen(rssSite: state.extra as RssSite);
+            return _usePortraitUi ? const portrait.DashboardScreen() : const landscape.DashboardScreen();
           },
         ),
         GoRoute(
           path: 'archive',
           builder: (BuildContext context, GoRouterState state) {
-            return const ArchiveScreen();
+            return _usePortraitUi ? const portrait.ArchiveScreen() : const landscape.ArchiveScreen();
+          },
+        ),
+        GoRoute(
+          path: 'sites',
+          builder: (BuildContext context, GoRouterState state) {
+            return _usePortraitUi ? const portrait.SitesScreen() : const landscape.SitesScreen();
+          },
+        ),
+        GoRoute(
+          path: 'site',
+          builder: (BuildContext context, GoRouterState state) {
+            return _usePortraitUi
+                ? portrait.FeedScreen(rssSite: state.extra as RssSite)
+                : landscape.FeedScreen(rssSite: state.extra as RssSite);
           },
         ),
       ],

@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -37,10 +36,10 @@ class _AnimatedFirstState extends State<AnimatedFirst> with TickerProviderStateM
 
   late final AnimationController _waitController;
 
-  double _containerHeight = 170;
-  List<int> _logoSizes = [130, 140, 150, 160, 170];
-
+  final double _containerHeight = 120;
+  final List<int> _logoSizes = [65, 70, 85, 90, 100];
   String _logoPath = 'assets/app-logo.svg';
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -54,11 +53,6 @@ class _AnimatedFirstState extends State<AnimatedFirst> with TickerProviderStateM
   @override
   void initState() {
     super.initState();
-
-    if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
-      _containerHeight = 120;
-      _logoSizes = [65, 70, 85, 90, 100];
-    }
 
     _firstFadeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1500));
     _firstRotateController = AnimationController(vsync: this, duration: Duration(milliseconds: 1400));

@@ -7,7 +7,7 @@ import 'package:homefe/functions.dart';
 import 'package:homefe/podo/rss/news_item.dart';
 import 'package:homefe/podo/rss/rss_site.dart';
 import 'package:homefe/callback_shortcuts.dart';
-import 'package:homefe/ui/list_tile.dart';
+import 'package:homefe/ui_portrait/list_tile.dart';
 import 'package:homefe/ui/spinner.dart';
 import 'package:rss_dart/domain/rss_item.dart';
 
@@ -53,8 +53,7 @@ class FeedScreenState extends State<FeedScreen> {
                 );
 
                 return const Spinner();
-              } else if (state is RssFeedSuccess &&
-                  state.rssFeed.items.isNotEmpty) {
+              } else if (state is RssFeedSuccess && state.rssFeed.items.isNotEmpty) {
                 return CallbackShortcuts(
                   bindings: getCallbackShortcuts(controller),
                   child: Focus(

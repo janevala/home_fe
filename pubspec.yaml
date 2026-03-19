@@ -22,7 +22,7 @@ dependencies:
   url_launcher: 6.3.2
   timeago: 3.7.1
   cached_network_image: 3.4.1
-  json_annotation: 4.11.0
+  json_annotation: 4.9.0
   collection: 1.19.1
   logger: 2.7.0
   flutter_svg: 2.2.4

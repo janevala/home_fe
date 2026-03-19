@@ -8,8 +8,8 @@ import 'package:homefe/constants/app_version.dart';
 import 'package:homefe/functions.dart';
 import 'package:homefe/logger/logger.dart';
 import 'package:homefe/persistence/persistent_storage.dart';
-import 'package:homefe/ui/animated_first.dart';
-import 'package:homefe/ui/animated_flags.dart';
+import 'package:homefe/ui_landscape/animated_first.dart';
+import 'package:homefe/ui_landscape/animated_flags.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardScreen extends StatefulWidget {

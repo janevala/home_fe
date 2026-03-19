@@ -66,34 +66,6 @@ class JsonFeedTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
-      return Card(
-        child: InkWell(
-          onTap: onItemTap,
-          onLongPress: onItemLongPress,
-          borderRadius: BorderRadius.circular(Radi.medium),
-          child: Padding(
-            padding: const EdgeInsets.all(8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildHeader(context),
-                const SizedBox(height: 8),
-                if (_description.isNotEmpty) ...[
-                  Text(
-                    _description,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  const SizedBox(height: 12),
-                ],
-                _buildMobileFooter(context),
-              ],
-            ),
-          ),
-        ),
-      );
-    }
-
     return Card(
       child: InkWell(
         onTap: onItemTap,
@@ -190,60 +162,6 @@ class JsonFeedTile extends StatelessWidget {
           style: Theme.of(context).textTheme.bodyMedium,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-        ),
-      ],
-    );
-  }
-
-  Widget _buildMobileFooter(BuildContext context) {
-    SvgPicture? image = _getImage(50);
-
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            if (image != null) ...[
-              ClipRRect(
-                borderRadius: BorderRadius.circular(Radi.medium),
-                child: ClipRRect(child: image),
-              ),
-              SizedBox(width: 4),
-            ],
-            Text(
-              _baseUrl,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                decoration: TextDecoration.underline,
-                color: AppColors.linkBlue,
-                decorationColor: AppColors.linkBlue,
-              ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // const Spacer(),
-            item.llm == 'original'
-                ? Icon(
-                    Icons.check,
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  )
-                : Icon(
-                    Icons.auto_fix_high,
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  ),
-            Text(
-              item.llm ?? AppLocalizations.of(context)!.unknown,
-              style: Theme.of(context).textTheme.bodyMedium,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ],
         ),
       ],
     );
@@ -363,9 +281,7 @@ class RssFeedTile extends StatelessWidget {
             borderRadius: BorderRadius.circular(Radi.medium),
             child: ClipRRect(child: image),
           ),
-          (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android)
-              ? SizedBox(width: 8)
-              : SizedBox(width: 16),
+          SizedBox(width: 16),
         ],
         Text(
           _baseUrl,
@@ -383,33 +299,6 @@ class RssFeedTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
-      return Card(
-        child: InkWell(
-          onTap: openItem,
-          borderRadius: BorderRadius.circular(Radi.medium),
-          child: Padding(
-            padding: const EdgeInsets.all(8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildHeader(context),
-                const SizedBox(height: 8),
-                if (_description.isNotEmpty) ...[
-                  Text(
-                    _description,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  const SizedBox(height: 12),
-                ],
-                _buildFooter(context),
-              ],
-            ),
-          ),
-        ),
-      );
-    }
-
     return Card(
       child: InkWell(
         onTap: openItem,

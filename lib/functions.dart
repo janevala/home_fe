@@ -50,7 +50,7 @@ import 'package:share_plus/share_plus.dart';
   }
 }
 
-openItem(BuildContext context, NewsItem item) async {
+Future<void> openItem(BuildContext context, NewsItem item) async {
   String? warningText;
   if (item.llm != null && item.llm != 'original') {
     warningText = AppLocalizations.of(context)!.translationMayContainErrors;

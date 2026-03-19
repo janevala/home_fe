@@ -92,47 +92,6 @@ class _AnimatedFlagsState extends State<AnimatedFlags> with TickerProviderStateM
       {'code': 'de', 'asset': 'assets/flags/flag-de.svg', 'tooltip': AppLocalizations.of(context)!.localeDeTranslated},
     ];
 
-    if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
-      return SizedBox(
-        height: 120,
-        child: Center(
-          child: AnimatedBuilder(
-            animation: _firstFadeIn,
-            builder: (context, child) => Opacity(
-              opacity: _firstFadeIn.value,
-              child: child,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  widget.welcomeMessage,
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-                const SizedBox(height: 32),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: flags.map((flag) {
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 16),
-                      child: _buildFlag(
-                        flag['code']!,
-                        flag['asset']!,
-                        flag['tooltip']!,
-                        isMobile: true,
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-    }
-
     return SizedBox(
       height: 170,
       child: Center(

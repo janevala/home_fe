@@ -7,10 +7,10 @@ part of 'archive.dart';
 // **************************************************************************
 
 ArchiveStats _$ArchiveStatsFromJson(Map<String, dynamic> json) => ArchiveStats(
-  json['status'] as String,
-  (json['count'] as num).toInt(),
-  json['oldest'] as String,
-);
+      json['status'] as String,
+      (json['count'] as num).toInt(),
+      json['oldest'] as String,
+    );
 
 Map<String, dynamic> _$ArchiveStatsToJson(ArchiveStats instance) =>
     <String, dynamic>{
