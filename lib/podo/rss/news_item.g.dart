@@ -16,6 +16,7 @@ NewsItem _$NewsItemFromJson(Map<String, dynamic> json) => NewsItem(
       json['source'] as String?,
       json['linkImage'] as String?,
       json['llm'] as String?,
+      json['language'] as String?,
     );
 
 Map<String, dynamic> _$NewsItemToJson(NewsItem instance) => <String, dynamic>{
@@ -28,4 +29,5 @@ Map<String, dynamic> _$NewsItemToJson(NewsItem instance) => <String, dynamic>{
       'source': instance.source,
       'linkImage': instance.linkImage,
       'llm': instance.llm,
+      'language': instance.language,
     };

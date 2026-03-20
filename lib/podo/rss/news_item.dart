@@ -22,6 +22,8 @@ class NewsItem {
   late String? linkImage;
   @JsonKey(name: 'llm')
   late String? llm;
+  @JsonKey(name: 'language')
+  late String? language;
 
   NewsItem(
     this.title,
@@ -33,6 +35,7 @@ class NewsItem {
     this.source,
     this.linkImage,
     this.llm,
+    this.language,
   ]);
 
   factory NewsItem.fromJson(Map<String, dynamic> json) => _$NewsItemFromJson(json);
