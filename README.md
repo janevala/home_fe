@@ -23,7 +23,6 @@ pipeline.sh
      LIMIT 50`, searchQuery, lang)
 ```
 
-
 ## Nice to have
 - Ping what translations are available
 - Server stats as in backend page, or similar. Data already in front
@@ -43,7 +42,6 @@ flutter pub get
 sudo docker network create home-network
 sudo docker context create production-context --docker "host=ssh://<user>@<your.remote.host>"
 
-grep flutter_bootstrap web/index.html
 sudo docker build --no-cache -f Dockerfile -t news-frontend .
 sudo docker run --name front-host --network home-network -p 7070:7070 --restart always -d news-frontend
 
