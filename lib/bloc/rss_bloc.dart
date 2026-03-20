@@ -174,7 +174,11 @@ class RssArchiveBloc extends Bloc<RssEvent, RssState> {
 
           items.addAll(newsItems.items);
           offset += limit;
-          hasMore = newsItems.items.length == limit && offset < totalItems;
+
+          // TODO: disabled in backend for now. there are 10k+ items
+          // hasMore = newsItems.items.length == limit && offset < totalItems;
+          hasMore = true;
+
           emit(ArchiveLoad(List.from(items)));
         } catch (e) {
           emit(Failure('Failed to load more items'));
