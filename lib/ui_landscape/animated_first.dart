@@ -54,18 +54,18 @@ class _AnimatedFirstState extends State<AnimatedFirst> with TickerProviderStateM
   void initState() {
     super.initState();
 
-    _firstFadeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1500));
-    _firstRotateController = AnimationController(vsync: this, duration: Duration(milliseconds: 1400));
+    _firstFadeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1000));
+    _firstRotateController = AnimationController(vsync: this, duration: Duration(milliseconds: 1100));
     _firstResizeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1000));
 
     // second is always slightly slower
-    _secondFadeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1600));
-    _secondRotateController = AnimationController(vsync: this, duration: Duration(milliseconds: 1500));
+    _secondFadeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1100));
+    _secondRotateController = AnimationController(vsync: this, duration: Duration(milliseconds: 1200));
     _secondResizeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1100));
 
     // third is even slower
-    _thirdFadeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1700));
-    _thirdRotateController = AnimationController(vsync: this, duration: Duration(milliseconds: 1600));
+    _thirdFadeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1200));
+    _thirdRotateController = AnimationController(vsync: this, duration: Duration(milliseconds: 1300));
     _thirdResizeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1000));
 
     _waitController = AnimationController(vsync: this, duration: Duration(milliseconds: 500));
