@@ -70,12 +70,26 @@ Future<void> openMobileItem(BuildContext context, NewsItem item) async {
   showDialog(
     context: context,
     builder: (context) {
+      final controller = ScrollController();
+
       return AlertDialog(
         title: SelectableText(
           item.title,
         ),
-        content: SelectableText(
-          description,
+        content: SizedBox(
+          width: double.maxFinite,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxHeight: MediaQuery.of(context).size.height * 0.8,
+            ),
+            child: Scrollbar(
+              controller: controller,
+              child: SingleChildScrollView(
+                controller: controller,
+                child: SelectableText(description),
+              ),
+            ),
+          ),
         ),
         buttonPadding: EdgeInsets.zero,
         actionsAlignment: MainAxisAlignment.end,
