@@ -36,8 +36,8 @@ class _AnimatedFirstState extends State<AnimatedFirst> with TickerProviderStateM
 
   late final AnimationController _waitController;
 
-  final double _containerHeight = 120;
-  final List<int> _logoSizes = [65, 70, 85, 90, 100];
+  final double _containerHeight = 130;
+  final List<int> _logoSizes = [85, 90, 100, 110, 120];
   String _logoPath = 'assets/app-logo.svg';
 
   @override

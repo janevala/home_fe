@@ -45,9 +45,9 @@ class _AnimatedFlagsState extends State<AnimatedFlags> with TickerProviderStateM
     return context.read<LocaleCubit>().state.languageCode == languageCode;
   }
 
-  Widget _buildFlag(String code, String asset, String tooltip, {bool isMobile = false}) {
+  Widget _buildFlag(String code, String asset, String tooltip) {
     final isCurrent = _isCurrentLocale(code);
-    final size = isMobile ? 50.0 : 100.0;
+    final size = 100.0;
 
     return Tooltip(
       message: tooltip,
@@ -63,7 +63,7 @@ class _AnimatedFlagsState extends State<AnimatedFlags> with TickerProviderStateM
             color: isCurrent ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.1) : Colors.transparent,
           ),
           child: Padding(
-            padding: EdgeInsets.all(isCurrent ? 4 : 0),
+            padding: EdgeInsets.all(6),
             child: SvgPicture.asset(
               asset,
               key: ValueKey(code),
@@ -92,7 +92,7 @@ class _AnimatedFlagsState extends State<AnimatedFlags> with TickerProviderStateM
     ];
 
     return SizedBox(
-      height: 170,
+      height: 180,
       child: Center(
         child: AnimatedBuilder(
           animation: _firstFadeIn,
@@ -119,7 +119,6 @@ class _AnimatedFlagsState extends State<AnimatedFlags> with TickerProviderStateM
                       flag['code']!,
                       flag['asset']!,
                       flag['tooltip']!,
-                      isMobile: false,
                     ),
                   );
                 }).toList(),

@@ -45,31 +45,28 @@ class _AnimatedFlagsState extends State<AnimatedFlags> with TickerProviderStateM
     return context.read<LocaleCubit>().state.languageCode == languageCode;
   }
 
-  Widget _buildFlag(String code, String asset, String tooltip, {bool isMobile = false}) {
+  Widget _buildFlag(String code, String asset, String tooltip) {
     final isCurrent = _isCurrentLocale(code);
-    final size = isMobile ? 50.0 : 100.0;
+    final size = 50.0;
 
-    return Tooltip(
-      message: tooltip,
-      child: InkWell(
-        onTap: () => context.read<LocaleCubit>().changeLocaleTo(Locale(code)),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(
-              color: isCurrent ? Theme.of(context).colorScheme.primary : Colors.transparent,
-              width: 2,
-            ),
-            color: isCurrent ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.1) : Colors.transparent,
+    return InkWell(
+      onTap: () => context.read<LocaleCubit>().changeLocaleTo(Locale(code)),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(
+            color: isCurrent ? Theme.of(context).colorScheme.primary : Colors.transparent,
+            width: 2,
           ),
-          child: Padding(
-            padding: EdgeInsets.all(isCurrent ? 4 : 0),
-            child: SvgPicture.asset(
-              asset,
-              key: ValueKey(code),
-              width: size,
-              height: size,
-            ),
+          color: isCurrent ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.1) : Colors.transparent,
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(2),
+          child: SvgPicture.asset(
+            asset,
+            key: ValueKey(code),
+            width: size,
+            height: size,
           ),
         ),
       ),
@@ -92,7 +89,7 @@ class _AnimatedFlagsState extends State<AnimatedFlags> with TickerProviderStateM
     ];
 
     return SizedBox(
-      height: 120,
+      height: 130,
       child: Center(
         child: AnimatedBuilder(
           animation: _firstFadeIn,
@@ -109,7 +106,7 @@ class _AnimatedFlagsState extends State<AnimatedFlags> with TickerProviderStateM
                   color: Theme.of(context).colorScheme.primary,
                 ),
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: flags.map((flag) {
@@ -119,7 +116,6 @@ class _AnimatedFlagsState extends State<AnimatedFlags> with TickerProviderStateM
                       flag['code']!,
                       flag['asset']!,
                       flag['tooltip']!,
-                      isMobile: true,
                     ),
                   );
                 }).toList(),

@@ -162,7 +162,7 @@ class RssArchiveBloc extends Bloc<RssEvent, RssState> {
             language: event.language,
           );
 
-          int totalItems = newsItems?.totalItems ?? 0;
+          // int totalItems = newsItems?.totalItems ?? 0;
           limit = newsItems?.limit ?? 0;
           offset = newsItems?.offset ?? 0;
 
