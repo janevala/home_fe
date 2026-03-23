@@ -6,7 +6,6 @@ import 'package:html/parser.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
-// import 'package:timeago/timeago.dart' as timeago;
 import 'package:flutter/foundation.dart' show defaultTargetPlatform, TargetPlatform;
 
 // title lenght in db = 500
@@ -15,7 +14,7 @@ import 'package:flutter/foundation.dart' show defaultTargetPlatform, TargetPlatf
   if (item.source == 'Dpreview' || (item.source == 'Hacker News' && item.llm == 'original')) {
     String description = item.title;
     if (warningText != null) {
-      description += '\n\n(LLM: ${item.llm ?? 'original'}. $warningText)';
+      description += '\n\n($warningText)';
     }
 
     return (description, item.title);
@@ -24,7 +23,7 @@ import 'package:flutter/foundation.dart' show defaultTargetPlatform, TargetPlatf
   if (item.description.isEmpty) {
     String description = item.title;
     if (warningText != null) {
-      description += '\n\n(${item.llm ?? 'original'}. $warningText)';
+      description += '\n\n($warningText)';
     }
 
     return (description, item.title);
@@ -42,7 +41,7 @@ import 'package:flutter/foundation.dart' show defaultTargetPlatform, TargetPlatf
     String descriptionForShare = description;
 
     if (warningText != null) {
-      description += '\n\n(${item.llm ?? 'original'}. $warningText)';
+      description += '\n\n($warningText)';
     }
 
     return (description, descriptionForShare);
