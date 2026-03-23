@@ -270,40 +270,40 @@ class DashboardScreenState extends State<DashboardScreen> {
         child: BlocBuilder<RssArchiveBloc, RssState>(
           builder: (context, state) {
             return Center(
-              child: SizedBox(
-                width: width * 0.7,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    showAnimation
-                        ? AnimatedFirst(
-                            onAnimationComplete: () {
-                              setState(() {
-                                showAnimation = false;
-                              });
-                            },
-                          )
-                        : AnimatedFlags(
-                            welcomeMessage: firstTimeUser
-                                ? AppLocalizations.of(context)!.welcome
-                                : AppLocalizations.of(context)!.welcomeBack,
-                          ),
-                    const SizedBox(height: 64),
-                    // if (!kIsWeb && !kIsWasm)
-                    //   ElevatedButton(
-                    //     onPressed: () {
-                    //       GoRouter.of(context).push('/sites');
-                    //     },
-                    //     child: Text(AppLocalizations.of(context)!.newsSites),
-                    //   ),
-                    // if (!kIsWeb && !kIsWasm) const SizedBox(height: 32),
-                    ElevatedButton(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  showAnimation
+                      ? AnimatedFirst(
+                          onAnimationComplete: () {
+                            setState(() {
+                              showAnimation = false;
+                            });
+                          },
+                        )
+                      : AnimatedFlags(
+                          welcomeMessage: firstTimeUser
+                              ? AppLocalizations.of(context)!.welcome
+                              : AppLocalizations.of(context)!.welcomeBack,
+                        ),
+                  const SizedBox(height: 64),
+                  // if (!kIsWeb && !kIsWasm)
+                  //   ElevatedButton(
+                  //     onPressed: () {
+                  //       GoRouter.of(context).push('/sites');
+                  //     },
+                  //     child: Text(AppLocalizations.of(context)!.newsSites),
+                  //   ),
+                  // if (!kIsWeb && !kIsWasm) const SizedBox(height: 32),
+                  SizedBox(
+                    width: width * 0.7,
+                    child: ElevatedButton(
                       onPressed: slowLoadingDone ? () => GoRouter.of(context).push('/archive') : null,
                       child: Text(AppLocalizations.of(context)!.newsArchive),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             );
           },
