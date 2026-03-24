@@ -54,19 +54,19 @@ class _AnimatedFirstState extends State<AnimatedFirst> with TickerProviderStateM
   void initState() {
     super.initState();
 
-    _firstFadeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1000));
-    _firstRotateController = AnimationController(vsync: this, duration: Duration(milliseconds: 1100));
-    _firstResizeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1000));
+    _firstFadeController = AnimationController(vsync: this, duration: Duration(milliseconds: 400));
+    _firstRotateController = AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+    _firstResizeController = AnimationController(vsync: this, duration: Duration(milliseconds: 600));
 
     // second is always slightly slower
-    _secondFadeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1100));
-    _secondRotateController = AnimationController(vsync: this, duration: Duration(milliseconds: 1200));
+    _secondFadeController = AnimationController(vsync: this, duration: Duration(milliseconds: 900));
+    _secondRotateController = AnimationController(vsync: this, duration: Duration(milliseconds: 1000));
     _secondResizeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1100));
 
     // third is even slower
-    _thirdFadeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1200));
-    _thirdRotateController = AnimationController(vsync: this, duration: Duration(milliseconds: 1300));
-    _thirdResizeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1000));
+    _thirdFadeController = AnimationController(vsync: this, duration: Duration(milliseconds: 400));
+    _thirdRotateController = AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+    _thirdResizeController = AnimationController(vsync: this, duration: Duration(milliseconds: 600));
 
     _waitController = AnimationController(vsync: this, duration: Duration(milliseconds: 500));
 
