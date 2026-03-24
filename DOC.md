@@ -1,4 +1,4 @@
-# Tech-Heavy News App System Architecture
+# System Architecture
 
 ## Overview
 
@@ -46,7 +46,7 @@ A Flutter (Dart) frontend application communicating with a Golang backend, both 
 │                               EXTERNAL NETWORK                            │
 │   ┌───────────────────────────────────────────────────────────────────┐   │
 │   │                         Caddy Server (HTTPS)                      │   │
-│   │                       (nginx reverse proxy)                       │   │
+│   │                        (nginx reverse proxy)                      │   │
 │   │   ┌───────────────────────────────────────────────────────────┐   │   │
 │   │   │                   PORT 443/80 (HTTPS/HTTP)                │   │   │
 │   │   └───────────────────────────────────────────────────────────┘   │   │
@@ -339,7 +339,7 @@ make release
 
 ---
 
-## 10. Future Enhancements (TODO from README)
+## 10. Future Enhancements
 
 ### Frontend TODOs
 - [ ] Detect available translations/ping for i18n support
@@ -360,18 +360,10 @@ make release
 ## 11. Quick Reference
 
 ### Port Summary
-| Service | Internal Port | External Port | Protocol |
-|---------|---------------|---------------|----------|
 
 ### Network Communication
-```
-Container-to-Container via hostname:
-- Frontend connects to: api-host:7071
-- Backend listens on port 7071
-```
 
 ### Environment Variables Cheat Sheet
-| Variable | Frontend Value | Backend Value | Description |
 
 ---
 
