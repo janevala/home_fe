@@ -59,14 +59,14 @@ class _AnimatedFirstState extends State<AnimatedFirst> with TickerProviderStateM
     _firstResizeController = AnimationController(vsync: this, duration: Duration(milliseconds: 600));
 
     // second is always slightly slower
-    _secondFadeController = AnimationController(vsync: this, duration: Duration(milliseconds: 900));
-    _secondRotateController = AnimationController(vsync: this, duration: Duration(milliseconds: 1000));
-    _secondResizeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1100));
+    _secondFadeController = AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+    _secondRotateController = AnimationController(vsync: this, duration: Duration(milliseconds: 600));
+    _secondResizeController = AnimationController(vsync: this, duration: Duration(milliseconds: 700));
 
     // third is even slower
-    _thirdFadeController = AnimationController(vsync: this, duration: Duration(milliseconds: 400));
-    _thirdRotateController = AnimationController(vsync: this, duration: Duration(milliseconds: 500));
-    _thirdResizeController = AnimationController(vsync: this, duration: Duration(milliseconds: 600));
+    _thirdFadeController = AnimationController(vsync: this, duration: Duration(milliseconds: 600));
+    _thirdRotateController = AnimationController(vsync: this, duration: Duration(milliseconds: 700));
+    _thirdResizeController = AnimationController(vsync: this, duration: Duration(milliseconds: 800));
 
     _waitController = AnimationController(vsync: this, duration: Duration(milliseconds: 500));
 
