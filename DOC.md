@@ -361,9 +361,64 @@ make release
 
 ### Port Summary
 
+| Service                   | Internal Port | External Port | Protocol   | Description              |
+|---------------------------|---------------|---------------|------------|--------------------------|
+| Frontend (Flutter Web)    | 7070          | 7070          | HTTPS      | Serves web app to users  |
+| Backend (API)             | 7071          | 7071          | HTTPS      | REST API for frontend    |
+| PostgreSQL Database       | 5432          | -             | TCP        | Persistent data storage  |
+
 ### Network Communication
 
+```
+┌─── Frontend Container (front-host) ────┐
+│    Flutter Web App                     │
+│    go_router handles navigation        │
+│                                        │
+│    HTTP API Calls:                     │
+│    Dio().get('http://api-host:7071/')  │
+└──────────────┬─────────────────────────┘
+               │ REST/JSON Requests
+               ▼
+┌─── Backend Container (api-host) ───────┐
+│    Go HTTP Server                      │
+│    Port 7071                           │
+│                                        │
+│    API Endpoints:                      │
+│    - /feed                             │
+│    - /news                             │
+│    - /articles                         │
+│    - /<incomplete>                     │
+│                                        │
+│    Auth: ?code=123                     │
+└──────────────┬─────────────────────────┘
+               │ Database Queries
+               ▼
+┌─── PostgreSQL Container ───────────────────┐
+│    postgres-host                           │
+│    Database: homebedb                      │
+│    Tables: feed_items, feed_translations   │
+└────────────────────────────────────────────┘
+
+Docker Network: home-network
+- Service Discovery by hostname only
+- No external DNS required
+
+Docker Context: production-context
+- During production pipeline deployment
+```
+
 ### Environment Variables Cheat Sheet
+
+| Variable             | Frontend Value                   | Backend Value                                      | Purpose                              |
+|----------------------|----------------------------------|----------------------------------------------------|--------------------------------------|
+| **ENV**              | debug or release                 | debug or release                                   | Build environment                    |
+| **REL**              | release1                         | -                                                  | Release variant                      |
+| **APP_API**          | http://api-host:7071             | -                                                  | Backend API endpoint for frontend    |
+| **DATABASE_URL**     | -                                | postgres://postgres:<pass>@host/db?sslmode=disable | Database connection string           |
+| **GOOS**             | -                                | linux (default)                                    | Go target OS                         |
+| **GOARCH**           | -                                | amd64/aarch64 (auto-detected)                      | Go target architecture               |
+
+**Note**: Always set `.env` and `config.json` files before Docker build or production deployment.
 
 ---
 
