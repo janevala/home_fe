@@ -1,4 +1,4 @@
-FROM ghcr.io/cirruslabs/flutter:3.38.6 AS builder
+FROM ghcr.io/cirruslabs/flutter:3.41.5 AS builder
 RUN apt update
 RUN apt install -y make bash
 
