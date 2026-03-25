@@ -51,11 +51,12 @@ graph TB
     end
     
     subgraph Docker_Network["home-network"]
-        D["Frontend Container front-host<br/>Flutter Web App<br/>Port: 7070<br/>API Endpoints:<br/>- /auth (POST)<br/>- /sites (GET)<br/>- /archive (GET)<br/>- /search (GET)<br/>- /refresh (GET)<br/>- /translate (POST)<br/>- /jq (GET)"]
-        C["Backend Container api-host<br/>Go HTTP Server<br/>Port: 7071<br/>Database: PostgreSQL<br/>Auth: code=123"]
-        E["PostgreSQL Container postgres-host<br/>Port: 5432<br/>Database: homebedb"]
+        D["front-host container<br/>Flutter Web App<br/>Port: 7070"]
+        C["api-host container<br/>Go HTTP Server<br/>Port: 7071<br/>Auth: code=123<br/>API Endpoints:<br/>- /auth (POST)<br/>- /sites (GET)<br/>- /archive (GET)<br/>- /search (GET)<br/>- /refresh (GET)<br/>- /translate (POST)<br/>- /jq (GET)"]
+        E["postgres-host container<br/>Port: 5432<br/>Database: homebedb"]
     end
     
+    B --> A
     A --> D
     D --> C
     C --> E
