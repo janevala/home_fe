@@ -46,12 +46,11 @@ A Flutter (Dart) frontend application communicating with a Golang backend, both 
 ```mermaid
 graph TB
     subgraph Internet
-        A["Caddy Server nginx reverse proxy"]
         B["PORT 443/80 HTTPS/HTTP"]
     end
     
     subgraph UFW_Firewall["UFW<br/>Port Filtering & Security"]
-        A
+        A["Caddy Server nginx reverse proxy"]
         subgraph Docker_Network["home-network"]
             D["front-host container<br/>Flutter Web App<br/>Port: 7070"]
             C["api-host container<br/>Go HTTP Server<br/>Port: 7071<br/>API Endpoints:<br/>- /auth (POST)<br/>- /sites (GET)<br/>- /archive (GET)<br/>- /search (GET)<br/>- /refresh (GET)<br/>- /translate (POST)<br/>- /jq (GET)"]
