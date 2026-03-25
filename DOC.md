@@ -44,7 +44,7 @@ A Flutter (Dart) frontend application communicating with a Golang backend, both 
 <!-- **Network:** -->
 
 ```mermaid
-graph TB
+graph LR
     subgraph Internet
         B["PORT 443/80 HTTPS/HTTP"]
     end
