@@ -59,8 +59,9 @@ graph TB
     F[Frontend: PORT 7070<br/>Flutter Web App]
     G[Backend: PORT 7071<br/>Golang + API]
     
-    C -- G --> H[Dio() Client Requests]
-    D -- F --> I[(PostgreSQL Container)]
+    C --> H[Dio() Client Requests]
+    D --> F
+    G --> I[(PostgreSQL Container)]
 ```
 
 **Caddy/Nginx → Frontend → Backend → PostgreSQL**
