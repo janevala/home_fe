@@ -51,9 +51,9 @@ graph TB
     end
     
     subgraph Docker_Network["home-network"]
-        D["Frontend Container front-host"]
-        C["Backend Container api-host"]
-        E["PostgreSQL Container postgres-host"]
+        D["Frontend Container front-host<br/>Flutter Web App<br/>Port: 7070<br/>API Endpoints:<br/>- /auth (POST)<br/>- /sites (GET)<br/>- /archive (GET)<br/>- /search (GET)<br/>- /refresh (GET)<br/>- /translate (POST)<br/>- /jq (GET)"]
+        C["Backend Container api-host<br/>Go HTTP Server<br/>Port: 7071<br/>Database: PostgreSQL<br/>Auth: code=123"]
+        E["PostgreSQL Container postgres-host<br/>Port: 5432<br/>Database: homebedb"]
     end
     
     A --> D
@@ -67,7 +67,99 @@ graph TB
 
 ---
 
-## 3. Communication Patterns
+## 3. API Endpoints Documentation
+
+### Backend API Endpoints (api-host:7071)
+
+All endpoints require authentication via `code=123` query parameter.
+
+#### Authentication Endpoints
+- **POST /auth**
+  - **Purpose**: User login and token refresh
+  - **Request Body**: 
+    ```json
+    {
+      "username": "string",
+      "password": "string", 
+      "grant_type": "password|refresh_token",
+      "client_id": "clientId",
+      "client_secret": "clientSecret"
+    }
+    ```
+  - **Response**: Token object with access token, refresh token, etc.
+  - **Used by**: `login()`, `refreshLogin()` methods
+
+#### Content Management Endpoints
+- **GET /sites**
+  - **Purpose**: Retrieve RSS feed sites configuration
+  - **Parameters**: `code=123`
+  - **Response**: RssSites object with available RSS sources
+  - **Used by**: `sites()` method
+
+- **GET /archive**
+  - **Purpose**: Retrieve archived news items with pagination
+  - **Parameters**: 
+    - `code=123` (required)
+    - `offset` (optional, default: 0) - Pagination offset
+    - `limit` (optional, default: 10) - Items per page
+    - `lang` (optional) - Language filter
+  - **Response**: NewsItems object with archived articles
+  - **Used by**: `archive()` method
+
+- **GET /search**
+  - **Purpose**: Search news articles by query
+  - **Parameters**:
+    - `code=123` (required)
+    - `q` (required) - Search query string
+    - `lang` (optional) - Language filter
+  - **Response**: NewsItems object with search results
+  - **Used by**: `search()` method
+
+- **GET /refresh**
+  - **Purpose**: Trigger refresh of RSS feeds/content
+  - **Parameters**: `code=123`
+  - **Response**: Status code and data
+  - **Used by**: `refresh()` method
+
+#### Translation Endpoints
+- **POST /translate**
+  - **Purpose**: Translate text/answer questions
+  - **Request Body**:
+    ```json
+    {
+      "question": "string"
+    }
+    ```
+  - **Parameters**: `code=123`
+  - **Response**: AnswerBody object with translated content
+  - **Used by**: `answerToQuestion()` method
+
+#### Configuration Endpoints
+- **GET /jq**
+  - **Purpose**: Retrieve backend configuration
+  - **Parameters**: `code=123`
+  - **Response**: Config object with backend settings
+  - **Used by**: `getConfig()` method
+
+### Frontend API Client Implementation
+
+The Flutter frontend uses the `ApiRepository` class with the following pattern:
+```dart
+// All requests follow this structure:
+List<Future<dynamic>> futures = [];
+futures.add(client.get('/endpoint', parameters: {"code": "123"}));
+List<dynamic> results = await Future.wait(futures);
+```
+
+**Key Implementation Details**:
+- Uses `Future.wait()` for concurrent request handling
+- All endpoints include `code=123` authentication parameter
+- Error handling with try-catch blocks and logging
+- Response parsing into strongly-typed Dart objects (PODOs)
+
+---
+
+## 4. Communication Patterns
 
 ### Frontend ↔ Backend API
 
@@ -75,7 +167,7 @@ graph TB
 ```dart
 // Flutter frontend makes requests like:
 Dio().get(
-  'http://api-host:7071/feed', 
+  'http://api-host:7071/sites', 
   queryParameters: { 'code': '123' }
 );
 ```
@@ -85,11 +177,11 @@ Dio().get(
 {
   "status": 200,
   "data": {
-    "feed": [
+    "sites": [
       {
-        "title": "News Title",
-        "link": "https://example.com",
-        "published": "2024-01-15T10:30:00Z"
+        "name": "Site Name",
+        "url": "https://example.com/rss",
+        "language": "en"
       }
     ]
   }
@@ -106,7 +198,7 @@ Dio().get(
 
 ---
 
-## 4. Frontend Stack & Dependencies
+## 5. Frontend Stack & Dependencies
 
 ### Core Flutter Packages
 ```yaml
@@ -143,7 +235,7 @@ assets/flags/
 
 ---
 
-## 5. Backend Stack & Dependencies
+## 6. Backend Stack & Dependencies
 
 ### Go Module Dependencies (from Makefile)
 ```bash
@@ -182,7 +274,7 @@ make release
 
 ---
 
-## 6. Docker Configuration
+## 7. Docker Configuration
 
 ### Frontend Dockerfile (Multi-stage)
 ```dockerfile
@@ -246,7 +338,7 @@ sudo docker network connect home-network api-host
 
 ---
 
-## 7. Environment Configuration
+## 8. Environment Configuration
 
 ### Frontend (.env.example)
 ```bash
@@ -263,7 +355,7 @@ DATABASE_URL=postgres://postgres:<user>@<postgres.host>:<pass>/homebedb?sslmode=
 
 ---
 
-## 8. Development Workflow
+## 9. Development Workflow
 
 ### Frontend Development Steps
 ```bash
@@ -300,7 +392,7 @@ make release
 
 ---
 
-## 9. Security Considerations
+## 10. Security Considerations
 
 ### Authentication
 - **Backend**: All endpoints require `code=123` query parameter
@@ -318,7 +410,7 @@ make release
 
 ---
 
-## 10. Future Enhancements
+## 11. Future Enhancements
 
 ### Frontend TODOs
 - [ ] Detect available translations/ping for i18n support
@@ -336,7 +428,7 @@ make release
 
 ---
 
-## 11. Quick Reference
+## 12. Quick Reference
 
 ### Port Summary
 
@@ -401,7 +493,7 @@ Docker Context: production-context
 
 ---
 
-## 12. Contact & Resources
+## 13. Contact & Resources
 
 ### Repository Links
 - **Frontend**:      https://github.com/janevala/home_fe
