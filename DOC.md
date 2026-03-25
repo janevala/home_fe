@@ -41,7 +41,7 @@ A Flutter (Dart) frontend application communicating with a Golang backend, both 
 
 ## 2. Architecture Diagram
 
-**Network:**
+<!-- **Network:** -->
 
 ```mermaid
 graph TB
