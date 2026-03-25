@@ -64,8 +64,8 @@ graph LR
     
     B --> A
     A --> D
-    D --> C
-    C --> E
+    D <--> C
+    C <--> E
 ```
 
 **Caddy/Nginx → Frontend → Backend → PostgreSQL**
