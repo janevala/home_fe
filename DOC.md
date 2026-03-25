@@ -51,7 +51,7 @@ graph TB
     
     subgraph VPS["VPS<br/>Virtual Private Server"]
         subgraph UFW_Firewall["UFW<br/>Port Filtering & Security"]
-            A["Caddy Server reverse proxy & Nginx"]
+            A["Caddy reverse proxy & Nginx"]
             subgraph Docker["Docker<br/>Container Runtime"]
                 subgraph Docker_Network["home-network"]
                     D["front-host container<br/>Flutter Web App<br/>Port: 7070"]
