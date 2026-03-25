@@ -41,11 +41,11 @@ A Flutter (Dart) frontend application communicating with a Golang backend, both 
 
 ## 2. Architecture Diagram
 
-**External Network:**
+**Network:**
 
 ```mermaid
 graph TB
-    subgraph External_Network
+    subgraph Internet
         A["Caddy Server nginx reverse proxy"]
         B["PORT 443/80 HTTPS/HTTP"]
     end
