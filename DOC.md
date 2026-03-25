@@ -49,13 +49,15 @@ graph TB
         B["PORT 443/80 HTTPS/HTTP"]
     end
     
-    subgraph VPS["VPS Server<br/>Virtual Private Server"]
+    subgraph VPS["VPS<br/>Virtual Private Server"]
         subgraph UFW_Firewall["UFW<br/>Port Filtering & Security"]
             A["Caddy Server nginx reverse proxy"]
-            subgraph Docker_Network["home-network"]
-                D["front-host container<br/>Flutter Web App<br/>Port: 7070"]
-                C["api-host container<br/>Go HTTP Server<br/>Port: 7071<br/>API Endpoints:<br/>- /auth (POST)<br/>- /sites (GET)<br/>- /archive (GET)<br/>- /search (GET)<br/>- /refresh (GET)<br/>- /translate (POST)<br/>- /jq (GET)"]
-                E["postgres-host container<br/>Port: 5432<br/>Database: homebedb"]
+            subgraph Docker["Docker<br/>Container Runtime"]
+                subgraph Docker_Network["home-network"]
+                    D["front-host container<br/>Flutter Web App<br/>Port: 7070"]
+                    C["api-host container<br/>Go HTTP Server<br/>Port: 7071<br/>API Endpoints:<br/>- /auth (POST)<br/>- /sites (GET)<br/>- /archive (GET)<br/>- /search (GET)<br/>- /refresh (GET)<br/>- /translate (POST)<br/>- /jq (GET)"]
+                    E["postgres-host container<br/>Port: 5432<br/>Database: homebedb"]
+                end
             end
         end
     end
