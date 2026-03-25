@@ -46,22 +46,19 @@ A Flutter (Dart) frontend application communicating with a Golang backend, both 
 ```mermaid
 graph TB
     subgraph External_Network
-        A[Caddy Server<br/>nginx reverse proxy]
-        B[PORT 443/80<br/>HTTPS/HTTP]
+        A["Caddy Server nginx reverse proxy"]
+        B["PORT 443/80 HTTPS/HTTP"]
     end
     
-    subgraph Docker_Network[home-network]
-        C[(Backend Container<br/>api-host)]
-        D[(Frontend Container<br/>front-host)]
-        E[(PostgreSQL Container<br/>postgres-host)]
+    subgraph Docker_Network["home-network"]
+        D["Frontend Container front-host"]
+        C["Backend Container api-host"]
+        E["PostgreSQL Container postgres-host"]
     end
     
-    F[Frontend: PORT 7070<br/>Flutter Web App]
-    G[Backend: PORT 7071<br/>Golang + API]
-    
-    C --> H[Dio() Client Requests]
-    D --> F
-    G --> I[(PostgreSQL Container)]
+    A --> D
+    D --> C
+    C --> E
 ```
 
 **Caddy/Nginx → Frontend → Backend → PostgreSQL**
