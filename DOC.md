@@ -50,7 +50,7 @@ graph TB
         B["PORT 443/80 HTTPS/HTTP"]
     end
     
-    subgraph UFW_Firewall["UFW Firewall<br/>Port Filtering & Security"]
+    subgraph UFW_Firewall["UFW<br/>Port Filtering & Security"]
         A
         subgraph Docker_Network["home-network"]
             D["front-host container<br/>Flutter Web App<br/>Port: 7070"]
