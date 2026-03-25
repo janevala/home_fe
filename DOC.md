@@ -41,50 +41,31 @@ A Flutter (Dart) frontend application communicating with a Golang backend, both 
 
 ## 2. Architecture Diagram
 
-```
-┌───────────────────────────────────────────────────────────────────────────┐
-│                               EXTERNAL NETWORK                            │
-│   ┌───────────────────────────────────────────────────────────────────┐   │
-│   │                         Caddy Server (HTTPS)                      │   │
-│   │                        (nginx reverse proxy)                      │   │
-│   │   ┌───────────────────────────────────────────────────────────┐   │   │
-│   │   │                   PORT 443/80 (HTTPS/HTTP)                │   │   │
-│   │   └───────────────────────────────────────────────────────────┘   │   │
-│   └───────────────────────────────────────────────────────────────────┘   │
-│                                   │                                       │
-│                                   ▼                                       │
-│   ┌───────────────────────────────────────────────────────────────────┐   │
-│   │                     DOCKER NETWORK: home-network                  │   │
-│   │   ┌──────────────────────────┐      ┌──────────────────────────┐  │   │
-│   │   │     Backend Container    │◄────►│    Frontend Container    │  │   │
-│   │   │        (api-host)        │      │       (front-host)       │  │   │
-│   │   │                          │      │                          │  │   │
-│   │   │     PORT 7071 (HTTPS)    │      │      PORT 7070 (HTTPS)   │  │   │
-│   │   │     Golang + API         │◄────►│      Flutter Web App     │  │   │
-│   │   │     (home_be_backend)    │      │      (news-frontend)     │  │   │
-│   │   │                          │      │                          │  │   │
-│   │   │  ┌────────────────────┐  │      │  ┌────────────────────┐  │  │   │
-│   │   │  │ API Endpoints      │──┼──────┼─►│ Flutter Web Routes │  │  │   │
-│   │   │  │ Go Handlers        │  │      │  │ (go_router)        │  │  │   │
-│   │   │  │ JSON Responses     │◄─┼──────┼──│ Flutter Bloc State │  │  │   │
-│   │   │  └────────────────────┘  │      │  └────────────────────┘  │  │   │
-│   │   └──────────────────────────┘      └──────────────────────────┘  │   │
-│   │                 │                                                 │   │
-│   │                 ▼                                                 │   │
-│   │   ┌──────────────────────────┐                                    │   │
-│   │   │   PostgreSQL Container   │                                    │   │
-│   │   │      (postgres-host)     │                                    │   │
-│   │   │       PORT 5432          │                                    │   │
-│   │   │    Database: homebedb    │                                    │   │
-│   │   └──────────────────────────┘                                    │   │
-│   └───────────────────────────────────────────────────────────────────┘   │
-└───────────────────────────────────────────────────────────────────────────┘
+**External Network:**
 
-Data Flow:
-1. User → HTTPS (Caddy/Nginx) → Frontend
-2. Frontend → HTTP API (localhost or internal network) → Backend
-3. Backend → PostgreSQL Database → Response to Frontend
+```mermaid
+graph TB
+    subgraph External_Network
+        A[Caddy Server<br/>nginx reverse proxy]
+        B[PORT 443/80<br/>HTTPS/HTTP]
+    end
+    
+    subgraph Docker_Network[home-network]
+        C[(Backend Container<br/>api-host)]
+        D[(Frontend Container<br/>front-host)]
+        E[(PostgreSQL Container<br/>postgres-host)]
+    end
+    
+    F[Frontend: PORT 7070<br/>Flutter Web App]
+    G[Backend: PORT 7071<br/>Golang + API]
+    
+    C -- G --> H[Dio() Client Requests]
+    D -- F --> I[(PostgreSQL Container)]
 ```
+
+**Caddy/Nginx → Frontend → Backend → PostgreSQL**
+
+*User requests (HTTPS) via reverse proxy serve front-end container, which communicates with backend via hostnames directly within Docker network. Database connection requires internal hostname resolution only.*
 
 ---
 
