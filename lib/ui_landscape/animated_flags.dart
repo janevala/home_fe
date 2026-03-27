@@ -21,7 +21,7 @@ class _AnimatedFlagsState extends State<AnimatedFlags> with TickerProviderStateM
   void initState() {
     super.initState();
 
-    _fadeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1500));
+    _fadeController = AnimationController(vsync: this, duration: Duration(milliseconds: 1000));
 
     _firstFadeIn = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(
