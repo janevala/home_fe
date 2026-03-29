@@ -7,7 +7,7 @@ import 'package:html/parser.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
-// import 'package:flutter/foundation.dart' show defaultTargetPlatform, TargetPlatform;
+import 'package:flutter/foundation.dart' show defaultTargetPlatform, TargetPlatform;
 
 // title lenght in db = 500
 // description length in db = 1000
@@ -52,12 +52,11 @@ import 'package:share_plus/share_plus.dart';
 }
 
 Future<void> openItem(BuildContext context, NewsItem item) async {
-  GoRouter.of(context).go('/article/${item.id}');
-  // if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
-  //   await openMobileItem(context, item);
-  // } else {
-  //   await openWebItem(context, item);
-  // }
+  if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
+    await openMobileItem(context, item);
+  } else {
+    await openWebItem(context, item);
+  }
 }
 
 Future<void> openMobileItem(BuildContext context, NewsItem item) async {
@@ -112,14 +111,17 @@ Future<void> openMobileItem(BuildContext context, NewsItem item) async {
             message: AppLocalizations.of(context)!.shareStory,
             child: IconButton(
               onPressed: () {
+                final GoRouterState state = GoRouter.of(context).state;
+                Uri uri = state.uri;
+                String link = '${uri.scheme}://${uri.host}/article/${item.id}';
                 if (item.title == item.description) {
                   SharePlus.instance.share(
-                    ShareParams(text: '$descriptionForShare\n\n${item.link}'),
+                    ShareParams(text: '$descriptionForShare\n\n$link'),
                   );
                 } else {
                   SharePlus.instance.share(
                     ShareParams(
-                      text: '${item.title}\n\n$descriptionForShare\n\n${item.link}',
+                      text: '${item.title}\n\n$descriptionForShare\n\n$link',
                     ),
                   );
                 }
