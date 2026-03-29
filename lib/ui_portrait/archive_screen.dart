@@ -8,7 +8,7 @@ import 'package:homefe/functions.dart';
 import 'package:homefe/podo/rss/news_item.dart';
 import 'package:homefe/callback_shortcuts.dart';
 import 'package:homefe/ui/spinner.dart';
-import 'package:homefe/ui_landscape/list_tile.dart';
+import 'package:homefe/ui_portrait/list_tile.dart';
 
 class ArchiveScreen extends StatefulWidget {
   const ArchiveScreen({super.key});
