@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:homefe/bloc/rss_bloc.dart';
 import 'package:homefe/logger/logger.dart';
 import 'package:homefe/callback_shortcuts.dart';
-import 'package:homefe/ui_landscape/list_tile.dart';
+import 'package:homefe/ui_portrait/list_tile.dart';
 
 class ArticleScreen extends StatefulWidget {
   final int id;
