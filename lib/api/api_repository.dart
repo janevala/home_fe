@@ -127,7 +127,7 @@ class ApiRepository {
     );
     List<dynamic> results = await Future.wait(futures);
 
-    if (results.isNotEmpty && results.first.data != null && (results.first.data as List).length == 1) {
+    if (results.isNotEmpty && results.first.data != null) {
       return NewsItems.fromJson(results.first.data);
     }
 

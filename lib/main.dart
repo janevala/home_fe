@@ -10,7 +10,6 @@ import 'package:homefe/bloc/rss_bloc.dart';
 import 'package:homefe/bloc/theme_cubit.dart';
 import 'package:homefe/constants/app_version.dart';
 import 'package:homefe/constants/supported_locals.dart';
-import 'package:homefe/logger/logger.dart';
 import 'package:homefe/podo/rss/rss_site.dart';
 import 'package:homefe/ui_portrait/login_screen.dart' as portrait;
 import 'package:homefe/ui_landscape/login_screen.dart' as landscape;
@@ -161,8 +160,6 @@ final GoRouter router = GoRouter(
           path: 'article/:id',
           builder: (BuildContext context, GoRouterState state) {
             final id = int.parse(state.pathParameters['id']!);
-
-            logger.d('ArticleScreen: $id');
 
             return _usePortraitUi ? portrait.ArticleScreen(id: id) : landscape.ArticleScreen(id: id);
           },
