@@ -84,20 +84,7 @@ class ApiRepository {
     return null;
   }
 
-  Future<RssSites?> sites() async {
-    List<Future<dynamic>> futures = [];
-    futures.add(client.get('/sites', parameters: {"code": "123"}));
-    List<dynamic> results = await Future.wait(futures);
-
-    if (results.isNotEmpty) {
-      Map<String, dynamic> json = jsonDecode(results.first.data);
-      return RssSites.fromJson(json);
-    }
-
-    return null;
-  }
-
-  Future<NewsItems?> archive({int offset = 0, int limit = 10, String? language}) async {
+  Future<NewsItems?> articles({int offset = 0, int limit = 10, String? language}) async {
     Map<String, dynamic> parameters = {"code": "123", "offset": offset, "limit": limit};
 
     if (language != null) {
@@ -107,13 +94,40 @@ class ApiRepository {
     List<Future<dynamic>> futures = [];
     futures.add(
       client.get(
-        '/archive',
+        '/articles',
         parameters: parameters,
       ),
     );
     List<dynamic> results = await Future.wait(futures);
 
     if (results.isNotEmpty) {
+      return NewsItems.fromJson(results.first.data);
+    }
+
+    return null;
+  }
+
+  Future<NewsItems?> article({required int id, String? language}) async {
+    Map<String, dynamic> parameters = {"code": "123", "id": id};
+
+    if (id != 0) {
+      parameters["id"] = id;
+    }
+
+    if (language != null) {
+      parameters["lang"] = language;
+    }
+
+    List<Future<dynamic>> futures = [];
+    futures.add(
+      client.get(
+        '/articles',
+        parameters: parameters,
+      ),
+    );
+    List<dynamic> results = await Future.wait(futures);
+
+    if (results.isNotEmpty && results.first.data != null && (results.first.data as List).length == 1) {
       return NewsItems.fromJson(results.first.data);
     }
 
@@ -150,6 +164,19 @@ class ApiRepository {
     }
 
     return (500, 'Unknown error');
+  }
+
+  Future<RssSites?> sites() async {
+    List<Future<dynamic>> futures = [];
+    futures.add(client.get('/sites', parameters: {"code": "123"}));
+    List<dynamic> results = await Future.wait(futures);
+
+    if (results.isNotEmpty) {
+      Map<String, dynamic> json = jsonDecode(results.first.data);
+      return RssSites.fromJson(json);
+    }
+
+    return null;
   }
 
   Future<AnswerBody?> answerToQuestion(QuestionBody questionBody) async {

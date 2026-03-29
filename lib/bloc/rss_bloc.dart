@@ -13,106 +13,111 @@ import 'package:rss_dart/domain/rss_feed.dart';
 
 abstract class RssState {}
 
-class RssEvent extends RssState {}
+class FeedEvent extends RssState {}
 
-class Initial extends RssEvent {}
+class Initial extends FeedEvent {}
 
-class Loading extends RssEvent {}
+class Loading extends FeedEvent {}
 
 class SlowLoading extends Loading {}
 
-class Failure extends RssEvent {
+class Failure extends FeedEvent {
   final String error;
 
   Failure(this.error);
 }
 
-class RssSitesEvent extends RssEvent {}
+class RssSitesEvent extends FeedEvent {}
 
-class RssFeedEvent extends RssEvent {
+class RssFeedEvent extends FeedEvent {
   final Uri url;
 
   RssFeedEvent(this.url);
 }
 
-class QuestionEvent extends RssEvent {
+class QuestionEvent extends FeedEvent {
   final String question;
 
   QuestionEvent(this.question);
 }
 
-class ConfigEvent extends RssEvent {}
+class ConfigEvent extends FeedEvent {}
 
-class RefreshArchive extends RssEvent {}
+class RefreshArchive extends FeedEvent {}
 
-class ArchiveLoadMore extends RssEvent {
+class ArchiveLoadMore extends FeedEvent {
   final List<NewsItem> items;
 
   ArchiveLoadMore(this.items);
 }
 
-class RssSitesSuccess extends RssEvent {
+class RssSitesSuccess extends FeedEvent {
   final RssSites rssSites;
 
   RssSitesSuccess(this.rssSites);
 }
 
-class RssFeedSuccess extends RssEvent {
+class RssFeedSuccess extends FeedEvent {
   final RssFeed rssFeed;
 
   RssFeedSuccess(this.rssFeed);
 }
 
-class ArchiveLoad extends RssEvent {
+class ArchiveLoad extends FeedEvent {
   final List<NewsItem> items;
 
   ArchiveLoad(this.items);
 }
 
-class SearchLoad extends RssEvent {
+class SearchLoad extends FeedEvent {
   final List<NewsItem> items;
 
   SearchLoad(this.items);
 }
 
-class ArchiveRefreshDone extends RssEvent {
+class ArchiveRefreshDone extends FeedEvent {
   final ArchiveStats stats;
 
   ArchiveRefreshDone(this.stats);
 }
 
-class AnswerSuccess extends RssEvent {
+class AnswerSuccess extends FeedEvent {
   final String answer;
 
   AnswerSuccess(this.answer);
 }
 
-class ConfigSuccess extends RssEvent {
+class ConfigSuccess extends FeedEvent {
   final Config config;
 
   ConfigSuccess(this.config);
 }
 
-class RssArchiveEvent extends RssEvent {
+class ArticlesEvent extends FeedEvent {
   final String? language;
 
-  RssArchiveEvent({this.language});
+  ArticlesEvent({this.language});
 }
 
-class LoadMoreArchive extends RssArchiveEvent {
+class LoadMoreArchive extends ArticlesEvent {
   LoadMoreArchive({super.language});
 }
 
-class SearchArchive extends RssArchiveEvent {
+class SearchArchive extends ArticlesEvent {
   final String query;
 
   SearchArchive({required this.query, super.language});
 }
 
-// TODO: this is probably redundant
-class ResetArchive extends RssArchiveEvent {}
+class ArticleEvent extends ArticlesEvent {
+  final int id;
 
-class RssSitesBloc extends Bloc<RssEvent, RssState> {
+  ArticleEvent({required this.id, super.language});
+}
+
+class ResetArchive extends ArticlesEvent {}
+
+class RssSitesBloc extends Bloc<FeedEvent, RssState> {
   ApiRepository repo;
 
   RssSitesBloc({required this.repo}) : super(Initial()) {
@@ -129,7 +134,7 @@ class RssSitesBloc extends Bloc<RssEvent, RssState> {
   }
 }
 
-class RssArchiveBloc extends Bloc<RssEvent, RssState> {
+class RssArchiveBloc extends Bloc<FeedEvent, RssState> {
   ApiRepository repo;
   int limit = 10;
   int offset = 0;
@@ -145,7 +150,7 @@ class RssArchiveBloc extends Bloc<RssEvent, RssState> {
       emit(Initial());
     });
 
-    on<RssArchiveEvent>((event, emit) async {
+    on<ArticlesEvent>((event, emit) async {
       if (event is LoadMoreArchive) {
         if (!hasMore) return;
 
@@ -156,7 +161,7 @@ class RssArchiveBloc extends Bloc<RssEvent, RssState> {
         }
 
         try {
-          NewsItems? newsItems = await repo.archive(
+          NewsItems? newsItems = await repo.articles(
             offset: offset,
             limit: limit,
             language: event.language,
@@ -238,7 +243,7 @@ class RssArchiveBloc extends Bloc<RssEvent, RssState> {
   }
 }
 
-class RssFeedBloc extends Bloc<RssEvent, RssState> {
+class RssFeedBloc extends Bloc<FeedEvent, RssState> {
   RssFeedBloc() : super(Initial()) {
     on<RssFeedEvent>((event, emit) async {
       emit(Loading());
