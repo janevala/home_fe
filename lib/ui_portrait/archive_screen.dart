@@ -111,7 +111,7 @@ class ArchiveScreenState extends State<ArchiveScreen> with TickerProviderStateMi
                 autofocus: true,
                 child: Center(
                   child: SizedBox(
-                    width: width * 0.6,
+                    width: width,
                     child: Stack(
                       children: [
                         CustomScrollView(

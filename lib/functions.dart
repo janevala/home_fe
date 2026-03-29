@@ -111,9 +111,7 @@ Future<void> openMobileItem(BuildContext context, NewsItem item) async {
             message: AppLocalizations.of(context)!.shareStory,
             child: IconButton(
               onPressed: () {
-                final GoRouterState state = GoRouter.of(context).state;
-                Uri uri = state.uri;
-                String link = '${uri.scheme}://${uri.host}/article/${item.id}';
+                String link = '${GoRouter.of(context).state.uri.toString()}/article/${item.id}';
                 if (item.title == item.description) {
                   SharePlus.instance.share(
                     ShareParams(text: '$descriptionForShare\n\n$link'),
