@@ -7,8 +7,8 @@ import 'package:homefe/bloc/rss_bloc.dart';
 import 'package:homefe/functions.dart';
 import 'package:homefe/podo/rss/news_item.dart';
 import 'package:homefe/callback_shortcuts.dart';
-import 'package:homefe/ui_portrait/list_tile.dart';
 import 'package:homefe/ui/spinner.dart';
+import 'package:homefe/ui_landscape/list_tile.dart';
 
 class ArchiveScreen extends StatefulWidget {
   const ArchiveScreen({super.key});
@@ -98,7 +98,7 @@ class ArchiveScreenState extends State<ArchiveScreen> with TickerProviderStateMi
         title: Text(AppLocalizations.of(context)!.title),
         leading: BackButton(
           onPressed: () {
-            context.pop();
+            GoRouter.of(context).go('/dashboard');
           },
         ),
       ),
@@ -111,7 +111,7 @@ class ArchiveScreenState extends State<ArchiveScreen> with TickerProviderStateMi
                 autofocus: true,
                 child: Center(
                   child: SizedBox(
-                    width: width,
+                    width: width * 0.6,
                     child: Stack(
                       children: [
                         CustomScrollView(

@@ -7,6 +7,7 @@ part of 'news_item.dart';
 // **************************************************************************
 
 NewsItem _$NewsItemFromJson(Map<String, dynamic> json) => NewsItem(
+  (json['id'] as num).toInt(),
   json['title'] as String,
   json['description'] as String,
   json['link'] as String,
@@ -20,6 +21,7 @@ NewsItem _$NewsItemFromJson(Map<String, dynamic> json) => NewsItem(
 );
 
 Map<String, dynamic> _$NewsItemToJson(NewsItem instance) => <String, dynamic>{
+  'id': instance.id,
   'title': instance.title,
   'description': instance.description,
   'content': instance.content,

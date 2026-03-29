@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:homefe/api/api_client.dart';
+import 'package:homefe/logger/logger.dart';
 import 'package:homefe/podo/answer/answer_body.dart';
 import 'package:homefe/podo/backend/config.dart';
 import 'package:homefe/podo/login/login_body.dart';
@@ -9,7 +10,6 @@ import 'package:homefe/podo/refreshtoken/refresh_token_body.dart';
 import 'package:homefe/podo/rss/news_items.dart';
 import 'package:homefe/podo/rss/rss_sites.dart';
 import 'package:homefe/podo/token/token.dart';
-import 'package:logger/logger.dart';
 
 class ApiRepository {
   ApiClient client;
@@ -44,7 +44,7 @@ class ApiRepository {
         );
       }
     } catch (e) {
-      Logger().e('Error during login: $e');
+      logger.e('Error during login: $e');
     }
 
     return null;
@@ -78,7 +78,7 @@ class ApiRepository {
         );
       }
     } catch (e) {
-      Logger().e('Error refreshing token: $e');
+      logger.e('Error refreshing token: $e');
     }
 
     return null;
@@ -108,7 +108,7 @@ class ApiRepository {
   }
 
   Future<NewsItems?> article({required int id, String? language}) async {
-    Map<String, dynamic> parameters = {"code": "123", "id": id};
+    Map<String, dynamic> parameters = {"code": "123", "id": id, "lang": language};
 
     if (id != 0) {
       parameters["id"] = id;
@@ -121,7 +121,7 @@ class ApiRepository {
     List<Future<dynamic>> futures = [];
     futures.add(
       client.get(
-        '/articles',
+        '/article',
         parameters: parameters,
       ),
     );

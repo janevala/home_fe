@@ -36,7 +36,7 @@ class FeedScreenState extends State<FeedScreen> {
         title: Text(widget.rssSite.title),
         leading: BackButton(
           onPressed: () {
-            context.go('/sites');
+            GoRouter.of(context).go('/sites');
           },
         ),
       ),
@@ -68,6 +68,7 @@ class FeedScreenState extends State<FeedScreen> {
                           openItem: () => openItem(
                             context,
                             NewsItem(
+                              0,
                               item.title!,
                               item.description!,
                               item.link!,

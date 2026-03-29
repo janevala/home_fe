@@ -28,7 +28,7 @@
   "newsNoItems": "Uutisia ei saatavilla",
   "token" : "Tunniste",
   "newsItemCount": "{count} uutista",
-  "newsArchiveStart": "Arkisto alk.: {date}",
+  "newsArchiveStart": "Arkisto alk. {date}",
   "unknown": "Tuntematon",
   "unknownReason": "Tuntematon syy",
   "contact": "Ota yhteyttä",

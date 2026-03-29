@@ -4,6 +4,8 @@ part 'news_item.g.dart';
 
 @JsonSerializable()
 class NewsItem {
+  @JsonKey(name: 'id')
+  late int id;
   @JsonKey(name: 'title')
   late String title;
   @JsonKey(name: 'description')
@@ -26,6 +28,7 @@ class NewsItem {
   late String? language;
 
   NewsItem(
+    this.id,
     this.title,
     this.description,
     this.link,

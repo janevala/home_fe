@@ -229,6 +229,7 @@ class RssFeedTile extends StatelessWidget {
   String get _baseUrl => _parseBaseUrl(item.link ?? '');
   String get _description => parseDescription(
     NewsItem(
+      0,
       item.title ?? '',
       item.description ?? '',
       item.link ?? '',

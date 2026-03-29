@@ -191,6 +191,21 @@ class RssArchiveBloc extends Bloc<FeedEvent, RssState> {
       }
     });
 
+    on<ArticleEvent>((event, emit) async {
+      emit(Loading());
+
+      try {
+        NewsItems? newsItems = await repo.article(
+          id: event.id,
+          language: event.language,
+        );
+
+        emit(ArchiveLoad(newsItems?.items ?? []));
+      } catch (e) {
+        emit(Failure('Failed to load article'));
+      }
+    });
+
     on<SearchArchive>((event, emit) async {
       try {
         NewsItems? newsItems = await repo.search(query: event.query, language: event.language);

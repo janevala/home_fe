@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:homefe/assets/i18n/generated/app_localizations.dart';
 import 'package:homefe/podo/rss/news_item.dart';
 import 'package:html/parser.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:flutter/foundation.dart' show defaultTargetPlatform, TargetPlatform;
+// import 'package:flutter/foundation.dart' show defaultTargetPlatform, TargetPlatform;
 
 // title lenght in db = 500
 // description length in db = 1000
@@ -51,11 +52,12 @@ import 'package:flutter/foundation.dart' show defaultTargetPlatform, TargetPlatf
 }
 
 Future<void> openItem(BuildContext context, NewsItem item) async {
-  if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
-    await openMobileItem(context, item);
-  } else {
-    await openWebItem(context, item);
-  }
+  GoRouter.of(context).go('/article/${item.id}');
+  // if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
+  //   await openMobileItem(context, item);
+  // } else {
+  //   await openWebItem(context, item);
+  // }
 }
 
 Future<void> openMobileItem(BuildContext context, NewsItem item) async {

@@ -98,7 +98,7 @@ class ArchiveScreenState extends State<ArchiveScreen> with TickerProviderStateMi
         title: Text(AppLocalizations.of(context)!.title),
         leading: BackButton(
           onPressed: () {
-            context.pop();
+            GoRouter.of(context).go('/dashboard');
           },
         ),
       ),

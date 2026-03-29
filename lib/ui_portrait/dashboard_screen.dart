@@ -299,7 +299,7 @@ class DashboardScreenState extends State<DashboardScreen> {
                   SizedBox(
                     width: width * 0.7,
                     child: ElevatedButton(
-                      onPressed: slowLoadingDone ? () => GoRouter.of(context).push('/archive') : null,
+                      onPressed: slowLoadingDone ? () => GoRouter.of(context).push('/articles') : null,
                       child: Text(AppLocalizations.of(context)!.newsArchive),
                     ),
                   ),
